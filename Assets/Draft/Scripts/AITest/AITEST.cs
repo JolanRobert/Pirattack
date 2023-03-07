@@ -74,7 +74,7 @@ public class AITEST : MonoBehaviour
         {
             ChangeArena(--index);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && index < 2)
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && index < 1)
         {
             ChangeArena(++index);
         }
