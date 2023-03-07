@@ -6,6 +6,7 @@ namespace Player
 {
     public class PlayerSwitchColor : MonoBehaviour
     {
+        public PlayerColor Color => color;
         public static Action OnSwitchColor;
         
         [SerializeField] private PlayerController playerController;

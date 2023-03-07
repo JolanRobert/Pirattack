@@ -64,7 +64,10 @@ namespace Utils
             isImmortal = !isImmortal;
         }
     
-        //Return health value between 0 and 1
+        /// <summary>
+        /// Return health value between 0 and 1
+        /// </summary>
+        /// <returns></returns>
         public float GetRatio()
         {
             return (float)currentHealth / maxHealth;
