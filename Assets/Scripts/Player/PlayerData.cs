@@ -12,6 +12,9 @@ namespace Player
         [Range(0,100)] public float defense;
         public int damage;
         public float resolveTime;
+        public AnimationCurve moveAcceleration;
+        public AnimationCurve moveDeceleration;
+        public float rotationSpeed = 0.1f;
 
         [Header("Bullets")]
         public float bulletSpeed;
