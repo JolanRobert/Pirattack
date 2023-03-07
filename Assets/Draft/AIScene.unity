@@ -807,6 +807,7 @@ GameObject:
   - component: {fileID: 831116511}
   - component: {fileID: 831116510}
   - component: {fileID: 831116509}
+  - component: {fileID: 831116514}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -989,6 +990,7 @@ MonoBehaviour:
   playerMovement: {fileID: 831116509}
   playerShoot: {fileID: 831116511}
   playerSwitchColor: {fileID: 831116510}
+  healthPlayer: {fileID: 831116514}
 --- !u!54 &831116513
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1016,6 +1018,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &831116514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831116502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e56747782a973eb45a52b697e4b3101c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: -1
+  currentHealth: 0
+  isImmortal: 0
 --- !u!1 &846497736
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +1047,7 @@ GameObject:
   - component: {fileID: 846497739}
   - component: {fileID: 846497743}
   - component: {fileID: 846497738}
+  - component: {fileID: 846497745}
   - component: {fileID: 846497737}
   - component: {fileID: 846497744}
   m_Layer: 0
@@ -1052,11 +1070,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 100
-  currentHp: 100
   damage: 10
-  speed: 1
-  attackSpeed: 1
   ShieldColor: 2
+  healthPlayer: {fileID: 846497745}
 --- !u!195 &846497738
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1208,6 +1224,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 846497737}
   agent: {fileID: 846497738}
+--- !u!114 &846497745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846497736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e56747782a973eb45a52b697e4b3101c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: -1
+  currentHealth: 0
+  isImmortal: 0
 --- !u!1 &1035567889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1980,6 +2011,7 @@ GameObject:
   - component: {fileID: 1921695924}
   - component: {fileID: 1921695923}
   - component: {fileID: 1921695922}
+  - component: {fileID: 1921695928}
   - component: {fileID: 1921695921}
   - component: {fileID: 1921695920}
   m_Layer: 0
@@ -2002,11 +2034,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 100
-  currentHp: 100
   damage: 10
-  speed: 1
-  attackSpeed: 1
   ShieldColor: 2
+  healthPlayer: {fileID: 1921695928}
   ShieldRenderer: {fileID: 74808838}
 --- !u!114 &1921695921
 MonoBehaviour:
@@ -2160,6 +2190,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1921695928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921695919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e56747782a973eb45a52b697e4b3101c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: -1
+  currentHealth: 0
+  isImmortal: 0
 --- !u!1 &2089978242
 GameObject:
   m_ObjectHideFlags: 0

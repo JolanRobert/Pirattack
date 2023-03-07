@@ -7,26 +7,30 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected float maxHp = 100f;
-    [SerializeField] protected float currentHp = 100f;
     [SerializeField] protected float damage = 10f;
-    [SerializeField] protected float speed = 1f;
-    [SerializeField] protected float attackSpeed = 1f;
     [SerializeField] protected PlayerColor ShieldColor = PlayerColor.Undefined;
+    [SerializeField] protected Health healthPlayer;
+
+    private void Start()
+    {
+        healthPlayer.onDeath += OnDie;
+    }
 
     private void OnEnable()
     {
-        currentHp = maxHp;
+        healthPlayer.Init((int)maxHp);
+    }
+
+    protected void OnDie()
+    {
+        gameObject.SetActive(false);
     }
     
     public void TakeDamage(float damage, PlayerColor color = PlayerColor.Undefined)
     {
         if (ShieldColor != PlayerColor.Undefined && ShieldColor != color) return;
         
-        currentHp -= damage;
-        if (currentHp <= 0)
-        {
-           gameObject.SetActive(false);
-        }
+        healthPlayer.LoseHealth((int)damage);
     }
     
     public void AssignShieldColor(PlayerColor color)

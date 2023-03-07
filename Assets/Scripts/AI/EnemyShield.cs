@@ -8,7 +8,7 @@ public class EnemyShield : Enemy
     
     private void OnEnable()
     {
-        currentHp = maxHp;
+        healthPlayer.Init((int)maxHp);
         PlayerColor color = (PlayerColor)Random.Range(0, 2);
        AssignShieldColor(color);
        ChangeShieldRendererColor(color);

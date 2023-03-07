@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,12 +12,18 @@ namespace Player
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private PlayerShoot playerShoot;
         [SerializeField] private PlayerSwitchColor playerSwitchColor;
+        [SerializeField] private Health healthPlayer;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;
         private bool shootInput;
         private bool switchColorInput;
-        
+
+        private void Start()
+        {
+            healthPlayer.Init(data.maxHealth);
+        }
+
         private void Update()
         {
             HandleMovement();
