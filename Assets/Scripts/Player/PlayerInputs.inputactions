@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Switch",
+                    "name": "SwitchColor",
                     "type": "Button",
                     "id": "026d3e44-e086-4b1d-a463-65aff47e7518",
                     "expectedControlType": "Button",
@@ -171,7 +171,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Switch",
+                    "action": "SwitchColor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

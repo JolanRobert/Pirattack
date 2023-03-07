@@ -10,15 +10,19 @@ namespace Player
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private PlayerShoot playerShoot;
+        [SerializeField] private PlayerSwitchColor playerSwitchColor;
 
-        private Vector2 moveInput, rotateInput;
+        private Vector2 moveInput;
+        private Vector2 rotateInput;
         private bool shootInput;
+        private bool switchColorInput;
         
         private void Update()
         {
             HandleMovement();
             HandleRotation();
             HandleShoot();
+            HandleSwitchColor();
         }
         
         public void OnMove(InputAction.CallbackContext context)
@@ -36,6 +40,11 @@ namespace Player
             shootInput = context.performed;
         }
 
+        public void OnSwitchColor(InputAction.CallbackContext context)
+        {
+            switchColorInput = context.started;
+        }
+
         private void HandleMovement()
         {
             playerMovement.Move(moveInput);
@@ -49,6 +58,11 @@ namespace Player
         private void HandleShoot()
         {
             if (shootInput) playerShoot.Shoot();
+        }
+
+        private void HandleSwitchColor()
+        {
+            if (switchColorInput) PlayerSwitchColor.OnSwitchColor.Invoke();
         }
     }
 }

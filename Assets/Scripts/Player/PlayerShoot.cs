@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Utils;
 
 namespace Player
 {
@@ -16,7 +17,7 @@ namespace Player
         {
             if (!canShoot) return;
             
-            Bullet bullet = Pooler.Instance.Pop("Bullet").GetComponent<Bullet>();
+            Bullet bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<Bullet>();
             bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
             bullet.Init(data);
             StartCoroutine(ShootCooldown());
@@ -25,7 +26,7 @@ namespace Player
         private IEnumerator ShootCooldown()
         {
             canShoot = false;
-            yield return new WaitForSeconds(1 / data.fireRate);
+            yield return new WaitForSeconds(1 / data.attackSpeed);
             canShoot = true;
         }
     }

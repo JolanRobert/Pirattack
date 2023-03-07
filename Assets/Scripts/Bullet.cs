@@ -1,5 +1,6 @@
 using Player;
 using UnityEngine;
+using Utils;
 
 public class Bullet : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class Bullet : MonoBehaviour
     {
         rb.velocity = transform.forward * data.bulletSpeed;
         
-        Pooler.Instance.DelayedDepop(data.bulletLifespan,"Bullet", gameObject);
+        Pooler.Instance.DelayedDepop(data.bulletLifespan, Key.Bullet, gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,6 +25,6 @@ public class Bullet : MonoBehaviour
             //Do Nothing
         }*/
 
-        Pooler.Instance.Depop("Bullet", gameObject);
+        Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
 }

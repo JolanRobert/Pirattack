@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2161.3684, g: 2265.3225, b: 3288.5786, a: 1}
+  m_IndirectSpecularColor: {r: 2158.8313, g: 2263.3928, b: 3287.067, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,13 +153,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolKeys:
-  - key: Bullet
+  - key: 0
     pool:
       prefab: {fileID: 8146502215300643550, guid: 1ee91bf533694774799b657340b16078,
         type: 3}
       baseCount: 100
-      baseRefreshSpeed: 0
-      refreshSpeed: 0
+      baseRefreshSpeed: 5
+      refreshSpeed: 5
 --- !u!4 &96330772
 Transform:
   m_ObjectHideFlags: 0
@@ -577,7 +577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NotificationBehavior: 0
-  m_MaxPlayerCount: -1
+  m_MaxPlayerCount: 2
   m_AllowJoining: 1
   m_JoinBehavior: 0
   m_PlayerJoinedEvent:

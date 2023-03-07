@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7102844447484125359}
   - component: {fileID: 5398305621724039023}
   - component: {fileID: 2297303709830124257}
+  - component: {fileID: 6062054095027167874}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -165,7 +166,19 @@ MonoBehaviour:
     m_ActionId: 482767b1-1a5a-4065-9872-6d47e76b13f1
     m_ActionName: Player/Shoot[/XInputControllerWindows1/rightTrigger]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7102844447484125359}
+        m_TargetAssemblyTypeName: Player.PlayerController, Assembly-CSharp
+        m_MethodName: OnSwitchColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 026d3e44-e086-4b1d-a463-65aff47e7518
     m_ActionName: Player/Switch[/XInputControllerWindows1/leftTrigger]
   m_NeverAutoSwitchControlSchemes: 0
@@ -188,6 +201,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 45fd4d20e314ef14593960a94ec76e63, type: 2}
   playerMovement: {fileID: 5398305621724039023}
   playerShoot: {fileID: 2297303709830124257}
+  playerSwitchColor: {fileID: 6062054095027167874}
 --- !u!114 &5398305621724039023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +230,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 7102844447484125359}
   firePoint: {fileID: 1023871615444969245}
+--- !u!114 &6062054095027167874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438483004797300496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8daa8cdab3414f1da2a76cca75a3c0ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 7102844447484125359}
 --- !u!1 &1814547813298989519
 GameObject:
   m_ObjectHideFlags: 0

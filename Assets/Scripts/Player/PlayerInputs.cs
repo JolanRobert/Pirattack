@@ -55,7 +55,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Switch"",
+                    ""name"": ""SwitchColor"",
                     ""type"": ""Button"",
                     ""id"": ""026d3e44-e086-4b1d-a463-65aff47e7518"",
                     ""expectedControlType"": ""Button"",
@@ -193,7 +193,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Switch"",
+                    ""action"": ""SwitchColor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -219,7 +219,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
-        m_Player_Switch = m_Player.FindAction("Switch", throwIfNotFound: true);
+        m_Player_SwitchColor = m_Player.FindAction("SwitchColor", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -284,7 +284,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Rotate;
     private readonly InputAction m_Player_Shoot;
-    private readonly InputAction m_Player_Switch;
+    private readonly InputAction m_Player_SwitchColor;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -292,7 +292,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
-        public InputAction @Switch => m_Wrapper.m_Player_Switch;
+        public InputAction @SwitchColor => m_Wrapper.m_Player_SwitchColor;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -311,9 +311,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
-            @Switch.started += instance.OnSwitch;
-            @Switch.performed += instance.OnSwitch;
-            @Switch.canceled += instance.OnSwitch;
+            @SwitchColor.started += instance.OnSwitchColor;
+            @SwitchColor.performed += instance.OnSwitchColor;
+            @SwitchColor.canceled += instance.OnSwitchColor;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -327,9 +327,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
-            @Switch.started -= instance.OnSwitch;
-            @Switch.performed -= instance.OnSwitch;
-            @Switch.canceled -= instance.OnSwitch;
+            @SwitchColor.started -= instance.OnSwitchColor;
+            @SwitchColor.performed -= instance.OnSwitchColor;
+            @SwitchColor.canceled -= instance.OnSwitchColor;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -361,6 +361,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
-        void OnSwitch(InputAction.CallbackContext context);
+        void OnSwitchColor(InputAction.CallbackContext context);
     }
 }
