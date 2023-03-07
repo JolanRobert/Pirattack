@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public class ShieldUp : Pattern
 {
-    public override void TouchPlayer(Player2 player)
+    public override void TouchPlayer(PlayerController player)
     {
         throw new System.NotImplementedException();
     }

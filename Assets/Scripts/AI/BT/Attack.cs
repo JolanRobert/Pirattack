@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using BehaviourTree;
+using Player;
 using UnityEngine;
 
 public class Attack : Node
@@ -13,7 +14,7 @@ public class Attack : Node
     
     public override NodeState Evaluate(Node root)
     {
-        Player2 target = (Player2)GetData("Target");
+        PlayerController target = (PlayerController)GetData("Target");
         if (target == null) return NodeState.Failure;
         
         caster.Attack(target);

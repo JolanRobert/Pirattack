@@ -7,6 +7,7 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         public PlayerData Data => data;
+        public PlayerColor Color => playerSwitchColor.GetPlayerColor();
         
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerMovement playerMovement;
@@ -51,6 +52,11 @@ namespace Player
         {
             switchColorInput = context.started;
         }
+        
+        public void RequestSwitchColor()
+        {
+            playerSwitchColor.Switch();
+        }
 
         private void HandleMovement()
         {
@@ -70,6 +76,11 @@ namespace Player
         private void HandleSwitchColor()
         {
             if (switchColorInput) PlayerSwitchColor.OnSwitchColor.Invoke();
+        }
+
+        public void TakeDamage(float damage, Enemy enemy)
+        {
+            healthPlayer.LoseHealth((int)damage);
         }
     }
 }

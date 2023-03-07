@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Boss : Enemy
 {
-    public static Action<Player2> OnTriggerAttack;
+    public static Action<PlayerController> OnTriggerAttack;
     public Pattern currentPattern;
     
     [SerializeField] private string[] voicelines;

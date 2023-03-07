@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using BehaviourTree;
+using Player;
 using UnityEngine;
 
 public class CanAttack : Node
@@ -15,10 +16,10 @@ public class CanAttack : Node
     public override NodeState Evaluate(Node root)
     {
         bool canAttack = (bool)GetData("CanAttack");
-        Player2 target = (Player2)GetData("Target");
+        PlayerController target = (PlayerController)GetData("Target");
         if (!target)
         {
-           Player2[] players = MyGameManager.Instance.Players;
+            PlayerController[] players = MyGameManager.Instance.Players;
            target = (Vector3.Distance(players[0].transform.position, transform.position) <
                      Vector3.Distance(players[1].transform.position, transform.position)) ? 
                players[0] : players[1];

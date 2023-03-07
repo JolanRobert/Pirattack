@@ -38,7 +38,7 @@ namespace Player
             Debug.Log($"Player {(int)color} -> {color}");
         }
 
-        private void Switch()
+        public void Switch()
         {
             PlayerColor newColor = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;
             Debug.Log($"Player {(int)color} -> {newColor}");

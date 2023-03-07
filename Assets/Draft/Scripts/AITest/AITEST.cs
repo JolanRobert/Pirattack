@@ -7,7 +7,7 @@ using Utils;
 
 public class AITEST : MonoBehaviour
 {
-    [SerializeField] private Player2 player;
+    [SerializeField] private PlayerController player;
     [SerializeField] private Enemy simpleEnemy;
     [SerializeField] private EnemyShield enemyWithShield;
 
@@ -51,13 +51,13 @@ public class AITEST : MonoBehaviour
 
     private void PrintPlayerColor()
     {
-        textColorPlayer.text = "Player Color : " + (player.colorPlayer == PlayerColor.Red ? "RED" : "BLUE");
+        textColorPlayer.text = "Player Color : " + (player.Color == PlayerColor.Red ? "RED" : "BLUE");
     }
 
 
     private void SwapPlayerColor()
     {
-        player.colorPlayer = player.colorPlayer == PlayerColor.Red ? PlayerColor.Blue : PlayerColor.Red;
+        player.RequestSwitchColor();
         PrintPlayerColor();
     }
 

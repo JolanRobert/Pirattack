@@ -5,7 +5,7 @@ using Utils;
 
 public class Bullet : MonoBehaviour
 {
-    [ReadOnly(true)] public Player2 owner;
+    [ReadOnly(true)] public PlayerController owner;
 
     [SerializeField] private Rigidbody rb;
 
@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy)
         {
-            enemy.TakeDamage(owner.GetDamage(), owner.colorPlayer);
+            enemy.TakeDamage(owner.Data.damage, owner.Color);
             Pooler.Instance.Depop(Key.Bullet, gameObject);
         }
 

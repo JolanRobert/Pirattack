@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public abstract class Pattern : MonoBehaviour
@@ -9,7 +10,7 @@ public Boss caster;
 public Renderer FXRenderer;
 
 
-public abstract void TouchPlayer(Player2 player);
+public abstract void TouchPlayer(PlayerController player);
 
 public abstract void Execute();
 }

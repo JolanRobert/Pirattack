@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Interfaces;
+using Player;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
@@ -38,7 +39,7 @@ public class Enemy : MonoBehaviour, IDamageable
         ShieldColor = color;
     }
 
-    public void Attack(Player2 target)
+    public void Attack(PlayerController target)
     {
         target.TakeDamage(damage, this);
     }
