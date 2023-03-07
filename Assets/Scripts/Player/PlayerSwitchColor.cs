@@ -7,6 +7,7 @@ namespace Player
     public class PlayerSwitchColor : MonoBehaviour
     {
         public static Action OnSwitchColor;
+        public bool Test_With_Single_Player = false;
         
         [SerializeField] private PlayerController playerController;
         
@@ -23,8 +24,16 @@ namespace Player
             OnSwitchColor -= Switch;
         }
 
+        public PlayerColor GetPlayerColor()
+        {
+            return color;
+        }
+        
         private void Start()
         {
+            if(Test_With_Single_Player)
+                color = PlayerColor.Blue;
+            else
             color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
             Debug.Log($"Player {(int)color} -> {color}");
         }
@@ -36,10 +45,5 @@ namespace Player
             color = newColor;
 
         }
-    }
-
-    public enum PlayerColor
-    {
-        Blue, Red
     }
 }
