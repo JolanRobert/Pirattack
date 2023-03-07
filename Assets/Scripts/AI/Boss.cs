@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using MyBox;
 using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,13 +8,13 @@ using Random = UnityEngine.Random;
 public class Boss : Enemy
 {
     public static Action<PlayerController> OnTriggerAttack;
-    public Pattern currentPattern;
+    [ReadOnly] public Pattern currentPattern;
     
     [SerializeField] private string[] voicelines;
 
-    private void OnEnable()
+    public void LaunchPattern(IEnumerator coroutine)
     {
-        OnTriggerAttack = currentPattern.TouchPlayer;
+        StartCoroutine(coroutine);
     }
 
 

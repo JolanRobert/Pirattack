@@ -10,6 +10,7 @@ public class AITEST : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private Enemy simpleEnemy;
     [SerializeField] private EnemyShield enemyWithShield;
+    [SerializeField] private Boss boss;
 
     [SerializeField] private TMP_Text textColorPlayer;
     
@@ -29,6 +30,7 @@ public class AITEST : MonoBehaviour
         player.transform.position = new Vector3(0, 1, -35);
         simpleEnemy.gameObject.SetActive(false);
         enemyWithShield.gameObject.SetActive(false);
+        boss.gameObject.SetActive(false);
         if (index == 0)
         {
             simpleEnemy.gameObject.SetActive(true);
@@ -38,6 +40,11 @@ public class AITEST : MonoBehaviour
         {
             enemyWithShield.gameObject.SetActive(true);
             enemyWithShield.transform.position = new Vector3(0, 1, 25);
+        }
+        else if (index == 2)
+        {
+            boss.gameObject.SetActive(true);
+            enemyWithShield.transform.position = new Vector3(0, 5, 0);
         }
     }
 
@@ -67,7 +74,7 @@ public class AITEST : MonoBehaviour
         {
             ChangeArena(--index);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && index < 1)
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && index < 2)
         {
             ChangeArena(++index);
         }

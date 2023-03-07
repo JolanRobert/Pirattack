@@ -7,19 +7,28 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
+    public Action<float, PlayerController> IsWasAttacked;
+    
     [SerializeField] protected float maxHp = 100f;
     [SerializeField] protected float damage = 10f;
     [SerializeField] protected PlayerColor ShieldColor = PlayerColor.Undefined;
-    [SerializeField] protected Health healthPlayer;
+    [SerializeField] protected Health healthEnemy;
+
 
     private void Start()
     {
-        healthPlayer.onDeath += OnDie;
+        healthEnemy.onDeath += OnDie;
     }
 
     private void OnEnable()
     {
-        healthPlayer.Init((int)maxHp);
+        healthEnemy.Init((int)maxHp);
+        ResetAttackDefaultValue();
+    }
+    
+    public PlayerColor GetShieldColor()
+    {
+        return ShieldColor;
     }
 
     protected void OnDie()
@@ -27,11 +36,22 @@ public class Enemy : MonoBehaviour, IDamageable
         gameObject.SetActive(false);
     }
     
-    public void TakeDamage(float damage, PlayerColor color = PlayerColor.Undefined)
+    public void TakeDamage(float _damage, PlayerController origin)
     {
-        if (ShieldColor != PlayerColor.Undefined && ShieldColor != color) return;
+        if (ShieldColor != PlayerColor.Undefined && ShieldColor != origin.Color) return;
         
-        healthPlayer.LoseHealth((int)damage);
+        
+        IsWasAttacked?.Invoke(_damage, origin);
+    }
+
+    public void OnTakeDamage(float _damage, PlayerController origin)
+    {
+        healthEnemy.LoseHealth((int)_damage);
+    }
+    
+    public void ResetAttackDefaultValue()
+    {
+        IsWasAttacked = OnTakeDamage;
     }
     
     public void AssignShieldColor(PlayerColor color)

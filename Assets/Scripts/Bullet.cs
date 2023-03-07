@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy)
         {
-            enemy.TakeDamage(owner.Data.damage, owner.Color);
+            enemy.TakeDamage(owner.Data.damage, owner);
             Pooler.Instance.Depop(Key.Bullet, gameObject);
         }
 

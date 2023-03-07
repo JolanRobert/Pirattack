@@ -6,7 +6,8 @@ namespace BehaviourTree
     {
         Running,
         Success,
-        Failure
+        Failure,
+        Abort
     }
     public abstract class Node
     {

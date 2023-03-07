@@ -24,6 +24,9 @@ namespace BehaviourTree
                     case NodeState.Running:
                         state = NodeState.Running;
                         return state;
+                    case NodeState.Abort:
+                        state = NodeState.Abort;
+                        return state;
                     default:
                         continue;
                 }

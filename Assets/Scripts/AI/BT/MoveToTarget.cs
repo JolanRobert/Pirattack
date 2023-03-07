@@ -15,7 +15,11 @@ public class MoveToTarget : Node
     public override NodeState Evaluate(Node root)
     {
         PlayerController target = (PlayerController)GetData("Target");
-        if (target == null) return NodeState.Failure;
+        if (target == null)
+        {
+            agent.SetDestination(agent.transform.position);
+            return NodeState.Failure;
+        }
         Vector3 direction = (target.transform.position - agent.transform.position).normalized;
        agent.SetDestination(target.gameObject.transform.position - direction * 5);
          return NodeState.Success;

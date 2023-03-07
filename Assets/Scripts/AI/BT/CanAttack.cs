@@ -24,7 +24,6 @@ public class CanAttack : Node
                      Vector3.Distance(players[1].transform.position, transform.position)) ? 
                players[0] : players[1];
            SetDataInBlackboard("Target", target);
-           SetDataInBlackboard("TargetPos", target);
         }
         if (canAttack && Vector3.Distance(target.transform.position, transform.position) <= 5)
         {
