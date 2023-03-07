@@ -27,7 +27,7 @@ namespace Player
         
         public void OnMove(InputAction.CallbackContext context)
         {
-            moveInput = context.ReadValue<Vector2>();
+            moveInput = context.ReadValue<Vector2>().normalized;
         }
         
         public void OnRotate(InputAction.CallbackContext context)
