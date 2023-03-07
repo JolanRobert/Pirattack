@@ -6,12 +6,16 @@ namespace Player
 {
     public class PlayerSwitchColor : MonoBehaviour
     {
+        public PlayerColor Color => color;
         public static Action OnSwitchColor;
-        
+
         [SerializeField] private PlayerController playerController;
         
         private PlayerColor color;
-        private int tmp;
+        private PlayerData data => playerController.Data;
+        
+        [Header("Debug")]
+        public bool Test_With_Single_Player;
 
         private void OnEnable()
         {
@@ -22,24 +26,21 @@ namespace Player
         {
             OnSwitchColor -= Switch;
         }
-
+        
         private void Start()
         {
-            color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
-            Debug.Log($"Player {(int)color} -> {color}");
+            if (Test_With_Single_Player) color = PlayerColor.Blue;
+            else color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
         }
 
-        private void Switch()
+        public void Switch()
         {
-            PlayerColor newColor = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;
-            Debug.Log($"Player {(int)color} -> {newColor}");
-            color = newColor;
-
+            color = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;
         }
     }
 
     public enum PlayerColor
     {
-        Blue, Red
+        Blue, Red, None
     }
 }
