@@ -16,7 +16,7 @@ public class CanAttack : Node
     public override NodeState Evaluate(Node root)
     {
         bool canAttack = (bool)GetData("CanAttack");
-        PlayerController target = (PlayerController)GetData("Target");
+        PlayerController target = GetData<PlayerController>("Target");
         if (!target)
         {
             PlayerController[] players = MyGameManager.Instance.Players;

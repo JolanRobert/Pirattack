@@ -19,7 +19,7 @@ public class EnemyBT : Tree
             new Sequence(new List<Node>
             {
                 new CanAttack(enemy.gameObject.transform),
-                new Attack(enemy),
+                new AttackCaC(enemy),
             }),
             new MoveToTarget(agent),
         });

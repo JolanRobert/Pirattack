@@ -14,7 +14,7 @@ public class MoveToTarget : Node
     
     public override NodeState Evaluate(Node root)
     {
-        PlayerController target = (PlayerController)GetData("Target");
+        PlayerController target = GetData<PlayerController>("Target");
         if (target == null)
         {
             agent.SetDestination(agent.transform.position);

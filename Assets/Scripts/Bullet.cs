@@ -1,11 +1,12 @@
-using System.ComponentModel;
+using MyBox;
 using Player;
 using UnityEngine;
 using Utils;
 
 public class Bullet : MonoBehaviour
 {
-    [ReadOnly(true)] public PlayerController owner;
+    [ReadOnly] public PlayerController owner;
+    [ReadOnly] public bool isPlayerTargeted = false;
 
     [SerializeField] private Rigidbody rb;
 
@@ -14,27 +15,32 @@ public class Bullet : MonoBehaviour
         rb.velocity = Vector3.zero;
     }
 
-    public void Init(PlayerData data)
+    public void Init(PlayerData data, bool _isPlayerTargeted = false)
     {
         rb.velocity = transform.forward * data.bulletSpeed;
+        isPlayerTargeted = _isPlayerTargeted;
 
         Pooler.Instance.DelayedDepop(data.bulletLifespan, Key.Bullet, gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        /*if (other.TryGetComponent(out PlayerController player))
+        if (!isPlayerTargeted)
         {
-            //Do Nothing
-        }*/
-        Enemy enemy = other.gameObject.GetComponent<Enemy>();
-        if (enemy)
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            if (enemy)
+            {
+                enemy.TakeDamage(owner.Data.damage, owner);
+                Pooler.Instance.Depop(Key.Bullet, gameObject);
+            }
+
+            if (!other.GetComponent<PlayerController>())
+                Pooler.Instance.Depop(Key.Bullet, gameObject);
+        }
+        else
         {
-            enemy.TakeDamage(owner.Data.damage, owner);
-            Pooler.Instance.Depop(Key.Bullet, gameObject);
+            // ADD here the code to detect and damage the player
         }
 
-        if (!other.GetComponent<PlayerController>())
-            Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
 }

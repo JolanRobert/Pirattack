@@ -4,17 +4,17 @@ using BehaviourTree;
 using Player;
 using UnityEngine;
 
-public class Attack : Node
+public class AttackCaC : Node
 {
     private Enemy caster;
-    public Attack(Enemy _caster)
+    public AttackCaC(Enemy _caster)
     {
         caster = _caster;
     }
     
     public override NodeState Evaluate(Node root)
     {
-        PlayerController target = (PlayerController)GetData("Target");
+        PlayerController target = GetData<PlayerController>("Target");
         if (target == null) return NodeState.Failure;
         
         caster.Attack(target);

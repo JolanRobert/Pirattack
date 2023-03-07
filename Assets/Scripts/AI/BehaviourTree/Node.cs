@@ -53,6 +53,23 @@ namespace BehaviourTree
             }
         }
 
+        public T GetData<T>(string key) where T : class
+        {
+            Node node = Parent;
+            while (node != null)
+            {
+                if (node.Parent == null)
+                {
+                    object value;
+                    if (node.data.TryGetValue(key, out value))
+                        return (T)value;
+                    return null;
+                }
+                node = node.Parent;
+            }
+            return null;
+        }
+
         public object GetData(string key)
         {
             Node node = Parent;
@@ -65,26 +82,11 @@ namespace BehaviourTree
                         return value;
                     return null;
                 }
+
                 node = node.Parent;
             }
+
             return null;
-            
-            
-            
-            // object value = null;
-            // if (data.TryGetValue(key, out value))
-            //     return value;
-            //
-            // Node node = Parent;
-            // while (node != null)
-            // {
-            //     value = node.GetData(key);
-            //     if (value != null)
-            //         return value;
-            //     node = node.Parent;
-            // }
-            //
-            // return null;
         }
 
         public bool ClearData(string key)

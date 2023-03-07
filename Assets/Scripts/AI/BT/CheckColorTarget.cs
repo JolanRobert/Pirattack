@@ -25,7 +25,7 @@ public class CheckColorTarget : Node
     {
         if (owner.GetShieldColor() == PlayerColor.Undefined) return NodeState.Success;
         
-        PlayerController target = (PlayerController)GetData("Target");
+        PlayerController target = GetData<PlayerController>("Target");
         if (target != null && target.Color == owner.GetShieldColor())
             SelectTarget();
         else
