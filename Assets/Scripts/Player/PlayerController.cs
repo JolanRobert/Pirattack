@@ -6,17 +6,20 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         public PlayerData Data => data;
+        public PlayerColor Color => playerSwitchColor.Color;
+        public PlayerCollision Collision => playerCollision;
         
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private PlayerShoot playerShoot;
         [SerializeField] private PlayerSwitchColor playerSwitchColor;
+        [SerializeField] private PlayerCollision playerCollision;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;
         private bool shootInput;
         private bool switchColorInput;
-        
+
         private void Update()
         {
             HandleMovement();
@@ -63,6 +66,15 @@ namespace Player
         private void HandleSwitchColor()
         {
             if (switchColorInput) PlayerSwitchColor.OnSwitchColor.Invoke();
+        }
+        
+        /*
+         * DEBUG
+         */
+        
+        public void RequestSwitchColor()
+        {
+            playerSwitchColor.Switch();
         }
     }
 }

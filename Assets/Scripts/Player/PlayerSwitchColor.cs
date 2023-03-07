@@ -8,11 +8,14 @@ namespace Player
     {
         public PlayerColor Color => color;
         public static Action OnSwitchColor;
-        
+
         [SerializeField] private PlayerController playerController;
         
         private PlayerColor color;
         private PlayerData data => playerController.Data;
+        
+        [Header("Debug")]
+        public bool Test_With_Single_Player;
 
         private void OnEnable()
         {
@@ -23,13 +26,14 @@ namespace Player
         {
             OnSwitchColor -= Switch;
         }
-
+        
         private void Start()
         {
-            color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
+            if (Test_With_Single_Player) color = PlayerColor.Blue;
+            else color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
         }
 
-        private void Switch()
+        public void Switch()
         {
             color = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;
         }
@@ -37,6 +41,6 @@ namespace Player
 
     public enum PlayerColor
     {
-        Blue, Red
+        Blue, Red, None
     }
 }

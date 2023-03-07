@@ -19,7 +19,7 @@ namespace Player
             
             Bullet bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<Bullet>();
             bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
-            bullet.Init(data);
+            bullet.Init(data, playerController);
             StartCoroutine(ShootCooldown());
         }
 

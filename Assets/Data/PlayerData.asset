@@ -16,7 +16,7 @@ MonoBehaviour:
   attackSpeed: 4
   moveSpeed: 5
   defense: 0
-  damage: 10
+  damage: 50
   resolveTime: 2
   moveAcceleration:
     serializedVersion: 2
