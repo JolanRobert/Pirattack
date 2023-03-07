@@ -1,0 +1,68 @@
+.verticalContainer {
+    flex-direction: row;
+}
+
+.container {
+    align-items: center;
+    flex-grow: 1;
+}
+
+.button {
+    background-color: rgb(255, 255, 255);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.button:hover {
+    background-color: rgb(156, 156, 156);
+}
+
+.button:focus {
+    -unity-background-image-tint-color: rgb(255, 0, 0);
+}
+
+.title {
+    background-color: rgb(255, 255, 255);
+    font-size: 50px;
+    align-self: center;
+    -unity-font-style: bold;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.playerContainer {
+    width: 150px;
+    background-color: rgb(255, 255, 255);
+    height: 200px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.playerImg {
+    background-image: url('project://database/Assets/Draft/Art%20UI/Pirate.png?fileID=2800000&guid=9ade847062dcf0949919cde57ddbe893&type=3#Pirate');
+    flex-grow: 1;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.readyLabel {
+    align-self: center;
+    -unity-font-style: bold;
+}
