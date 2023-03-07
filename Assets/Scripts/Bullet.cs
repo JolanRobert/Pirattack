@@ -1,3 +1,4 @@
+using Interfaces;
 using Player;
 using UnityEngine;
 using Utils;
@@ -5,6 +6,8 @@ using Utils;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
+
+    private int bulletDamage;
 
     private void OnEnable()
     {
@@ -14,16 +17,17 @@ public class Bullet : MonoBehaviour
     public void Init(PlayerData data)
     {
         rb.velocity = transform.forward * data.bulletSpeed;
+        bulletDamage = data.damage;
         
         Pooler.Instance.DelayedDepop(data.bulletLifespan, Key.Bullet, gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        /*if (other.TryGetComponent(out PlayerController player))
+        if (other.TryGetComponent(out IDamageable entity))
         {
-            //Do Nothing
-        }*/
+            if (entity is not PlayerCollision) entity.Damage(bulletDamage);
+        }
 
         Pooler.Instance.Depop(Key.Bullet, gameObject);
     }

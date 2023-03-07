@@ -11,7 +11,7 @@ namespace Player
         [SerializeField] private PlayerController playerController;
         
         private PlayerColor color;
-        private int tmp;
+        private PlayerData data => playerController.Data;
 
         private void OnEnable()
         {
@@ -26,15 +26,11 @@ namespace Player
         private void Start()
         {
             color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
-            Debug.Log($"Player {(int)color} -> {color}");
         }
 
         private void Switch()
         {
-            PlayerColor newColor = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;
-            Debug.Log($"Player {(int)color} -> {newColor}");
-            color = newColor;
-
+            color = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;
         }
     }
 
