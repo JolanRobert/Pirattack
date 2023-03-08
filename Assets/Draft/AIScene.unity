@@ -2044,6 +2044,13 @@ MonoBehaviour:
       baseCount: 10
       baseRefreshSpeed: 0
       refreshSpeed: 0
+  - key: 2
+    pool:
+      prefab: {fileID: 4691548925603374114, guid: 34222d2cbd9306745b9788815ba6f105,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
 --- !u!1 &1661642951
 GameObject:
   m_ObjectHideFlags: 0

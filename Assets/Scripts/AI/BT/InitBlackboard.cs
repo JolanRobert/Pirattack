@@ -6,6 +6,16 @@ using UnityEngine;
 public class InitEnemyBlackboard : Node
 {
     private bool isInit = false;
+    private Enemy enemy;
+    private Enemy enemyShield;
+
+    public InitEnemyBlackboard(Enemy _enemy)
+    {
+        if(_enemy is EnemyShield)
+            enemyShield = _enemy;
+        else
+            enemy = _enemy;
+    }
     
     public override NodeState Evaluate(Node root)
     {
@@ -14,6 +24,10 @@ public class InitEnemyBlackboard : Node
         SetDataInBlackboard("Target", null);
         SetDataInBlackboard("CanAttack", true);
         SetDataInBlackboard("WaitTime", 0f);
+        if (enemyShield != null)
+            SetDataInBlackboard("caster", enemyShield);
+        else
+        SetDataInBlackboard("caster", enemy);
         return NodeState.Success;
     }
 }

@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     public Action<int, PlayerController> IsWasAttacked;
     public EnemyData Data => enemyData;
+    public PlayerColor Color => ShieldColor;
     
     [SerializeField] private EnemyData enemyData;
     [SerializeField] protected PlayerColor ShieldColor = PlayerColor.None;

@@ -15,8 +15,14 @@ public class ConeProjectile : MonoBehaviour
     private float angle = 45;
     private Vector3 casterPosition;
     private PlayerController target;
+    private EnemyShield caster;
 
-    IEnumerator Cone(EnemyShield caster)
+    public EnemyShield Caster
+    {
+        get => caster;
+    }
+    
+    IEnumerator Cone()
     {
         while (currentSize < maxSize)
         {
@@ -43,10 +49,26 @@ public class ConeProjectile : MonoBehaviour
             //
             yield return new WaitForSeconds(delay);
         }
+
         Pooler.Instance.Depop(Key.Cone, gameObject);
     }
 
-    public void Init(EnemyShield _caster, PlayerController _target)
+    IEnumerator Wave()
+    {
+        Vector3 direction = (target.transform.position - casterPosition).normalized;
+        while (currentSize < maxSize)
+        {
+            float newDisplacement = Time.deltaTime * delay;
+            currentSize += newDisplacement;
+            transform.localScale = new Vector3(currentSize, 1, 1);
+            transform.position += direction * newDisplacement;
+            yield return new WaitForEndOfFrame();
+        }
+
+        Pooler.Instance.Depop(Key.Wave, gameObject);
+    }
+
+    public void InitCone(EnemyShield _caster, PlayerController _target)
     {
         maxSize = _caster.Data.maxSize;
         minSize = _caster.Data.minSize;
@@ -55,6 +77,20 @@ public class ConeProjectile : MonoBehaviour
         currentSize = minSize;
         casterPosition = _caster.transform.position;
         target = _target;
-        StartCoroutine(Cone(_caster));
+        caster = _caster;
+        StartCoroutine(Cone());
+    }
+
+    public void InitWave(EnemyShield _caster, PlayerController _target)
+    {
+        maxSize = _caster.Data.maxSize;
+        minSize = _caster.Data.minSize;
+        delay = _caster.Data.speedPattern;
+        angle = _caster.Data.angle;
+        currentSize = minSize;
+        casterPosition = _caster.transform.position;
+        target = _target;
+        caster = _caster;
+        StartCoroutine(Wave());
     }
 }

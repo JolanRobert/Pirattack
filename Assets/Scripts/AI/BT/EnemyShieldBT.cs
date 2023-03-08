@@ -14,12 +14,12 @@ public class EnemyShieldBT : Tree
     {
         origin = new Selector(new List<Node>
         {
-            new InitEnemyBlackboard(),
+            new InitEnemyBlackboard(enemy),
             new TaskWaitForSeconds(),
-            new CheckColorTarget(enemy),
+            new CheckColorTarget(),
             new Sequence(new List<Node>
             {
-                new CanAttack(enemy.gameObject.transform),
+                new CanAttack(enemy.transform),
                 new AttackProjectile(),
             }),
             new MoveToTarget(agent),

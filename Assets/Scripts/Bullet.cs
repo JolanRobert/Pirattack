@@ -30,13 +30,18 @@ public class Bullet : MonoBehaviour
     {
         if (other.TryGetComponent(out IDamageable entity))
         {
-            if (entity is PlayerCollision && !owner)
+            switch (entity)
             {
-                // ADD here code for enemy bullet hit player
+                case PlayerCollision when !owner:
+                    // ADD here code for enemy bullet hit player
+                    break;
+                case Enemy enemy when owner:
+                    enemy.IsWasAttacked.Invoke(bulletDamage, owner);
+                    break;
+                default:
+                    entity.Damage(bulletDamage);
+                    break;
             }
-
-            else if (entity is Enemy && owner) ((Enemy)entity).IsWasAttacked.Invoke(bulletDamage, owner);
-            else entity.Damage(bulletDamage);
         }
 
         if (!(entity is PlayerCollision && owner))

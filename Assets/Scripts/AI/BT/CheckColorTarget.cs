@@ -8,10 +8,6 @@ using UnityEngine;
 public class CheckColorTarget : Node
 {
     private EnemyShield owner;
-    public CheckColorTarget(EnemyShield owner)
-    {
-        SetDataInBlackboard("caster", owner);
-    }
 
     private void SelectTarget()
     {
@@ -24,8 +20,9 @@ public class CheckColorTarget : Node
 
     public override NodeState Evaluate(Node root)
     {
+        owner = GetData<EnemyShield>("caster");
         if (owner.GetShieldColor() == PlayerColor.None) return NodeState.Success;
-        
+
         PlayerController target = GetData<PlayerController>("Target");
         owner = GetData<EnemyShield>("caster");
         if (target != null && target.Color == owner.GetShieldColor())

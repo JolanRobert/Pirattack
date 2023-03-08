@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TaskWaitForSeconds : Node
 {
-    public  static Action FinalCountdown;
+    public static Action FinalCountdown;
     
     public override NodeState Evaluate(Node root)
     {
@@ -12,6 +12,7 @@ public class TaskWaitForSeconds : Node
         if (timer <= 0)
         {
             FinalCountdown?.Invoke();
+            FinalCountdown = null;
             return NodeState.Failure;
         }
         timer -= Time.deltaTime;

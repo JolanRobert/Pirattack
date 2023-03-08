@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyShield : Enemy
 {
-    public EnemyShieldData Data;
+    public new EnemyShieldData Data;
     
     [SerializeField] protected Renderer ShieldRenderer;
     

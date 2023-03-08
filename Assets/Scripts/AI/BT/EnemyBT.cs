@@ -14,12 +14,12 @@ public class EnemyBT : Tree
     {
         origin = new Selector(new List<Node>
         {
-            new InitEnemyBlackboard(),
+            new InitEnemyBlackboard(enemy),
             new TaskWaitForSeconds(),
             new Sequence(new List<Node>
             {
-                new CanAttack(enemy.gameObject.transform),
-                new AttackCaC(enemy),
+                new CanAttack(enemy.transform),
+                new AttackCaC(),
             }),
             new MoveToTarget(agent),
         });

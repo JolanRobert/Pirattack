@@ -14,11 +14,14 @@ public class MoveToTarget : Node
     public override NodeState Evaluate(Node root)
     {
         float distance = 0;
-        EnemyShield enemyShield = GetData<EnemyShield>("caster");
-        if (enemyShield != null)
-            distance = enemyShield.Data.AttackDistance;
+        var enemyShield = GetData("caster");
+        if (enemyShield != null && enemyShield is EnemyShield)
+            distance = (enemyShield as EnemyShield).Data.AttackDistance;
         else
-            distance = GetData<Enemy>("caster").Data.AttackDistance;
+        {
+            Enemy enemy = enemyShield as Enemy;
+            distance = enemy.Data.AttackDistance;
+        }
         PlayerController target = GetData<PlayerController>("Target");
         if (target == null)
         {

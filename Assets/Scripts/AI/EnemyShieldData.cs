@@ -9,6 +9,7 @@ public class EnemyShieldData : ScriptableObject
     public int maxHealth;
     public int damage;
     public float AttackDistance = 2;
+    public float AttackSpeed = 1;
     public float speed = 3.5f;
     public float delaySwitchTarget = 0f;
 
