@@ -465,6 +465,7 @@ MonoBehaviour:
   enemyData: {fileID: 0}
   ShieldColor: 2
   healthEnemy: {fileID: 306523661}
+  agent: {fileID: 0}
   currentPattern: {fileID: 0}
   voicelines: []
 --- !u!1 &347574710
@@ -1264,6 +1265,7 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: bd22af85a22ec0147bbcf024a9756be4, type: 2}
   ShieldColor: 2
   healthEnemy: {fileID: 846497745}
+  agent: {fileID: 846497738}
 --- !u!195 &846497738
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2323,6 +2325,7 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: bd22af85a22ec0147bbcf024a9756be4, type: 2}
   ShieldColor: 2
   healthEnemy: {fileID: 1921695928}
+  agent: {fileID: 1921695922}
   Data: {fileID: 11400000, guid: edaaf3dc24281744bbc303e9ddc001b3, type: 2}
   ShieldRenderer: {fileID: 74808838}
 --- !u!114 &1921695930

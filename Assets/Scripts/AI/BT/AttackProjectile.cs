@@ -6,14 +6,10 @@ using Utils;
 public class AttackProjectile : Node
 {
     private EnemyShield enemyShield;
-    public AttackProjectile(EnemyShield player)
-    {
-        enemyShield = player;
-    }
-    
     public override NodeState Evaluate(Node root)
     {
         PlayerController target = GetData<PlayerController>("Target");
+        enemyShield = GetData<EnemyShield>("caster");
         if (target == null) return NodeState.Failure;
 
         ConeProjectile cone =  Pooler.Instance.Pop(Key.Cone).GetComponent<ConeProjectile>();

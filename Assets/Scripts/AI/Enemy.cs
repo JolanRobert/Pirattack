@@ -2,14 +2,17 @@ using System;
 using Interfaces;
 using Player;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
     public Action<int, PlayerController> IsWasAttacked;
+    public EnemyData Data => enemyData;
     
     [SerializeField] private EnemyData enemyData;
     [SerializeField] protected PlayerColor ShieldColor = PlayerColor.None;
     [SerializeField] protected Health healthEnemy;
+    [SerializeField] protected NavMeshAgent agent;
 
     protected int damage = 0;
     protected float maxHp = 0;
@@ -25,6 +28,7 @@ public class Enemy : MonoBehaviour, IDamageable
         maxHp = enemyData.maxHealth; // possible to change max health value
         healthEnemy.Init((int)maxHp);
         ResetAttackDefaultValue();
+        agent.speed = enemyData.speed;
     }
     
     public PlayerColor GetShieldColor()

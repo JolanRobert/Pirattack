@@ -11,6 +11,7 @@ public class EnemyShield : Enemy
     {
         damage = Data.damage; // possible to change damage value
         maxHp = Data.maxHealth; // possible to change max health value
+        agent.speed = Data.speed;
         healthEnemy.Init((int)maxHp);
         PlayerColor color = (PlayerColor)Random.Range(0, 2);
        AssignShieldColor(color);

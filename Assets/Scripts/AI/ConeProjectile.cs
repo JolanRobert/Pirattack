@@ -54,7 +54,7 @@ public class ConeProjectile : MonoBehaviour
     {
         maxSize = _caster.Data.maxSize;
         minSize = _caster.Data.minSize;
-        delay = _caster.Data.speed;
+        delay = _caster.Data.speedPattern;
         angle = _caster.Data.angle;
         currentSize = minSize;
         casterPosition = _caster.transform.position;

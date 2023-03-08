@@ -8,10 +8,9 @@ using UnityEngine;
 public class CheckColorTarget : Node
 {
     private EnemyShield owner;
-
-    public CheckColorTarget(EnemyShield _owner)
+    public CheckColorTarget(EnemyShield owner)
     {
-        owner = _owner;
+        SetDataInBlackboard("caster", owner);
     }
 
     private void SelectTarget()
@@ -26,6 +25,7 @@ public class CheckColorTarget : Node
         if (owner.GetShieldColor() == PlayerColor.None) return NodeState.Success;
         
         PlayerController target = GetData<PlayerController>("Target");
+        owner = GetData<EnemyShield>("caster");
         if (target != null && target.Color == owner.GetShieldColor())
             SelectTarget();
         else
