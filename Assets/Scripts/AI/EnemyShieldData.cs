@@ -10,6 +10,7 @@ public class EnemyShieldData : ScriptableObject
     public int damage;
     public float AttackDistance = 2;
     public float speed = 3.5f;
+    public float delaySwitchTarget = 0f;
 
     [Header("Bullets")]
     public float maxSize;

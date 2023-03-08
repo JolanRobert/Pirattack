@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using BehaviourTree;
 using UnityEngine;
 
 public class TaskWaitForSeconds : Node
 {
+    public  static Action FinalCountdown;
+    
     public override NodeState Evaluate(Node root)
     {
         float timer = (float)GetData("WaitTime");
         if (timer <= 0)
         {
-            SetDataInBlackboard("CanAttack", true);
+            FinalCountdown?.Invoke();
             return NodeState.Failure;
         }
         timer -= Time.deltaTime;

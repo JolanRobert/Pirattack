@@ -10,6 +10,7 @@ public class EnemyData : ScriptableObject
     public int damage = 10;
     public float AttackDistance = 2;
     public float speed = 3.5f;
+    public float ATKSpeed = 1f;
 
     [Header("Bullets")]
     private float _maxSize;

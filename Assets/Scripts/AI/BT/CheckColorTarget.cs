@@ -18,6 +18,8 @@ public class CheckColorTarget : Node
         PlayerController[] players = MyGameManager.Instance.Players;
         PlayerController target = (players[0].Color != owner.GetShieldColor()) ? players[0] : players[1];
         SetDataInBlackboard("Target", target);
+        SetDataInBlackboard("WaitTime", owner.Data.delaySwitchTarget);
+        TaskWaitForSeconds.FinalCountdown = null;
     }
 
     public override NodeState Evaluate(Node root)

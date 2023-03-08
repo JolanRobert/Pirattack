@@ -14,7 +14,7 @@ public class AttackProjectile : Node
 
         ConeProjectile cone =  Pooler.Instance.Pop(Key.Cone).GetComponent<ConeProjectile>();
         cone.transform.SetPositionAndRotation(enemyShield.transform.position, enemyShield.transform.rotation);
-        cone.Init(enemyShield);
+        cone.Init(enemyShield, target);
 
         SetDataInBlackboard("CanAttack", false);
         SetDataInBlackboard("WaitTime", enemyShield.Data.maxSize - enemyShield.Data.minSize); 

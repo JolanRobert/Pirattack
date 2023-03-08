@@ -14,43 +14,39 @@ public class ConeProjectile : MonoBehaviour
     private float delay = 1;
     private float angle = 45;
     private Vector3 casterPosition;
+    private PlayerController target;
 
     IEnumerator Cone(EnemyShield caster)
     {
-        PlayerController[] players = MyGameManager.Instance.Players;
         while (currentSize < maxSize)
         {
             currentSize += delay;
-            for (int i = 0; i < players.Length; i++)
+            Vector3 direction = (target.transform.position - casterPosition).normalized;
+            float angleBetween = Vector3.Angle(transform.forward, direction);
+            if (angleBetween < angle / 2)
             {
-                Vector3 direction = (players[i].transform.position - casterPosition).normalized;
-                float angleBetween = Vector3.Angle(transform.forward, direction);
-                if (angleBetween < angle / 2)
+                float distance = Vector3.Distance(casterPosition, target.transform.position);
+                if (distance < currentSize)
                 {
-                    float distance = Vector3.Distance(casterPosition, players[i].transform.position);
-                    if (distance < currentSize)
+                    if (Physics.Raycast(casterPosition, direction, distance))
                     {
-                        if (Physics.Raycast(casterPosition, direction, distance))
-                        {
-                            players[i].Collision.Damage(caster.Data.damage);
-                            Debug.Log("Hit Player");
-                        }
+                        target.Collision.Damage(caster.Data.damage);
+                        Debug.Log("Hit Player");
                     }
                 }
             }
 
             //Debug
-            Vector3 dir = (players[0].transform.position - casterPosition).normalized;
+            Vector3 dir = (target.transform.position - casterPosition).normalized;
             Vector3 pos = casterPosition;
             Debug.DrawLine(pos, pos + dir * currentSize, Color.blue, 10f);
             //
             yield return new WaitForSeconds(delay);
         }
-
         Pooler.Instance.Depop(Key.Cone, gameObject);
     }
 
-    public void Init(EnemyShield _caster)
+    public void Init(EnemyShield _caster, PlayerController _target)
     {
         maxSize = _caster.Data.maxSize;
         minSize = _caster.Data.minSize;
@@ -58,6 +54,7 @@ public class ConeProjectile : MonoBehaviour
         angle = _caster.Data.angle;
         currentSize = minSize;
         casterPosition = _caster.transform.position;
+        target = _target;
         StartCoroutine(Cone(_caster));
     }
 }
