@@ -132,6 +132,7 @@ namespace Utils
 
     public enum Key
     {
-        Bullet
+        Bullet,
+        Cone
     }
 }

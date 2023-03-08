@@ -7,11 +7,13 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     public Action<int, PlayerController> IsWasAttacked;
     
-    [SerializeField] protected float maxHp = 100f;
-    [SerializeField] protected int damage = 10;
+    [SerializeField] private EnemyData enemyData;
     [SerializeField] protected PlayerColor ShieldColor = PlayerColor.None;
     [SerializeField] protected Health healthEnemy;
 
+    protected int damage = 0;
+    protected float maxHp = 0;
+    
     private void Start()
     {
         healthEnemy.onDeath += OnDie;
@@ -19,6 +21,8 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void OnEnable()
     {
+        damage = enemyData.damage; // possible to change damage value
+        maxHp = enemyData.maxHealth; // possible to change max health value
         healthEnemy.Init((int)maxHp);
         ResetAttackDefaultValue();
     }
@@ -35,7 +39,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(int _damage, PlayerController origin)
     {
-        if (ShieldColor != PlayerColor.None && ShieldColor != origin.Color) return;
+        //if (ShieldColor != PlayerColor.None && ShieldColor != origin.Color) return;
         
         Damage(_damage);
     }

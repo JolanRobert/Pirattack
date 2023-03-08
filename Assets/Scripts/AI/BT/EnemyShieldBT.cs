@@ -20,7 +20,7 @@ public class EnemyShieldBT : Tree
             new Sequence(new List<Node>
             {
                 new CanAttack(enemy.gameObject.transform),
-                new AttackProjectile(),
+                new AttackProjectile(enemy),
             }),
             new MoveToTarget(agent),
         });
