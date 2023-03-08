@@ -1,5 +1,9 @@
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Button = UnityEngine.UIElements.Button;
 
 namespace UI
 {
@@ -48,25 +52,44 @@ namespace UI
             p2Ready = root.Q<Label>(LB_P2READY);
             
             //Bindings
-            playBT.clicked -= Play;
-            playBT.clicked += Play;
+            BindButton(playBT, Play);
+            BindButton(quitBT, Quit);
+            BindButton(backBT, Back);
             
-            quitBT.clicked -= Quit;
-            quitBT.clicked += Quit;
-            
-            backBT.clicked -= Back;
-            backBT.clicked += Back;
-
             // Default values
-            playBT.Focus();
             DisplayMenu(true);
         }
 
         #region UI Update
+            private void BindButton(Button button, Action onClick)
+            {
+                button.clicked -= onClick;
+                button.clicked += onClick;
+                button.RegisterCallback<FocusEvent>(_ => FocusButton(button, true));
+                button.RegisterCallback<BlurEvent>(_ => FocusButton(button, false));
+            }
+            
             private void DisplayMenu(bool b)
             {
                 menuVE.style.display = b ? DisplayStyle.Flex : DisplayStyle.None;  
                 playerConnectionVE.style.display = b ? DisplayStyle.None : DisplayStyle.Flex;
+
+                if (b) playBT.Focus();
+                else backBT.Focus();
+            }
+
+            private void FocusButton(Button button, bool focused)
+            {
+                if (focused)
+                {
+                    button.RemoveFromClassList("button");
+                    button.AddToClassList("buttonFocus");
+                }
+                else
+                {
+                    button.RemoveFromClassList("buttonFocus");
+                    button.AddToClassList("button");
+                }
             }
         #endregion
         
