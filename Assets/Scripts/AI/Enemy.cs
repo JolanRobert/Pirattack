@@ -2,6 +2,7 @@ using System;
 using Interfaces;
 using Player;
 using UnityEngine;
+using Utils;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
