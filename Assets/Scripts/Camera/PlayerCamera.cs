@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    void Start()
-    {
-        CameraManager.instance.InitializePlayer(transform);
-    }
+    
 }
