@@ -1,34 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
     public Transform[] focus;
-    public Camera[] cameras;
     public Transform[] players;
-    public float distance,angle;
-    public bool separated;
-    public Material splitScreenMat;
+    public Camera[] cameras;
+    [SerializeField] private float distance;
+    public float angle;
+    [SerializeField] private Material splitScreenMat;
     public static CameraManager instance;
-    public bool playersConnected;
-    public Vector3 focusPos;
-    //public UiIndicator uiIndicator;
+    private bool playersConnected,separated;
+    [SerializeField] private Vector3 focusPos;
+    [SerializeField] private UiIndicator uiIndicator;
 
     private void Awake()
     {
         instance = this;
     }
 
-    public void InitializePlayer(Transform player)
+    private void Start()
     {
+        players = new Transform[2];
+        PlayerInputManager.instance.onPlayerJoined += InitializePlayer;
+    }
+
+    public void InitializePlayer(PlayerInput player)
+    {
+        Debug.Log("We Got Him");
+        Transform playerTransform = player.transform;
         if (players[0] == null)
         {
-            players[0] = player;
+            players[0] = playerTransform;
         }
         else
         {
-            players[1] = player;
+            players[1] = playerTransform;
             playersConnected = true;
         }
     }
@@ -42,7 +52,7 @@ public class CameraManager : MonoBehaviour
             {
                 separated = true;
                 cameras[1].gameObject.SetActive(true);
-                splitScreenMat.SetInt("_Split",1);
+                cameras[2].gameObject.SetActive(true);
                 Separated();
             }
             else United();
@@ -53,7 +63,7 @@ public class CameraManager : MonoBehaviour
             {
                 separated = false;
                 cameras[1].gameObject.SetActive(false);
-                splitScreenMat.SetInt("_Split",0);
+                cameras[2].gameObject.SetActive(false);
                 United();
             }
             else Separated();
@@ -64,7 +74,7 @@ public class CameraManager : MonoBehaviour
     {
         focus[0].position = players[0].position + focusPos;
         focus[1].position = players[1].position + focusPos;
-        //uiIndicator.UpdateIndicatorsSeparated();
+        uiIndicator.UpdateIndicators(true);
         cameras[0].transform.position = focus[0].transform.position + (focus[1].transform.position - focus[0].transform.position).normalized * (distance / 2);
         cameras[1].transform.position = focus[1].transform.position + (focus[0].transform.position - focus[1].transform.position).normalized * (distance / 2);
         angle = Vector2.SignedAngle(Vector2.right,
@@ -78,7 +88,8 @@ public class CameraManager : MonoBehaviour
     void United()
     {
         focus[0].position = players[0].position + focusPos;
-        //uiIndicator.UpdateIndicatorsSingle();
+        focus[1].position = players[1].position + focusPos;
+        uiIndicator.UpdateIndicators(false);
         cameras[0].transform.position = (focus[0].transform.position + focus[1].transform.position) / 2;
     }
     
