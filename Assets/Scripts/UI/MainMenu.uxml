@@ -13,7 +13,7 @@
                     <ui:Label tabindex="-1" text="Ready !" display-tooltip-when-elided="true" name="LB_P2Ready" class="readyLabel" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:Button text="Back" display-tooltip-when-elided="true" name="BT_Back" class="button" style="width: 200px;" />
+            <ui:Button text="Back" display-tooltip-when-elided="true" name="BT_Back" focusable="false" class="button" style="width: 200px;" />
         </ui:VisualElement>
         <ui:VisualElement name="VE_Menu" class="container">
             <ui:Button text="Play" display-tooltip-when-elided="true" name="BT_Play" class="button" style="width: 350px; margin-top: 77px;" />

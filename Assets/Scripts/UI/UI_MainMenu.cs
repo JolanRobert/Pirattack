@@ -1,14 +1,19 @@
 using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
-using Button = UnityEngine.UIElements.Button;
 
 namespace UI
 {
     public class UI_MainMenu : MonoBehaviour
     {
+        private enum MenuState
+        {
+            Menu,
+            Lobby
+        }
+        
         #region Constants
             private const string BT_PLAY = "BT_Play";
             private const string BT_QUIT = "BT_Quit";
@@ -30,6 +35,9 @@ namespace UI
             private Label p1Ready, p2Ready;
         #endregion
 
+        private PlayerInput playerInputP1, playerInputP2;
+        private MenuState state = MenuState.Menu;
+        
         private void Start()
         {
             var root = layout.rootVisualElement;
@@ -52,21 +60,31 @@ namespace UI
             p2Ready = root.Q<Label>(LB_P2READY);
             
             //Bindings
-            BindButton(playBT, Play);
-            BindButton(quitBT, Quit);
-            BindButton(backBT, Back);
+            BindButton(playBT, Play, true);
+            BindButton(quitBT, Quit, true);
+            BindButton(backBT, Back, false);
             
             // Default values
             DisplayMenu(true);
+            
+            var connectedDeviceCount = 0;
+            foreach (var joystickName in InputSystem.devices) {
+                Debug.Log(joystickName);
+                connectedDeviceCount++;
+            }
+            Debug.Log("Number of connected devices: " + connectedDeviceCount);
         }
 
         #region UI Update
-            private void BindButton(Button button, Action onClick)
+            private void BindButton(Button button, Action onClick, bool focusable)
             {
                 button.clicked -= onClick;
                 button.clicked += onClick;
-                button.RegisterCallback<FocusEvent>(_ => FocusButton(button, true));
-                button.RegisterCallback<BlurEvent>(_ => FocusButton(button, false));
+                
+                if (!focusable) return;
+                
+                button.RegisterCallback<FocusInEvent>(_ => FocusButton(button, true));
+                button.RegisterCallback<FocusOutEvent>(_ => FocusButton(button, false));
             }
             
             private void DisplayMenu(bool b)
@@ -74,8 +92,19 @@ namespace UI
                 menuVE.style.display = b ? DisplayStyle.Flex : DisplayStyle.None;  
                 playerConnectionVE.style.display = b ? DisplayStyle.None : DisplayStyle.Flex;
 
-                if (b) playBT.Focus();
-                else backBT.Focus();
+                if (b)
+                {
+                    state = MenuState.Menu;
+                    playBT.Focus();
+                }
+                else
+                {
+                    StartCoroutine(LaunchLobby());
+                    p1ImgVE.visible = false;
+                    p2ImgVE.visible = false;
+                    p1Ready.visible = false;
+                    p2Ready.visible = false;
+                }
             }
 
             private void FocusButton(Button button, bool focused)
@@ -108,7 +137,7 @@ namespace UI
                 #endif
             }
             
-            private void Back()
+            public void Back()
             {
                 DisplayMenu(true);
             }
@@ -117,6 +146,39 @@ namespace UI
         private void StartGame()
         {
             
+        }
+
+        /*public void OnJoin(PlayerInput playerInput)
+        {
+            Debug.Log($"Player joined with {playerInput}");
+        }
+        
+        public void OnLeft(PlayerInput playerInput)
+        {
+            Debug.Log($"Player left with {playerInput}");
+        }*/
+
+        public void OnJoin(InputAction.CallbackContext context)
+        {
+            if (state is not MenuState.Lobby) return;
+            
+            if (!playerInputP1)
+            {
+                playerInputP1 = PlayerInputManager.instance.JoinPlayer();
+                p1ImgVE.visible = true;
+            }
+            else if (!playerInputP2)
+            {
+                playerInputP2 = PlayerInputManager.instance.JoinPlayer();
+                p2ImgVE.visible = true;
+            }
+        }
+
+        private IEnumerator LaunchLobby()
+        {
+            yield return new WaitForSeconds(0.25f);
+
+            state = MenuState.Lobby;
         }
     }
 }
