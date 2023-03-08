@@ -30,7 +30,6 @@ public class CameraManager : MonoBehaviour
 
     public void InitializePlayer(PlayerInput player)
     {
-        Debug.Log("We Got Him");
         Transform playerTransform = player.transform;
         if (players[0] == null)
         {

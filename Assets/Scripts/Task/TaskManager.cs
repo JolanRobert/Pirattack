@@ -30,7 +30,7 @@ namespace Task
         private IEnumerator TaskCycle()
         {
             isCycling = true;
-            int time = Random.Range(timeBeforeNextTask.Min, timeBeforeNextTask.Min+1);
+            int time = Random.Range(timeBeforeNextTask.Min, timeBeforeNextTask.Max+1);
             yield return new WaitForSeconds(time);
             AddTask();
 
