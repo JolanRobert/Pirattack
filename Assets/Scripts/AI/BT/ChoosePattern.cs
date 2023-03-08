@@ -6,12 +6,10 @@ using UnityEngine;
 public class ChoosePattern : Node
 {
     private Pattern[] patterns;
-    private float delayBetweenPatterns;
     
-    public ChoosePattern(Pattern[] _patterns, float _delayBetweenPatterns)
+    public ChoosePattern(Pattern[] _patterns)
     {
         patterns = _patterns;
-        delayBetweenPatterns = _delayBetweenPatterns;
     }
     public override NodeState Evaluate(Node root) 
     {
@@ -20,7 +18,7 @@ public class ChoosePattern : Node
          // while (pattern == GetData<Pattern>("currentPattern"))
          //        pattern = patterns[Random.Range(0, patterns.Length)];
         //
-        SetDataInBlackboard("WaitTime", pattern.delay + delayBetweenPatterns);
+        SetDataInBlackboard("WaitTime", pattern.delay + pattern.caster.Data.delayBetWeenPattern);
         SetDataInBlackboard("currentPattern", pattern);
         return NodeState.Success;
     }

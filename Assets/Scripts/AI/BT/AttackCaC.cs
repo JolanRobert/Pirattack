@@ -14,7 +14,7 @@ public class AttackCaC : Node
         
         caster.Attack(target);
         SetDataInBlackboard("CanAttack", false);
-        TaskWaitForSeconds.FinalCountdown = () => SetDataInBlackboard("CanAttack", true);
+        GetData<TaskWaitForSeconds>("WaitNode").FinalCountdown = () => SetDataInBlackboard("CanAttack", true);
         SetDataInBlackboard("WaitTime", caster.Data.ATKSpeed);
         return NodeState.Success;
     }

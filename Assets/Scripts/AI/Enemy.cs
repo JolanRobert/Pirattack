@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] protected NavMeshAgent agent;
 
     protected int damage = 0;
-    protected float maxHp = 0;
+    protected int maxHp = 0;
     
     private void Start()
     {

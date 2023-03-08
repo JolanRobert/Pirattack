@@ -10,8 +10,6 @@ public class BossBT : Tree
 {
     [SerializeField] private Pattern[] AllPatterns;
     [SerializeField] private Boss boss;
-    [SerializeField] private float delayBetweenPatterns = 3f;
-
     protected override Node InitTree()
     {
         origin = new Selector(new List<Node>
@@ -21,7 +19,7 @@ public class BossBT : Tree
             new TaskWaitForSeconds(),
             new Sequence(new List<Node>
             {
-                new ChoosePattern(AllPatterns, delayBetweenPatterns),
+                new ChoosePattern(AllPatterns),
                 new ExecutePattern()
             }),
         });

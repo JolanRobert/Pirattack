@@ -9,16 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61eadd808e74ae549ad7433adc658a2d, type: 3}
-  m_Name: EnemyShieldData
+  m_Script: {fileID: 11500000, guid: 56ac23410858be34680f9d28b3ed520c, type: 3}
+  m_Name: BottleRain
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  damage: 0
-  AttackDistance: 10
-  AttackSpeed: 1
-  speed: 3.5
-  delaySwitchTarget: 0
-  maxSize: 11
-  minSize: 1
-  speedPattern: 8
-  angle: 45
+  delay: 5
+  caster: {fileID: 0}
+  FXRenderer: {fileID: 0}

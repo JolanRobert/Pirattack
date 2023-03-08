@@ -15,7 +15,7 @@ public class CheckColorTarget : Node
         PlayerController target = (players[0].Color != owner.GetShieldColor()) ? players[0] : players[1];
         SetDataInBlackboard("Target", target);
         SetDataInBlackboard("WaitTime", owner.Data.delaySwitchTarget);
-        TaskWaitForSeconds.FinalCountdown = null;
+        GetData<TaskWaitForSeconds>("WaitNode").FinalCountdown = null;
     }
 
     public override NodeState Evaluate(Node root)

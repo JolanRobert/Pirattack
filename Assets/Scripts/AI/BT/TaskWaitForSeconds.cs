@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class TaskWaitForSeconds : Node
 {
-    public static Action FinalCountdown;
+    public Action FinalCountdown;
     
     public override NodeState Evaluate(Node root)
     {
         float timer = (float)GetData("WaitTime");
+        if (GetData<TaskWaitForSeconds>("WaitNode") == null)
+            SetDataInBlackboard("WaitNode", this);
+        
         if (timer <= 0)
         {
             FinalCountdown?.Invoke();

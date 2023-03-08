@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
+        owner = null;
         rb.velocity = Vector3.zero;
     }
 

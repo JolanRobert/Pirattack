@@ -20,9 +20,15 @@ public static UIManager Instance;
     }
     
     
-    
-    public void SetVoicelineText(string text)
+    IEnumerator PrintVoiceline(string text)
     {
         voicelineText.text = text;
+        yield return new WaitForSeconds(3);
+        voicelineText.text = "";
+    }
+
+    public void SetVoicelineText(string text)
+    {
+        StartCoroutine(PrintVoiceline(text));
     }
 }
