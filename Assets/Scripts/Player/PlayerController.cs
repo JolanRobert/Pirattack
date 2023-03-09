@@ -8,6 +8,7 @@ namespace Player
         public PlayerData Data => data;
         public PlayerColor Color => playerSwitchColor.Color;
         public bool IsInteracting => playerInteract.IsInteracting;
+        public bool IsDown => playerRespawn.IsDown;
         
         public PlayerCollision Collision => playerCollision;
         public PlayerInteract Interact => playerInteract;
@@ -18,6 +19,7 @@ namespace Player
         [SerializeField] private PlayerSwitchColor playerSwitchColor;
         [SerializeField] private PlayerCollision playerCollision;
         [SerializeField] private PlayerInteract playerInteract;
+        [SerializeField] private PlayerRespawn playerRespawn;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;
@@ -27,11 +29,18 @@ namespace Player
 
         private void Update()
         {
+            HandleInteract();
+
+            if (IsInteracting || IsDown)
+            {
+                playerMovement.Cancel();
+                return;
+            }
+            
             HandleMovement();
             HandleRotation();
             HandleShoot();
             HandleSwitchColor();
-            HandleInteract();
         }
         
         #region InputCallback

@@ -11,13 +11,18 @@ namespace Player
         public float moveSpeed;
         [Range(0,100)] public float defense;
         public int damage;
-        public float resolveTime;
+        public float resolveDuration;
+        
+        [Header("Movement")]
         public AnimationCurve moveAcceleration;
         public AnimationCurve moveDeceleration;
         public float rotationSpeed = 0.1f;
-
+        
         [Header("Bullets")]
         public float bulletSpeed;
         public float bulletLifespan;
+
+        [Header("Other")]
+        public float respawnDuration;
     }
 }
