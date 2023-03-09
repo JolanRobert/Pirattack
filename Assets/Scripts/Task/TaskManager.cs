@@ -11,8 +11,8 @@ namespace Task
         [SerializeField, MinMaxRange(1, 10)] private RangedInt timeBeforeNextTask;
         [SerializeField] private List<Task> tasks;
 
-        [SerializeField, ReadOnly] private List<Task> nextTasks;
-        [SerializeField, ReadOnly] private List<Task> currentTasks = new List<Task>();
+        private Queue<Task> nextTasks;
+        private List<Task> currentTasks = new List<Task>();
 
         private bool isCycling = true;
 
@@ -20,11 +20,6 @@ namespace Task
         {
             RefreshNextTasks();
             //StartCoroutine(TaskCycle());
-        }
-
-        private void Start()
-        {
-            Debug.Log("Probuilder");
         }
 
         private IEnumerator TaskCycle()
@@ -40,18 +35,16 @@ namespace Task
 
         private void RefreshNextTasks()
         {
-            nextTasks = new List<Task>(tasks);
-            nextTasks.Shuffle();
+            nextTasks = new Queue<Task>(tasks.Shuffle());
         }
         
         [ContextMenu("Add Task")]
         private void AddTask()
         {
-            Task newTask = nextTasks[0];
+            Task newTask = nextTasks.Peek();
             if (currentTasks.Contains(newTask)) return;
             
-            currentTasks.Add(newTask);
-            nextTasks.RemoveAt(0);
+            currentTasks.Add(nextTasks.Dequeue());
             
             newTask.OnComplete = CompleteTask;
             newTask.gameObject.SetActive(true);

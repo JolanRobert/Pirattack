@@ -53,6 +53,7 @@ namespace Utils
             currentHealth = amount;
         }
 
+        [ContextMenu("Kill")]
         public void Kill()
         {
             currentHealth = 0;
