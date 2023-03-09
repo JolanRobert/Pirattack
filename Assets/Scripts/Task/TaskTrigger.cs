@@ -9,17 +9,12 @@ namespace Task
 {
     public class TaskTrigger : MonoBehaviour
     {
+        [SerializeField] private Task task;
         [SerializeField] private Image progressBar;
+        
         [SerializeField, ReadOnly] private PlayerColor requiredColor = PlayerColor.None;
-
-        private Task task;
         
         private HashSet<PlayerController> players = new HashSet<PlayerController>();
-
-        private void Awake()
-        {
-            task = GetComponentInParent<Task>();
-        }
 
         private void OnDisable()
         {
