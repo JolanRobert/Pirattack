@@ -2,8 +2,8 @@
     <Style src="project://database/Assets/Scripts/UI/MainMenu.uss?fileID=7433441132597879392&amp;guid=bfbc368cf46bf5e499a98a53f6471940&amp;type=3#MainMenu" />
     <ui:VisualElement name="VE_Background" class="container" style="background-image: url(&apos;project://database/Assets/Draft/Art%20UI/BeachBG.jpg?fileID=2800000&amp;guid=8c9a089e210d2544f8e4d64f385ba394&amp;type=3#BeachBG&apos;); -unity-background-scale-mode: scale-and-crop;">
         <ui:Label tabindex="-1" text="Pirattack" display-tooltip-when-elided="true" name="LB_Title" class="title" style="margin-top: 29px;" />
-        <ui:VisualElement name="VE_PlayerConnection" class="container horizContainer">
-            <ui:VisualElement name="VE_Players" class="vertiContainer verticalContainer" style="margin-top: 50px;">
+        <ui:VisualElement name="VE_PlayerConnection" class="container">
+            <ui:VisualElement name="VE_Players" class="verticalContainer" style="margin-top: 50px;">
                 <ui:VisualElement name="VE_Player1" class="playerContainer" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
                     <ui:VisualElement name="VE_P1Img" class="playerImg" style="-unity-background-image-tint-color: rgb(255, 129, 126);" />
                     <ui:Label tabindex="-1" text="Ready !" display-tooltip-when-elided="true" name="LB_P1Ready" class="readyLabel" />
@@ -13,11 +13,11 @@
                     <ui:Label tabindex="-1" text="Ready !" display-tooltip-when-elided="true" name="LB_P2Ready" class="readyLabel" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:Button text="Back" display-tooltip-when-elided="true" name="BT_Back" class="button" style="width: 100px;" />
+            <ui:Button text="Back" display-tooltip-when-elided="true" name="BT_Back" focusable="false" class="button" style="width: 200px;" />
         </ui:VisualElement>
         <ui:VisualElement name="VE_Menu" class="container">
-            <ui:Button text="Play" display-tooltip-when-elided="true" name="BT_Play" class="button" style="width: 150px; margin-top: 52px;" />
-            <ui:Button text="Quit" display-tooltip-when-elided="true" name="BT_Quit" class="button" style="width: 100px;" />
+            <ui:Button text="Play" display-tooltip-when-elided="true" name="BT_Play" class="button" style="width: 350px; margin-top: 77px;" />
+            <ui:Button text="Quit" display-tooltip-when-elided="true" name="BT_Quit" class="button" style="width: 200px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
