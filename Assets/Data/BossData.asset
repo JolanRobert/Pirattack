@@ -13,13 +13,53 @@ MonoBehaviour:
   m_Name: BossData
   m_EditorClassIdentifier: 
   maxHealth: 1000
-  delayBetWeenPattern: 1
+  delayBetweenPattern: 1
   maxHealthShield: 200
-  SpeedBottle: 5
-  ImpactSize: 1
-  MinImpactRange: 10
-  MaxImpactRange: 40
-  NbBottle: 30
-  damagePerBottle: 0
-  delayBetweenBottle: 0.3
-  delayBeforeFalling: 3
+  SpeedBottleRain: 5
+  ImpactSizeRain: 1
+  MinImpactRangeRain: 10
+  MaxImpactRangeRain: 40
+  NbBottleRain: 10
+  damagePerBottleRain: 0
+  delayBetweenBottleRain: 0.3
+  delayBeforeFallingRain: 3
+  SpeedBottleHarassment: 5
+  ImpactSizeHarassment: 4
+  probabilityDistanceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.5
+      inSlope: -0.27757144
+      outSlope: -0.27757144
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1.8194112
+      outSlope: -1.8194112
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.044480324
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ratioDistanceCurve: 4
+  NbBottleHarassment: 10
+  damagePerBottleHarassment: 0
+  delayBetweenBottleHarassment: 0.3
+  delayBeforeFallingHarassment: 1.5

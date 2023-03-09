@@ -18,7 +18,7 @@ public class ChoosePattern : Node
          // while (pattern == GetData<Pattern>("currentPattern"))
          //        pattern = patterns[Random.Range(0, patterns.Length)];
         //
-        SetDataInBlackboard("WaitTime", pattern.GetDelay() + pattern.caster.Data.delayBetWeenPattern);
+        SetDataInBlackboard("WaitTime", pattern.GetDelay() + pattern.caster.Data.delayBetweenPattern);
         SetDataInBlackboard("currentPattern", pattern);
         return NodeState.Success;
     }

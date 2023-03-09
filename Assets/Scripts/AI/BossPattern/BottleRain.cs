@@ -14,14 +14,14 @@ public class BottleRain : Pattern
     public override float GetDelay()
     {
         BossData data = caster.Data;
-        float animationBottle = data.NbBottle * (data.delayBetweenBottle + 1.2f); // 1.2f = temps de l'animation up
-        float animationFallBottle = data.NbBottle * (data.delayBetweenBottle + 1.2f); // 1.2f = temps de l'animation fall
-        return animationBottle + data.delayBeforeFalling + animationFallBottle;
+        float animationBottle = data.NbBottleRain * (data.delayBetweenBottleRain + 1.2f); // 1.2f = temps de l'animation up
+        float animationFallBottle = data.NbBottleRain * (data.delayBetweenBottleRain + 1.2f); // 1.2f = temps de l'animation fall
+        return animationBottle + data.delayBeforeFallingRain + animationFallBottle;
     }
 
     public override void TouchPlayer(PlayerController player)
     {
-        player.Collision.Damage(caster.Data.damagePerBottle);
+        player.Collision.Damage(caster.Data.damagePerBottleRain);
         Debug.Log("Touch Player by BottleRain");
     }
 
@@ -34,30 +34,31 @@ public class BottleRain : Pattern
     IEnumerator ExecuteBottleRainAnimation()
     {
         BossData data = caster.Data;
-        for (int i = 0; i < data.NbBottle; i++)
+        for (int i = 0; i < data.NbBottleRain; i++)
         {
             Instantiate(bottleAnimationPrefab, caster.transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(caster.Data.delayBetweenBottle);
+            yield return new WaitForSeconds(caster.Data.delayBetweenBottleRain);
         }
-        yield return new WaitForSeconds(data.delayBeforeFalling);
-        for (int i = 0; i < data.NbBottle; i++)
+        yield return new WaitForSeconds(data.delayBeforeFallingRain);
+        for (int i = 0; i < data.NbBottleRain; i++)
         {
-            Vector3 randomPos = new Vector3(Utils.Utilities.RandomRangeWithExclusion(-data.MaxImpactRange, data.MaxImpactRange, -data.MinImpactRange, data.MinImpactRange),
+            Vector3 randomPos = new Vector3(Utils.Utilities.RandomRangeWithExclusion(-data.MaxImpactRangeRain, data.MaxImpactRangeRain, -data.MinImpactRangeRain, data.MinImpactRangeRain),
                 55, 
-                Utils.Utilities.RandomRangeWithExclusion(-data.MaxImpactRange, data.MaxImpactRange, -data.MinImpactRange, data.MinImpactRange));
+                Utils.Utilities.RandomRangeWithExclusion(-data.MaxImpactRangeRain, data.MaxImpactRangeRain, -data.MinImpactRangeRain, data.MinImpactRangeRain));
+            
             Vector3 FallPosition = caster.transform.position + randomPos;
 
             GameObject bottle = Pooler.Instance.Pop(Key.Bottle);
             bottle.transform.position = FallPosition;
-            bottle.GetComponent<BoxCollider>().size = new Vector3(data.ImpactSize, 2, data.ImpactSize);
+            bottle.GetComponent<BoxCollider>().size = new Vector3(data.ImpactSizeRain, 2, data.ImpactSizeRain);
             
             FallPosition.y = 0.5f;
             GameObject fx = Pooler.Instance.Pop(Key.FXBottle);
             fx.transform.position = FallPosition;
-            fx.transform.localScale = new Vector3(data.ImpactSize, 1, data.ImpactSize);
+            fx.transform.localScale = new Vector3(data.ImpactSizeRain, 1, data.ImpactSizeRain);
             
-            bottle.GetComponent<BottleFalling>().Init(data.SpeedBottle, fx);
-            yield return new WaitForSeconds(caster.Data.delayBetweenBottle);
+            bottle.GetComponent<BottleFalling>().Init(data.SpeedBottleRain, fx);
+            yield return new WaitForSeconds(caster.Data.delayBetweenBottleRain);
         }
     }
     
