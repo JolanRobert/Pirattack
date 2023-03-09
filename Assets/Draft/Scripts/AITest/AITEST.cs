@@ -57,7 +57,7 @@ public class AITEST : MonoBehaviour
 
     private void PrintPlayerColor()
     {
-        textColorPlayer.text = "Player Color : " + (player.Color == PlayerColor.Red ? "RED" : "BLUE");
+        textColorPlayer.text = "Player Color : " + (player.PColor == PlayerColor.Red ? "RED" : "BLUE");
     }
 
 

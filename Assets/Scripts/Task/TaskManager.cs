@@ -19,7 +19,7 @@ namespace Task
         private void Awake()
         {
             RefreshNextTasks();
-            //StartCoroutine(TaskCycle());
+            StartCoroutine(TaskCycle());
         }
 
         private IEnumerator TaskCycle()
@@ -49,7 +49,6 @@ namespace Task
             newTask.OnComplete = CompleteTask;
             newTask.gameObject.SetActive(true);
             newTask.Init();
-            Debug.Log($"New Task {newTask.gameObject.name}");
             
             if (nextTasks.Count == 0) RefreshNextTasks();
         }
@@ -58,7 +57,7 @@ namespace Task
         {
             currentTasks.Remove(task);
             task.gameObject.SetActive(false);
-            //if (!isCycling) StartCoroutine(TaskCycle());
+            if (!isCycling) StartCoroutine(TaskCycle());
         }
     }
 }

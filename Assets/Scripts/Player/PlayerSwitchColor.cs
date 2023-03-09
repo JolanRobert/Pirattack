@@ -7,7 +7,7 @@ namespace Player
 {
     public class PlayerSwitchColor : MonoBehaviour
     {
-        public PlayerColor Color => color;
+        public PlayerColor PColor => color;
         public static Action OnSwitchColor;
 
         [SerializeField] private Renderer sphereRenderer;
