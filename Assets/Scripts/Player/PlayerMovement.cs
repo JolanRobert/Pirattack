@@ -43,6 +43,7 @@ namespace Player
         public void Cancel()
         {
             rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
     }
 }

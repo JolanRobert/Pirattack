@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Player
@@ -7,16 +8,17 @@ namespace Player
     {
         public bool IsInteracting => isInteracting;
         
-        public Action OnBeginInteract;
         public Action OnEndInteract;
 
+        private List<InteractiveElement> interactions = new List<InteractiveElement>();
         private bool isInteracting;
         
         public void BeginInteract()
         {
-            if (isInteracting) return;
+            if (interactions.Count == 0) return;
+            
+            interactions[0].Progress();
             isInteracting = true;
-            OnBeginInteract?.Invoke();
         }
 
         public void EndInteract()
@@ -24,6 +26,17 @@ namespace Player
             if (!isInteracting) return;
             isInteracting = false;
             OnEndInteract?.Invoke();
+        }
+
+        public void Subscribe(InteractiveElement elmt)
+        {
+            interactions.Add(elmt);
+            interactions.Sort();
+        }
+
+        public void Unsubscribe(InteractiveElement elmt)
+        {
+            interactions.Remove(elmt);
         }
     }
 }

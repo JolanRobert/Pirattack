@@ -29,13 +29,11 @@ namespace Player
 
         private void Update()
         {
+            if (AssertState(IsDown)) return;
+            
             HandleInteract();
 
-            if (IsInteracting || IsDown)
-            {
-                playerMovement.Cancel();
-                return;
-            }
+            if (AssertState(IsInteracting)) return;
             
             HandleMovement();
             HandleRotation();
@@ -70,6 +68,12 @@ namespace Player
         }
         #endregion
 
+        private bool AssertState(bool state)
+        {
+            if (state) playerMovement.Cancel();
+            return state;
+        }
+        
         private void HandleMovement()
         {
             playerMovement.Move(moveInput);
