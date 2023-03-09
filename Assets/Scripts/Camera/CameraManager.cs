@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,22 +19,12 @@ public class CameraManager : MonoBehaviour
         instance = this;
     }
 
-    private void Start()
-    {
-        players = new Transform[2];
-        PlayerInputManager.instance.onPlayerJoined += InitializePlayer;
-    }
-
     public void InitializePlayer(PlayerInput player)
     {
-        Transform playerTransform = player.transform;
-        if (players[0] == null)
-        {
-            players[0] = playerTransform;
-        }
+        if (players[0] == null) players[0] = player.transform;
         else
         {
-            players[1] = playerTransform;
+            players[1] = player.transform;
             playersConnected = true;
         }
     }
@@ -91,6 +78,4 @@ public class CameraManager : MonoBehaviour
         uiIndicator.UpdateIndicators(false);
         cameras[0].transform.position = (focus[0].transform.position + focus[1].transform.position) / 2;
     }
-    
-    
 }

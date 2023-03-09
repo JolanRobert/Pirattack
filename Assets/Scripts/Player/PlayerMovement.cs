@@ -12,7 +12,7 @@ namespace Player
         private float turnSmoothAngle;
         private float accelerationProgress;
         private float deccelerationProgress;
-        
+
         public void Move(Vector2 moveInput)
         {
             if (moveInput is { x: < 0.1f, y: < 0.1f } and { x: > -0.1f, y: > -0.1f })
@@ -38,6 +38,12 @@ namespace Player
             var targetAngle = Mathf.Atan2(rotateInput.x, rotateInput.y) * Mathf.Rad2Deg;
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothAngle, data.rotationSpeed);
             transform.rotation = Quaternion.Euler(0, angle, 0);
+        }
+        
+        public void Cancel()
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
     }
 }
