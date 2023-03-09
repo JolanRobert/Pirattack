@@ -154,15 +154,23 @@ namespace UI
 
         public void TryToJoinPlayer(InputAction.CallbackContext context)
         {
-            if (state is not MenuState.Lobby) return;
-
             var device = context.control.device;
+            
+            if (state is not MenuState.Lobby || device is null) return;
+
             var p1Device = MenuManager.Instance.player1Device;
             var p2Device = MenuManager.Instance.player2Device;
 
-            if (device.Equals(p1Device) || device.Equals(p2Device)) return;
-
-            if (p1Device is null)
+            if (device.Equals(p1Device))
+            {
+                p1ImgVE.visible = false;
+                MenuManager.Instance.player1Device = null;
+            } else if (device.Equals(p2Device))
+            {
+                p2ImgVE.visible = false;
+                MenuManager.Instance.player2Device = null;
+            }
+            else if (p1Device is null)
             {
                 p1ImgVE.visible = true;
                 MenuManager.Instance.player1Device = device;

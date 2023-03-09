@@ -6,6 +6,9 @@ public class PlayerInUI : MonoBehaviour
 {
     public void OnJoin(InputAction.CallbackContext context)
     {
-        MenuManager.Instance.uiMainMenu.TryToJoinPlayer(context);
+        if (context.started)
+        {
+            MenuManager.Instance.uiMainMenu.TryToJoinPlayer(context);
+        }
     }
 }
