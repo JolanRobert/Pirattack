@@ -15,6 +15,10 @@ MonoBehaviour:
   maxHealth: 1000
   delayBetweenPattern: 1
   maxHealthShield: 200
+  lootGun:
+  - {fileID: 2798511252438826758, guid: a7345c2050749ef468fbea5f34a16ffa, type: 3}
+  lootGunAmmo:
+  - {fileID: 2798511252438826758, guid: a7345c2050749ef468fbea5f34a16ffa, type: 3}
   SpeedBottleRain: 5
   ImpactSizeRain: 1
   MinImpactRangeRain: 10

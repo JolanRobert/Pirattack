@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using AI;
+using AI.BossPattern;
 using Player;
 using UnityEngine;
 using Utils;
@@ -15,8 +17,8 @@ public class BottleHarrasment : Pattern
     {
         BossData data = caster.Data;
         float animationTime = ((55 / Time.deltaTime * 45f) * Time.deltaTime) / 1000f;
-        float animationBottle = data.NbBottleHarassment * data.delayBetweenBottleHarassment + animationTime;
-        float animationFallBottle = data.NbBottleHarassment * data.delayBetweenBottleHarassment + animationTime;
+        float animationBottle = data.nbBottleHarassment * data.delayBetweenBottleHarassment + animationTime;
+        float animationFallBottle = data.nbBottleHarassment * data.delayBetweenBottleHarassment + animationTime;
         return animationBottle + data.delayBeforeFallingHarassment + animationFallBottle;
     }
 
@@ -35,7 +37,7 @@ public class BottleHarrasment : Pattern
     IEnumerator ExecuteBottleHarassmentAnimation()
     {
         BossData data = caster.Data;
-        for (int i = 0; i < data.NbBottleHarassment; i++)
+        for (int i = 0; i < data.nbBottleHarassment; i++)
         {
             Instantiate(bottleAnimationPrefab, caster.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(caster.Data.delayBetweenBottleHarassment);
@@ -54,7 +56,7 @@ public class BottleHarrasment : Pattern
             }
         } 
         
-        for (int i = 0; i < data.NbBottleHarassment; i++)
+        for (int i = 0; i < data.nbBottleHarassment; i++)
         {
 
             
@@ -65,12 +67,12 @@ public class BottleHarrasment : Pattern
             
             GameObject bottle = Pooler.Instance.Pop(Key.Bottle);
             bottle.transform.position = FallPosition;
-            bottle.GetComponent<BoxCollider>().size = new Vector3(data.ImpactSizeHarassment, 2, data.ImpactSizeHarassment);
+            bottle.GetComponent<BoxCollider>().size = new Vector3(data.impactSizeHarassment, 2, data.impactSizeHarassment);
             
             FallPosition.y = 0.5f;
             GameObject fx = Pooler.Instance.Pop(Key.FXBottle);
             fx.transform.position = FallPosition;
-            fx.transform.localScale = new Vector3(data.ImpactSizeHarassment, 1, data.ImpactSizeHarassment);
+            fx.transform.localScale = new Vector3(data.impactSizeHarassment, 1, data.impactSizeHarassment);
             
             bottle.GetComponent<BottleFalling>().Init(data.SpeedBottleHarassment, fx);
             yield return new WaitForSeconds(caster.Data.delayBetweenBottleHarassment);

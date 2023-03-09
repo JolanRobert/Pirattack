@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour, IDamageable
         return ShieldColor;
     }
 
-    protected void OnDie()
+    protected virtual void OnDie()
     {
         gameObject.SetActive(false);
     }
