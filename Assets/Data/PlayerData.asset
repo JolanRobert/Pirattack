@@ -17,7 +17,7 @@ MonoBehaviour:
   moveSpeed: 5
   defense: 0
   damage: 50
-  resolveTime: 2
+  resolveDuration: 0
   moveAcceleration:
     serializedVersion: 2
     m_Curve:
@@ -31,7 +31,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
+      time: 0.3
       value: 1
       inSlope: 0
       outSlope: 0
@@ -55,8 +55,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.03691053
     - serializedVersion: 3
-      time: 1
-      value: 0.0008468628
+      time: 0.3
+      value: 0
       inSlope: -0.000000036845446
       outSlope: -0.000000036845446
       tangentMode: 0
@@ -69,3 +69,4 @@ MonoBehaviour:
   rotationSpeed: 0.1
   bulletSpeed: 10
   bulletLifespan: 2
+  respawnDuration: 2

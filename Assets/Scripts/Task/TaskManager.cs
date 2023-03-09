@@ -22,11 +22,6 @@ namespace Task
             //StartCoroutine(TaskCycle());
         }
 
-        private void Start()
-        {
-            Debug.Log("Probuilder");
-        }
-
         private IEnumerator TaskCycle()
         {
             isCycling = true;
