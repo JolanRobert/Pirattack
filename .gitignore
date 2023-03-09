@@ -71,4 +71,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-ProjectSettings/Packages/Settings.json
+# Probuilder settings
+/[Pp]rojectSettings/Packages/com.unity.probuilder/Settings.json
