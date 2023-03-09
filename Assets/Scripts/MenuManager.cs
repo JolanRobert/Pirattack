@@ -13,7 +13,7 @@ public class MenuManager : Singleton<MenuManager>
     
     private void Awake()
     {
-        InitializeSingleton();
+        InitializeSingleton(false);
     }
 
     private void Start()
