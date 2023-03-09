@@ -9,7 +9,7 @@ public class PlayerSpawner : MonoBehaviour
 
     private void Awake()
     {
-        PlayerInputManager pim = PlayerInputManager.instance;
+        var pim = PlayerInputManager.instance;
         var p1= pim.JoinPlayer(playerIndex:0, controlScheme: "Gamepad", pairWithDevice: devicesSO.player1Device);
         var p2= pim.JoinPlayer(playerIndex:1, controlScheme: "Gamepad", pairWithDevice: devicesSO.player2Device);
         

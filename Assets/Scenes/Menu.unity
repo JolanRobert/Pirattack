@@ -411,6 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layout: {fileID: 6801142764561152618}
+  playerInput: {fileID: 6801142764561152619}
   devicesSO: {fileID: 11400000, guid: 37f6fadd1fd78a343a0a3128c64ab9d5, type: 2}
   gameScene: Game
 --- !u!1 &4068453339171528015

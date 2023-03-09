@@ -30,9 +30,10 @@ namespace UI
             
             private const string USS_BUTTON = "button";
             private const string USS_BUTTONFOCUS = "buttonFocus";
-            #endregion
+        #endregion
         
         [SerializeField] private UIDocument layout;
+        [SerializeField] private PlayerInput playerInput;
         [SerializeField] private PlayerDeviceBuffer devicesSO;
         [SerializeField, Scene] private string gameScene;
 
@@ -44,7 +45,18 @@ namespace UI
         #endregion
 
         private MenuState state = MenuState.Menu;
+        private InputDevice lastMainDevice;
 
+        private void OnEnable()
+        {
+            InputSystem.onDeviceChange += OnDeviceChange;
+        }
+
+        private void OnDisable()
+        {
+            InputSystem.onDeviceChange -= OnDeviceChange;
+        }
+        
         private void Start()
         {
             var root = layout.rootVisualElement;
@@ -74,6 +86,8 @@ namespace UI
             // Default values
             DisplayMenu(true);
 
+            // Devices
+            SetMainDeviceToDefault();
             devicesSO.player1Device = null;
             devicesSO.player2Device = null;
         }
@@ -160,39 +174,71 @@ namespace UI
             }
         #endregion
         
+        #region Input and devices
+            public void TryToJoinPlayer(InputAction.CallbackContext context)
+            {
+                var device = context.control.device;
+                    
+                if (state is not MenuState.Lobby || device is null) return;
+
+                var p1Device = devicesSO.player1Device;
+                var p2Device = devicesSO.player2Device;
+
+                if (device.Equals(p1Device))
+                {
+                    p1ImgVE.visible = false;
+                    devicesSO.player1Device = null;
+                } else if (device.Equals(p2Device))
+                {
+                    p2ImgVE.visible = false;
+                    devicesSO.player2Device = null;
+                }
+                else if (p1Device is null)
+                {
+                    p1ImgVE.visible = true;
+                    devicesSO.player1Device = device;
+                }
+                else if (p2Device is null)
+                {
+                    p2ImgVE.visible = true;
+                    devicesSO.player2Device = device;
+                }
+            }
+
+            public void SetMainDeviceToDefault()
+            {
+                var gamepads = Gamepad.all;
+                if (gamepads.Count <= 0) return;
+                playerInput.SwitchCurrentControlScheme(gamepads[0]);
+                lastMainDevice = gamepads[0];
+            }
+            
+            public void SetMainDeviceToOnlyLast()
+            {
+                if (lastMainDevice is null) return;
+                playerInput.SwitchCurrentControlScheme(lastMainDevice);
+            }
+            
+            private void OnDeviceChange(InputDevice device, InputDeviceChange change)
+            {
+                switch (change)
+                {
+                    case InputDeviceChange.Disconnected:
+                        if (device.Equals(lastMainDevice)) SetMainDeviceToDefault();
+                        break;
+                    case InputDeviceChange.Reconnected:
+                        SetMainDeviceToOnlyLast();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(change), change, null);
+                }
+            }
+        #endregion
+        
         private void StartGame()
         {
             SceneController.Instance.QuickLoad(gameScene);
         }
 
-        public void TryToJoinPlayer(InputAction.CallbackContext context)
-        {
-            var device = context.control.device;
-            
-            if (state is not MenuState.Lobby || device is null) return;
-
-            var p1Device = devicesSO.player1Device;
-            var p2Device = devicesSO.player2Device;
-
-            if (device.Equals(p1Device))
-            {
-                p1ImgVE.visible = false;
-                devicesSO.player1Device = null;
-            } else if (device.Equals(p2Device))
-            {
-                p2ImgVE.visible = false;
-                devicesSO.player2Device = null;
-            }
-            else if (p1Device is null)
-            {
-                p1ImgVE.visible = true;
-                devicesSO.player1Device = device;
-            }
-            else if (p2Device is null)
-            {
-                p2ImgVE.visible = true;
-                devicesSO.player2Device = device;
-            }
-        }
-}
+    }
 }
