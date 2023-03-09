@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 7102844447484125359}
   - component: {fileID: 5398305621724039023}
   - component: {fileID: 2297303709830124257}
-  - component: {fileID: 6062054095027167874}
+  - component: {fileID: 8277088488143925093}
   - component: {fileID: 1715889565026001892}
+  - component: {fileID: 2282690922230610877}
   - component: {fileID: 8176063751241425810}
   m_Layer: 0
   m_Name: Player
@@ -85,7 +86,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -183,6 +184,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 026d3e44-e086-4b1d-a463-65aff47e7518
     m_ActionName: Player/Switch[/XInputControllerWindows1/leftTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7102844447484125359}
+        m_TargetAssemblyTypeName: Player.PlayerController, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d2f38423-f456-4a4b-9445-86630b6832d8
+    m_ActionName: Player/Interact[/XInputControllerWindows/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -203,7 +220,9 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 45fd4d20e314ef14593960a94ec76e63, type: 2}
   playerMovement: {fileID: 5398305621724039023}
   playerShoot: {fileID: 2297303709830124257}
-  playerSwitchColor: {fileID: 6062054095027167874}
+  playerSwitchColor: {fileID: 8277088488143925093}
+  playerCollision: {fileID: 1715889565026001892}
+  playerInteract: {fileID: 2282690922230610877}
 --- !u!114 &5398305621724039023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,7 +251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 7102844447484125359}
   firePoint: {fileID: 1023871615444969245}
---- !u!114 &6062054095027167874
+--- !u!114 &8277088488143925093
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,7 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8daa8cdab3414f1da2a76cca75a3c0ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 7102844447484125359}
+  color: 0
 --- !u!114 &1715889565026001892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +278,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 7102844447484125359}
   health: {fileID: 8176063751241425810}
+--- !u!114 &2282690922230610877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438483004797300496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 428af795681642959e13ce40afce2408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8176063751241425810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +302,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3ecd43f646421b887a76091ff21685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: -1
+  currentHealth: -1
+  isImmortal: 0
 --- !u!1 &1814547813298989519
 GameObject:
   m_ObjectHideFlags: 0
