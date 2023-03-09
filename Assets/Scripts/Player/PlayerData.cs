@@ -9,14 +9,12 @@ namespace Player
         public int maxHealth;
         public float attackSpeed;
         public float moveSpeed;
-        [Range(0,100)] public float defense;
         public int damage;
-        public float resolveDuration;
         
         [Header("Movement")]
         public AnimationCurve moveAcceleration;
         public AnimationCurve moveDeceleration;
-        public float rotationSpeed = 0.1f;
+        public AnimationCurve rotationCurve;
         
         [Header("Bullets")]
         public float bulletSpeed;
@@ -24,5 +22,6 @@ namespace Player
 
         [Header("Other")]
         public float respawnDuration;
+        public float switchColorCooldown;
     }
 }

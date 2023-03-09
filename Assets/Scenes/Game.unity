@@ -2739,7 +2739,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5195434
+  m_Name: pb_Mesh138042
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -30517,13 +30517,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a51427a0a7539498733adab545ed99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTaskSimultaneously: 3
+  maxTaskSimultaneously: 2
   timeBeforeNextTask:
     Min: 2
     Max: 4
   tasks:
   - {fileID: 752726565}
   - {fileID: 1773381638}
+  currentTasks: []
+  isCycling: 0
 --- !u!4 &2092895835
 Transform:
   m_ObjectHideFlags: 0
