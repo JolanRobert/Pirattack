@@ -28,7 +28,7 @@ public class Boss : Enemy
     {
         maxHp = Data.maxHealth; // possible to change max health value
         healthEnemy.Init(maxHp);
-        ResetAttackDefaultValue();
+        ResetAttackBossDefaultValue();
         Print_Argh();
         AddShield();
     }
@@ -44,9 +44,29 @@ public class Boss : Enemy
         shieldHealth -= damage;
         if (shieldHealth <= 0)
         {
-            ResetAttackDefaultValue();
+            ResetAttackBossDefaultValue();
             FXShield.SetActive(false);
         }
+    }
+    
+    public void TakeBossDamage(int _damage, PlayerController origin)
+    {
+        BossDamage(_damage);
+    }
+    
+    public void BossDamage(int damage)
+    {
+        float ratio = healthEnemy.GetRatio();
+        healthEnemy.LoseHealth(damage);
+        if( ratio > 0.5f && healthEnemy.GetRatio() <= 0.5f)
+        {
+            AddShield();
+        }
+    }
+    
+    public void ResetAttackBossDefaultValue()
+    {
+        IsWasAttacked = TakeBossDamage;
     }
     
     public void AddShield()

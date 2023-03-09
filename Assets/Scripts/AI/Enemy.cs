@@ -45,8 +45,6 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(int _damage, PlayerController origin)
     {
-        //if (ShieldColor != PlayerColor.None && ShieldColor != origin.Color) return;
-        
         Damage(_damage);
     }
     
