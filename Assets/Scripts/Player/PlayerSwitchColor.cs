@@ -1,4 +1,5 @@
 using System;
+using MyBox;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,13 +10,7 @@ namespace Player
         public PlayerColor Color => color;
         public static Action OnSwitchColor;
 
-        [SerializeField] private PlayerController playerController;
-        
-        private PlayerColor color;
-        private PlayerData data => playerController.Data;
-        
-        [Header("Debug")]
-        public bool Test_With_Single_Player;
+        [SerializeField, ReadOnly] private PlayerColor color;
 
         private void OnEnable()
         {
@@ -29,8 +24,7 @@ namespace Player
         
         private void Start()
         {
-            if (Test_With_Single_Player) color = PlayerColor.Blue;
-            else color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
+            color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
         }
 
         public void Switch()

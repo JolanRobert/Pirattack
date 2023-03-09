@@ -9,43 +9,59 @@ namespace Task
 {
     public class Task : MonoBehaviour
     {
+        public Action<Task> OnComplete;
+        
+        public float CompletionDuration => completionDuration;
+        
+        [SerializeField] private float completionDuration;
         [SerializeField] private List<TaskTrigger> triggers;
-
-        private void OnEnable()
-        {
-            foreach (TaskTrigger trigger in triggers)
-            {
-                trigger.OnPlayerEnter += CheckCompletion;
-            }
-        }
-
-        private void OnDisable()
-        {
-            foreach (TaskTrigger trigger in triggers)
-            {
-                trigger.OnPlayerEnter -= CheckCompletion;
-            }
-        }
-
+        
         public void Init()
         {
             List<PlayerColor> colors = Enum.GetValues(typeof(PlayerColor)).Cast<PlayerColor>().ToList();
+            colors.Remove(PlayerColor.None);
             colors.Shuffle();
 
             for (int i = 0; i < triggers.Count; i++)
             {
+                Debug.Log($"Trigger {i+1} is {colors[i%colors.Count]}");
                 triggers[i].SetRequiredColor(colors[i%colors.Count]);
             }
         }
 
-        private void CheckCompletion()
+        public void Progress()
+        {
+            if (!IsValid()) return;
+            
+            foreach (TaskTrigger trigger in triggers)
+            {
+                trigger.IncreaseBar();
+            }
+        }
+
+        public void DecreaseProgressOvertime()
         {
             foreach (TaskTrigger trigger in triggers)
             {
-                if (!trigger.Evaluate()) return;
+                trigger.DecreaseBar();
             }
-            
-            Debug.Log("Task completed");
+        }
+
+        private bool IsValid()
+        {
+            foreach (TaskTrigger trigger in triggers)
+            {
+                if (!trigger.Evaluate()) return false;
+            }
+
+            return true;
+        }
+
+        public void Complete(TaskTrigger trigger)
+        {
+            if (trigger != triggers[0]) return;
+            OnComplete.Invoke(this);
+            Debug.Log("Task is complete!");
         }
     }
 }

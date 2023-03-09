@@ -8,18 +8,23 @@ namespace Player
     {
         public PlayerData Data => data;
         public PlayerColor Color => playerSwitchColor.Color;
+        public bool IsInteracting => playerInteract.IsInteracting;
+        
         public PlayerCollision Collision => playerCollision;
+        public PlayerInteract Interact => playerInteract;
         
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private PlayerShoot playerShoot;
         [SerializeField] private PlayerSwitchColor playerSwitchColor;
         [SerializeField] private PlayerCollision playerCollision;
+        [SerializeField] private PlayerInteract playerInteract;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;
         private bool shootInput;
         private bool switchColorInput;
+        private bool interactInput;
 
         private void Update()
         {
@@ -27,8 +32,10 @@ namespace Player
             HandleRotation();
             HandleShoot();
             HandleSwitchColor();
+            HandleInteract();
         }
         
+        #region InputCallback
         public void OnMove(InputAction.CallbackContext context)
         {
             moveInput = context.ReadValue<Vector2>().normalized;
@@ -46,8 +53,14 @@ namespace Player
 
         public void OnSwitchColor(InputAction.CallbackContext context)
         {
-            switchColorInput = context.started;
+            switchColorInput = context.performed;
         }
+
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            interactInput = context.performed;
+        }
+        #endregion
 
         private void HandleMovement()
         {
@@ -67,6 +80,12 @@ namespace Player
         private void HandleSwitchColor()
         {
             if (switchColorInput) PlayerSwitchColor.OnSwitchColor.Invoke();
+        }
+
+        private void HandleInteract()
+        {
+            if (interactInput) playerInteract.BeginInteract();
+            else playerInteract.EndInteract();
         }
         
         /*
