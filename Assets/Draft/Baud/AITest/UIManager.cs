@@ -21,7 +21,6 @@ public static UIManager Instance;
         }
     }
     
-    
     IEnumerator PrintVoiceline(string text)
     {
         voicelineText.text = text;

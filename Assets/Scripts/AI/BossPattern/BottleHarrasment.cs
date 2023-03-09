@@ -58,9 +58,7 @@ public class BottleHarrasment : Pattern
         
         for (int i = 0; i < data.nbBottleHarassment; i++)
         {
-
-            
-            Vector3 playerPos = MyGameManager.Instance.Players[0].transform.position;
+            Vector3 playerPos = MyGameManager.Instance.Players[i % 2].transform.position;
             
             Vector3 randomPos = playerPos + new Vector3(randomPosList[Random.Range(0, randomPosList.Count)] * data.ratioDistanceCurve, 55, randomPosList[Random.Range(0, randomPosList.Count)] * data.ratioDistanceCurve);
             Vector3 FallPosition = caster.transform.position + randomPos;

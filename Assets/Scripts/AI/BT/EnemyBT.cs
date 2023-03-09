@@ -12,17 +12,15 @@ public class EnemyBT : Tree
     
     protected override Node InitTree()
     {
-        origin = new Selector(new List<Node>
-        {
+        origin = new Selector(
             new InitEnemyBlackboard(enemy),
             new TaskWaitForSeconds(),
-            new Sequence(new List<Node>
-            {
+            new Sequence(
                 new CanAttack(enemy.transform),
-                new AttackCaC(),
-            }),
-            new MoveToTarget(agent),
-        });
+                new AttackCaC()
+            ),
+            new MoveToTarget(agent)
+        );
         return origin;
     }
 }

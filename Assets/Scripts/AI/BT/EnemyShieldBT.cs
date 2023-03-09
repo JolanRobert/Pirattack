@@ -12,18 +12,16 @@ public class EnemyShieldBT : Tree
     
     protected override Node InitTree()
     {
-        origin = new Selector(new List<Node>
-        {
+        origin = new Selector(
             new InitEnemyBlackboard(enemy),
             new TaskWaitForSeconds(),
             new CheckColorTarget(),
-            new Sequence(new List<Node>
-            {
+            new Sequence(
                 new CanAttack(enemy.transform),
-                new AttackProjectile(),
-            }),
-            new MoveToTarget(agent),
-        });
+                new AttackProjectile()
+            ),
+            new MoveToTarget(agent)
+        );
         return origin;
     }
 }

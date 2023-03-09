@@ -14,19 +14,17 @@ public class BossBT : Tree
 {
     [SerializeField] private Pattern[] allPatterns;
     [SerializeField] private Boss boss;
+
     protected override Node InitTree()
     {
-        origin = new Selector(new List<Node>
-        {
+        origin = new Selector(
             new InitBossBlackboard(),
             new InitPatternBoss(allPatterns, boss),
             new TaskWaitForSeconds(),
-            new Sequence(new List<Node>
-            {
+            new Sequence(
                 new ChoosePattern(allPatterns),
                 new ExecutePattern()
-            }),
-        });
+            ));
         return origin;
     }
 }
