@@ -148,13 +148,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74808835}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1921695927}
-  m_RootOrder: 0
+  m_Father: {fileID: 306523660}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &74808838
 MeshRenderer:
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 306523657}
   - component: {fileID: 306523663}
   - component: {fileID: 306523662}
-  - component: {fileID: 306523661}
+  - component: {fileID: 306523664}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -374,7 +374,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dff9af680201e04488f1aff707fcc2c4, type: 2}
+  - {fileID: 2100000, guid: 30b18050eb49ca949accff2136b6d54d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -415,25 +415,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 74808836}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &306523661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 306523656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e56747782a973eb45a52b697e4b3101c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: -1
-  currentHealth: 0
-  isImmortal: 0
 --- !u!114 &306523662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,7 +449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 0}
   ShieldColor: 2
-  healthEnemy: {fileID: 306523661}
+  healthEnemy: {fileID: 306523664}
   agent: {fileID: 0}
   currentPattern: {fileID: 0}
   Data: {fileID: 11400000, guid: be4ff7882d7de814eb71c30e569b5dd5, type: 2}
@@ -471,6 +457,22 @@ MonoBehaviour:
   - Yo Ho Ho !
   - YARG !
   - Coward ! Where is my ship ?
+  FXShield: {fileID: 74808835}
+--- !u!114 &306523664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306523656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe3ecd43f646421b887a76091ff21685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: -1
+  currentHealth: 0
+  isImmortal: 0
 --- !u!1 &347574710
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,8 +533,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 30
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -575,7 +577,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 2221
+  m_ColorTemperature: 5604
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 4.1142302e-38, y: 0, z: 0, w: -7.1418708e-37}
   m_UseBoundingSphereOverride: 0
@@ -668,8 +670,9 @@ GameObject:
   - component: {fileID: 624225748}
   - component: {fileID: 624225747}
   - component: {fileID: 624225746}
-  - component: {fileID: 624225745}
   - component: {fileID: 624225755}
+  - component: {fileID: 624225756}
+  - component: {fileID: 624225757}
   m_Layer: 0
   m_Name: _
   m_TagString: Untagged
@@ -677,21 +680,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &624225745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624225744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e56747782a973eb45a52b697e4b3101c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: -1
-  currentHealth: 0
-  isImmortal: 0
 --- !u!114 &624225746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -718,8 +706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8daa8cdab3414f1da2a76cca75a3c0ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 624225749}
-  Test_With_Single_Player: 1
+  color: 0
 --- !u!114 &624225748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -751,6 +738,7 @@ MonoBehaviour:
   playerShoot: {fileID: 624225748}
   playerSwitchColor: {fileID: 624225747}
   playerCollision: {fileID: 624225755}
+  playerInteract: {fileID: 624225757}
 --- !u!54 &624225750
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -880,7 +868,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 624225749}
-  health: {fileID: 624225745}
+  health: {fileID: 624225756}
+--- !u!114 &624225756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624225744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe3ecd43f646421b887a76091ff21685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: -1
+  currentHealth: 0
+  isImmortal: 0
+--- !u!114 &624225757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624225744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 428af795681642959e13ce40afce2408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &635501654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,8 +1154,9 @@ GameObject:
   - component: {fileID: 831116511}
   - component: {fileID: 831116510}
   - component: {fileID: 831116509}
-  - component: {fileID: 831116514}
   - component: {fileID: 831116515}
+  - component: {fileID: 831116516}
+  - component: {fileID: 831116517}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1275,8 +1291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8daa8cdab3414f1da2a76cca75a3c0ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 831116512}
-  Test_With_Single_Player: 1
+  color: 0
 --- !u!114 &831116511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1308,6 +1323,7 @@ MonoBehaviour:
   playerShoot: {fileID: 831116511}
   playerSwitchColor: {fileID: 831116510}
   playerCollision: {fileID: 831116515}
+  playerInteract: {fileID: 831116517}
 --- !u!54 &831116513
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1335,21 +1351,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &831116514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831116502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e56747782a973eb45a52b697e4b3101c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: -1
-  currentHealth: 0
-  isImmortal: 0
 --- !u!114 &831116515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1363,7 +1364,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 831116512}
-  health: {fileID: 831116514}
+  health: {fileID: 831116516}
+--- !u!114 &831116516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831116502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe3ecd43f646421b887a76091ff21685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: -1
+  currentHealth: 0
+  isImmortal: 0
+--- !u!114 &831116517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831116502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 428af795681642959e13ce40afce2408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &846497736
 GameObject:
   m_ObjectHideFlags: 0
@@ -1378,9 +1406,9 @@ GameObject:
   - component: {fileID: 846497739}
   - component: {fileID: 846497743}
   - component: {fileID: 846497738}
-  - component: {fileID: 846497745}
   - component: {fileID: 846497737}
   - component: {fileID: 846497744}
+  - component: {fileID: 846497745}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1564,7 +1592,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 846497736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e56747782a973eb45a52b697e4b3101c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe3ecd43f646421b887a76091ff21685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: -1
@@ -2038,7 +2066,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579406485}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 48.3, z: -57}
+  m_LocalPosition: {x: 0, y: 61.8, z: -68.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2190,6 +2218,20 @@ MonoBehaviour:
       baseCount: 10
       baseRefreshSpeed: 0
       refreshSpeed: 0
+  - key: 3
+    pool:
+      prefab: {fileID: 6858054070577640285, guid: 3d47ff911954f1d4b856f0f4a8d4098b,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
+  - key: 4
+    pool:
+      prefab: {fileID: 6195251321702353031, guid: 448d529854d2a9b4d99a3a76d367bbaa,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
 --- !u!114 &1600245397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2203,6 +2245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   voicelineText: {fileID: 635501655}
+  timerVoiceline: 4
 --- !u!1 &1661642951
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,9 +2349,9 @@ GameObject:
   - component: {fileID: 1921695924}
   - component: {fileID: 1921695923}
   - component: {fileID: 1921695922}
-  - component: {fileID: 1921695928}
   - component: {fileID: 1921695930}
   - component: {fileID: 1921695929}
+  - component: {fileID: 1921695931}
   m_Layer: 0
   m_Name: EnemyWithShield
   m_TagString: Untagged
@@ -2449,26 +2492,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 74808836}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1921695928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1921695919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e56747782a973eb45a52b697e4b3101c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: -1
-  currentHealth: 0
-  isImmortal: 0
 --- !u!114 &1921695929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2483,7 +2510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: bd22af85a22ec0147bbcf024a9756be4, type: 2}
   ShieldColor: 2
-  healthEnemy: {fileID: 1921695928}
+  healthEnemy: {fileID: 1921695931}
   agent: {fileID: 1921695922}
   Data: {fileID: 11400000, guid: edaaf3dc24281744bbc303e9ddc001b3, type: 2}
   ShieldRenderer: {fileID: 74808838}
@@ -2501,6 +2528,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1921695929}
   agent: {fileID: 1921695922}
+--- !u!114 &1921695931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921695919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe3ecd43f646421b887a76091ff21685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: -1
+  currentHealth: 0
+  isImmortal: 0
 --- !u!1 &2089978242
 GameObject:
   m_ObjectHideFlags: 0

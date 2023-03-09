@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ac23410858be34680f9d28b3ed520c, type: 3}
   m_Name: BottleRain
   m_EditorClassIdentifier: 
-  delay: 5
   caster: {fileID: 0}
   FXRenderer: {fileID: 0}
+  bottleAnimationPrefab: {fileID: 2378445257764351735, guid: dc7d1e139ac42764e9071617b4692470,
+    type: 3}
+  bottlePrefab: {fileID: 6858054070577640285, guid: 3d47ff911954f1d4b856f0f4a8d4098b,
+    type: 3}
+  FXFallingPosPrefab: {fileID: 6195251321702353031, guid: 448d529854d2a9b4d99a3a76d367bbaa,
+    type: 3}

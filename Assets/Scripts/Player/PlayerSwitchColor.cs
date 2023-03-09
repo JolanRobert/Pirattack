@@ -21,10 +21,11 @@ namespace Player
         {
             OnSwitchColor -= Switch;
         }
-        
+
         private void Start()
         {
-            color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
+            if (PlayerInputManager.instance)
+                color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
         }
 
         public void Switch()
@@ -35,6 +36,8 @@ namespace Player
 
     public enum PlayerColor
     {
-        Blue, Red, None
+        Blue,
+        Red,
+        None
     }
 }

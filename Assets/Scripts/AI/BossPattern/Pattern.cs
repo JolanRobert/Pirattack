@@ -6,11 +6,13 @@ using UnityEngine;
 
 public abstract class Pattern : ScriptableObject
 {
-    public float delay = 5f;
     public Boss caster;
-    public Renderer FXRenderer;
 
+    public abstract float GetDelay();
+    
     public abstract void TouchPlayer(PlayerController player); // Called when the boss touch the player
+    
+    public abstract void EndTrigger(GameObject obj); // Called when the boss stop touching the player
 
     public abstract void Execute();
 }

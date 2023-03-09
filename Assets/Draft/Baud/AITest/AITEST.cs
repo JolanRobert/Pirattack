@@ -44,7 +44,7 @@ public class AITEST : MonoBehaviour
         else if (index == 2)
         {
             boss.gameObject.SetActive(true);
-            enemyWithShield.transform.position = new Vector3(0, 5, 0);
+            boss.transform.position = new Vector3(0, 5, 0);
         }
     }
 
@@ -73,7 +73,7 @@ public class AITEST : MonoBehaviour
         {
             ChangeArena(--index);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && index < 1)
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && index < 2)
         {
             ChangeArena(++index);
         }

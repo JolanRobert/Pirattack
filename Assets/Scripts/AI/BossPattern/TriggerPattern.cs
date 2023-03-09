@@ -13,5 +13,6 @@ public class TriggerPattern : MonoBehaviour
         {
             Boss.OnTriggerAttack?.Invoke(player);
         }
+        Boss.Instance.currentPattern.EndTrigger(gameObject);
     }
 }

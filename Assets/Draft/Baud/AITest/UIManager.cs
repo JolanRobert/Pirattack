@@ -7,6 +7,8 @@ public class UIManager : MonoBehaviour
 {
 public static UIManager Instance;
 [SerializeField] private TMP_Text voicelineText;
+[SerializeField] private float timerVoiceline = 5f;
+
     private void Awake()
     {
         if (Instance == null)
@@ -23,7 +25,7 @@ public static UIManager Instance;
     IEnumerator PrintVoiceline(string text)
     {
         voicelineText.text = text;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(timerVoiceline);
         voicelineText.text = "";
     }
 

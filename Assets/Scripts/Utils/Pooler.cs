@@ -135,5 +135,7 @@ namespace Utils
         Bullet,
         Cone,
         Wave,
+        Bottle,
+        FXBottle,
     }
 }
