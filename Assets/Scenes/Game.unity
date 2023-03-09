@@ -405,18 +405,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2887664736199400752}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &752726565 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3985872492839700432, guid: 28bc3e9a16f203d43af420871b22dad4,
-    type: 3}
-  m_PrefabInstance: {fileID: 2887664736199400752}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8114de753e254a288995e668a22fc1fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1111930950
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +633,6 @@ MonoBehaviour:
     Min: 2
     Max: 4
   tasks:
-  - {fileID: 752726565}
   - {fileID: 1773381638}
 --- !u!4 &2092895835
 Transform:
@@ -878,11 +865,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2092895835}
     m_Modifications:
-    - target: {fileID: 3985872492839700432, guid: 28bc3e9a16f203d43af420871b22dad4,
-        type: 3}
-      propertyPath: triggers.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4880663303800703864, guid: 28bc3e9a16f203d43af420871b22dad4,
         type: 3}
       propertyPath: m_Name
@@ -1138,16 +1120,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2092895835}
     m_Modifications:
-    - target: {fileID: 4053960185696009282, guid: 09ea8d21b90c16b4e976c2e7cc676435,
-        type: 3}
-      propertyPath: triggers.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4053960185696009282, guid: 09ea8d21b90c16b4e976c2e7cc676435,
-        type: 3}
-      propertyPath: triggers.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6859729299561161411, guid: 09ea8d21b90c16b4e976c2e7cc676435,
         type: 3}
       propertyPath: m_RootOrder
@@ -1203,10 +1175,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7279290949688578208, guid: 09ea8d21b90c16b4e976c2e7cc676435,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 8169825600250818210, guid: 09ea8d21b90c16b4e976c2e7cc676435,
         type: 3}
       propertyPath: m_Name
       value: Task_Two
+      objectReference: {fileID: 0}
+    - target: {fileID: 9018015619641992140, guid: 09ea8d21b90c16b4e976c2e7cc676435,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8daa8cdab3414f1da2a76cca75a3c0ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereRenderer: {fileID: 7497002044412786270}
   color: 0
 --- !u!114 &1715889565026001892
 MonoBehaviour:
@@ -300,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428af795681642959e13ce40afce2408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactions: []
 --- !u!114 &5152434294688659781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -661,8 +663,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00b5a1f8ef3d8247bd021d4df983b6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRespawn: {fileID: 5152434294688659781}
   progressBar: {fileID: 2400105806810688773}
+  playerRespawn: {fileID: 5152434294688659781}
 --- !u!1 &8992350275656957718
 GameObject:
   m_ObjectHideFlags: 0

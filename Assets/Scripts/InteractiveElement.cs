@@ -30,10 +30,11 @@ public class InteractiveElement : MonoBehaviour, IComparable<InteractiveElement>
     public virtual void Progress()
     {
         Debug.Log("Progress");
-        float duration = completionDuration - progressBar.fillAmount * completionDuration;
+        float newAmount = progressBar.fillAmount + Time.deltaTime / completionDuration;
+
         progressBar.DOKill();
-        Tween tween = progressBar.DOFillAmount(1, duration).SetEase(Ease.Linear);
-        tween.onComplete += Complete;
+        Tween tween = progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
+        if (newAmount >= 1) tween.onComplete += Complete;
     }
 
     protected virtual void Regress()

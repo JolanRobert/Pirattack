@@ -7,6 +7,7 @@ namespace Task
     public class TaskTrigger : InteractiveElement
     {
         [SerializeField] private Task task;
+        [SerializeField] private Renderer cubeRenderer;
         
         [SerializeField, ReadOnly] private PlayerColor requiredColor = PlayerColor.None;
         
@@ -30,6 +31,7 @@ namespace Task
         public void SetRequiredColor(PlayerColor color)
         {
             requiredColor = color;
+            cubeRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
         }
         
         public bool Evaluate()

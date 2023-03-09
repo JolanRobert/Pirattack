@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MyBox;
 using UnityEngine;
 
 namespace Player
@@ -10,7 +11,7 @@ namespace Player
         
         public Action OnEndInteract;
 
-        private List<InteractiveElement> interactions = new List<InteractiveElement>();
+        [SerializeField, ReadOnly] private List<InteractiveElement> interactions = new List<InteractiveElement>();
         private bool isInteracting;
         
         public void BeginInteract()
