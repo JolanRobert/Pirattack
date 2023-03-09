@@ -173,7 +173,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &351532667
 GameObject:
@@ -279,7 +279,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &376383575
 GameObject:
@@ -397,7 +397,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &752726564 stripped
 Transform:
@@ -471,7 +471,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1368763165
 GameObject:
@@ -483,6 +483,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1368763167}
   - component: {fileID: 1368763166}
+  - component: {fileID: 1368763168}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -502,13 +503,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NotificationBehavior: 3
+  m_NotificationBehavior: 2
   m_MaxPlayerCount: 2
   m_AllowJoining: 1
-  m_JoinBehavior: 0
+  m_JoinBehavior: 2
   m_PlayerJoinedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 493100675904189490}
+        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+        m_MethodName: InitializePlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_PlayerLeftEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -548,8 +561,21 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1368763168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368763165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c2c6069715fca4399df8e0eb2f83c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  devicesSO: {fileID: 11400000, guid: 37f6fadd1fd78a343a0a3128c64ab9d5, type: 2}
 --- !u!4 &1773381637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6859729299561161411, guid: 09ea8d21b90c16b4e976c2e7cc676435,
@@ -597,7 +623,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2092895833
 GameObject:
@@ -649,7 +675,7 @@ Transform:
   - {fileID: 752726564}
   - {fileID: 1773381637}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &493100675904189490
 MonoBehaviour:
@@ -666,7 +692,9 @@ MonoBehaviour:
   focus:
   - {fileID: 1441578777956624376}
   - {fileID: 8425049505645094478}
-  players: []
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
   cameras:
   - {fileID: 3043635374963006717}
   - {fileID: 4461811674782497996}
@@ -709,7 +737,7 @@ Transform:
   - {fileID: 8921807176084363018}
   - {fileID: 1777939559289345095}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1441578777956624376
 Transform:
@@ -1206,7 +1234,7 @@ GameObject:
   - component: {fileID: 1125105429385894810}
   - component: {fileID: 493100675904189490}
   m_Layer: 0
-  m_Name: CamManager
+  m_Name: Cameras
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1532,7 +1560,7 @@ GameObject:
   - component: {fileID: 6318329625467750855}
   - component: {fileID: 2964906514479015244}
   m_Layer: 5
-  m_Name: CanvasMathis
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

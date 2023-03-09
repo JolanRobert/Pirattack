@@ -1,12 +1,11 @@
-using System;
 using MyBox;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : Singleton<MenuManager>
 {
-    public InputDevice player1Device, player2Device;
     public UI_MainMenu uiMainMenu;
     
     [SerializeField] private GameObject playerInUiGO;
@@ -18,6 +17,8 @@ public class MenuManager : Singleton<MenuManager>
 
     private void Start()
     {
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Menu"));
+        
         foreach (var gamepad in Gamepad.all)
         {
             PlayerInput.Instantiate(playerInUiGO, controlScheme: "Gamepad", pairWithDevice: gamepad);

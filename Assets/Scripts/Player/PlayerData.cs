@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player
 {
-    [CreateAssetMenu(fileName = "New PlayerData", menuName = "Data/PlayerData")]
+    [CreateAssetMenu(fileName = "New PlayerData", menuName = "SO/PlayerData")]
     public class PlayerData : ScriptableObject
     {
         [Header("Stats")]

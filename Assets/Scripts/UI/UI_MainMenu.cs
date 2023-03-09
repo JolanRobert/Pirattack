@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using DefaultNamespace;
+using MyBox;
+using Scene;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -30,6 +33,8 @@ namespace UI
             #endregion
         
         [SerializeField] private UIDocument layout;
+        [SerializeField] private PlayerDeviceBuffer devicesSO;
+        [SerializeField, Scene] private string gameScene;
 
         #region Visual Elements
             private Button playBT, quitBT, backBT;
@@ -68,6 +73,14 @@ namespace UI
             
             // Default values
             DisplayMenu(true);
+
+            devicesSO.player1Device = null;
+            devicesSO.player2Device = null;
+        }
+
+        private void Update()
+        {
+            if (devicesSO.player1Device != null && devicesSO.player2Device != null) StartGame();
         }
 
         #region UI Update
@@ -91,8 +104,8 @@ namespace UI
                 {
                     state = MenuState.Menu;
                     playBT.Focus();
-                    MenuManager.Instance.player1Device = null;
-                    MenuManager.Instance.player2Device = null;
+                    devicesSO.player1Device = null;
+                    devicesSO.player2Device = null;
                 }
                 else
                 {
@@ -149,7 +162,7 @@ namespace UI
         
         private void StartGame()
         {
-            
+            SceneController.Instance.QuickLoad(gameScene);
         }
 
         public void TryToJoinPlayer(InputAction.CallbackContext context)
@@ -158,27 +171,27 @@ namespace UI
             
             if (state is not MenuState.Lobby || device is null) return;
 
-            var p1Device = MenuManager.Instance.player1Device;
-            var p2Device = MenuManager.Instance.player2Device;
+            var p1Device = devicesSO.player1Device;
+            var p2Device = devicesSO.player2Device;
 
             if (device.Equals(p1Device))
             {
                 p1ImgVE.visible = false;
-                MenuManager.Instance.player1Device = null;
+                devicesSO.player1Device = null;
             } else if (device.Equals(p2Device))
             {
                 p2ImgVE.visible = false;
-                MenuManager.Instance.player2Device = null;
+                devicesSO.player2Device = null;
             }
             else if (p1Device is null)
             {
                 p1ImgVE.visible = true;
-                MenuManager.Instance.player1Device = device;
+                devicesSO.player1Device = device;
             }
             else if (p2Device is null)
             {
                 p2ImgVE.visible = true;
-                MenuManager.Instance.player2Device = device;
+                devicesSO.player2Device = device;
             }
         }
 }

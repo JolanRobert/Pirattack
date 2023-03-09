@@ -22,10 +22,10 @@ namespace Player
         {
             OnSwitchColor -= Switch;
         }
-        
-        private void Start()
+
+        public void InitColor(PlayerColor color)
         {
-            color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
+            this.color = color;
             sphereRenderer.material.color = color == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
         }
 

@@ -18,6 +18,11 @@ namespace Scene
         private Queue<SceneCommand> commands = new Queue<SceneCommand>();
         private Coroutine operationCR;
 
+        private void Awake()
+        {
+            InitializeSingleton();
+        }
+
         public void LoadScene(String sceneName) {
 
             if (IsSceneLoaded(sceneName)) {
