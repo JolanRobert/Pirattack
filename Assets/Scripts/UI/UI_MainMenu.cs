@@ -24,7 +24,10 @@ namespace UI
             private const string VE_P2IMG = "VE_P2Img";
             private const string LB_P1READY = "LB_P1Ready";
             private const string LB_P2READY = "LB_P2Ready";
-        #endregion
+            
+            private const string USS_BUTTON = "button";
+            private const string USS_BUTTONFOCUS = "buttonFocus";
+            #endregion
         
         [SerializeField] private UIDocument layout;
 
@@ -35,9 +38,8 @@ namespace UI
             private Label p1Ready, p2Ready;
         #endregion
 
-        private PlayerInput playerInputP1, playerInputP2;
         private MenuState state = MenuState.Menu;
-        
+
         private void Start()
         {
             var root = layout.rootVisualElement;
@@ -66,13 +68,6 @@ namespace UI
             
             // Default values
             DisplayMenu(true);
-            
-            var connectedDeviceCount = 0;
-            foreach (var joystickName in InputSystem.devices) {
-                Debug.Log(joystickName);
-                connectedDeviceCount++;
-            }
-            Debug.Log("Number of connected devices: " + connectedDeviceCount);
         }
 
         #region UI Update
@@ -96,6 +91,8 @@ namespace UI
                 {
                     state = MenuState.Menu;
                     playBT.Focus();
+                    MenuManager.Instance.player1Device = null;
+                    MenuManager.Instance.player2Device = null;
                 }
                 else
                 {
@@ -111,16 +108,23 @@ namespace UI
             {
                 if (focused)
                 {
-                    button.RemoveFromClassList("button");
-                    button.AddToClassList("buttonFocus");
+                    button.RemoveFromClassList(USS_BUTTON);
+                    button.AddToClassList(USS_BUTTONFOCUS);
                 }
                 else
                 {
-                    button.RemoveFromClassList("buttonFocus");
-                    button.AddToClassList("button");
+                    button.RemoveFromClassList(USS_BUTTONFOCUS);
+                    button.AddToClassList(USS_BUTTON);
                 }
             }
-        #endregion
+
+            private IEnumerator LaunchLobby()
+            {
+                yield return new WaitForSeconds(0.25f);
+
+                state = MenuState.Lobby;
+            }
+            #endregion
         
         #region Main Buttons
             private void Play()
@@ -148,37 +152,26 @@ namespace UI
             
         }
 
-        /*public void OnJoin(PlayerInput playerInput)
-        {
-            Debug.Log($"Player joined with {playerInput}");
-        }
-        
-        public void OnLeft(PlayerInput playerInput)
-        {
-            Debug.Log($"Player left with {playerInput}");
-        }*/
-
-        public void OnJoin(InputAction.CallbackContext context)
+        public void TryToJoinPlayer(InputAction.CallbackContext context)
         {
             if (state is not MenuState.Lobby) return;
-            
-            if (!playerInputP1)
+
+            var device = context.control.device;
+            var p1Device = MenuManager.Instance.player1Device;
+            var p2Device = MenuManager.Instance.player2Device;
+
+            if (device.Equals(p1Device) || device.Equals(p2Device)) return;
+
+            if (p1Device is null)
             {
-                playerInputP1 = PlayerInputManager.instance.JoinPlayer();
                 p1ImgVE.visible = true;
+                MenuManager.Instance.player1Device = device;
             }
-            else if (!playerInputP2)
+            else if (p2Device is null)
             {
-                playerInputP2 = PlayerInputManager.instance.JoinPlayer();
                 p2ImgVE.visible = true;
+                MenuManager.Instance.player2Device = device;
             }
         }
-
-        private IEnumerator LaunchLobby()
-        {
-            yield return new WaitForSeconds(0.25f);
-
-            state = MenuState.Lobby;
-        }
-    }
+}
 }
