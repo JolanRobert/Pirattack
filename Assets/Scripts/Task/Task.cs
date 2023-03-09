@@ -29,25 +29,7 @@ namespace Task
             }
         }
 
-        public void Progress()
-        {
-            if (!IsValid()) return;
-            
-            foreach (TaskTrigger trigger in triggers)
-            {
-                trigger.IncreaseBar();
-            }
-        }
-
-        public void DecreaseProgressOvertime()
-        {
-            foreach (TaskTrigger trigger in triggers)
-            {
-                trigger.DecreaseBar();
-            }
-        }
-
-        private bool IsValid()
+        public bool IsValid()
         {
             foreach (TaskTrigger trigger in triggers)
             {
