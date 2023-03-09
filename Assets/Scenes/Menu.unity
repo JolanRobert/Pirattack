@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 1303635845}
   - component: {fileID: 1303635846}
   m_Layer: 0
-  m_Name: PlayersManager
+  m_Name: PlayerManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -336,9 +336,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
-<<<<<<< HEAD:Assets/Scenes/MainMenu.unity
---- !u!1 &2013410473
-=======
 --- !u!4 &1354111399234048210
 Transform:
   m_ObjectHideFlags: 0
@@ -368,7 +365,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layout: {fileID: 6801142764561152618}
 --- !u!1 &4068453339171528015
->>>>>>> romeo:Assets/Scenes/Menu.unity
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -478,6 +474,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 96d6bc39-c3e0-42b1-9f61-b4fb64613dbf
     m_ActionName: UI/Join[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d2f38423-f456-4a4b-9445-86630b6832d8
+    m_ActionName: Player/Interact[/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: UI
