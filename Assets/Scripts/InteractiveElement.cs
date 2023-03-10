@@ -1,50 +1,42 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
+using InteractiveTrigger;
+using MyBox;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InteractiveElement : MonoBehaviour, IComparable<InteractiveElement>
 {
-    [SerializeField] private Image progressBar;
+    public bool IsActive => isActive;
+
+    [Separator("Interactive Element")]
+    [SerializeField] protected Image progressBar;
+    [SerializeField] protected Renderer cubeRenderer;
 
     protected HashSet<PlayerController> players = new HashSet<PlayerController>();
-    protected float completionDuration = 1;
+    private bool isActive;
 
-    private void OnEnable()
+    protected void OnEnable()
     {
+        isActive = true;
         progressBar.fillAmount = 0;
     }
     
     private void OnDisable()
     {
+        isActive = false;
+            
         foreach (PlayerController player in players)
         {
             player.Interact.Unsubscribe(this);
-            player.Interact.OnEndInteract -= Regress;
+            player.Interact.OnEndInteract -= OnCancel;
         }
         
         players.Clear();
     }
 
-    public virtual void Progress()
-    {
-        float newAmount = progressBar.fillAmount + Time.deltaTime / completionDuration;
-
-        progressBar.DOKill();
-        Tween tween = progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
-        if (newAmount >= 1) tween.onComplete += Complete;
-    }
-
-    protected virtual void Regress()
-    {
-        float duration = completionDuration*2 - (1-progressBar.fillAmount) * completionDuration*2;
-        progressBar.DOKill();
-        progressBar.DOFillAmount(0, duration).SetEase(Ease.Linear);
-    }
-
-    protected virtual void Complete() {}
+    protected virtual void OnCancel() {}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -52,7 +44,7 @@ public class InteractiveElement : MonoBehaviour, IComparable<InteractiveElement>
         {
             players.Add(player);
             player.Interact.Subscribe(this);
-            player.Interact.OnEndInteract += Regress;
+            player.Interact.OnEndInteract += OnCancel;
         }
     }
 
@@ -62,7 +54,7 @@ public class InteractiveElement : MonoBehaviour, IComparable<InteractiveElement>
         {
             players.Remove(player);
             player.Interact.Unsubscribe(this);
-            player.Interact.OnEndInteract -= Regress;
+            player.Interact.OnEndInteract -= OnCancel;
         }
     }
 

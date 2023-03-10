@@ -1,5 +1,3 @@
-using System;
-using Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,29 +14,45 @@ namespace Player
         public PlayerCollision Collision => playerCollision;
         public PlayerInteract Interact => playerInteract;
 
-        [HideInInspector] public Vector3 StartPosition;
-        
         [SerializeField] private PlayerData data;
+        [SerializeField] private PlayerInput playerInput;
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private PlayerShoot playerShoot;
         [SerializeField] private PlayerSwitchColor playerSwitchColor;
         [SerializeField] private PlayerCollision playerCollision;
         [SerializeField] private PlayerInteract playerInteract;
         [SerializeField] private PlayerRespawn playerRespawn;
+        [SerializeField] private Rigidbody rb;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;
         private bool shootInput;
         private bool switchColorInput;
         private bool interactInput;
+        private bool cancelInteractInput;
 
-        private void Start()
+        private Vector3 startPos;
+        private bool isSpawned;
+        private bool isInit;
+
+        public void Init(Vector3 startPosition, PlayerColor color)
         {
-            transform.position = StartPosition;
+            startPos = startPosition;
+            Color.InitColor(color);
+            isInit = true;
         }
 
         private void Update()
         {
+            if (!isInit) return;
+            
+            if (!isSpawned)
+            {
+                rb.position = startPos;
+                isSpawned = true;
+                return;
+            }
+
             if (AssertState(IsDown)) return;
             
             HandleInteract();
@@ -49,6 +63,8 @@ namespace Player
             HandleRotation();
             HandleShoot();
             HandleSwitchColor();
+            
+            ResetInputs();
         }
         
         #region InputCallback
@@ -69,12 +85,17 @@ namespace Player
 
         public void OnSwitchColor(InputAction.CallbackContext context)
         {
-            switchColorInput = context.performed;
+            if (context.started) switchColorInput = true;
         }
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            interactInput = context.performed;
+            if (context.started) interactInput = true;
+        }
+        
+        public void OnCancelInteract(InputAction.CallbackContext context)
+        {
+            if (context.started) cancelInteractInput = true;
         }
         #endregion
 
@@ -107,7 +128,15 @@ namespace Player
         private void HandleInteract()
         {
             if (interactInput) playerInteract.BeginInteract();
-            else playerInteract.EndInteract();
+            if (cancelInteractInput) playerInteract.EndInteract();
+            if (IsInteracting) playerInteract.UpdateInteract();
+        }
+
+        private void ResetInputs()
+        {
+            switchColorInput = false;
+            interactInput = false;
+            cancelInteractInput = false;
         }
         
         /*
@@ -116,7 +145,7 @@ namespace Player
         
         public void RequestSwitchColor()
         {
-            playerSwitchColor.Switch();
+            //playerSwitchColor.Switch();
         }
     }
 }
