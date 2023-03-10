@@ -1,16 +1,18 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Player;
 using UnityEngine;
 
-public class Pattern : ScriptableObject
+namespace AI.BossPattern
 {
-    public float delay = 5f;
-    public Boss caster;
-    public Renderer FXRenderer;
+    public abstract class Pattern : ScriptableObject
+    {
+        public Boss caster;
 
-    public virtual void TouchPlayer(PlayerController player) {} // Called when the boss touch the player
+        public abstract float GetDelay();
+    
+        public abstract void TouchPlayer(PlayerController player); // Called when the boss touch the player
+    
+        public abstract void EndTrigger(GameObject obj); // Called when the boss stop touching the player
 
-    public virtual void Execute(){}
+        public abstract void Execute();
+    }
 }

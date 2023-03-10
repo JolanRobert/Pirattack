@@ -14,27 +14,29 @@ namespace BehaviourTree
         public Node Parent;
         
         protected NodeState state;
-        protected List<Node> children = new List<Node>();
+        protected Node[] children;
 
-        private Dictionary<string, object> data = new Dictionary<string, object>();
+        private Dictionary<string, object> data = new ();
 
-        public Node()
+        protected Node()
         {
             Parent = null;
         }
 
-        public Node(List<Node> children)
+        protected Node(params Node[] _children)
         {
-            foreach (Node child in children)
+            int cpt = -1;
+            children = new Node[_children.Length];
+            foreach (Node child in _children)
             {
-                AttachNode(child);
+                AttachNode(child, ++cpt);
             }
         }
 
-        private void AttachNode(Node node)
+        private void AttachNode(Node node, int index)
         {
             node.Parent = this;
-            children.Add(node);
+            children[index] = node;
         }
 
         public abstract NodeState Evaluate(Node root);
@@ -53,7 +55,7 @@ namespace BehaviourTree
             }
         }
 
-        public T GetData<T>(string key) where T : class
+        protected T GetData<T>(string key) where T : class
         {
             Node node = Parent;
             while (node != null)
@@ -70,7 +72,7 @@ namespace BehaviourTree
             return null;
         }
 
-        public object GetData(string key)
+        protected object GetData(string key)
         {
             Node node = Parent;
             while (node != null)
@@ -108,6 +110,25 @@ namespace BehaviourTree
 
             return false;
         }
+        
+        public bool ClearAllData()
+        {
+            if (Parent == null)
+            {
+                data.Clear();
+                return true;
+            }
+            
+            Node node = this;
+            while (node.Parent != null)
+            {
+                node = node.Parent;
+            }
+            
+            data.Clear();
+            return true;
+        }
+        
     }
 }
 

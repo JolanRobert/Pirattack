@@ -2,42 +2,57 @@ using System;
 using Interfaces;
 using Player;
 using UnityEngine;
+using UnityEngine.AI;
 using Utils;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
     public Action<int, PlayerController> IsWasAttacked;
+    public EnemyData Data => enemyData;
+    public PlayerColor Color => ShieldColor;
     
-    [SerializeField] protected float maxHp = 100f;
-    [SerializeField] protected int damage = 10;
+    [SerializeField] private EnemyData enemyData;
     [SerializeField] protected PlayerColor ShieldColor = PlayerColor.None;
     [SerializeField] protected Health healthEnemy;
+    [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] private EnemyBT BT;
 
+    protected int damage = 0;
+    protected int maxHp = 0;
+    
     private void Start()
     {
-        healthEnemy.onDeath += OnDie;
+        healthEnemy.onDeath = OnDie;
     }
 
     private void OnEnable()
     {
+        damage = enemyData.damage; // possible to change damage value
+        maxHp = enemyData.maxHealth; // possible to change max health value
         healthEnemy.Init((int)maxHp);
         ResetAttackDefaultValue();
+        agent.speed = enemyData.speed;
+        BT.ResetBlackboard();
+        BT.enabled = true;
     }
-    
+
+    private void OnDisable()
+    {
+        BT.enabled = false;
+    }
+
     public PlayerColor GetShieldColor()
     {
         return ShieldColor;
     }
 
-    protected void OnDie()
+    protected virtual void OnDie()
     {
-        gameObject.SetActive(false);
+        Pooler.Instance.Depop(Key.BasicEnemy, gameObject);
     }
 
     public void TakeDamage(int _damage, PlayerController origin)
     {
-        if (ShieldColor != PlayerColor.None && ShieldColor != origin.Color) return;
-        
         Damage(_damage);
     }
     

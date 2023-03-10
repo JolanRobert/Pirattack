@@ -1,32 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using BehaviourTree;
 using Player;
-using UnityEditor.SearchService;
-using UnityEngine;
 
 public class CheckColorTarget : Node
 {
     private EnemyShield owner;
 
-    public CheckColorTarget(EnemyShield _owner)
-    {
-        owner = _owner;
-    }
-
     private void SelectTarget()
     {
         PlayerController[] players = MyGameManager.Instance.Players;
-        PlayerController target = (players[0].Color != owner.GetShieldColor()) ? players[0] : players[1];
+        PlayerController target = (players[0].PColor != owner.GetShieldColor()) ? players[0] : players[1];
         SetDataInBlackboard("Target", target);
+        SetDataInBlackboard("WaitTime", owner.Data.delaySwitchTarget);
+        GetData<TaskWaitForSeconds>("WaitNode").FinalCountdown = null;
     }
 
     public override NodeState Evaluate(Node root)
     {
-        if (owner.GetShieldColor() == PlayerColor.None) return NodeState.Success;
-        
+        owner = GetData<EnemyShield>("caster");
+        PlayerColor color = owner.GetShieldColor();
+        if (color == PlayerColor.None) return NodeState.Success;
+
         PlayerController target = GetData<PlayerController>("Target");
-        if (target != null && target.Color == owner.GetShieldColor())
+        if (target != null && target.Color.PColor == color)
             SelectTarget();
         else
             SelectTarget();

@@ -3,25 +3,41 @@ using Player;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MoveToTarget : Node
+namespace AI.BT
 {
-    private NavMeshAgent agent;
-    
-    public MoveToTarget(NavMeshAgent _agent)
+    public class MoveToTarget : Node
     {
-        agent = _agent;
-    }
-    
-    public override NodeState Evaluate(Node root)
-    {
-        PlayerController target = GetData<PlayerController>("Target");
-        if (target == null)
+        private readonly NavMeshAgent agent;
+        public MoveToTarget(NavMeshAgent _agent)
         {
-            agent.SetDestination(agent.transform.position);
-            return NodeState.Failure;
+            agent = _agent;
         }
-        Vector3 direction = (target.transform.position - agent.transform.position).normalized;
-       agent.SetDestination(target.gameObject.transform.position - direction * 5);
-         return NodeState.Success;
+
+        public override NodeState Evaluate(Node root)
+        {
+            //float distance = 0;
+            /*var enemyShield = GetData("caster");
+            if (enemyShield is EnemyShield shield)
+                distance = shield.Data.AttackDistance;
+            else
+            {
+                Enemy enemy = enemyShield as Enemy;
+                if (enemy != null) distance = enemy.Data.AttackDistance;
+            }*/
+            PlayerController target = GetData<PlayerController>("Target");
+            var agentPosition = agent.transform.position;
+            var targetPosition = target.transform.position;
+            if (target == null)
+            {
+                agent.SetDestination(agentPosition);
+                return NodeState.Failure;
+            }
+
+            Vector3 direction = (targetPosition - agentPosition).normalized;
+            Vector3 destination = targetPosition/* - direction * distance*/;
+            destination.y = agentPosition.y;
+            agent.SetDestination(destination);
+            return NodeState.Success;
+        }
     }
 }

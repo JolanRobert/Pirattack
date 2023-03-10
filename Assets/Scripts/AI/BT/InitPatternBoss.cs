@@ -1,3 +1,5 @@
+using AI;
+using AI.BossPattern;
 using BehaviourTree;
 
 public class InitPatternBoss : Node

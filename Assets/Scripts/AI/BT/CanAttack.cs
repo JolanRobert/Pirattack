@@ -25,11 +25,22 @@ public class CanAttack : Node
                players[0] : players[1];
            SetDataInBlackboard("Target", target);
         }
-        if (canAttack && Vector3.Distance(target.transform.position, transform.position) <= 5)
-        {
-            Debug.Log("Can attack");
-            return NodeState.Success;
-        }
-        return NodeState.Failure;
+        var enemyShield = GetData("caster");
+        float distanceMin = 1;
+        if (enemyShield != null && enemyShield is EnemyShield)
+            distanceMin = (enemyShield as EnemyShield).Data.AttackDistance;
+        else
+            distanceMin = (enemyShield as Enemy).Data.AttackDistance;
+        
+        if (!canAttack || !(Vector3.Distance(target.transform.position, transform.position) <= distanceMin + 0.5f))
+            return NodeState.Failure;
+        
+        if (!Physics.Raycast(transform.position, target.transform.position - transform.position, out var hit, 100))
+            return NodeState.Failure;
+        
+        if (hit.collider.gameObject != target.gameObject) return NodeState.Failure;
+        
+        Debug.Log("Can attack");
+        return NodeState.Success;
     }
 }

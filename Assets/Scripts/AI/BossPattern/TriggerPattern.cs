@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using AI;
 using Player;
 using UnityEngine;
 
@@ -13,5 +11,6 @@ public class TriggerPattern : MonoBehaviour
         {
             Boss.OnTriggerAttack?.Invoke(player);
         }
+        Boss.Instance.currentPattern.EndTrigger(gameObject);
     }
 }

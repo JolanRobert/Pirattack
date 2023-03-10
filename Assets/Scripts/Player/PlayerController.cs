@@ -6,32 +6,65 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         public PlayerData Data => data;
-        public PlayerColor Color => playerSwitchColor.Color;
+        public PlayerColor PColor => playerSwitchColor.PColor;
         public bool IsInteracting => playerInteract.IsInteracting;
-        
+        public bool IsDown => playerRespawn.IsDown;
+
+        public PlayerSwitchColor Color => playerSwitchColor;
         public PlayerCollision Collision => playerCollision;
         public PlayerInteract Interact => playerInteract;
-        
+
         [SerializeField] private PlayerData data;
+        [SerializeField] private PlayerInput playerInput;
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private PlayerShoot playerShoot;
         [SerializeField] private PlayerSwitchColor playerSwitchColor;
         [SerializeField] private PlayerCollision playerCollision;
         [SerializeField] private PlayerInteract playerInteract;
+        [SerializeField] private PlayerRespawn playerRespawn;
+        [SerializeField] private Rigidbody rb;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;
         private bool shootInput;
         private bool switchColorInput;
         private bool interactInput;
+        private bool cancelInteractInput;
+
+        private Vector3 startPos;
+        private bool isSpawned;
+        private bool isInit;
+
+        public void Init(Vector3 startPosition, PlayerColor color)
+        {
+            startPos = startPosition;
+            Color.InitColor(color);
+            isInit = true;
+        }
 
         private void Update()
         {
+            if (!isInit) return;
+            
+            if (!isSpawned)
+            {
+                rb.position = startPos;
+                isSpawned = true;
+                return;
+            }
+
+            if (AssertState(IsDown)) return;
+            
+            HandleInteract();
+
+            if (AssertState(IsInteracting)) return;
+            
             HandleMovement();
             HandleRotation();
             HandleShoot();
             HandleSwitchColor();
-            HandleInteract();
+            
+            ResetInputs();
         }
         
         #region InputCallback
@@ -52,15 +85,26 @@ namespace Player
 
         public void OnSwitchColor(InputAction.CallbackContext context)
         {
-            switchColorInput = context.performed;
+            if (context.started) switchColorInput = true;
         }
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            interactInput = context.performed;
+            if (context.started) interactInput = true;
+        }
+        
+        public void OnCancelInteract(InputAction.CallbackContext context)
+        {
+            if (context.started) cancelInteractInput = true;
         }
         #endregion
 
+        private bool AssertState(bool state)
+        {
+            if (state) playerMovement.Cancel();
+            return state;
+        }
+        
         private void HandleMovement()
         {
             playerMovement.Move(moveInput);
@@ -84,7 +128,15 @@ namespace Player
         private void HandleInteract()
         {
             if (interactInput) playerInteract.BeginInteract();
-            else playerInteract.EndInteract();
+            if (cancelInteractInput) playerInteract.EndInteract();
+            if (IsInteracting) playerInteract.UpdateInteract();
+        }
+
+        private void ResetInputs()
+        {
+            switchColorInput = false;
+            interactInput = false;
+            cancelInteractInput = false;
         }
         
         /*
@@ -93,7 +145,7 @@ namespace Player
         
         public void RequestSwitchColor()
         {
-            playerSwitchColor.Switch();
+            //playerSwitchColor.Switch();
         }
     }
 }

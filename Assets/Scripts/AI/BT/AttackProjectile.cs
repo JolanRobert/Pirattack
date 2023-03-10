@@ -1,17 +1,24 @@
 using BehaviourTree;
 using Player;
+using UnityEngine;
+using Utils;
 
 public class AttackProjectile : Node
 {
+    private EnemyShield enemyShield;
     public override NodeState Evaluate(Node root)
     {
         PlayerController target = GetData<PlayerController>("Target");
+        enemyShield = GetData<EnemyShield>("caster");
         if (target == null) return NodeState.Failure;
 
-//ADD CODE HERE to make the enemy shoot a projectile at the player
+        ConeProjectile cone =  Pooler.Instance.Pop(Key.Wave).GetComponent<ConeProjectile>();
+        cone.transform.SetPositionAndRotation(enemyShield.transform.position, enemyShield.transform.rotation);
+        cone.InitWave(enemyShield, target);
 
         SetDataInBlackboard("CanAttack", false);
-        SetDataInBlackboard("WaitTime", 1f);
+        SetDataInBlackboard("WaitTime", (enemyShield.Data.maxSize - enemyShield.Data.minSize) /  enemyShield.Data.speedPattern + enemyShield.Data.AttackSpeed); 
+        GetData<TaskWaitForSeconds>("WaitNode").FinalCountdown = () => SetDataInBlackboard("CanAttack", true);
         return NodeState.Success;
     }
 }

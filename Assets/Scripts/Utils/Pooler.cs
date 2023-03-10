@@ -9,14 +9,14 @@ namespace Utils
     {
         public static Pooler Instance;
     
-        private Dictionary<Key, Pool> pools = new Dictionary<Key, Pool>();
-        [SerializeField] private List<PoolKey> poolKeys = new List<PoolKey>();
+        private Dictionary<Key, Pool> pools = new ();
+        [SerializeField] private List<PoolKey> poolKeys = new ();
     
         [Serializable]
         public class Pool
         {
             public GameObject prefab;
-            public Queue<GameObject> queue = new Queue<GameObject>();
+            public Queue<GameObject> queue = new ();
 
             public int baseCount;
             public float baseRefreshSpeed = 5;
@@ -132,6 +132,12 @@ namespace Utils
 
     public enum Key
     {
-        Bullet
+        Bullet,
+        Cone,
+        Wave,
+        Bottle,
+        FXBottle,
+        BasicEnemy,
+        EnemyShield,
     }
 }

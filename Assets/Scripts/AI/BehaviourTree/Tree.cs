@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace BehaviourTree
@@ -27,6 +28,12 @@ namespace BehaviourTree
         public Node getOrigin()
         {
             return origin;
+        }
+
+        public void ResetBlackboard()
+        {
+            origin?.ClearAllData();
+            origin?.SetDataInBlackboard("Init", true);
         }
 
         protected abstract Node InitTree();
