@@ -19,11 +19,11 @@ public class CanAttack : Node
         PlayerController target = GetData<PlayerController>("Target");
         if (!target)
         {
-            PlayerController[] players = MyGameManager.Instance.Players;
-           target = (Vector3.Distance(players[0].transform.position, transform.position) <
+            PlayerController[] players = PlayerManager.Players.ToArray();
+            target = (Vector3.Distance(players[0].transform.position, transform.position) <
                      Vector3.Distance(players[1].transform.position, transform.position)) ? 
                players[0] : players[1];
-           SetDataInBlackboard("Target", target);
+            SetDataInBlackboard("Target", target);
         }
         var enemyShield = GetData("caster");
         float distanceMin = 1;
