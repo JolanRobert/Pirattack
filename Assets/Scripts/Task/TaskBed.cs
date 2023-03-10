@@ -1,8 +1,6 @@
-using InteractiveTrigger;
-
 namespace Task
 {
-    public class TaskBed : TaskTrigger
+    public class TaskBed : ChaosTask
     {
         
     }

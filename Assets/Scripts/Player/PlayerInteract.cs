@@ -58,9 +58,9 @@ namespace Player
             if (interactions.Count == 0) return;
             if (isInteracting) return;
 
-            if (interactions[0] is TaskTrigger tTrigger)
+            if (interactions[0] is ChaosTask task)
             {
-                if (!tTrigger.Evaluate()) return;
+                if (!task.IsValid()) return;
             }
             
             currentInteraction = interactions[0];
@@ -79,10 +79,10 @@ namespace Player
             
             if (currentInteraction is RespawnTrigger rTrigger) rTrigger.HandleInput(AInput);
             
-            else if (currentInteraction is TaskTrigger tTrigger)
+            else if (currentInteraction is ChaosTask task)
             {
-                if (!tTrigger.IsValid()) return;
-                if (tTrigger is TaskToilet tToilet) tToilet.HandleInput(LBInput, RBInput);
+                if (!task.IsValid()) return;
+                if (task is TaskToilet tToilet) tToilet.HandleInput(LBInput, RBInput);
             }
             
             ResetInputs();

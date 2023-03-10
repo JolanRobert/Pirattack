@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Task
 {
-    public class TaskToilet : TaskTrigger
+    public class TaskToilet : ChaosTask
     {
         [Separator("Task Toilet")]
         [SerializeField] private float amountPerInput;
@@ -51,7 +51,7 @@ namespace Task
 
             progressBar.DOKill();
             Tween tween = progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
-            if (newAmount >= 1) tween.onComplete += () => chaosTask.Complete(this);
+            if (newAmount >= 1) tween.onComplete += Complete;
         }
 
         private void DecreaseBar()

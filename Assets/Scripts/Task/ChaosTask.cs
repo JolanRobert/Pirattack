@@ -9,33 +9,40 @@ using Random = UnityEngine.Random;
 
 namespace Task
 {
-    public class ChaosTask : MonoBehaviour
+    public class ChaosTask : InteractiveElement
     {
         public Action<ChaosTask> OnComplete;
 
-        [SerializeField] private TaskTrigger firstTrigger;
-        [SerializeField] private TaskTrigger secondTrigger;
+        [SerializeField] private Renderer cubeRenderer;
+        [SerializeField, ReadOnly] private PlayerColor requiredColor = PlayerColor.None;
         
         public void Init()
         {
-            if (secondTrigger != null) return;
-            
             List<PlayerColor> colors = Enum.GetValues(typeof(PlayerColor)).Cast<PlayerColor>().ToList();
             colors.Remove(PlayerColor.None);
             
             PlayerColor rdmColor = colors[Random.Range(0, colors.Count)];
-            firstTrigger.SetRequiredColor(rdmColor);
+            SetRequiredColor(rdmColor);
         }
-
+        
+        private void SetRequiredColor(PlayerColor color)
+        {
+            requiredColor = color;
+            cubeRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
+        }
+        
         public bool IsValid()
         {
-            if (!firstTrigger.Evaluate()) return false;
-            return secondTrigger == null || secondTrigger.Evaluate();
+            foreach (PlayerController player in players)
+            {
+                if (requiredColor == PlayerColor.None || player.PColor == requiredColor) return true;
+            }
+
+            return false;
         }
 
-        public void Complete(TaskTrigger trigger)
+        protected void Complete()
         {
-            if (trigger != firstTrigger) return;
             OnComplete.Invoke(this);
             Debug.Log("Task is complete!");
         }

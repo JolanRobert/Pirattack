@@ -36,7 +36,6 @@ namespace Player
 
         public void Switch()
         {
-            Debug.Log("Switch Color!");
             if (!canSwitch) return;
             
             color = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;

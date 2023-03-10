@@ -853,6 +853,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 116855500}
+  - component: {fileID: 116855503}
+  - component: {fileID: 116855502}
   - component: {fileID: 116855501}
   m_Layer: 0
   m_Name: Task_Toilet
@@ -873,7 +875,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2053678387}
+  - {fileID: 658049407}
+  - {fileID: 537693319}
   m_Father: {fileID: 2092895835}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -886,11 +889,61 @@ MonoBehaviour:
   m_GameObject: {fileID: 116855499}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8114de753e254a288995e668a22fc1fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ed6425785984825b23ae0c1873ff5a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstTrigger: {fileID: 2053678388}
-  secondTrigger: {fileID: 0}
+  progressBar: {fileID: 624286241}
+  cubeRenderer: {fileID: 658049409}
+  requiredColor: 2
+  amountPerInput: 0.05
+  timeBeforeLosing: 0.5
+  lossAmountPerSec: 0.2
+--- !u!114 &116855502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116855499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cd926bb9d510543847bc79ae7379f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Preset: 3
+  CustomWireColor: {r: 0, g: 0, b: 0, a: 0}
+  CustomFillColor: {r: 0, g: 0, b: 0, a: 0}
+  CustomCenterColor: {r: 0, g: 0, b: 0, a: 0}
+  Alpha: 1
+  WireColor: {r: 0.6, g: 1, b: 0.73333335, a: 0.5019608}
+  FillColor: {r: 0.6, g: 1, b: 0.73333335, a: 0.24313726}
+  CenterColor: {r: 0.6, g: 1, b: 0.73333335, a: 0.6745098}
+  DrawFill: 1
+  DrawWire: 1
+  DrawCenter: 0
+  CenterMarkerRadius: 1
+  IncludeChildColliders: 0
+--- !u!65 &116855503
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116855499}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 3, z: 3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!43 &123070546
 Mesh:
   m_ObjectHideFlags: 0
@@ -7667,7 +7720,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 624286240}
-  m_Father: {fileID: 2053678387}
+  m_Father: {fileID: 116855500}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9788,12 +9841,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658049406}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 2053678387}
+  m_Father: {fileID: 116855500}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &658049408
@@ -30384,107 +30437,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2053634516}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2053678386
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2053678387}
-  - component: {fileID: 2053678390}
-  - component: {fileID: 2053678389}
-  - component: {fileID: 2053678388}
-  m_Layer: 0
-  m_Name: FirstTrigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2053678387
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053678386}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 658049407}
-  - {fileID: 537693319}
-  m_Father: {fileID: 116855500}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2053678388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053678386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ed6425785984825b23ae0c1873ff5a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  progressBar: {fileID: 624286241}
-  chaosTask: {fileID: 116855501}
-  cubeRenderer: {fileID: 658049409}
-  requiredColor: 2
-  amountPerInput: 0.05
-  timeBeforeLosing: 0.5
-  lossAmountPerSec: 0.2
---- !u!114 &2053678389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053678386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1cd926bb9d510543847bc79ae7379f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 3
-  CustomWireColor: {r: 0, g: 0, b: 0, a: 0}
-  CustomFillColor: {r: 0, g: 0, b: 0, a: 0}
-  CustomCenterColor: {r: 0, g: 0, b: 0, a: 0}
-  Alpha: 1
-  WireColor: {r: 0.6, g: 1, b: 0.73333335, a: 0.5019608}
-  FillColor: {r: 0.6, g: 1, b: 0.73333335, a: 0.24313726}
-  CenterColor: {r: 0.6, g: 1, b: 0.73333335, a: 0.6745098}
-  DrawFill: 1
-  DrawWire: 1
-  DrawCenter: 0
-  CenterMarkerRadius: 1
-  IncludeChildColliders: 0
---- !u!65 &2053678390
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053678386}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3, y: 3, z: 3}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2080662752
 GameObject:
   m_ObjectHideFlags: 0
