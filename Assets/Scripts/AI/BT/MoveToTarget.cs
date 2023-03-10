@@ -3,34 +3,39 @@ using Player;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MoveToTarget : Node
+namespace AI.BT
 {
-    private NavMeshAgent agent;
-    public MoveToTarget(NavMeshAgent _agent)
+    public class MoveToTarget : Node
     {
-        agent = _agent;
-    }
-
-    public override NodeState Evaluate(Node root)
-    {
-        float distance = 0;
-        var enemyShield = GetData("caster");
-        if (enemyShield != null && enemyShield is EnemyShield)
-            distance = (enemyShield as EnemyShield).Data.AttackDistance;
-        else
+        private NavMeshAgent agent;
+        public MoveToTarget(NavMeshAgent _agent)
         {
-            Enemy enemy = enemyShield as Enemy;
-            distance = enemy.Data.AttackDistance;
-        }
-        PlayerController target = GetData<PlayerController>("Target");
-        if (target == null)
-        {
-            agent.SetDestination(agent.transform.position);
-            return NodeState.Failure;
+            agent = _agent;
         }
 
-        Vector3 direction = (target.transform.position - agent.transform.position).normalized;
-        agent.SetDestination(target.gameObject.transform.position - direction * distance);
-        return NodeState.Success;
+        public override NodeState Evaluate(Node root)
+        {
+            float distance = 0;
+            var enemyShield = GetData("caster");
+            if (enemyShield is EnemyShield shield)
+                distance = shield.Data.AttackDistance;
+            else
+            {
+                Enemy enemy = enemyShield as Enemy;
+                if (enemy != null) distance = enemy.Data.AttackDistance;
+            }
+            PlayerController target = GetData<PlayerController>("Target");
+            if (target == null)
+            {
+                agent.SetDestination(agent.transform.position);
+                return NodeState.Failure;
+            }
+
+            Vector3 direction = (target.transform.position - agent.transform.position).normalized;
+            Vector3 destination = target.gameObject.transform.position - direction * distance;
+            destination.y = agent.transform.position.y;
+            agent.SetDestination(destination);
+            return NodeState.Success;
+        }
     }
 }

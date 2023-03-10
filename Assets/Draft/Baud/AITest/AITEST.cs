@@ -14,10 +14,7 @@ public class AITEST : MonoBehaviour
     [SerializeField] private Boss boss;
 
     [SerializeField] private TMP_Text textColorPlayer;
-    
-    [SerializeField] private PlayerController playerController;
-        
-    private PlayerData data => playerController.Data;
+    private PlayerData data => player.Data;
 
     private int index = 0;
 

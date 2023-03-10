@@ -7,54 +7,48 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private float spawnRate = 5f;
     [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private float delaySpawn = 0.3f;
+    [SerializeField] private float delaySpawn = 0.4f;
+    [SerializeField] private int  nbTickPerShieldSpawn = 5;
 
-    [SerializeField] private Enemy basicEnemy;
-    [SerializeField] private EnemyShield enemyShield;
+    private float currentTime = 0f;
+    private int nbSpawn = 0;
+    private readonly List<Transform> activeSpawnPoints = new();
 
-    float StartTime;
-    float currentTime;
-    int nbSpawn = 1;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartTime = Time.time;
-        currentTime = 0f;
-    }
-
-
-    IEnumerator SpawnEnemy(int nbSpawn, Vector3 SpawnPosition)
+    IEnumerator SpawnEnemy(int nbSpawn, Vector3 spawnPosition, Key key)
     {
         for (int i = 0; i < nbSpawn; i++)
         {
+            GameObject enemy = Pooler.Instance.Pop(key);
+            enemy.transform.position = spawnPosition;
+            enemy.SetActive(false);
+            enemy.transform.position = spawnPosition;
+            enemy.SetActive(true);
             yield return new WaitForSeconds(delaySpawn);
-            GameObject enemy = Pooler.Instance.Pop(Key.BasicEnemy);
-            enemy.transform.position = SpawnPosition;
         }
     }
 
-    IEnumerator SpawnShieldEnemy(int nbSpawn, Vector3 SpawnPosition)
+    private void ResetActiveSpawnPoints()
     {
-        for (int i = 0; i < nbSpawn; i++)
+        for (int i = 0; i < spawnPoints.Length; i++)
         {
-            yield return new WaitForSeconds(delaySpawn);
-            GameObject enemy = Pooler.Instance.Pop(Key.EnemyShield);
-            enemy.transform.position = SpawnPosition;
+            activeSpawnPoints.Add(spawnPoints[i]);
         }
     }
 
     void Update()
     {
         currentTime += Time.deltaTime;
-        if (currentTime >= spawnRate)
-        {
-            currentTime = 0f;
-            //nbSpawn++;
-            Vector3 SpawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
-            StartCoroutine(SpawnEnemy(nbSpawn, SpawnPosition));
-            if (nbSpawn % 5 == 0)
-                StartCoroutine(SpawnShieldEnemy(1 + nbSpawn / 5, SpawnPosition));
-        }
+        if (!(currentTime >= spawnRate)) return;
+        
+        currentTime = 0f;
+        nbSpawn++;
+        if (activeSpawnPoints.Count == 0)
+            ResetActiveSpawnPoints();
+        int index = Random.Range(0, activeSpawnPoints.Count);
+        Vector3 spawnPosition = spawnPoints[index].position;
+        activeSpawnPoints.RemoveAt(index);
+        StartCoroutine(SpawnEnemy(nbSpawn, spawnPosition, Key.BasicEnemy));
+        if (nbSpawn % nbTickPerShieldSpawn == 0)
+            StartCoroutine(SpawnEnemy(1 + nbSpawn / nbTickPerShieldSpawn, spawnPosition, Key.EnemyShield));
     }
 }

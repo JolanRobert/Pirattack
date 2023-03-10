@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class InitEnemyBlackboard : Node
 {
-    private bool isInit = false;
     private Enemy enemy;
     private Enemy enemyShield;
 
