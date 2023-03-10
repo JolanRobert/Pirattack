@@ -9,7 +9,7 @@ public class EnemyBT : Tree
 {
     [SerializeField] private Enemy enemy;
     [SerializeField] private NavMeshAgent agent;
-    
+
     protected override Node InitTree()
     {
         origin = new Selector(

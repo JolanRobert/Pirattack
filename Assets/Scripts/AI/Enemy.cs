@@ -15,13 +15,14 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] protected PlayerColor ShieldColor = PlayerColor.None;
     [SerializeField] protected Health healthEnemy;
     [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] private EnemyBT BT;
 
     protected int damage = 0;
     protected int maxHp = 0;
     
     private void Start()
     {
-        healthEnemy.onDeath += OnDie;
+        healthEnemy.onDeath = OnDie;
     }
 
     private void OnEnable()
@@ -31,8 +32,15 @@ public class Enemy : MonoBehaviour, IDamageable
         healthEnemy.Init((int)maxHp);
         ResetAttackDefaultValue();
         agent.speed = enemyData.speed;
+        BT.ResetBlackboard();
+        BT.enabled = true;
     }
-    
+
+    private void OnDisable()
+    {
+        BT.enabled = false;
+    }
+
     public PlayerColor GetShieldColor()
     {
         return ShieldColor;
@@ -40,7 +48,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     protected virtual void OnDie()
     {
-        gameObject.SetActive(false);
+        Pooler.Instance.Depop(Key.BasicEnemy, gameObject);
     }
 
     public void TakeDamage(int _damage, PlayerController origin)

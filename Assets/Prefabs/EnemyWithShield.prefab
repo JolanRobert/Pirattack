@@ -23,7 +23,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2876925998060703776
 Transform:
   m_ObjectHideFlags: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5997423093716213911}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e00b1f6dd17fd940bcd482dc65a0505, type: 3}
   m_Name: 
@@ -191,8 +191,9 @@ MonoBehaviour:
   ShieldColor: 2
   healthEnemy: {fileID: 5336739398439908694}
   agent: {fileID: 6205894247673788950}
+  BT: {fileID: 0}
   Data: {fileID: 11400000, guid: edaaf3dc24281744bbc303e9ddc001b3, type: 2}
-  ShieldRenderer: {fileID: 0}
+  BTShield: {fileID: 777649018231885426}
 --- !u!114 &5336739398439908694
 MonoBehaviour:
   m_ObjectHideFlags: 0

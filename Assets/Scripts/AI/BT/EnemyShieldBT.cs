@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using BehaviourTree;
@@ -9,7 +10,7 @@ public class EnemyShieldBT : Tree
 {
     [SerializeField] private EnemyShield enemy;
     [SerializeField] private NavMeshAgent agent;
-    
+
     protected override Node InitTree()
     {
         origin = new Selector(

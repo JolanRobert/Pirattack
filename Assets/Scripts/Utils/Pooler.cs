@@ -137,5 +137,7 @@ namespace Utils
         Wave,
         Bottle,
         FXBottle,
+        BasicEnemy,
+        EnemyShield,
     }
 }

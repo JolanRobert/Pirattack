@@ -15,6 +15,11 @@ public class BossBT : Tree
     [SerializeField] private Pattern[] allPatterns;
     [SerializeField] private Boss boss;
 
+    private void OnEnable()
+    {
+        origin?.ClearAllData();
+    }
+    
     protected override Node InitTree()
     {
         origin = new Selector(

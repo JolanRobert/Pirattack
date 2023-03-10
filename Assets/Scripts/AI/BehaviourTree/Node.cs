@@ -16,7 +16,7 @@ namespace BehaviourTree
         protected NodeState state;
         protected Node[] children;
 
-        private Dictionary<string, object> data = new Dictionary<string, object>();
+        private Dictionary<string, object> data = new ();
 
         protected Node()
         {
@@ -41,7 +41,7 @@ namespace BehaviourTree
 
         public abstract NodeState Evaluate(Node root);
 
-        protected void SetDataInBlackboard(string key, object value)
+        public void SetDataInBlackboard(string key, object value)
         {
             Node node = Parent;
             while (node != null)
@@ -110,6 +110,25 @@ namespace BehaviourTree
 
             return false;
         }
+        
+        public bool ClearAllData()
+        {
+            if (Parent == null)
+            {
+                data.Clear();
+                return true;
+            }
+            
+            Node node = this;
+            while (node.Parent != null)
+            {
+                node = node.Parent;
+            }
+            
+            data.Clear();
+            return true;
+        }
+        
     }
 }
 

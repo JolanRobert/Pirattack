@@ -19,8 +19,9 @@ public class InitEnemyBlackboard : Node
 
     public override NodeState Evaluate(Node root)
     {
-        if (isInit) return NodeState.Failure;
-        isInit = true;
+        var init = GetData("Init");
+        if (init != null && (bool)init) return NodeState.Failure;
+        SetDataInBlackboard("Init", true);
         SetDataInBlackboard("Target", null);
         SetDataInBlackboard("CanAttack", true);
         SetDataInBlackboard("WaitTime", 0f);

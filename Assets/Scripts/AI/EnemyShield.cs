@@ -1,9 +1,12 @@
 using Player;
 using UnityEngine;
+using Utils;
 
 public class EnemyShield : Enemy
 {
     public new EnemyShieldData Data;
+    
+    [SerializeField] private EnemyShieldBT BTShield;
 
     private void OnEnable()
     {
@@ -15,6 +18,14 @@ public class EnemyShield : Enemy
        AssignShieldColor(color);
        //ChangeShieldRendererColor(color);
        ResetAttackDefaultValue();
+       healthEnemy.onDeath = OnDie;
+       BTShield.ResetBlackboard();
+       BTShield.enabled = true;
+    }
+    
+    private void OnDisable()
+    {
+        BTShield.enabled = false;
     }
     
     // public void ChangeShieldRendererColor(PlayerColor color)
@@ -32,4 +43,9 @@ public class EnemyShield : Enemy
     //             break;
     //     }
     // }
+
+    protected override void OnDie()
+    {
+        Pooler.Instance.Depop(Key.EnemyShield, gameObject);
+    }
 }
