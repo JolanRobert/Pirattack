@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Player;
 using UnityEngine;
 
-public class MyGameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public static MyGameManager Instance;
+    public static GameManager Instance;
     public PlayerController[] Players;
     
     

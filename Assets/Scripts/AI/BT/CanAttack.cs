@@ -19,7 +19,7 @@ public class CanAttack : Node
         PlayerController target = GetData<PlayerController>("Target");
         if (!target)
         {
-            PlayerController[] players = MyGameManager.Instance.Players;
+            PlayerController[] players = GameManager.Instance.Players;
            target = (Vector3.Distance(players[0].transform.position, transform.position) <
                      Vector3.Distance(players[1].transform.position, transform.position)) ? 
                players[0] : players[1];
