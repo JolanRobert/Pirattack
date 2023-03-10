@@ -235,6 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0417a8ff8a0f48ceaffe52f561978034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartPosition: {x: 0, y: 0, z: 0}
   data: {fileID: 11400000, guid: 45fd4d20e314ef14593960a94ec76e63, type: 2}
   playerMovement: {fileID: 5398305621724039023}
   playerShoot: {fileID: 2297303709830124257}
@@ -282,6 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8daa8cdab3414f1da2a76cca75a3c0ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 7102844447484125359}
   sphereRenderer: {fileID: 7497002044412786270}
   color: 0
 --- !u!114 &1715889565026001892

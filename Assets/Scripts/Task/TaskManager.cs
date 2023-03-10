@@ -12,9 +12,9 @@ namespace Task
         [SerializeField] private List<Task> tasks;
 
         private Queue<Task> nextTasks;
-        private List<Task> currentTasks = new List<Task>();
+        public List<Task> currentTasks = new List<Task>();
 
-        private bool isCycling = true;
+        public bool isCycling;
 
         private void Awake()
         {
@@ -35,12 +35,17 @@ namespace Task
 
         private void RefreshNextTasks()
         {
-            nextTasks = new Queue<Task>(tasks.Shuffle());
+            List<Task> tasksToAdd = new List<Task>(tasks);
+            tasksToAdd.Shuffle();
+            Debug.Log(tasksToAdd.RemoveAll(task => currentTasks.Contains(task)));
+            nextTasks = new Queue<Task>(tasksToAdd);
         }
         
         [ContextMenu("Add Task")]
         private void AddTask()
         {
+            if (nextTasks.Count == 0) RefreshNextTasks();
+            
             Task newTask = nextTasks.Peek();
             if (currentTasks.Contains(newTask)) return;
             
@@ -49,8 +54,6 @@ namespace Task
             newTask.OnComplete = CompleteTask;
             newTask.gameObject.SetActive(true);
             newTask.Init();
-            
-            if (nextTasks.Count == 0) RefreshNextTasks();
         }
 
         private void CompleteTask(Task task)
