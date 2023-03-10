@@ -90,6 +90,7 @@ namespace AI
         {
             LootSystem();
             Print_DieVoicelines();
+            GameManager.OnEndFightBoss?.Invoke();
             gameObject.SetActive(false);
         }
 

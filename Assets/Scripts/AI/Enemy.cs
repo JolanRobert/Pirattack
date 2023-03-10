@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private void Start()
     {
         healthEnemy.onDeath = OnDie;
+        healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
     }
 
     private void OnEnable()

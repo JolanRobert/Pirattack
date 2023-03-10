@@ -6,6 +6,8 @@ using Utils;
 
 public class SpawnManager : MonoBehaviour
 {
+    public static SpawnManager Instance;
+    
     [SerializeField] private float spawnRate = 5f;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private float delaySpawn = 0.4f;
@@ -16,12 +18,19 @@ public class SpawnManager : MonoBehaviour
     private int nbShield = 0;
     private readonly List<Transform> activeSpawnPoints = new();
     private bool isSpawning = false;
+    private bool onBossFight = false;
     private List<Key> keys = new();
+    
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     IEnumerator SpawnEnemy(Vector3 spawnPosition)
     {
         for (int i = 0; i < keys.Count; i++)
         {
+            if (onBossFight) yield return null;
             GameObject enemy = Pooler.Instance.Pop(keys[i]);
             enemy.SetActive(false);
             enemy.transform.position = spawnPosition;
@@ -39,6 +48,11 @@ public class SpawnManager : MonoBehaviour
             activeSpawnPoints.Add(spawnPoints[i]);
         }
     }
+    
+    public void SetOnBossFight(bool value)
+    {
+        onBossFight = value;
+    }
 
     private void CheckAddShieldMan()
     {
@@ -48,7 +62,7 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-        if (isSpawning) return;
+        if (isSpawning || onBossFight) return;
         currentTime += Time.deltaTime;
         if (!(currentTime >= spawnRate)) return;
 
