@@ -9,17 +9,18 @@ namespace Task
     {
         [SerializeField] private int maxTaskSimultaneously;
         [SerializeField, MinMaxRange(1, 10)] private RangedInt timeBeforeNextTask;
-        [SerializeField] private List<Task> tasks;
+        [SerializeField] private List<ChaosTask> tasks;
 
-        private Queue<Task> nextTasks;
-        public List<Task> currentTasks = new List<Task>();
+        private Queue<ChaosTask> nextTasks;
+        private List<ChaosTask> currentTasks = new List<ChaosTask>();
 
-        public bool isCycling;
+        private bool isCycling;
 
         private void Awake()
         {
+            if (tasks.Count == 0) return;
             RefreshNextTasks();
-            StartCoroutine(TaskCycle());
+            //StartCoroutine(TaskCycle());
         }
 
         private IEnumerator TaskCycle()
@@ -35,32 +36,31 @@ namespace Task
 
         private void RefreshNextTasks()
         {
-            List<Task> tasksToAdd = new List<Task>(tasks);
+            List<ChaosTask> tasksToAdd = new List<ChaosTask>(tasks);
             tasksToAdd.Shuffle();
-            Debug.Log(tasksToAdd.RemoveAll(task => currentTasks.Contains(task)));
-            nextTasks = new Queue<Task>(tasksToAdd);
+            nextTasks = new Queue<ChaosTask>(tasksToAdd);
         }
         
         [ContextMenu("Add Task")]
         private void AddTask()
         {
             if (nextTasks.Count == 0) RefreshNextTasks();
-            
-            Task newTask = nextTasks.Peek();
-            if (currentTasks.Contains(newTask)) return;
+
+            ChaosTask newChaosTask = nextTasks.Peek();
+            if (currentTasks.Contains(newChaosTask)) return;
             
             currentTasks.Add(nextTasks.Dequeue());
             
-            newTask.OnComplete = CompleteTask;
-            newTask.gameObject.SetActive(true);
-            newTask.Init();
+            newChaosTask.OnComplete = CompleteTask;
+            newChaosTask.gameObject.SetActive(true);
+            newChaosTask.Init();
         }
 
-        private void CompleteTask(Task task)
+        private void CompleteTask(ChaosTask chaosTask)
         {
-            currentTasks.Remove(task);
-            task.gameObject.SetActive(false);
-            if (!isCycling) StartCoroutine(TaskCycle());
+            currentTasks.Remove(chaosTask);
+            chaosTask.gameObject.SetActive(false);
+            //if (!isCycling) StartCoroutine(TaskCycle());
         }
     }
 }

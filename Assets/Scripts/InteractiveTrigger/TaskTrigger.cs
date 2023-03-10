@@ -1,33 +1,20 @@
 using MyBox;
 using Player;
+using Task;
 using UnityEngine;
 
-namespace Task
+namespace InteractiveTrigger
 {
     public class TaskTrigger : InteractiveElement
     {
-        [SerializeField] private Task task;
+        public bool IsValid() => chaosTask.IsValid();
+        
+        [Separator("Task Trigger")]
+        [SerializeField] protected ChaosTask chaosTask;
         [SerializeField] private Renderer cubeRenderer;
         
         [SerializeField, ReadOnly] private PlayerColor requiredColor = PlayerColor.None;
         
-        private void Awake()
-        {
-            completionDuration = task.CompletionDuration;
-        }
-
-        public override void Progress()
-        {
-            if (!task.IsValid()) return;
-            
-            base.Progress();
-        }
-
-        protected override void Complete()
-        {
-            task.Complete(this);
-        }
-
         public void SetRequiredColor(PlayerColor color)
         {
             requiredColor = color;
@@ -38,7 +25,7 @@ namespace Task
         {
             foreach (PlayerController player in players)
             {
-                if (player.PColor == requiredColor && player.IsInteracting) return true;
+                if (requiredColor == PlayerColor.None || player.PColor == requiredColor) return true;
             }
 
             return false;

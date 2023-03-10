@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using MyBox;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Player
 {
@@ -37,6 +36,7 @@ namespace Player
 
         public void Switch()
         {
+            Debug.Log("Switch Color!");
             if (!canSwitch) return;
             
             color = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;

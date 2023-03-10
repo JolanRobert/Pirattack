@@ -1,7 +1,9 @@
+using System;
 using DefaultNamespace;
 using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerSpawner : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class PlayerSpawner : MonoBehaviour
     
     private void Start()
     {
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Game"));
+        
         PlayerInputManager pim = PlayerInputManager.instance;
         pim.JoinPlayer(playerIndex:0, controlScheme: "Gamepad", pairWithDevice: devicesSO.player1Device);
         pim.JoinPlayer(playerIndex:1, controlScheme: "Gamepad", pairWithDevice: devicesSO.player2Device);
