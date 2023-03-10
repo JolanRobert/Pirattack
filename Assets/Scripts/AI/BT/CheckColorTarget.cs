@@ -7,7 +7,7 @@ public class CheckColorTarget : Node
 
     private void SelectTarget()
     {
-        PlayerController[] players = GameManager.Instance.Players;
+        PlayerController[] players = PlayerManager.Players.ToArray();
         PlayerController target = (players[0].PColor != owner.GetShieldColor()) ? players[0] : players[1];
         SetDataInBlackboard("Target", target);
         SetDataInBlackboard("WaitTime", owner.Data.delaySwitchTarget);

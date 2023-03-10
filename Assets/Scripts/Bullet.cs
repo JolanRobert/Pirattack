@@ -39,13 +39,9 @@ public class Bullet : MonoBehaviour
                 case Enemy enemy when owner:
                     enemy.IsWasAttacked.Invoke(bulletDamage, owner);
                     break;
-                default:
-                    entity.Damage(bulletDamage);
-                    break;
             }
         }
-
-        if (!(entity is PlayerCollision && owner))
-            Pooler.Instance.Depop(Key.Bullet, gameObject);
+        
+        Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
 }

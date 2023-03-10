@@ -56,7 +56,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 1
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -71,8 +71,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 84
-  m_CollisionDetection: 2
+  m_Constraints: 116
+  m_CollisionDetection: 1
 --- !u!136 &1177753645568152364
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -80,7 +80,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438483004797300496}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 63525b4eb00c6e946977e9eb5f4fdfec, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -368,6 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 7102844447484125359}
   firePoint: {fileID: 1023871615444969245}
+  weapon: {fileID: 11400000, guid: 4a273582232152646813047f2edef602, type: 2}
 --- !u!114 &8277088488143925093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,7 +410,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactions: []
-  isInteracting: 0
 --- !u!114 &5152434294688659781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -672,7 +672,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -772,6 +772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 2400105806810688773}
+  cubeRenderer: {fileID: 0}
   playerRespawn: {fileID: 5152434294688659781}
 --- !u!1 &8992350275656957718
 GameObject:
