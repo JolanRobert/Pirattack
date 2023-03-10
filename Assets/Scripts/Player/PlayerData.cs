@@ -14,7 +14,7 @@ namespace Player
         [Header("Movement")]
         public AnimationCurve moveAcceleration;
         public AnimationCurve moveDeceleration;
-        public AnimationCurve rotationCurve;
+        public float rotationSpeed;
         
         [Header("Bullets")]
         public float bulletSpeed;

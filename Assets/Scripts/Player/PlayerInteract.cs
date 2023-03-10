@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using InteractiveTrigger;
 using MyBox;
 using Task;
 using UnityEngine;
@@ -83,7 +82,7 @@ namespace Player
             {
                 if (!task.IsValid()) return;
                 if (task is TaskToilet tToilet) tToilet.HandleInput(LBInput, RBInput);
-                else if (task is TaskBed tBed) tBed.HandleInput(AInput);
+                else if (task is TaskBedItem tBedItem) tBedItem.HandleInput(AInput);
             }
             
             ResetInputs();

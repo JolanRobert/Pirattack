@@ -50,6 +50,7 @@ namespace Player
             {
                 rb.position = startPos;
                 isSpawned = true;
+                playerMovement.Cancel();
                 return;
             }
 
@@ -75,7 +76,7 @@ namespace Player
         
         public void OnRotate(InputAction.CallbackContext context)
         {
-            rotateInput = context.ReadValue<Vector2>();
+            rotateInput = context.ReadValue<Vector2>().normalized;
         }
         
         public void OnShoot(InputAction.CallbackContext context)
