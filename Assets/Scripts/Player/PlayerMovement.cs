@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Player
@@ -13,6 +14,13 @@ namespace Player
         private float accelerationProgress;
         private float deccelerationProgress;
         private float rotationProgress;
+
+        private Quaternion targetRotation;
+
+        private void FixedUpdate()
+        {
+            rb.MoveRotation(Quaternion.Lerp(rb.rotation, targetRotation, data.rotationSpeed * Time.fixedDeltaTime));
+        }
 
         public void Move(Vector2 moveInput)
         {
@@ -32,22 +40,9 @@ namespace Player
 
         public void Rotate(Vector2 rotateInput)
         {
-            rb.angularVelocity = Vector3.zero;
-
-            if (rotateInput.sqrMagnitude < 0.1f)
-            {
-                rotationProgress = 0;
-                return;
-            }
-
-            /*var targetAngle = Mathf.Atan2(rotateInput.x, rotateInput.y) * Mathf.Rad2Deg;
-            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothAngle, data.rotationSpeed * Time.deltaTime * 120);
-            transform.rotation = Quaternion.Euler(0, angle, 0);*/
-            
-            var angle = Mathf.Atan2(rotateInput.x, rotateInput.y) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, angle, 0), data.rotationCurve.Evaluate(rotationProgress) * Time.deltaTime * 60);
-
-            rotationProgress += Time.deltaTime;
+            var direction = new Vector3(rotateInput.x, 0f, rotateInput.y);
+            if (direction.magnitude < 0.1f) return;
+            targetRotation = Quaternion.LookRotation(direction, Vector3.up);
         }
         
         public void Cancel()
