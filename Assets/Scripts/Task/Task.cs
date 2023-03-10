@@ -24,7 +24,6 @@ namespace Task
 
             for (int i = 0; i < triggers.Count; i++)
             {
-                Debug.Log($"Trigger {i+1} is {colors[i%colors.Count]}");
                 triggers[i].SetRequiredColor(colors[i%colors.Count]);
             }
         }

@@ -38,7 +38,7 @@ namespace Task
         {
             foreach (PlayerController player in players)
             {
-                if (player.Color == requiredColor && player.IsInteracting) return true;
+                if (player.PColor == requiredColor && player.IsInteracting) return true;
             }
 
             return false;

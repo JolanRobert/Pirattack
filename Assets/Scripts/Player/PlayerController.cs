@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,12 +7,15 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         public PlayerData Data => data;
-        public PlayerColor Color => playerSwitchColor.Color;
+        public PlayerColor PColor => playerSwitchColor.PColor;
         public bool IsInteracting => playerInteract.IsInteracting;
         public bool IsDown => playerRespawn.IsDown;
-        
+
+        public PlayerSwitchColor Color => playerSwitchColor;
         public PlayerCollision Collision => playerCollision;
         public PlayerInteract Interact => playerInteract;
+
+        [HideInInspector] public Vector3 StartPosition;
         
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerMovement playerMovement;
@@ -26,6 +30,11 @@ namespace Player
         private bool shootInput;
         private bool switchColorInput;
         private bool interactInput;
+
+        private void Start()
+        {
+            transform.position = StartPosition;
+        }
 
         private void Update()
         {

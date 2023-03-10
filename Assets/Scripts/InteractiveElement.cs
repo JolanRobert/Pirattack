@@ -21,6 +21,7 @@ public class InteractiveElement : MonoBehaviour, IComparable<InteractiveElement>
     {
         foreach (PlayerController player in players)
         {
+            player.Interact.Unsubscribe(this);
             player.Interact.OnEndInteract -= Regress;
         }
         
@@ -29,7 +30,6 @@ public class InteractiveElement : MonoBehaviour, IComparable<InteractiveElement>
 
     public virtual void Progress()
     {
-        Debug.Log("Progress");
         float newAmount = progressBar.fillAmount + Time.deltaTime / completionDuration;
 
         progressBar.DOKill();
@@ -39,7 +39,6 @@ public class InteractiveElement : MonoBehaviour, IComparable<InteractiveElement>
 
     protected virtual void Regress()
     {
-        Debug.Log("Regress");
         float duration = completionDuration*2 - (1-progressBar.fillAmount) * completionDuration*2;
         progressBar.DOKill();
         progressBar.DOFillAmount(0, duration).SetEase(Ease.Linear);

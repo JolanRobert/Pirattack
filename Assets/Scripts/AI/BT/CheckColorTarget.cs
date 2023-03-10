@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using BehaviourTree;
 using Player;
-using UnityEditor.SearchService;
-using UnityEngine;
 
 public class CheckColorTarget : Node
 {
@@ -17,7 +13,7 @@ public class CheckColorTarget : Node
     private void SelectTarget()
     {
         PlayerController[] players = MyGameManager.Instance.Players;
-        PlayerController target = (players[0].Color != owner.GetShieldColor()) ? players[0] : players[1];
+        PlayerController target = (players[0].PColor != owner.GetShieldColor()) ? players[0] : players[1];
         SetDataInBlackboard("Target", target);
     }
 
@@ -26,7 +22,7 @@ public class CheckColorTarget : Node
         if (owner.GetShieldColor() == PlayerColor.None) return NodeState.Success;
         
         PlayerController target = GetData<PlayerController>("Target");
-        if (target != null && target.Color == owner.GetShieldColor())
+        if (target != null && target.PColor == owner.GetShieldColor())
             SelectTarget();
         else
             SelectTarget();
