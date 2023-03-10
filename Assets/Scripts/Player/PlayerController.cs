@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,8 +14,6 @@ namespace Player
         public PlayerCollision Collision => playerCollision;
         public PlayerInteract Interact => playerInteract;
 
-        [HideInInspector] public Vector3 StartPosition;
-        
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private PlayerShoot playerShoot;
@@ -24,6 +21,7 @@ namespace Player
         [SerializeField] private PlayerCollision playerCollision;
         [SerializeField] private PlayerInteract playerInteract;
         [SerializeField] private PlayerRespawn playerRespawn;
+        [SerializeField] private Rigidbody rb;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;
@@ -31,13 +29,28 @@ namespace Player
         private bool switchColorInput;
         private bool interactInput;
 
-        private void Start()
+        private Vector3 startPos;
+        private bool isSpawned;
+        private bool isInit;
+
+        public void Init(Vector3 startPosition, PlayerColor color)
         {
-            transform.position = StartPosition;
+            startPos = startPosition;
+            Color.InitColor(color);
+            isInit = true;
         }
 
         private void Update()
         {
+            if (!isInit) return;
+            
+            if (!isSpawned)
+            {
+                rb.position = startPos;
+                isSpawned = true;
+                return;
+            }
+
             if (AssertState(IsDown)) return;
             
             HandleInteract();
