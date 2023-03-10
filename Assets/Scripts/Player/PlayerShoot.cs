@@ -10,6 +10,7 @@ namespace Player
         [SerializeField] private Transform firePoint;
         
         private PlayerData data => playerController.Data;
+        [SerializeField] private WeaponData weapon;
 
         private bool canShoot = true;
 
@@ -17,9 +18,9 @@ namespace Player
         {
             if (!canShoot) return;
             
-            Bullet bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<Bullet>();
+            BulletBehavior bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<BulletBehavior>();
             bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
-            bullet.Init(data, playerController);
+            bullet.Init(weapon, playerController);
             StartCoroutine(ShootCooldown());
         }
 
