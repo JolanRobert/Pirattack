@@ -8,38 +8,44 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
     [SerializeField, ReadOnly] private PlayerController owner;
-    [SerializeField, ReadOnly] private bool isPlayerTargeted = false;
-    
+
     private int bulletDamage;
 
     private void OnEnable()
     {
+        owner = null;
         rb.velocity = Vector3.zero;
     }
 
-    public void Init(PlayerData data, PlayerController owner, bool _isPlayerTargeted = false)
+    public void Init(PlayerData data, PlayerController _owner)
     {
         rb.velocity = transform.forward * data.bulletSpeed;
 
-        this.owner = owner;
+        owner = _owner;
         bulletDamage = data.damage;
-        isPlayerTargeted = _isPlayerTargeted;
-        
+
         Pooler.Instance.DelayedDepop(data.bulletLifespan, Key.Bullet, gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isPlayerTargeted) return;
-        
         if (other.TryGetComponent(out IDamageable entity))
         {
-            if (entity is PlayerCollision) return;
-            
-            if (entity is Enemy) ((Enemy)entity).IsWasAttacked.Invoke(bulletDamage, owner);
-            else entity.Damage(bulletDamage);
+            switch (entity)
+            {
+                case PlayerCollision when !owner:
+                    // ADD here code for enemy bullet hit player
+                    break;
+                case Enemy enemy when owner:
+                    enemy.IsWasAttacked.Invoke(bulletDamage, owner);
+                    break;
+                default:
+                    entity.Damage(bulletDamage);
+                    break;
+            }
         }
 
-        Pooler.Instance.Depop(Key.Bullet, gameObject);
+        if (!(entity is PlayerCollision && owner))
+            Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
 }

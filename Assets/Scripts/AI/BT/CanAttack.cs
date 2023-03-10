@@ -25,7 +25,13 @@ public class CanAttack : Node
                players[0] : players[1];
            SetDataInBlackboard("Target", target);
         }
-        if (canAttack && Vector3.Distance(target.transform.position, transform.position) <= 5)
+        var enemyShield = GetData("caster");
+        float distanceMin = 1;
+        if (enemyShield != null && enemyShield is EnemyShield)
+            distanceMin = (enemyShield as EnemyShield).Data.AttackDistance;
+        else
+            distanceMin = (enemyShield as Enemy).Data.AttackDistance;
+        if (canAttack && Vector3.Distance(target.transform.position, transform.position) <= distanceMin + 0.5f)
         {
             Debug.Log("Can attack");
             return NodeState.Success;
