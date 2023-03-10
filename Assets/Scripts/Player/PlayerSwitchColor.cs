@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using MyBox;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,10 +8,16 @@ namespace Player
 {
     public class PlayerSwitchColor : MonoBehaviour
     {
-        public PlayerColor Color => color;
+        public PlayerColor PColor => color;
         public static Action OnSwitchColor;
 
+        [SerializeField] private PlayerController playerController;
+        [SerializeField] private Renderer sphereRenderer;
         [SerializeField, ReadOnly] private PlayerColor color;
+        
+        private PlayerData data => playerController.Data;
+
+        private bool canSwitch = true;
 
         private void OnEnable()
         {
@@ -22,6 +29,12 @@ namespace Player
             OnSwitchColor -= Switch;
         }
 
+        public void InitColor(PlayerColor color)
+        {
+            sphereRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
+            this.color = color;
+        }
+        
         private void Start()
         {
             if (PlayerInputManager.instance)
@@ -30,7 +43,18 @@ namespace Player
 
         public void Switch()
         {
+            if (!canSwitch) return;
+            
             color = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;
+            sphereRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
+            StartCoroutine(SwitchCooldown());
+        }
+
+        private IEnumerator SwitchCooldown()
+        {
+            canSwitch = false;
+            yield return new WaitForSeconds(data.switchColorCooldown);
+            canSwitch = true;
         }
     }
 

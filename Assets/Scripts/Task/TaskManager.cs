@@ -11,20 +11,15 @@ namespace Task
         [SerializeField, MinMaxRange(1, 10)] private RangedInt timeBeforeNextTask;
         [SerializeField] private List<Task> tasks;
 
-        [SerializeField, ReadOnly] private List<Task> nextTasks;
-        [SerializeField, ReadOnly] private List<Task> currentTasks = new List<Task>();
+        private Queue<Task> nextTasks;
+        public List<Task> currentTasks = new List<Task>();
 
-        private bool isCycling = true;
+        public bool isCycling;
 
         private void Awake()
         {
             RefreshNextTasks();
-            //StartCoroutine(TaskCycle());
-        }
-
-        private void Start()
-        {
-            Debug.Log("Probuilder");
+            StartCoroutine(TaskCycle());
         }
 
         private IEnumerator TaskCycle()
@@ -40,32 +35,32 @@ namespace Task
 
         private void RefreshNextTasks()
         {
-            nextTasks = new List<Task>(tasks);
-            nextTasks.Shuffle();
+            List<Task> tasksToAdd = new List<Task>(tasks);
+            tasksToAdd.Shuffle();
+            Debug.Log(tasksToAdd.RemoveAll(task => currentTasks.Contains(task)));
+            nextTasks = new Queue<Task>(tasksToAdd);
         }
         
         [ContextMenu("Add Task")]
         private void AddTask()
         {
-            Task newTask = nextTasks[0];
+            if (nextTasks.Count == 0) RefreshNextTasks();
+            
+            Task newTask = nextTasks.Peek();
             if (currentTasks.Contains(newTask)) return;
             
-            currentTasks.Add(newTask);
-            nextTasks.RemoveAt(0);
+            currentTasks.Add(nextTasks.Dequeue());
             
             newTask.OnComplete = CompleteTask;
             newTask.gameObject.SetActive(true);
             newTask.Init();
-            Debug.Log($"New Task {newTask.gameObject.name}");
-            
-            if (nextTasks.Count == 0) RefreshNextTasks();
         }
 
         private void CompleteTask(Task task)
         {
             currentTasks.Remove(task);
             task.gameObject.SetActive(false);
-            //if (!isCycling) StartCoroutine(TaskCycle());
+            if (!isCycling) StartCoroutine(TaskCycle());
         }
     }
 }

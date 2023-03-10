@@ -12,7 +12,8 @@ namespace Player
         private float turnSmoothAngle;
         private float accelerationProgress;
         private float deccelerationProgress;
-        
+        private float rotationProgress;
+
         public void Move(Vector2 moveInput)
         {
             if (moveInput is { x: < 0.1f, y: < 0.1f } and { x: > -0.1f, y: > -0.1f })
@@ -32,12 +33,27 @@ namespace Player
         public void Rotate(Vector2 rotateInput)
         {
             rb.angularVelocity = Vector3.zero;
-            
-            if (rotateInput.sqrMagnitude < 0.1f) return;
 
-            var targetAngle = Mathf.Atan2(rotateInput.x, rotateInput.y) * Mathf.Rad2Deg;
-            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothAngle, data.rotationSpeed);
-            transform.rotation = Quaternion.Euler(0, angle, 0);
+            if (rotateInput.sqrMagnitude < 0.1f)
+            {
+                rotationProgress = 0;
+                return;
+            }
+
+            /*var targetAngle = Mathf.Atan2(rotateInput.x, rotateInput.y) * Mathf.Rad2Deg;
+            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothAngle, data.rotationSpeed * Time.deltaTime * 120);
+            transform.rotation = Quaternion.Euler(0, angle, 0);*/
+            
+            var angle = Mathf.Atan2(rotateInput.x, rotateInput.y) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, angle, 0), data.rotationCurve.Evaluate(rotationProgress) * Time.deltaTime * 60);
+
+            rotationProgress += Time.deltaTime;
+        }
+        
+        public void Cancel()
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
     }
 }
