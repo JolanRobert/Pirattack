@@ -17,10 +17,11 @@ public class CheckColorTarget : Node
     public override NodeState Evaluate(Node root)
     {
         owner = GetData<EnemyShield>("caster");
-        if (owner.GetShieldColor() == PlayerColor.None) return NodeState.Success;
+        PlayerColor color = owner.GetShieldColor();
+        if (color == PlayerColor.None) return NodeState.Success;
 
         PlayerController target = GetData<PlayerController>("Target");
-        if (target != null && target.Color == owner.GetShieldColor())
+        if (target != null && target.Color.PColor == color)
             SelectTarget();
         else
             SelectTarget();

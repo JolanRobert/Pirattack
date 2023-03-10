@@ -43,7 +43,7 @@ namespace AI
 
         private void ShieldTakeDamage(int damage, PlayerController origin)
         {
-            if (ShieldColor != PlayerColor.None && ShieldColor != origin.Color) return;
+            if (ShieldColor != PlayerColor.None && ShieldColor != origin.Color.PColor) return;
             shieldHealth -= damage;
             if (shieldHealth <= 0)
             {
@@ -80,9 +80,9 @@ namespace AI
                 int indexGunAmmo = Random.Range(0, Data.lootGunAmmo.Length);
             
                 Instantiate(Data.lootGun[Random.Range(0, Data.lootGun.Length)], transform.position + Vector3.back * 10 + Vector3.right * (i - 2) + Vector3.right * i * 2 - Vector3.up * 4.5f, Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = MyGameManager.Instance.Players[i].Color == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
+                    .GetComponent<Renderer>().material.color = MyGameManager.Instance.Players[i].Color.PColor == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
                 Instantiate(Data.lootGunAmmo[Random.Range(0, Data.lootGunAmmo.Length)], transform.position + Vector3.back * 10 + Vector3.right * (i - 1) + Vector3.right * i * 2 - Vector3.up * 4.5f, Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = MyGameManager.Instance.Players[i].Color == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
+                    .GetComponent<Renderer>().material.color = MyGameManager.Instance.Players[i].Color.PColor == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
             }
         }
     
