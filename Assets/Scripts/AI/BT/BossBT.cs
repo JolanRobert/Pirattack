@@ -1,30 +1,35 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using AI;
+using AI.BossPattern;
+using AI.BT;
 using BehaviourTree;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Tree = BehaviourTree.Tree;
 
 [Serializable]
 public class BossBT : Tree
 {
-    [SerializeField] private Pattern[] AllPatterns;
+    [SerializeField] private Pattern[] allPatterns;
     [SerializeField] private Boss boss;
-    [SerializeField] private float delayBetweenPatterns = 3f;
 
+    private void OnEnable()
+    {
+        origin?.ClearAllData();
+    }
+    
     protected override Node InitTree()
     {
-        origin = new Selector(new List<Node>
-        {
+        origin = new Selector(
             new InitBossBlackboard(),
-            new InitPatternBoss(AllPatterns, boss),
+            new InitPatternBoss(allPatterns, boss),
             new TaskWaitForSeconds(),
-            new Sequence(new List<Node>
-            {
-                new ChoosePattern(AllPatterns, delayBetweenPatterns),
+            new Sequence(
+                new ChoosePattern(allPatterns),
                 new ExecutePattern()
-            }),
-        });
+            ));
         return origin;
     }
 }

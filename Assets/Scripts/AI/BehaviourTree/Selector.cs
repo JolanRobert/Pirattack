@@ -7,7 +7,7 @@ namespace BehaviourTree
     {
         public Selector() : base() {}
 
-        public Selector(List<Node> children) : base(children)
+        public Selector(params Node[] children) : base(children)
         {
         }
 

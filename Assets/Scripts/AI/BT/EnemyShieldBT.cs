@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using AI.BT;
 using BehaviourTree;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,21 +11,19 @@ public class EnemyShieldBT : Tree
 {
     [SerializeField] private EnemyShield enemy;
     [SerializeField] private NavMeshAgent agent;
-    
+
     protected override Node InitTree()
     {
-        origin = new Selector(new List<Node>
-        {
-            new InitEnemyBlackboard(),
-            new CheckColorTarget(enemy),
+        origin = new Selector(
+            new InitEnemyBlackboard(enemy),
             new TaskWaitForSeconds(),
-            new Sequence(new List<Node>
-            {
-                new CanAttack(enemy.gameObject.transform),
-                new AttackProjectile(),
-            }),
-            new MoveToTarget(agent),
-        });
+            new CheckColorTarget(),
+            new Sequence(
+                new CanAttack(enemy.transform),
+                new AttackProjectile()
+            ),
+            new MoveToTarget(agent)
+        );
         return origin;
     }
 }
