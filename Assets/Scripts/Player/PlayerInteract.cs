@@ -21,7 +21,7 @@ namespace Player
         
         private bool LBInput;
         private bool RBInput;
-        private bool AInput;
+        private bool AInputDown, AInput;
         private Vector2 leftStickInput;
         private Vector2 rightStickInput;
         
@@ -38,7 +38,8 @@ namespace Player
         
         public void OnA(InputAction.CallbackContext context)
         {
-            if (context.started) AInput = true;
+            if (context.started) AInputDown = true;
+            AInput = context.performed;
         }
 
         public void OnLeftStick(InputAction.CallbackContext context)
@@ -82,7 +83,7 @@ namespace Player
             {
                 if (!task.IsValid()) return;
                 if (task is TaskToilet tToilet) tToilet.HandleInput(LBInput, RBInput);
-                else if (task is TaskBedItem tBedItem) tBedItem.HandleInput(AInput);
+                else if (task is TaskBedItem tBedItem) tBedItem.HandleInput(AInputDown);
             }
             
             ResetInputs();
@@ -112,7 +113,7 @@ namespace Player
         {
             LBInput = false;
             RBInput = false;
-            AInput = false;
+            AInputDown = false;
         }
     }
 }

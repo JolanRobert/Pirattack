@@ -41,8 +41,7 @@ public class Bullet : MonoBehaviour
                     break;
             }
         }
-
-        if (!(entity is PlayerCollision && owner))
-            Pooler.Instance.Depop(Key.Bullet, gameObject);
+        
+        Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
 }
