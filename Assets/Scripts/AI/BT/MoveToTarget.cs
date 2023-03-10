@@ -15,15 +15,15 @@ namespace AI.BT
 
         public override NodeState Evaluate(Node root)
         {
-            float distance = 0;
-            var enemyShield = GetData("caster");
+            //float distance = 0;
+            /*var enemyShield = GetData("caster");
             if (enemyShield is EnemyShield shield)
                 distance = shield.Data.AttackDistance;
             else
             {
                 Enemy enemy = enemyShield as Enemy;
                 if (enemy != null) distance = enemy.Data.AttackDistance;
-            }
+            }*/
             PlayerController target = GetData<PlayerController>("Target");
             if (target == null)
             {
@@ -32,7 +32,7 @@ namespace AI.BT
             }
 
             Vector3 direction = (target.transform.position - agent.transform.position).normalized;
-            Vector3 destination = target.gameObject.transform.position - direction * distance;
+            Vector3 destination = target.gameObject.transform.position/* - direction * distance*/;
             destination.y = agent.transform.position.y;
             agent.SetDestination(destination);
             return NodeState.Success;
