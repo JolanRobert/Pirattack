@@ -31,11 +31,16 @@ public class CanAttack : Node
             distanceMin = (enemyShield as EnemyShield).Data.AttackDistance;
         else
             distanceMin = (enemyShield as Enemy).Data.AttackDistance;
-        if (canAttack && Vector3.Distance(target.transform.position, transform.position) <= distanceMin + 0.5f)
-        {
-            Debug.Log("Can attack");
-            return NodeState.Success;
-        }
-        return NodeState.Failure;
+        
+        if (!canAttack || !(Vector3.Distance(target.transform.position, transform.position) <= distanceMin + 0.5f))
+            return NodeState.Failure;
+        
+        if (!Physics.Raycast(transform.position, target.transform.position - transform.position, out var hit, 100))
+            return NodeState.Failure;
+        
+        if (hit.collider.gameObject != target.gameObject) return NodeState.Failure;
+        
+        Debug.Log("Can attack");
+        return NodeState.Success;
     }
 }

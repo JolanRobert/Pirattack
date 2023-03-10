@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using MyBox;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Player
 {
@@ -29,16 +28,10 @@ namespace Player
             OnSwitchColor -= Switch;
         }
 
-        public void InitColor(PlayerColor color)
+        public void InitColor(PlayerColor newColor)
         {
+            color = newColor;
             sphereRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
-            this.color = color;
-        }
-        
-        private void Start()
-        {
-            if (PlayerInputManager.instance)
-                color = (PlayerColor)PlayerInputManager.instance.playerCount - 1;
         }
 
         public void Switch()
@@ -60,8 +53,6 @@ namespace Player
 
     public enum PlayerColor
     {
-        Blue,
-        Red,
-        None
+        Blue, Red, None
     }
 }

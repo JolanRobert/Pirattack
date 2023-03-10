@@ -71,6 +71,60 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CancelInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""00c74a7c-6d26-4596-95ac-daa28f97a979"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LB"",
+                    ""type"": ""Button"",
+                    ""id"": ""705eb60d-073a-4f29-9f79-ceae16a13635"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RB"",
+                    ""type"": ""Button"",
+                    ""id"": ""0f67fbdb-b9d1-4552-a4b1-5f00787000d1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""A"",
+                    ""type"": ""Button"",
+                    ""id"": ""bbb9b46a-67b6-4fd9-958b-46d2f1f5fd36"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftStick"",
+                    ""type"": ""Value"",
+                    ""id"": ""452e1397-1a50-42db-92d6-43ec1cbef052"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RightStick"",
+                    ""type"": ""Value"",
+                    ""id"": ""cf10cb36-8e11-463d-bec9-31c4aee64a3f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -201,7 +255,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""SwitchColor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -209,11 +263,77 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1f1b2ddf-d5f6-4ee1-9977-059b1ad636e4"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b648cd4-ff34-4a1c-9b8f-2ec8d34df62c"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CancelInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0369d802-a4c7-4bec-8f4a-e49bf68008e9"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""LB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b7b3c5f-aa94-43a2-817e-59ca306d5dda"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""499a767d-c91a-4a2e-a297-0225878b14ee"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""A"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""71bc2311-7bf1-475a-8602-572c02b2a625"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""LeftStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2151b77b-e9f7-4f9c-866d-df08fc0619d1"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RightStick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -384,6 +504,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_SwitchColor = m_Player.FindAction("SwitchColor", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_CancelInteract = m_Player.FindAction("CancelInteract", throwIfNotFound: true);
+        m_Player_LB = m_Player.FindAction("LB", throwIfNotFound: true);
+        m_Player_RB = m_Player.FindAction("RB", throwIfNotFound: true);
+        m_Player_A = m_Player.FindAction("A", throwIfNotFound: true);
+        m_Player_LeftStick = m_Player.FindAction("LeftStick", throwIfNotFound: true);
+        m_Player_RightStick = m_Player.FindAction("RightStick", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Return = m_UI.FindAction("Return", throwIfNotFound: true);
@@ -456,6 +582,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_SwitchColor;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_CancelInteract;
+    private readonly InputAction m_Player_LB;
+    private readonly InputAction m_Player_RB;
+    private readonly InputAction m_Player_A;
+    private readonly InputAction m_Player_LeftStick;
+    private readonly InputAction m_Player_RightStick;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -465,6 +597,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @SwitchColor => m_Wrapper.m_Player_SwitchColor;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @CancelInteract => m_Wrapper.m_Player_CancelInteract;
+        public InputAction @LB => m_Wrapper.m_Player_LB;
+        public InputAction @RB => m_Wrapper.m_Player_RB;
+        public InputAction @A => m_Wrapper.m_Player_A;
+        public InputAction @LeftStick => m_Wrapper.m_Player_LeftStick;
+        public InputAction @RightStick => m_Wrapper.m_Player_RightStick;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -489,6 +627,24 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @CancelInteract.started += instance.OnCancelInteract;
+            @CancelInteract.performed += instance.OnCancelInteract;
+            @CancelInteract.canceled += instance.OnCancelInteract;
+            @LB.started += instance.OnLB;
+            @LB.performed += instance.OnLB;
+            @LB.canceled += instance.OnLB;
+            @RB.started += instance.OnRB;
+            @RB.performed += instance.OnRB;
+            @RB.canceled += instance.OnRB;
+            @A.started += instance.OnA;
+            @A.performed += instance.OnA;
+            @A.canceled += instance.OnA;
+            @LeftStick.started += instance.OnLeftStick;
+            @LeftStick.performed += instance.OnLeftStick;
+            @LeftStick.canceled += instance.OnLeftStick;
+            @RightStick.started += instance.OnRightStick;
+            @RightStick.performed += instance.OnRightStick;
+            @RightStick.canceled += instance.OnRightStick;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -508,6 +664,24 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @CancelInteract.started -= instance.OnCancelInteract;
+            @CancelInteract.performed -= instance.OnCancelInteract;
+            @CancelInteract.canceled -= instance.OnCancelInteract;
+            @LB.started -= instance.OnLB;
+            @LB.performed -= instance.OnLB;
+            @LB.canceled -= instance.OnLB;
+            @RB.started -= instance.OnRB;
+            @RB.performed -= instance.OnRB;
+            @RB.canceled -= instance.OnRB;
+            @A.started -= instance.OnA;
+            @A.performed -= instance.OnA;
+            @A.canceled -= instance.OnA;
+            @LeftStick.started -= instance.OnLeftStick;
+            @LeftStick.performed -= instance.OnLeftStick;
+            @LeftStick.canceled -= instance.OnLeftStick;
+            @RightStick.started -= instance.OnRightStick;
+            @RightStick.performed -= instance.OnRightStick;
+            @RightStick.canceled -= instance.OnRightStick;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -611,6 +785,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnSwitchColor(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnCancelInteract(InputAction.CallbackContext context);
+        void OnLB(InputAction.CallbackContext context);
+        void OnRB(InputAction.CallbackContext context);
+        void OnA(InputAction.CallbackContext context);
+        void OnLeftStick(InputAction.CallbackContext context);
+        void OnRightStick(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
