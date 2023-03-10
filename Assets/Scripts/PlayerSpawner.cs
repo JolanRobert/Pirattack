@@ -7,37 +7,28 @@ using UnityEngine.SceneManagement;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    public static PlayerController Player1;
-    public static PlayerController Player2;
-    
     [SerializeField] private PlayerDeviceBuffer devicesSO;
     [SerializeField] private Transform p1SpawnPoint;
     [SerializeField] private Transform p2SpawnPoint;
-    
+
+    private PlayerInput playerInput1, playerInput2;
     private void Start()
     {
+        if (devicesSO.player1Device is null && Gamepad.all.Count > 0) devicesSO.player1Device = Gamepad.all[0];
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Game"));
         
-        PlayerInputManager pim = PlayerInputManager.instance;
-        pim.JoinPlayer(playerIndex:0, controlScheme: "Gamepad", pairWithDevice: devicesSO.player1Device);
-        pim.JoinPlayer(playerIndex:1, controlScheme: "Gamepad", pairWithDevice: devicesSO.player2Device);
+        var pim = PlayerInputManager.instance;
+        playerInput1 = pim.JoinPlayer(playerIndex:0, controlScheme: "Gamepad", pairWithDevice: devicesSO.player1Device);
+        playerInput2 = pim.JoinPlayer(playerIndex:1, controlScheme: "Gamepad", pairWithDevice: devicesSO.player2Device);
+        
+        var player1 = playerInput1.GetComponent<PlayerController>();
+        var player2 = playerInput2.GetComponent<PlayerController>();
+        
+        player1.Init(p1SpawnPoint.position, PlayerColor.Blue);
+        player2.Init(p2SpawnPoint.position, PlayerColor.Red);
+        
+        CameraManager.instance.InitializePlayer(playerInput1);
+        CameraManager.instance.InitializePlayer(playerInput2);
     }
 
-    private void OnPlayerJoined(PlayerInput player)
-    {
-        if (player.playerIndex == 0)
-        {
-            Player1 = player.GetComponent<PlayerController>();
-            Player1.StartPosition = p1SpawnPoint.position;
-            Player1.Color.InitColor(PlayerColor.Blue);
-        }
-        else
-        {
-            Player2 = player.GetComponent<PlayerController>();
-            Player2.StartPosition = p2SpawnPoint.position;
-            Player2.Color.InitColor(PlayerColor.Red);
-        }
-        
-        CameraManager.instance.InitializePlayer(player);
-    }
 }

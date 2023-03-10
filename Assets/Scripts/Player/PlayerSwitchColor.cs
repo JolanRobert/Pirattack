@@ -28,9 +28,9 @@ namespace Player
             OnSwitchColor -= Switch;
         }
 
-        public void InitColor(PlayerColor color)
+        public void InitColor(PlayerColor newColor)
         {
-            this.color = color;
+            color = newColor;
             sphereRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
         }
 

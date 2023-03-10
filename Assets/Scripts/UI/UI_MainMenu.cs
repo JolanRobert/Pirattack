@@ -205,15 +205,15 @@ namespace UI
                 }
             }
 
-            public void SetMainDeviceToDefault()
+            private void SetMainDeviceToDefault()
             {
                 var gamepads = Gamepad.all;
                 if (gamepads.Count <= 0) return;
                 playerInput.SwitchCurrentControlScheme(gamepads[0]);
                 lastMainDevice = gamepads[0];
             }
-            
-            public void SetMainDeviceToOnlyLast()
+
+            private void SetMainDeviceToOnlyLast()
             {
                 if (lastMainDevice is null) return;
                 playerInput.SwitchCurrentControlScheme(lastMainDevice);
@@ -229,8 +229,6 @@ namespace UI
                     case InputDeviceChange.Reconnected:
                         SetMainDeviceToOnlyLast();
                         break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(change), change, null);
                 }
             }
         #endregion

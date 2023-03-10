@@ -331,7 +331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0417a8ff8a0f48ceaffe52f561978034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPosition: {x: 0, y: 0, z: 0}
   data: {fileID: 11400000, guid: 45fd4d20e314ef14593960a94ec76e63, type: 2}
   playerInput: {fileID: 5279964875902474849}
   playerMovement: {fileID: 5398305621724039023}
@@ -340,6 +339,7 @@ MonoBehaviour:
   playerCollision: {fileID: 1715889565026001892}
   playerInteract: {fileID: 2282690922230610877}
   playerRespawn: {fileID: 5152434294688659781}
+  rb: {fileID: 8432319942325821711}
 --- !u!114 &5398305621724039023
 MonoBehaviour:
   m_ObjectHideFlags: 0
