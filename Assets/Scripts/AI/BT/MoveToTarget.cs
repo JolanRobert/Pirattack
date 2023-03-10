@@ -7,7 +7,7 @@ namespace AI.BT
 {
     public class MoveToTarget : Node
     {
-        private NavMeshAgent agent;
+        private readonly NavMeshAgent agent;
         public MoveToTarget(NavMeshAgent _agent)
         {
             agent = _agent;
@@ -25,15 +25,17 @@ namespace AI.BT
                 if (enemy != null) distance = enemy.Data.AttackDistance;
             }*/
             PlayerController target = GetData<PlayerController>("Target");
+            var agentPosition = agent.transform.position;
+            var targetPosition = target.transform.position;
             if (target == null)
             {
-                agent.SetDestination(agent.transform.position);
+                agent.SetDestination(agentPosition);
                 return NodeState.Failure;
             }
 
-            Vector3 direction = (target.transform.position - agent.transform.position).normalized;
-            Vector3 destination = target.gameObject.transform.position/* - direction * distance*/;
-            destination.y = agent.transform.position.y;
+            Vector3 direction = (targetPosition - agentPosition).normalized;
+            Vector3 destination = targetPosition/* - direction * distance*/;
+            destination.y = agentPosition.y;
             agent.SetDestination(destination);
             return NodeState.Success;
         }
