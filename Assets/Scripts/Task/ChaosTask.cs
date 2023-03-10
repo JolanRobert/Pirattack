@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using InteractiveTrigger;
 using MyBox;
 using Player;
 using UnityEngine;
@@ -13,7 +12,6 @@ namespace Task
     {
         public Action<ChaosTask> OnComplete;
 
-        [SerializeField] private Renderer cubeRenderer;
         [SerializeField, ReadOnly] private PlayerColor requiredColor = PlayerColor.None;
         
         public void Init()
@@ -39,12 +37,6 @@ namespace Task
             }
 
             return false;
-        }
-
-        protected void Complete()
-        {
-            OnComplete.Invoke(this);
-            Debug.Log("Task is complete!");
         }
     }
 }

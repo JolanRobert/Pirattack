@@ -83,6 +83,7 @@ namespace Player
             {
                 if (!task.IsValid()) return;
                 if (task is TaskToilet tToilet) tToilet.HandleInput(LBInput, RBInput);
+                else if (task is TaskBed tBed) tBed.HandleInput(AInput);
             }
             
             ResetInputs();

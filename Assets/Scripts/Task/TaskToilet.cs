@@ -1,5 +1,4 @@
 using DG.Tweening;
-using InteractiveTrigger;
 using MyBox;
 using UnityEngine;
 
@@ -8,9 +7,9 @@ namespace Task
     public class TaskToilet : ChaosTask
     {
         [Separator("Task Toilet")]
-        [SerializeField] private float amountPerInput;
+        [SerializeField, Range(0.01f,1)] private float amountPerInput;
+        [SerializeField, Range(0.01f,1)] private float lossAmountPerSec;
         [SerializeField] private float timeBeforeLosing;
-        [SerializeField] private float lossAmountPerSec;
 
         private Input nextInput;
         private float timer;
@@ -61,6 +60,12 @@ namespace Task
 
             progressBar.DOKill();
             progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
+        }
+        
+        private void Complete()
+        {
+            OnComplete.Invoke(this);
+            Debug.Log("Task is complete!");
         }
         
         private enum Input
