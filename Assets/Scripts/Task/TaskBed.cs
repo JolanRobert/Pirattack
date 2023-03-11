@@ -1,37 +1,48 @@
-using DG.Tweening;
+using System.Collections.Generic;
 using MyBox;
+using Player;
 using UnityEngine;
 
 namespace Task
 {
     public class TaskBed : ChaosTask
     {
+        public float AmountPerInput => amountPerInput;
+
         [Separator("Task Bed")]
+        [SerializeField] private List<TaskBedItem> beds;
         [SerializeField, Range(0.01f,1)] private float amountPerInput;
-        
-        protected override void OnCancel()
+
+        private List<TaskBedItem> bedsLeft;
+
+        protected new void OnEnable()
         {
-            progressBar.fillAmount = 0;
-        }
-        
-        public void HandleInput(bool aInput)
-        {
-            if (aInput) IncreaseBar();
+            base.OnEnable();
+
+            bedsLeft = new List<TaskBedItem>(beds);
+            foreach (TaskBedItem bed in beds)
+            {
+                bed.gameObject.SetActive(true);
+            }
         }
 
-        private void IncreaseBar()
+        public override void Init()
         {
-            float newAmount = progressBar.fillAmount + amountPerInput;
-
-            progressBar.DOKill();
-            Tween tween = progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
-            if (newAmount >= 1) tween.onComplete += Complete;
+            foreach (TaskBedItem item in beds)
+            {
+                item.SetRequiredColor(GetRandomColor());
+            }
         }
-        
+
+        public void Progress(TaskBedItem item)
+        {
+            bedsLeft.Remove(item);
+            if (bedsLeft.Count == 0) Complete();
+        }
+
         private void Complete()
         {
             OnComplete.Invoke(this);
-            Debug.Log("Task is complete!");
         }
     }
 }

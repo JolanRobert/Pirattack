@@ -74,15 +74,15 @@ namespace AI
 
         private void LootSystem()
         {
-            for (int i = 0; i < MyGameManager.Instance.Players.Length; i++)
+            for (int i = 0; i < PlayerManager.Players.Count; i++)
             {
                 int indexGun = Random.Range(0, Data.lootGun.Length);
                 int indexGunAmmo = Random.Range(0, Data.lootGunAmmo.Length);
             
                 Instantiate(Data.lootGun[Random.Range(0, Data.lootGun.Length)], transform.position + Vector3.back * 10 + Vector3.right * (i - 2) + Vector3.right * i * 2 - Vector3.up * 4.5f, Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = MyGameManager.Instance.Players[i].Color.PColor == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
+                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
                 Instantiate(Data.lootGunAmmo[Random.Range(0, Data.lootGunAmmo.Length)], transform.position + Vector3.back * 10 + Vector3.right * (i - 1) + Vector3.right * i * 2 - Vector3.up * 4.5f, Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = MyGameManager.Instance.Players[i].Color.PColor == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
+                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
             }
         }
     
