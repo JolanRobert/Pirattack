@@ -8,19 +8,21 @@ namespace Task
     public class TaskMustache : ChaosTask
     {
         [Separator("Task Mustache")]
-        [SerializeField] private float angleCheckTimer;
-        [SerializeField, Range(0f,180f)] private float minAnglePerCheck;
-        [SerializeField, Range(0.01f,1)] private float gainAmountPer30over;
+        [SerializeField, ReadOnly] private float angleCheckTimer;
+        [SerializeField, Range(0f,360)] private float minAnglePerCheck;
         [SerializeField, Range(0.01f,1)] private float lossAmountPerSec;
+        [SerializeField] private float speedFactor = 1;
 
         private Vector2 leftInput, rightInput;
         private Vector2 lastLeftInput, lastRightInput;
-        private bool isCheckingLeft, isCheckingRight;
+        private bool isChecking;
 
-        public float currentAngle;
+        private float currentAngle;
+        private float timer;
         
         protected override void OnCancel()
         {
+            progressBar.DOKill();
             progressBar.fillAmount = 0;
         }
  
@@ -28,31 +30,24 @@ namespace Task
         {
             base.OnEnable();
 
-            isCheckingLeft = false;
-            isCheckingRight = false;
-
+            isChecking = false;
             currentAngle = 0;
+            timer = 0.3f;
         }
  
         public void HandleInput(Vector2 leftInput, Vector2 rightInput)
         {
             this.leftInput = leftInput;
             this.rightInput = rightInput;
-            
-            if (leftInput != lastLeftInput && !isCheckingLeft) StartCoroutine(LeftSpinDetection());
-            if (rightInput != lastRightInput && !isCheckingRight) StartCoroutine(RightSpinDetection());
 
-            currentAngle -= Time.deltaTime * angleCheckTimer * minAnglePerCheck;
-            if (currentAngle <= 0) currentAngle = 0;
-            if (!DOTween.IsTweening(progressBar)) DecreaseBar();
+            if (!isChecking) StartCoroutine(SpinDetection());
 
-            Debug.Log(currentAngle);
+            timer -= Time.deltaTime;
         }
         
         private void IncreaseBar()
         {
-            float angleDiff = currentAngle - minAnglePerCheck;
-            float newAmount = progressBar.fillAmount + angleDiff / 30 * gainAmountPer30over;
+            float newAmount = progressBar.fillAmount + currentAngle / 360 * speedFactor;
 
             progressBar.DOKill();
             Tween tween = progressBar.DOFillAmount(newAmount, angleCheckTimer).SetEase(Ease.Linear);
@@ -62,10 +57,10 @@ namespace Task
         private void DecreaseBar()
         {
             if (progressBar.fillAmount == 0) return;
-            float newAmount = progressBar.fillAmount - Time.deltaTime * lossAmountPerSec;
+            float newAmount = progressBar.fillAmount - lossAmountPerSec*angleCheckTimer;
 
             progressBar.DOKill();
-            progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
+            progressBar.DOFillAmount(newAmount, angleCheckTimer).SetEase(Ease.Linear);
         }
         
         private void Complete()
@@ -74,36 +69,28 @@ namespace Task
             Debug.Log("Task is complete!");
         }
 
-        private IEnumerator LeftSpinDetection()
+        private IEnumerator SpinDetection()
         {
-            isCheckingLeft = true;
+            isChecking = true;
+
             lastLeftInput = leftInput;
-
-            yield return new WaitForSeconds(angleCheckTimer);
-
-            currentAngle += Vector2.Angle(lastLeftInput, leftInput);
-            isCheckingLeft = false;
-            
-            CheckAngleDiff();
-        }
-        
-        private IEnumerator RightSpinDetection()
-        {
-            isCheckingRight = true;
             lastRightInput = rightInput;
-
+            
             yield return new WaitForSeconds(angleCheckTimer);
             
+            currentAngle += Vector2.Angle(lastLeftInput, leftInput);
             currentAngle += Vector2.Angle(lastRightInput, rightInput);
-            isCheckingRight = false;
-            
-            CheckAngleDiff();
-        }
+            currentAngle -= minAnglePerCheck;
 
-        private void CheckAngleDiff()
-        {
-            if (currentAngle > minAnglePerCheck) IncreaseBar();
+            if (currentAngle >= 0)
+            {
+                IncreaseBar();
+                timer = 0.3f;
+            }
+            else if (timer <= 0) DecreaseBar();
+
             currentAngle = 0;
+            isChecking = false;
         }
     }
 }
