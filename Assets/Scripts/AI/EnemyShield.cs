@@ -10,25 +10,37 @@ public class EnemyShield : Enemy
 
     private void OnEnable()
     {
-        damage = Data.damage; // possible to change damage value
-        maxHp = Data.maxHealth; // possible to change max health value
-        agent.speed = Data.speed;
-        healthEnemy.Init((int)maxHp);
-        PlayerColor color = (PlayerColor)Random.Range(0, 2);
-       AssignShieldColor(color);
-       //ChangeShieldRendererColor(color);
-       ResetAttackDefaultValue();
-       healthEnemy.onDeath = OnDie;
-       healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
-       BTShield.ResetBlackboard();
-       BTShield.enabled = true;
+        healthEnemy.onDeath = OnDie;
+        if (GameManager.Instance) healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
+        
+        BTShield.enabled = true;
     }
     
     private void OnDisable()
     {
+        if (GameManager.Instance) healthEnemy.onDeath -= GameManager.Instance.AddEnemyKilled;
+        
         BTShield.enabled = false;
     }
-    
+
+    private void Awake()
+    {
+        damage = Data.damage; // possible to change damage value
+        maxHp = Data.maxHealth; // possible to change max health value
+        agent.speed = Data.speed;
+        
+        PlayerColor color = (PlayerColor)Random.Range(0, 2);
+        AssignShieldColor(color);
+        //ChangeShieldRendererColor(color);
+        ResetAttackDefaultValue();
+        BTShield.ResetBlackboard();
+    }
+
+    private void Start()
+    {
+        healthEnemy.Init(maxHp);
+    }
+
     // public void ChangeShieldRendererColor(PlayerColor color)
     // {
     //     switch (color)

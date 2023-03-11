@@ -7,10 +7,8 @@ namespace Player
     public class PlayerShoot : MonoBehaviour
     {
         [SerializeField] private PlayerController playerController;
+        [SerializeField] private WeaponData weaponData;
         [SerializeField] private Transform firePoint;
-        
-        private PlayerData data => playerController.Data;
-        [SerializeField] private WeaponData weapon;
 
         private bool canShoot = true;
 
@@ -18,16 +16,16 @@ namespace Player
         {
             if (!canShoot) return;
             
-            BulletBehavior bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<BulletBehavior>();
+            Bullet bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<Bullet>();
             bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
-            bullet.Init(weapon, playerController);
+            bullet.Init(playerController, weaponData);
             StartCoroutine(ShootCooldown());
         }
 
         private IEnumerator ShootCooldown()
         {
             canShoot = false;
-            yield return new WaitForSeconds(1 / data.attackSpeed);
+            yield return new WaitForSeconds(1 / weaponData.fireRate);
             canShoot = true;
         }
     }

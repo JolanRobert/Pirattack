@@ -367,8 +367,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 7102844447484125359}
+  weaponData: {fileID: 11400000, guid: 4a273582232152646813047f2edef602, type: 2}
   firePoint: {fileID: 1023871615444969245}
-  weapon: {fileID: 11400000, guid: 4a273582232152646813047f2edef602, type: 2}
 --- !u!114 &8277088488143925093
 MonoBehaviour:
   m_ObjectHideFlags: 0
