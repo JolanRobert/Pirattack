@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6639291524338660306}
   - component: {fileID: 9163636531104725141}
   - component: {fileID: 5325602303719954824}
-  - component: {fileID: 7985490768449152014}
   m_Layer: 0
   m_Name: ImpactVFX
   m_TagString: Untagged
@@ -4887,19 +4886,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &7985490768449152014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 362027995258581016}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b349776922a508e40bec86978e5681ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleSystem: {fileID: 0}
 --- !u!1 &872289632893344932
 GameObject:
   m_ObjectHideFlags: 0
@@ -9824,7 +9810,6 @@ GameObject:
   - component: {fileID: 8576614220463208735}
   - component: {fileID: 8738652332705372372}
   - component: {fileID: 8043459452745764951}
-  - component: {fileID: 2288537647992554377}
   m_Layer: 0
   m_Name: ImpactWaves
   m_TagString: Untagged
@@ -14709,19 +14694,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &2288537647992554377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2979935283177968898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b349776922a508e40bec86978e5681ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleSystem: {fileID: 0}
 --- !u!1 &3372077107701150023
 GameObject:
   m_ObjectHideFlags: 0
@@ -14757,7 +14729,7 @@ Transform:
   - {fileID: 9521898876644820}
   - {fileID: 6639291524338660306}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &5330579316737851752
 ParticleSystemRenderer:
