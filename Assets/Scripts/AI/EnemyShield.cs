@@ -19,6 +19,7 @@ public class EnemyShield : Enemy
        //ChangeShieldRendererColor(color);
        ResetAttackDefaultValue();
        healthEnemy.onDeath = OnDie;
+       healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
        BTShield.ResetBlackboard();
        BTShield.enabled = true;
     }
