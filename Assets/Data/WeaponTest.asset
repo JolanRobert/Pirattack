@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 10
   bulletLifespan: 5
-  damage: 10
+  damage: 50
   nbBounce: 2
   nbPierce: 2
   fireRate: 4

@@ -61,7 +61,7 @@ public class AITEST : MonoBehaviour
 
     private void SwapPlayerColor()
     {
-        player.RequestSwitchColor();
+        //player.RequestSwitchColor();
         PrintPlayerColor();
     }
 

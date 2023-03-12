@@ -40,12 +40,12 @@ public class Bullet : MonoBehaviour
         Pooler.Instance.DelayedDepop(data.bulletLifespan, Key.Bullet, gameObject);
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision collision)
     {
         // TODO : Remplacer l'instanciation VFX par un Pool
         
         //Hit entity
-        if (other.gameObject.TryGetComponent(out IDamageable entity))
+        if (collision.gameObject.TryGetComponent(out IDamageable entity))
         {
             //Enemy damage player
             if (entity is PlayerCollision && !owner) entity.Damage(damage);
@@ -68,16 +68,15 @@ public class Bullet : MonoBehaviour
         {
             if (nbBounce > 0)
             {
-                Vector3 normal = other.contacts[0].normal;
+                Vector3 normal = collision.contacts[0].normal;
                 Destroy(Instantiate(particleSystem, transform.position, Quaternion.LookRotation(-normal)), 0.3f);
-                rb.velocity = Vector3.Reflect(transform.forward, normal) * speed;
+                rb.velocity = Vector3.Reflect(rb.velocity.normalized, normal) * speed;
                 nbBounce--;
                 return;
             }
-            
-            Destroy(Instantiate(particleSystem, transform.position, transform.rotation), 0.3f);
         }
         
+        Destroy(Instantiate(particleSystem,transform.position,transform.rotation),0.3f);
         Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
 }

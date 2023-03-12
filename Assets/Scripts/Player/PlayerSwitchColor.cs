@@ -34,12 +34,13 @@ namespace Player
             sphereRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
         }
 
-        public void Switch()
+        private void Switch()
         {
             if (!canSwitch) return;
             
             color = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;
             sphereRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
+            playerController.Interact.EndInteract();
             StartCoroutine(SwitchCooldown());
         }
 
