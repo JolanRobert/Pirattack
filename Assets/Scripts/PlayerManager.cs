@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using DefaultNamespace;
 using Player;
@@ -33,10 +32,12 @@ public class PlayerManager : MonoBehaviour
         var playerInput1 = pim.JoinPlayer(playerIndex:0, controlScheme: "Gamepad", pairWithDevice: devicesSO.player1Device);
         var playerInput2 = pim.JoinPlayer(playerIndex:1, controlScheme: "Gamepad", pairWithDevice: devicesSO.player2Device);
 
-        Players = new List<PlayerController>();
-        Players.Add(playerInput1.GetComponent<PlayerController>());
-        Players.Add(playerInput2.GetComponent<PlayerController>());
-        
+        Players = new List<PlayerController>
+        {
+            playerInput1.GetComponent<PlayerController>(),
+            playerInput2.GetComponent<PlayerController>()
+        };
+
         Players[0].Init(p1SpawnPoint.position, PlayerColor.Blue);
         Players[1].Init(p2SpawnPoint.position, PlayerColor.Red);
         

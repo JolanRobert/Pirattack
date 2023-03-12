@@ -60,7 +60,7 @@ namespace UI
         private void Start()
         {
             var root = layout.rootVisualElement;
-        
+
             // Buttons
             playBT = root.Q<Button>(BT_PLAY);
             quitBT = root.Q<Button>(BT_QUIT);
@@ -85,11 +85,9 @@ namespace UI
             
             // Default values
             DisplayMenu(true);
-
-            // Devices
+            UpdatePlayer(true, null);
+            UpdatePlayer(false, null);
             SetMainDeviceToDefault();
-            devicesSO.player1Device = null;
-            devicesSO.player2Device = null;
         }
 
         private void Update()
@@ -98,6 +96,24 @@ namespace UI
         }
 
         #region UI Update
+            private void UpdatePlayer(bool p1, InputDevice newDevice)
+            {
+                if (p1) devicesSO.player1Device = newDevice;
+                else devicesSO.player2Device = newDevice;
+
+                var visible = newDevice is not null;
+                if (p1)
+                {
+                    p1ImgVE.visible = visible;
+                    p1Ready.visible = visible;
+                }
+                else
+                {
+                    p2ImgVE.visible = visible;
+                    p2Ready.visible = visible;
+                }
+            }
+            
             private void BindButton(Button button, Action onClick, bool focusable)
             {
                 button.clicked -= onClick;
@@ -118,16 +134,12 @@ namespace UI
                 {
                     state = MenuState.Menu;
                     playBT.Focus();
-                    devicesSO.player1Device = null;
-                    devicesSO.player2Device = null;
                 }
                 else
                 {
                     StartCoroutine(LaunchLobby());
-                    p1ImgVE.visible = false;
-                    p2ImgVE.visible = false;
-                    p1Ready.visible = false;
-                    p2Ready.visible = false;
+                    UpdatePlayer(true, null);
+                    UpdatePlayer(false, null);
                 }
             }
 
@@ -174,37 +186,34 @@ namespace UI
             }
         #endregion
         
-        #region Input and devices
-            public void TryToJoinPlayer(InputAction.CallbackContext context)
+        public void TryToJoinPlayer(InputAction.CallbackContext context)
+        {
+            var device = context.control.device;
+                
+            if (state is not MenuState.Lobby || device is null) return;
+
+            var p1Device = devicesSO.player1Device;
+            var p2Device = devicesSO.player2Device;
+
+            if (device.Equals(p1Device))
             {
-                var device = context.control.device;
-                    
-                if (state is not MenuState.Lobby || device is null) return;
-
-                var p1Device = devicesSO.player1Device;
-                var p2Device = devicesSO.player2Device;
-
-                if (device.Equals(p1Device))
-                {
-                    p1ImgVE.visible = false;
-                    devicesSO.player1Device = null;
-                } else if (device.Equals(p2Device))
-                {
-                    p2ImgVE.visible = false;
-                    devicesSO.player2Device = null;
-                }
-                else if (p1Device is null)
-                {
-                    p1ImgVE.visible = true;
-                    devicesSO.player1Device = device;
-                }
-                else if (p2Device is null)
-                {
-                    p2ImgVE.visible = true;
-                    devicesSO.player2Device = device;
-                }
+                UpdatePlayer(true, null);
+            } else if (device.Equals(p2Device))
+            {
+                UpdatePlayer(false, null);
             }
-
+            else if (p1Device is null)
+            {
+                UpdatePlayer(true, device);
+            }
+            else if (p2Device is null)
+            {
+                UpdatePlayer(false, device);
+            }
+            
+        }
+        
+        #region Input and devices
             private void SetMainDeviceToDefault()
             {
                 var gamepads = Gamepad.all;
@@ -225,8 +234,10 @@ namespace UI
                 {
                     case InputDeviceChange.Disconnected:
                         if (device.Equals(lastMainDevice)) SetMainDeviceToDefault();
+                        UpdatePlayer(device.Equals(devicesSO.player1Device), null);
                         break;
-                    case InputDeviceChange.Reconnected:
+                    case InputDeviceChange.Added:
+                        MenuManager.Instance.AddPlayer(device);
                         SetMainDeviceToOnlyLast();
                         break;
                 }
