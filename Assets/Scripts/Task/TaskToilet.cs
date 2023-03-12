@@ -14,6 +14,12 @@ namespace Task
         private Input nextInput;
         private float timer;
         
+        protected override void OnCancel()
+        {
+            progressBar.DOKill();
+            progressBar.DOFillAmount(0, 1/lossAmountPerSec).SetEase(Ease.Linear);
+        }
+        
         private new void OnEnable()
         {
             base.OnEnable();

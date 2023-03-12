@@ -37,14 +37,12 @@ namespace Task
         public void Progress(TaskBedItem item)
         {
             bedsLeft.Remove(item);
-            Debug.Log(bedsLeft.Count);
             if (bedsLeft.Count == 0) Complete();
         }
 
         private void Complete()
         {
             OnComplete.Invoke(this);
-            Debug.Log("Task is complete!");
         }
     }
 }
