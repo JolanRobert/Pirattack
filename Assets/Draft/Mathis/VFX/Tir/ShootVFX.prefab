@@ -4952,7 +4952,7 @@ Transform:
   - {fileID: 6970731643515570660}
   - {fileID: 673634627828181288}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!198 &8786222669477268841
 ParticleSystem:
@@ -9820,6 +9820,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 0}
+  bounces: 0
+  pierces: 0
+  damages: 0
+  owner: {fileID: 0}
+  weaponData: {fileID: 0}
+  speed: 0
 --- !u!1 &2752357635166256045
 GameObject:
   m_ObjectHideFlags: 0
@@ -24519,6 +24525,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 0}
+  bounces: 0
+  pierces: 0
+  damages: 0
+  owner: {fileID: 0}
+  weaponData: {fileID: 0}
+  speed: 0
 --- !u!1 &5726527287119614241
 GameObject:
   m_ObjectHideFlags: 0
@@ -24530,7 +24542,6 @@ GameObject:
   - component: {fileID: 2552941683980741452}
   - component: {fileID: 4935925184414170776}
   - component: {fileID: 3001648746445416953}
-  - component: {fileID: 2209134756394784303}
   m_Layer: 0
   m_Name: ImpactWaves
   m_TagString: Untagged
@@ -29415,19 +29426,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &2209134756394784303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5726527287119614241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b349776922a508e40bec86978e5681ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleSystem: {fileID: 0}
 --- !u!1 &6377217104704043506
 GameObject:
   m_ObjectHideFlags: 0
@@ -34325,7 +34323,6 @@ GameObject:
   - component: {fileID: 6270540391202816876}
   - component: {fileID: 6402257480157472322}
   - component: {fileID: 3225888245009127216}
-  - component: {fileID: 2221230496487954229}
   m_Layer: 0
   m_Name: ImpactsSplashs
   m_TagString: Untagged
@@ -39210,16 +39207,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &2221230496487954229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7396739410536917565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b349776922a508e40bec86978e5681ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleSystem: {fileID: 0}

@@ -1,3 +1,4 @@
+using System.Timers;
 using DG.Tweening;
 using MyBox;
 using UnityEngine;
@@ -16,8 +17,9 @@ namespace Task
         
         protected override void OnCancel()
         {
-            progressBar.DOKill();
-            progressBar.DOFillAmount(0, 1/lossAmountPerSec).SetEase(Ease.Linear);
+            base.OnCancel();
+            
+            taskInfos.DoProgressFill(0, 1 / lossAmountPerSec);
         }
         
         private new void OnEnable()
@@ -59,20 +61,17 @@ namespace Task
         
         private void IncreaseBar()
         {
-            float newAmount = progressBar.fillAmount + amountPerInput;
-
-            progressBar.DOKill();
-            Tween tween = progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
+            float newAmount = ProgressAmount + amountPerInput;
+            Tween tween = taskInfos.DoProgressFill(newAmount, Time.deltaTime);
             if (newAmount >= 1) tween.onComplete += Complete;
         }
 
         private void DecreaseBar()
         {
-            if (progressBar.fillAmount == 0) return;
-            float newAmount = progressBar.fillAmount - Time.deltaTime*lossAmountPerSec;
-
-            progressBar.DOKill();
-            progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
+            if (ProgressAmount == 0) return;
+            
+            float newAmount = ProgressAmount - Time.deltaTime * lossAmountPerSec;
+            taskInfos.DoProgressFill(newAmount, Time.deltaTime);
         }
         
         private void Complete()

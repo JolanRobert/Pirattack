@@ -193,8 +193,12 @@ MonoBehaviour:
   healthEnemy: {fileID: 779365937772194499}
   agent: {fileID: 5354188228015821563}
   BT: {fileID: 0}
-  animator: {fileID: 0}
-  rb: {fileID: 0}
+  animator: {fileID: 699064867367454987}
+  rb: {fileID: 5269338767321766461}
+  renderer: {fileID: 4888187534809316240}
+  materials:
+  - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
+  - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
   Data: {fileID: 11400000, guid: edaaf3dc24281744bbc303e9ddc001b3, type: 2}
   BTShield: {fileID: 7140208481260745866}
 --- !u!114 &779365937772194499
@@ -280,6 +284,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Clamp_Idle
       objectReference: {fileID: 0}
+    - target: {fileID: 7749646889685082105, guid: 0baaa521b7aa80546975f2f4a1a17740,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -319,6 +328,12 @@ Animator:
 --- !u!4 &3445441860595843970 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0baaa521b7aa80546975f2f4a1a17740,
+    type: 3}
+  m_PrefabInstance: {fileID: 2907656727672317033}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4888187534809316240 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7749646889685082105, guid: 0baaa521b7aa80546975f2f4a1a17740,
     type: 3}
   m_PrefabInstance: {fileID: 2907656727672317033}
   m_PrefabAsset: {fileID: 0}

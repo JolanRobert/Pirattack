@@ -30,9 +30,8 @@ namespace Task
         {
             foreach (TaskBedItem item in beds)
             {
-                PlayerColor bedColor = GetRandomColor();
-                item.SetRequiredColor(bedColor);
-                UiIndicator.instance.AddObject(item.gameObject, bedColor);
+                requiredColor = GetRandomColor();
+                UiIndicator.instance.AddObject(item.gameObject, requiredColor);
             }
         }
 

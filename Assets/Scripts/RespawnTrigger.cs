@@ -3,12 +3,12 @@ using MyBox;
 using Player;
 using UnityEngine;
 
-public class RespawnTrigger : InteractiveElement
+public class RespawnTrigger : MonoBehaviour
 {
     [Separator("Respawn Trigger")]
     [SerializeField] private PlayerRespawn playerRespawn;
 
-    public void HandleInput(bool respawnInput)
+    /*public void HandleInput(bool respawnInput)
     {
         Debug.Log(respawnInput);
         if (respawnInput) IncreaseBar();
@@ -36,5 +36,5 @@ public class RespawnTrigger : InteractiveElement
     private void Complete()
     {
         playerRespawn.Respawn();
-    }
+    }*/
 }

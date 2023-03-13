@@ -15,9 +15,9 @@ using Utils;
         {
             if (!canShoot) return;
             playerController.Animator.SetTrigger("Attack");
-            BulletBehavior bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<BulletBehavior>();
+            Bullet bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<Bullet>();
             bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
-            bullet.Init(weaponData, playerController);
+            bullet.Init(playerController, weaponData);
             StartCoroutine(ShootCooldown());
         }
 

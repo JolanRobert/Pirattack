@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private EnemyBT BT;
     [SerializeField] protected Animator animator;
     [SerializeField] protected Rigidbody rb;
+    [SerializeField] private SkinnedMeshRenderer renderer;
+    [SerializeField] private Material[] materials;
 
     protected int damage = 0;
     protected int maxHp = 0;
@@ -91,5 +93,23 @@ public class Enemy : MonoBehaviour, IDamageable
     private void Update()
     {
         animator.SetFloat("Velocity", agent.velocity.magnitude);
+    }
+
+    public void SetIced(float duration)
+    {
+        renderer.material = materials[1];
+        GameObject vfx = Pooler.Instance.Pop(Key.PerkIceVFX);
+        vfx.transform.position = transform.position;
+        Pooler.Instance.DelayedDepop(0.5f,Key.PerkIceVFX,vfx);
+        StopIced(duration);
+    }
+
+    public async void StopIced(float duration)
+    {
+        await System.Threading.Tasks.Task.Delay(Mathf.FloorToInt(1000 * duration));
+        renderer.material = materials[0];
+        GameObject vfx = Pooler.Instance.Pop(Key.PerkIceVFX);
+        vfx.transform.position = transform.position;
+        Pooler.Instance.DelayedDepop(0.5f,Key.PerkIceVFX,vfx);
     }
 }
