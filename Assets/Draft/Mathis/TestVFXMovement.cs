@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
+using Utils;
 
 public class TestVFXMovement : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class TestVFXMovement : MonoBehaviour
     public List<GameObject> proj;
     public GameObject prefab;
     public WeaponData weaponData;
+    public PlayerController controller;
     
 
     private void Start()
@@ -29,12 +31,9 @@ public class TestVFXMovement : MonoBehaviour
         else
         {
             timer = loop;
-            proj[0].SetActive(false);
-            proj[0].transform.position = start.position;
-            proj[0].SetActive(true);
-            proj[0].transform.forward = canon.position -start.position;
-            proj.Add(proj[0]);
-            proj.RemoveAt(0);
+            Bullet bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<Bullet>();
+            bullet.transform.SetPositionAndRotation(canon.position, canon.rotation);
+            bullet.Init(controller,weaponData);
         }
 
         for (int i = 0; i < proj.Count; i++)

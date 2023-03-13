@@ -48,14 +48,20 @@ public class Bullet : MonoBehaviour
         if (nbBounce > 0)
         {
             Vector3 normal = collision.GetContact(0).normal;
-            Destroy(Instantiate(particleSystem, transform.position, Quaternion.LookRotation(-normal)), 0.3f);
+            GameObject vfx = Pooler.Instance.Pop(Key.BulletImpactVFX);
+            vfx.transform.position = transform.position;
+            vfx.transform.rotation = Quaternion.LookRotation(-normal);
+            Pooler.Instance.DelayedDepop(0.3f,Key.BulletImpactVFX,vfx);
             rb.velocity = Vector3.Reflect(transform.forward, normal) * speed;
             rb.MoveRotation(Quaternion.LookRotation(rb.velocity));
             nbBounce--;
             return;
         }
         
-        Destroy(Instantiate(particleSystem,transform.position,transform.rotation),0.3f);
+        GameObject vfx2 = Pooler.Instance.Pop(Key.BulletImpactVFX);
+        vfx2.transform.position = transform.position;
+        vfx2.transform.rotation = transform.rotation;
+        Pooler.Instance.DelayedDepop(0.3f,Key.BulletImpactVFX,vfx2);
         Debug.Log("collision with "+collision.gameObject.name);
         Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
