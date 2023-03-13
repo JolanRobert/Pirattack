@@ -1,51 +1,62 @@
-using MyBox;
+using System;
 using Interfaces;
+using MyBox;
 using Player;
 using UnityEngine;
 using Utils;
 
 public class Bullet : MonoBehaviour
 {
+    public PlayerController Owner => owner;
+    
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private Collider collider;
+    [SerializeField] private BulletTrigger bulletTrigger;
+    [SerializeField] private GameObject particleSystem;
     [SerializeField, ReadOnly] private PlayerController owner;
 
-    private int bulletDamage;
+    private float speed;
+    private int damage;
+    private int nbBounce;
+    private int nbPierce;
 
     private void OnEnable()
     {
-        owner = null;
         rb.velocity = Vector3.zero;
+        collider.enabled = true;
     }
 
-    public void Init(PlayerData data, PlayerController _owner)
+    public void Init(PlayerController owner, WeaponData data)
     {
-        rb.velocity = transform.forward * data.bulletSpeed;
-
-        owner = _owner;
-        bulletDamage = data.damage;
-
+        bulletTrigger.Init(data);
+        
+        speed = data.bulletSpeed;
+        damage = data.damage;
+        nbBounce = data.nbBounce;
+        nbPierce = data.nbPierce;
+        
+        this.owner = owner;
+        rb.velocity = transform.forward * speed;
         Pooler.Instance.DelayedDepop(data.bulletLifespan, Key.Bullet, gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.TryGetComponent(out IDamageable entity))
+        // TODO : Remplacer l'instanciation VFX par un Pool
+        
+        //Hit wall
+        if (nbBounce > 0)
         {
-            switch (entity)
-            {
-                case PlayerCollision when !owner:
-                    // ADD here code for enemy bullet hit player
-                    break;
-                case Enemy enemy when owner:
-                    enemy.IsWasAttacked.Invoke(bulletDamage, owner);
-                    break;
-                default:
-                    entity.Damage(bulletDamage);
-                    break;
-            }
+            Vector3 normal = collision.GetContact(0).normal;
+            Destroy(Instantiate(particleSystem, transform.position, Quaternion.LookRotation(-normal)), 0.3f);
+            rb.velocity = Vector3.Reflect(transform.forward, normal) * speed;
+            rb.MoveRotation(Quaternion.LookRotation(rb.velocity));
+            nbBounce--;
+            return;
         }
-
-        if (!(entity is PlayerCollision && owner))
-            Pooler.Instance.Depop(Key.Bullet, gameObject);
+        
+        Destroy(Instantiate(particleSystem,transform.position,transform.rotation),0.3f);
+        Debug.Log("collision with "+collision.gameObject.name);
+        Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
 }

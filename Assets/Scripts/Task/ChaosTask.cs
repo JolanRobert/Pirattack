@@ -11,24 +11,21 @@ namespace Task
     public class ChaosTask : InteractiveElement
     {
         public Action<ChaosTask> OnComplete;
-
+        
         [SerializeField, ReadOnly] private PlayerColor requiredColor = PlayerColor.None;
-        
-        public void Init()
+
+        public virtual void Init()
         {
-            List<PlayerColor> colors = Enum.GetValues(typeof(PlayerColor)).Cast<PlayerColor>().ToList();
-            colors.Remove(PlayerColor.None);
-            
-            PlayerColor rdmColor = colors[Random.Range(0, colors.Count)];
-            SetRequiredColor(rdmColor);
+            SetRequiredColor(GetRandomColor());
+            UiIndicator.instance.AddObject(gameObject, requiredColor);
         }
-        
-        private void SetRequiredColor(PlayerColor color)
+
+        public void SetRequiredColor(PlayerColor color)
         {
             requiredColor = color;
             cubeRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
         }
-        
+
         public bool IsValid()
         {
             foreach (PlayerController player in players)
@@ -37,6 +34,14 @@ namespace Task
             }
 
             return false;
+        }
+        
+        protected PlayerColor GetRandomColor()
+        {
+            List<PlayerColor> colors = Enum.GetValues(typeof(PlayerColor)).Cast<PlayerColor>().ToList();
+            colors.Remove(PlayerColor.None);
+            
+            return colors[Random.Range(0, colors.Count)];
         }
     }
 }

@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 2282690922230610877}
   - component: {fileID: 5152434294688659781}
   - component: {fileID: 8176063751241425810}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 1
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -71,7 +71,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 84
+  m_Constraints: 116
   m_CollisionDetection: 2
 --- !u!136 &1177753645568152364
 CapsuleCollider:
@@ -80,7 +80,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438483004797300496}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 63525b4eb00c6e946977e9eb5f4fdfec, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -367,6 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 7102844447484125359}
+  weaponData: {fileID: 11400000, guid: 4a273582232152646813047f2edef602, type: 2}
   firePoint: {fileID: 1023871615444969245}
 --- !u!114 &8277088488143925093
 MonoBehaviour:
@@ -395,6 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d12370a8054242b1698f6e4161516e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 7102844447484125359}
   health: {fileID: 8176063751241425810}
 --- !u!114 &2282690922230610877
 MonoBehaviour:
@@ -409,7 +411,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactions: []
-  isInteracting: 0
 --- !u!114 &5152434294688659781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,7 +453,7 @@ GameObject:
   - component: {fileID: 2790738270739516777}
   - component: {fileID: 5914155366038953253}
   - component: {fileID: 8681833972913268579}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +552,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1023871615444969245}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -585,7 +586,7 @@ GameObject:
   - component: {fileID: 9091580397470726037}
   - component: {fileID: 7497002044412786270}
   - component: {fileID: 830804382095065393}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -672,7 +673,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -690,7 +691,7 @@ GameObject:
   - component: {fileID: 2228758043220109670}
   - component: {fileID: 5532799354631048293}
   - component: {fileID: 737393668590710159}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RespawnTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,6 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 2400105806810688773}
+  cubeRenderer: {fileID: 0}
   playerRespawn: {fileID: 5152434294688659781}
 --- !u!1 &8992350275656957718
 GameObject:
@@ -784,7 +786,7 @@ GameObject:
   - component: {fileID: 2489292549983039141}
   - component: {fileID: 6987595170192538006}
   - component: {fileID: 2672767959211366360}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -868,6 +870,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ProgressBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176076783119058960, guid: 3a068144d49d4484ba1cdc2dc757693d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2084981485301344629, guid: 3a068144d49d4484ba1cdc2dc757693d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4789442754587056131, guid: 3a068144d49d4484ba1cdc2dc757693d,
         type: 3}
@@ -973,6 +985,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4989309143579060254, guid: 3a068144d49d4484ba1cdc2dc757693d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

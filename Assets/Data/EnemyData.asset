@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyData
   m_EditorClassIdentifier: 
   maxHealth: 100
-  damage: 0
+  damage: 5
   AttackDistance: 3
   speed: 3.5
-  ATKspeed: 1
+  ATKSpeed: 1
