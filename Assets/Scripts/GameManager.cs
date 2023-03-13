@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int DecreaseChaosBar = 10;
     [SerializeField] private float  DepopBossTimer = 60f;
     [SerializeField] private GameObject triggerBossDoor;
+    [SerializeField] private GameObject bossDoor;
     [SerializeField] private GameObject Boss;
     
     private float startTime;
@@ -74,6 +75,8 @@ public class GameManager : MonoBehaviour
     IEnumerator RelaunchGame(float delay)
     {
         Boss.SetActive(false);
+        triggerBossDoor.SetActive(false);
+        bossDoor.SetActive(false);
         yield return new WaitForSeconds(delay);
         SpawnManager.Instance.SetOnBossFight(false);
         ChaosBar = 50;
@@ -83,6 +86,7 @@ public class GameManager : MonoBehaviour
     
     public void BossKilled()
     {
+        
         StartCoroutine(RelaunchGame(10f));
     }
     
@@ -90,6 +94,7 @@ public class GameManager : MonoBehaviour
     {
         UIManager.Instance.SetVoicelineText("Boss is here !");
         triggerBossDoor.SetActive(true);
+        bossDoor.SetActive(true);
         Boss.SetActive(true);
         waitingForBoss = true;
         timerDepopBoss = DepopBossTimer;
