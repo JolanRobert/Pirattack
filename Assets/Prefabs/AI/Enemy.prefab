@@ -129,6 +129,10 @@ MonoBehaviour:
   BT: {fileID: 7802507471193136510}
   animator: {fileID: 3389813104167062050}
   rb: {fileID: 4852080501000238888}
+  renderer: {fileID: 2270062293439620508}
+  materials:
+  - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
+  - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
 --- !u!114 &7802507471193136510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,6 +515,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -43.96813
       objectReference: {fileID: 0}
+    - target: {fileID: 4121431660456653262, guid: 31d3511be7f96fd40a46301de80d870c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
     - target: {fileID: 4905787481440951023, guid: 31d3511be7f96fd40a46301de80d870c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -585,6 +594,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3389813104167062050}
   m_SourcePrefab: {fileID: 100100000, guid: 31d3511be7f96fd40a46301de80d870c, type: 3}
+--- !u!137 &2270062293439620508 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4121431660456653262, guid: 31d3511be7f96fd40a46301de80d870c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2788473512294814802}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2393694674718454713 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 31d3511be7f96fd40a46301de80d870c,

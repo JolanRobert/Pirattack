@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private EnemyBT BT;
     [SerializeField] protected Animator animator;
     [SerializeField] protected Rigidbody rb;
-    [SerializeField] private MeshRenderer renderer;
+    [SerializeField] private SkinnedMeshRenderer renderer;
     [SerializeField] private Material[] materials;
 
     protected int damage = 0;

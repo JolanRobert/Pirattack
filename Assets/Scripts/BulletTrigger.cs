@@ -40,9 +40,9 @@ public class BulletTrigger : MonoBehaviour
             vfx.transform.rotation = transform.rotation;
             Pooler.Instance.DelayedDepop(0.3f,Key.BulletImpactVFX,vfx);
            
-            if (nbSlow > 0 && entity is DestructibleProp prop && owner)
+            if (nbSlow > 0 && entity is Enemy ennemy && owner)
             {
-                prop.SetIced(nbSlow);
+                ennemy.SetIced(nbSlow);
             }
             
             if (nbShock > 0)

@@ -529,6 +529,10 @@ MonoBehaviour:
   BT: {fileID: 0}
   animator: {fileID: 0}
   rb: {fileID: 0}
+  renderer: {fileID: 1426896915795377821}
+  materials:
+  - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
+  - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
   currentPattern: {fileID: 0}
   Data: {fileID: 11400000, guid: be4ff7882d7de814eb71c30e569b5dd5, type: 2}
   voicelines:
@@ -1464,7 +1468,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4222442362028934484, guid: 51f66eb44e28c4d4bae8e93eff247015, type: 3}
+  - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
