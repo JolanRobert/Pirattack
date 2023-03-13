@@ -37,6 +37,11 @@ public class EnemyShield : Enemy
         agent.speed = Data.speed;
     }
 
+    protected override void Depop()
+    {
+        Pooler.Instance.Depop(Key.EnemyShield, gameObject);
+    }
+
     // public void ChangeShieldRendererColor(PlayerColor color)
     // {
     //     switch (color)

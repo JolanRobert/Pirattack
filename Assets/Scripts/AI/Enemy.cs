@@ -24,16 +24,23 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         damage = enemyData.damage; // possible to change damage value
         maxHp = enemyData.maxHealth; // possible to change max health value
-        healthEnemy.Init((int)maxHp);
+        healthEnemy.Init(maxHp);
         ResetAttackDefaultValue();
         agent.speed = enemyData.speed;
         BT.ResetBlackboard();
         BT.enabled = true;
+        GameManager.OnLaunchingBoss += Depop;
     }
 
     private void OnDisable()
     {
         BT.enabled = false;
+        GameManager.OnLaunchingBoss -= Depop;
+    }
+
+    protected virtual void Depop()
+    {
+        Pooler.Instance.Depop(Key.BasicEnemy, gameObject);
     }
     
     private void Start()

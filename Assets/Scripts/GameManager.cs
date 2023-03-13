@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     public static Action OnEndFightBoss;
     public static Action OnIncreaseChaosBar;
     public static Action OnDecreaseChaosBar;
-    public PlayerController[] Players;
     
     [SerializeField] private int IncreaseChaosBar = 10;
     [SerializeField] private int DecreaseChaosBar = 10;
