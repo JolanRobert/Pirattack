@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 730959167}
   - component: {fileID: 730959168}
   m_Layer: 0
-  m_Name: MenuManager
+  m_Name: LobbyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02302f554d696f64aa87da22a1a8fe80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiMainMenu: {fileID: 1720424870525075471}
+  uiLobby: {fileID: 1720424870525075471}
   players: []
 --- !u!1 &1453483111
 GameObject:

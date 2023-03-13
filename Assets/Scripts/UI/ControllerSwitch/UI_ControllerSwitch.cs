@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using DefaultNamespace;
+using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -16,6 +18,8 @@ namespace UI
         
         [SerializeField] private UIDocument layout;
         [SerializeField] private PlayerDeviceBuffer devicesSO;
+        
+        public static List<PlayerInUI> Players;
 
         #region Visual Elements
             private VisualElement p1ImgVE, p2ImgVE;

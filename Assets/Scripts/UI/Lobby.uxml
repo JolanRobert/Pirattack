@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/UI/Menus.uss?fileID=7433441132597879392&amp;guid=bfbc368cf46bf5e499a98a53f6471940&amp;type=3#Menus" />
+    <ui:VisualElement name="VE_Players" class="verticalContainer" style="align-self: center;">
+        <ui:VisualElement name="VE_Player1" class="playerContainer" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+            <ui:VisualElement name="VE_P1Img" class="playerImg" style="-unity-background-image-tint-color: rgb(126, 246, 255);" />
+            <ui:Label tabindex="-1" text="Ready !" display-tooltip-when-elided="true" name="LB_P1Ready" class="readyLabel" />
+        </ui:VisualElement>
+        <ui:VisualElement name="VE_Player2" class="playerContainer" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+            <ui:VisualElement name="VE_P2Img" class="playerImg" style="-unity-background-image-tint-color: rgb(255, 137, 126);" />
+            <ui:Label tabindex="-1" text="Ready !" display-tooltip-when-elided="true" name="LB_P2Ready" class="readyLabel" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

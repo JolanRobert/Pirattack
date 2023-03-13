@@ -5,6 +5,7 @@ using MyBox;
 using Scene;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace UI
@@ -18,9 +19,9 @@ namespace UI
         }
         
         #region Constants
+            private const string VE_LOBBY = "VE_Lobby";
             private const string BT_PLAY = "BT_Play";
             private const string BT_QUIT = "BT_Quit";
-            private const string BT_BACK = "BT_Back";
             private const string VE_MENU = "VE_Menu";
             private const string VE_PLAYERCONNECTION = "VE_PlayerConnection";
             private const string VE_P1IMG = "VE_P1Img";
@@ -40,6 +41,7 @@ namespace UI
         #region Visual Elements
             private Button playBT, quitBT, backBT;
             private VisualElement menuVE, playerConnectionVE;
+            private VisualElement lobby;
             private VisualElement p1ImgVE, p2ImgVE;
             private Label p1Ready, p2Ready;
         #endregion
@@ -59,32 +61,36 @@ namespace UI
         
         private void Start()
         {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Menu"));
+            
+            LobbyManager.Instance.InstantiatePlayers();
+            
             var root = layout.rootVisualElement;
 
+            lobby = root.Q<VisualElement>(VE_LOBBY);
+            
             // Buttons
             playBT = root.Q<Button>(BT_PLAY);
             quitBT = root.Q<Button>(BT_QUIT);
-            backBT = root.Q<Button>(BT_BACK);
             
             // Containers
             menuVE = root.Q<VisualElement>(VE_MENU);
             playerConnectionVE = root.Q<VisualElement>(VE_PLAYERCONNECTION);
             
             // Images
-            p1ImgVE = root.Q<VisualElement>(VE_P1IMG);
-            p2ImgVE = root.Q<VisualElement>(VE_P2IMG);
+            p1ImgVE = lobby.Q<VisualElement>(VE_P1IMG);
+            p2ImgVE = lobby.Q<VisualElement>(VE_P2IMG);
             
             // Labels
-            p1Ready = root.Q<Label>(LB_P1READY);
-            p2Ready = root.Q<Label>(LB_P2READY);
+            p1Ready = lobby.Q<Label>(LB_P1READY);
+            p2Ready = lobby.Q<Label>(LB_P2READY);
             
             //Bindings
             BindButton(playBT, Play, true);
             BindButton(quitBT, Quit, true);
-            BindButton(backBT, Back, false);
             
             // Default values
-            DisplayMenu(true);
+            DisplayMenu(state is MenuState.Menu);
             UpdatePlayer(true, null);
             UpdatePlayer(false, null);
             SetMainDeviceToDefault();
@@ -237,7 +243,7 @@ namespace UI
                         UpdatePlayer(device.Equals(devicesSO.player1Device), null);
                         break;
                     case InputDeviceChange.Added:
-                        MenuManager.Instance.AddPlayer(device);
+                        LobbyManager.Instance.AddPlayer(device);
                         SetMainDeviceToOnlyLast();
                         break;
                 }

@@ -85,7 +85,7 @@
 }
 
 .playerImg {
-    background-image: url('project://database/Assets/Draft/Art%20UI/Pirate.png?fileID=2800000&guid=9ade847062dcf0949919cde57ddbe893&type=3#Pirate');
+    background-image: url('project://database/Assets/Draft/Romeo/Art%20UI/Pirate.png?fileID=2800000&guid=9ade847062dcf0949919cde57ddbe893&type=3#Pirate');
     flex-grow: 1;
     -unity-background-scale-mode: scale-to-fit;
 }
