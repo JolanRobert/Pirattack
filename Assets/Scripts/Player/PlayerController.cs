@@ -31,29 +31,15 @@ namespace Player
         private bool interactInput;
         private bool cancelInteractInput;
 
-        private Vector3 startPos;
-        private bool isSpawned;
-        private bool isInit;
-
         public void Init(Vector3 startPosition, PlayerColor color)
         {
-            startPos = startPosition;
-            Color.InitColor(color);
-            isInit = true;
+            playerSwitchColor.InitColor(color);
+            rb.position = startPosition;
+            playerMovement.Cancel();
         }
 
         private void Update()
         {
-            if (!isInit) return;
-            
-            if (!isSpawned)
-            {
-                rb.position = startPos;
-                isSpawned = true;
-                playerMovement.Cancel();
-                return;
-            }
-
             if (AssertState(IsDown)) return;
             
             HandleInteract();
@@ -138,15 +124,6 @@ namespace Player
             switchColorInput = false;
             interactInput = false;
             cancelInteractInput = false;
-        }
-        
-        /*
-         * DEBUG
-         */
-        
-        public void RequestSwitchColor()
-        {
-            //playerSwitchColor.Switch();
         }
     }
 }

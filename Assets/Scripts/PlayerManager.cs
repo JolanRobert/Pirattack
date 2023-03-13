@@ -60,6 +60,6 @@ public class PlayerManager : MonoBehaviour
     
     private void Update()
     {
-        Debug.Log($"P1 : {devicesSO.player1Device} / P2 : {devicesSO.player2Device}");
+        //Debug.Log($"P1 : {devicesSO.player1Device} / P2 : {devicesSO.player2Device}");
     }
 }

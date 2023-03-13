@@ -10,6 +10,7 @@ public class RespawnTrigger : InteractiveElement
 
     public void HandleInput(bool respawnInput)
     {
+        Debug.Log(respawnInput);
         if (respawnInput) IncreaseBar();
         else DecreaseBar();
     }

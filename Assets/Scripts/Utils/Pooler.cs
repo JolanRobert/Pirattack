@@ -19,8 +19,8 @@ namespace Utils
             public Queue<GameObject> queue = new ();
 
             public int baseCount;
-            public float baseRefreshSpeed = 5;
-            public float refreshSpeed = 5;
+            [HideInInspector] public float baseRefreshSpeed = 5;
+            [HideInInspector] public float refreshSpeed = 5;
         }
 
         [Serializable]
