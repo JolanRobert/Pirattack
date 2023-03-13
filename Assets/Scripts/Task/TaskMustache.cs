@@ -34,7 +34,14 @@ namespace Task
             currentAngle = 0;
             timer = 0.3f;
         }
- 
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            
+            UiIndicator.instance.RemoveObject(gameObject);
+        }
+
         public void HandleInput(Vector2 leftInput, Vector2 rightInput)
         {
             this.leftInput = leftInput;
