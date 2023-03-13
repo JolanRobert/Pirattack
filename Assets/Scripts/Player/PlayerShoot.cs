@@ -14,11 +14,13 @@ using Utils;
         public void Shoot()
         {
             if (!canShoot) return;
-            playerController.Animator.SetTrigger("Attack");
+            
             Bullet bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<Bullet>();
             bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
             bullet.Init(playerController, weaponData);
             StartCoroutine(ShootCooldown());
+            
+            playerController.Animation.SetTrigger(PlayerAnimation.AnimTrigger.Attack);
         }
 
         private IEnumerator ShootCooldown()

@@ -1,40 +1,45 @@
-using DG.Tweening;
-using MyBox;
+using System;
+using System.Collections.Generic;
 using Player;
 using UnityEngine;
 
 public class RespawnTrigger : MonoBehaviour
 {
-    [Separator("Respawn Trigger")]
     [SerializeField] private PlayerRespawn playerRespawn;
+    
+    private HashSet<PlayerController> players = new HashSet<PlayerController>();
+    private float timer;
 
-    /*public void HandleInput(bool respawnInput)
+    private void OnEnable()
     {
-        Debug.Log(respawnInput);
-        if (respawnInput) IncreaseBar();
-        else DecreaseBar();
-    }
-        
-    private void IncreaseBar()
-    {
-        float newAmount = progressBar.fillAmount + Time.deltaTime / playerRespawn.RespawnDuration;
-
-        progressBar.DOKill();
-        Tween tween = progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
-        if (newAmount >= 1) tween.onComplete += Complete;
+        timer = playerRespawn.RespawnDuration;
     }
 
-    private void DecreaseBar()
+    private void Update()
     {
-        if (progressBar.fillAmount == 0) return;
-        float newAmount = progressBar.fillAmount - Time.deltaTime / playerRespawn.RespawnDuration;
+        if (players.Count == 0) return;
 
-        progressBar.DOKill();
-        progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
+        timer -= Time.deltaTime;
+        if (timer <= 0)
+        {
+            playerRespawn.Respawn();
+            gameObject.SetActive(false);
+        }
     }
 
-    private void Complete()
+    private void OnTriggerEnter(Collider other)
     {
-        playerRespawn.Respawn();
-    }*/
+        if (other.TryGetComponent(out PlayerController player))
+        {
+            players.Add(player);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out PlayerController player))
+        {
+            players.Remove(player);
+        }
+    }
 }

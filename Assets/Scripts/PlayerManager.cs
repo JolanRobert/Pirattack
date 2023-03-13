@@ -33,11 +33,13 @@ public class PlayerManager : MonoBehaviour
         var playerInput2 = pim.JoinPlayer(playerIndex:1, controlScheme: "Gamepad", pairWithDevice: devicesSO.player2Device);
 
         if (playerInput1 && playerInput2)
-        Players = new List<PlayerController>
         {
-            playerInput1.GetComponent<PlayerController>(),
-            playerInput2.GetComponent<PlayerController>()
-        };
+            Players = new List<PlayerController>()
+            {
+                playerInput1.GetComponent<PlayerController>(),
+                playerInput2.GetComponent<PlayerController>()
+            };
+        }
         else
         {
             Debug.LogError("PlayerInputManager is null");
