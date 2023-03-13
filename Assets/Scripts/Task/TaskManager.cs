@@ -12,25 +12,38 @@ namespace Task
     public class TaskManager : MonoBehaviour
     {
         [SerializeField] private int maxTaskSimultaneously;
-        [SerializeField, MinMaxRange(1, 10)] private RangedInt timeBeforeNextTask;
+        [SerializeField, MinMaxRange(1, 30)] private RangedInt timeBeforeNextTask;
         [SerializeField] private List<ChaosTask> tasks;
 
-        private Queue<ChaosTask> nextTasks;
-        private List<ChaosTask> currentTasks = new List<ChaosTask>();
+        [Header("Debug")]
+        [SerializeField] private bool isActive = true;
+
+        [SerializeField, ReadOnly] private List<ChaosTask> nextTasks;
+        [SerializeField, ReadOnly] private List<ChaosTask> currentTasks = new List<ChaosTask>();
 
         private bool isCycling;
-
+        
         private void Awake()
         {
             if (tasks.Count == 0) return;
+            
             RefreshNextTasks();
-            //StartCoroutine(TaskCycle());
+            if (isActive) StartCoroutine(TaskCycle());
+        }
+        
+        private void RefreshNextTasks()
+        {
+            List<ChaosTask> tasksToAdd = new List<ChaosTask>(tasks);
+            tasksToAdd.Shuffle();
+            tasksToAdd.RemoveAll(task => currentTasks.Contains(task));
+            nextTasks = new List<ChaosTask>(tasksToAdd);
         }
 
         private IEnumerator TaskCycle()
         {
             isCycling = true;
             int time = Random.Range(timeBeforeNextTask.Min, timeBeforeNextTask.Max+1);
+            Debug.Log("Wait "+time+"s");
             yield return new WaitForSeconds(time);
             AddTask();
 
@@ -38,24 +51,20 @@ namespace Task
             else isCycling = false;
         }
 
-        private void RefreshNextTasks()
-        {
-            List<ChaosTask> tasksToAdd = new List<ChaosTask>(tasks);
-            tasksToAdd.Shuffle();
-            nextTasks = new Queue<ChaosTask>(tasksToAdd);
-        }
-        
         [ContextMenu("Add Task")]
         private void AddTask()
         {
             if (nextTasks.Count == 0) RefreshNextTasks();
 
-            ChaosTask newChaosTask = nextTasks.Peek();
+            ChaosTask newChaosTask = nextTasks[0];
             if (currentTasks.Contains(newChaosTask)) return;
-            
-            currentTasks.Add(nextTasks.Dequeue());
-            
-            newChaosTask.OnComplete = CompleteTask;
+
+            Debug.Log("Add task");
+            currentTasks.Add(newChaosTask);
+            nextTasks.RemoveAt(0);
+
+            newChaosTask.OnComplete = null;
+            newChaosTask.OnComplete += CompleteTask;
             newChaosTask.gameObject.SetActive(true);
             newChaosTask.Init();
         }
@@ -64,7 +73,8 @@ namespace Task
         {
             currentTasks.Remove(chaosTask);
             chaosTask.gameObject.SetActive(false);
-            //if (!isCycling) StartCoroutine(TaskCycle());
+            
+            if (!isCycling) StartCoroutine(TaskCycle());
         }
     }
 }

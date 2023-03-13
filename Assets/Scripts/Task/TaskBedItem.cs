@@ -11,6 +11,7 @@ namespace Task
 
         protected override void OnCancel()
         {
+            progressBar.DOKill();
             progressBar.fillAmount = 0;
         }
     

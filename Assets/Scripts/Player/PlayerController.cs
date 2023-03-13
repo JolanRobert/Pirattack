@@ -139,14 +139,5 @@ namespace Player
             interactInput = false;
             cancelInteractInput = false;
         }
-        
-        /*
-         * DEBUG
-         */
-        
-        public void RequestSwitchColor()
-        {
-            //playerSwitchColor.Switch();
-        }
     }
 }

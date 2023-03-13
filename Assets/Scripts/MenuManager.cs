@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using MyBox;
 using UI;
 using UnityEngine;
@@ -7,9 +9,8 @@ using UnityEngine.SceneManagement;
 public class MenuManager : Singleton<MenuManager>
 {
     public UI_MainMenu uiMainMenu;
-    
-    [SerializeField] private GameObject playerInUiGO;
-    
+    public List<PlayerInput> players = new();
+
     private void Awake()
     {
         InitializeSingleton(false);
@@ -21,7 +22,18 @@ public class MenuManager : Singleton<MenuManager>
         
         foreach (var gamepad in Gamepad.all)
         {
-            PlayerInput.Instantiate(playerInUiGO, controlScheme: "Gamepad", pairWithDevice: gamepad);
+            AddPlayer(gamepad);
         }
+    }
+
+    public void AddPlayer(InputDevice device)
+    {
+        if (device is not Gamepad || IsDeviceAlreadyUsed(device)) return;
+        players.Add(PlayerInputManager.instance.JoinPlayer(controlScheme: "Gamepad", pairWithDevice: device));
+    }
+
+    private bool IsDeviceAlreadyUsed(InputDevice device)
+    {
+        return players.Any(player => player.devices.ToList().Contains(device));
     }
 }

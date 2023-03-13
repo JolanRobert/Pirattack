@@ -22,8 +22,8 @@ namespace Player
         private bool LBDown;
         private bool RBDown;
         private bool ADown, A;
-        private Vector2 leftStickInput;
-        private Vector2 rightStickInput;
+        private Vector2 leftStick;
+        private Vector2 rightStick;
         
         #region InputCallback
         public void OnLB(InputAction.CallbackContext context)
@@ -44,12 +44,12 @@ namespace Player
 
         public void OnLeftStick(InputAction.CallbackContext context)
         {
-            leftStickInput = context.ReadValue<Vector2>();
+            leftStick = context.ReadValue<Vector2>();
         }
 
         public void OnRightStick(InputAction.CallbackContext context)
         {
-            rightStickInput = context.ReadValue<Vector2>();
+            rightStick = context.ReadValue<Vector2>();
         }
         #endregion
 
@@ -84,6 +84,7 @@ namespace Player
                 if (!task.IsValid()) return;
                 if (task is TaskToilet tToilet) tToilet.HandleInput(LBDown, RBDown);
                 else if (task is TaskBedItem tBedItem) tBedItem.HandleInput(ADown);
+                else if (task is TaskMustache tMustache) tMustache.HandleInput(leftStick, rightStick);
             }
             
             ResetInputs();

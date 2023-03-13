@@ -20,12 +20,6 @@ public class Enemy : MonoBehaviour, IDamageable
     protected int damage = 0;
     protected int maxHp = 0;
     
-    private void Start()
-    {
-        healthEnemy.onDeath = OnDie;
-        healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
-    }
-
     private void OnEnable()
     {
         damage = enemyData.damage; // possible to change damage value
@@ -40,6 +34,12 @@ public class Enemy : MonoBehaviour, IDamageable
     private void OnDisable()
     {
         BT.enabled = false;
+    }
+    
+    private void Start()
+    {
+        healthEnemy.onDeath = OnDie;
+        if (GameManager.Instance) healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
     }
 
     public PlayerColor GetShieldColor()

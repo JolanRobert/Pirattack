@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3733465884280373180}
   - component: {fileID: 3313278295323787213}
   - component: {fileID: 3698247674790767495}
-  - component: {fileID: 277812753659211604}
+  - component: {fileID: 2874709385956090136}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -110,7 +110,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8146502215300643550}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.736506, y: 1, z: -34.72921}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -166,7 +166,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &277812753659211604
+--- !u!114 &2874709385956090136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,11 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce594429d93ab2f4cbe021fa6def5b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 3313278295323787213}
   particleSystem: {fileID: 3372077107701150023, guid: a3013b66ae7b0434dbb2d7d098c442ba,
     type: 3}
-  bounces: 0
-  pierces: 0
-  damages: 0
   owner: {fileID: 0}
-  weaponData: {fileID: 0}
-  speed: 0

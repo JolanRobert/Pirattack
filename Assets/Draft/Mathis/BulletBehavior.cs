@@ -27,8 +27,8 @@ public class BulletBehavior : MonoBehaviour
         owner = player;
         speed = weaponData.bulletSpeed;
         damages = weaponData.damage;
-        bounces = weaponData.bounce;
-        pierces = weaponData.pierce;
+        bounces = weaponData.nbBounce;
+        pierces = weaponData.nbPierce;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -84,7 +84,7 @@ public class BulletBehavior : MonoBehaviour
 
     private void OnEnable()
     {
-        //bounces = weaponData.bounce;
-        //pierces = weaponData.pierce;
+        bounces = weaponData.nbBounce;
+        pierces = weaponData.nbPierce;
     }
 }
