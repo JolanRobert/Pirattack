@@ -1,13 +1,24 @@
+using System;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public class UiIndicator : MonoBehaviour
 {
     [SerializeField] private CameraManager cameraManager;
-    [SerializeField] private List<GameObject> obj;
+    [SerializeField] private List<IndicObj> obj;
+    public static UiIndicator instance;
     [SerializeField] private List<Transform> indics;
     [SerializeField] private RectTransform boxRect;
-    [SerializeField] private GameObject prefab;
+    [SerializeField] private GameObject prefabNoColor;
+    [SerializeField] private GameObject prefabRed;
+    [SerializeField] private GameObject prefabBlue;
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void UpdateIndicators(bool separated)
     {
@@ -24,12 +35,15 @@ public class UiIndicator : MonoBehaviour
         }
     }
 
-    public void AddObject(GameObject newObj)
+    public void AddObject(GameObject newObj,PlayerColor color)
     {
-        obj.Add(newObj);
+        IndicObj added = new IndicObj();
+        added.obj = newObj;
+        added.color = color;
+        obj.Add(added);
         for (int i = 0; i < 2; i++)
         {
-            GameObject newIndic = Instantiate(prefab, boxRect.position, Quaternion.identity, boxRect);
+            GameObject newIndic = Instantiate(color == PlayerColor.None ? prefabNoColor : color == PlayerColor.Blue ? prefabBlue : prefabRed, boxRect.position, Quaternion.identity, boxRect);
             newIndic.SetActive(false);
             indics.Add(newIndic.transform);
         }
@@ -37,7 +51,14 @@ public class UiIndicator : MonoBehaviour
     
     public void RemoveObject(GameObject objToRemove)
     {
-        int index = obj.IndexOf(objToRemove);
+        int index = 0;
+        for (int i = 0; i < obj.Count; i++)
+        {
+            if (obj[i].obj == objToRemove)
+            {
+                index = i;
+            }
+        }
         indics.RemoveAt(index * 2);
         indics.RemoveAt(index * 2+1);
         obj.RemoveAt(index);
@@ -56,7 +77,7 @@ public class UiIndicator : MonoBehaviour
         }
         indics[objIndex*2+1].gameObject.SetActive(false);
         Vector3 focus = (cameraManager.players[0].position + cameraManager.players[1].position) / 2;
-        Vector3 dir = obj[objIndex].transform.position - focus;
+        Vector3 dir = obj[objIndex].obj.transform.position - focus;
         Vector2 pos = cameraManager.cameras[0].WorldToScreenPoint(focus + dir.normalized);
         indics[objIndex*2].position = FindPointOnRectBorder(pos - (boxRect.rect.center + (Vector2)boxRect.position),
             boxRect.rect.center + (Vector2)boxRect.position,boxRect);
@@ -81,7 +102,7 @@ public class UiIndicator : MonoBehaviour
     public void UpdatePositionForCamera(int player,int index,int objIndex)
     {
         Vector3 focus = cameraManager.players[player].position;
-        Vector3 dir = obj[objIndex].transform.position - focus;
+        Vector3 dir = obj[objIndex].obj.transform.position - focus;
         Vector2 pos = cameraManager.cameras[player].WorldToScreenPoint(focus + dir.normalized);
         Vector2 center = cameraManager.cameras[player].WorldToScreenPoint(focus);
         Vector2 splitDir = Quaternion.Euler(0,0,cameraManager.angle) * Vector2.up;
@@ -103,7 +124,11 @@ public class UiIndicator : MonoBehaviour
 
     public bool CheckVisibility(int player,int index,int objIndex)
     {
-        Vector2 pos = cameraManager.cameras[player].WorldToScreenPoint(obj[objIndex].transform.position);
+        if (PlayerManager.Players[player].Color.PColor != obj[objIndex].color)
+        {
+            return false;
+        }
+        Vector2 pos = cameraManager.cameras[player].WorldToScreenPoint(obj[objIndex].obj.transform.position);
         Vector2 splitNormal = Quaternion.Euler(0, 0, player == 0 ? cameraManager.angle-90 : cameraManager.angle+90) * Vector2.up;
         if (boxRect.rect.Contains(pos - (Vector2) boxRect.position))
         {
@@ -116,7 +141,7 @@ public class UiIndicator : MonoBehaviour
     }
     public bool CheckVisibilitySingle(int objIndex)
     {
-        Vector2 pos = cameraManager.cameras[0].WorldToScreenPoint(obj[objIndex].transform.position);
+        Vector2 pos = cameraManager.cameras[0].WorldToScreenPoint(obj[objIndex].obj.transform.position);
         if (boxRect.rect.Contains(pos - (Vector2) boxRect.position))
         {
             return false;
@@ -169,5 +194,12 @@ public class UiIndicator : MonoBehaviour
             B1.x + (B2.x - B1.x) * mu,
             B1.y + (B2.y - B1.y) * mu
         );
+    }
+
+    [Serializable]
+    public class IndicObj
+    {
+        public PlayerColor color;
+        public GameObject obj;
     }
 }
