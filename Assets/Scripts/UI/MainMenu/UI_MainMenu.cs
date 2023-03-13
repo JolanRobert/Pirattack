@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using DefaultNamespace;
 using MyBox;
 using Scene;
 using UnityEngine;
@@ -10,7 +9,7 @@ using UnityEngine.UIElements;
 
 namespace UI
 {
-    public class UI_MainMenu : MonoBehaviour
+    public class UI_MainMenu : UI_Lobby
     {
         private enum MenuState
         {
@@ -19,55 +18,35 @@ namespace UI
         }
         
         #region Constants
-            private const string VE_LOBBY = "VE_Lobby";
             private const string BT_PLAY = "BT_Play";
             private const string BT_QUIT = "BT_Quit";
             private const string VE_MENU = "VE_Menu";
             private const string VE_PLAYERCONNECTION = "VE_PlayerConnection";
-            private const string VE_P1IMG = "VE_P1Img";
-            private const string VE_P2IMG = "VE_P2Img";
-            private const string LB_P1READY = "LB_P1Ready";
-            private const string LB_P2READY = "LB_P2Ready";
             
             private const string USS_BUTTON = "button";
             private const string USS_BUTTONFOCUS = "buttonFocus";
         #endregion
         
-        [SerializeField] private UIDocument layout;
         [SerializeField] private PlayerInput playerInput;
-        [SerializeField] private PlayerDeviceBuffer devicesSO;
         [SerializeField, Scene] private string gameScene;
 
         #region Visual Elements
             private Button playBT, quitBT, backBT;
             private VisualElement menuVE, playerConnectionVE;
-            private VisualElement lobby;
-            private VisualElement p1ImgVE, p2ImgVE;
-            private Label p1Ready, p2Ready;
         #endregion
 
         private MenuState state = MenuState.Menu;
         private InputDevice lastMainDevice;
 
-        private void OnEnable()
-        {
-            InputSystem.onDeviceChange += OnDeviceChange;
-        }
-
-        private void OnDisable()
-        {
-            InputSystem.onDeviceChange -= OnDeviceChange;
-        }
-        
         private void Start()
         {
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("Menu"));
             
             LobbyManager.Instance.InstantiatePlayers();
             
+            Init();
+            
             var root = layout.rootVisualElement;
-
-            lobby = root.Q<VisualElement>(VE_LOBBY);
             
             // Buttons
             playBT = root.Q<Button>(BT_PLAY);
@@ -76,24 +55,16 @@ namespace UI
             // Containers
             menuVE = root.Q<VisualElement>(VE_MENU);
             playerConnectionVE = root.Q<VisualElement>(VE_PLAYERCONNECTION);
-            
-            // Images
-            p1ImgVE = lobby.Q<VisualElement>(VE_P1IMG);
-            p2ImgVE = lobby.Q<VisualElement>(VE_P2IMG);
-            
-            // Labels
-            p1Ready = lobby.Q<Label>(LB_P1READY);
-            p2Ready = lobby.Q<Label>(LB_P2READY);
-            
+
             //Bindings
             BindButton(playBT, Play, true);
             BindButton(quitBT, Quit, true);
             
             // Default values
             DisplayMenu(state is MenuState.Menu);
+            SetMainDeviceToDefault();
             UpdatePlayer(true, null);
             UpdatePlayer(false, null);
-            SetMainDeviceToDefault();
         }
 
         private void Update()
@@ -102,24 +73,6 @@ namespace UI
         }
 
         #region UI Update
-            private void UpdatePlayer(bool p1, InputDevice newDevice)
-            {
-                if (p1) devicesSO.player1Device = newDevice;
-                else devicesSO.player2Device = newDevice;
-
-                var visible = newDevice is not null;
-                if (p1)
-                {
-                    p1ImgVE.visible = visible;
-                    p1Ready.visible = visible;
-                }
-                else
-                {
-                    p2ImgVE.visible = visible;
-                    p2Ready.visible = visible;
-                }
-            }
-            
             private void BindButton(Button button, Action onClick, bool focusable)
             {
                 button.clicked -= onClick;
@@ -169,7 +122,7 @@ namespace UI
 
                 state = MenuState.Lobby;
             }
-            #endregion
+        #endregion
         
         #region Main Buttons
             private void Play()
@@ -192,7 +145,7 @@ namespace UI
             }
         #endregion
         
-        public void TryToJoinPlayer(InputAction.CallbackContext context)
+        public override void TryToJoinPlayer(InputAction.CallbackContext context)
         {
             var device = context.control.device;
                 
@@ -234,13 +187,14 @@ namespace UI
                 playerInput.SwitchCurrentControlScheme(lastMainDevice);
             }
             
-            private void OnDeviceChange(InputDevice device, InputDeviceChange change)
+            protected override void OnDeviceChange(InputDevice device, InputDeviceChange change)
             {
                 switch (change)
                 {
                     case InputDeviceChange.Disconnected:
                         if (device.Equals(lastMainDevice)) SetMainDeviceToDefault();
-                        UpdatePlayer(device.Equals(devicesSO.player1Device), null);
+                        if (device.Equals(devicesSO.player1Device)) UpdatePlayer(true, null);
+                        else if (device.Equals(devicesSO.player2Device)) UpdatePlayer(false, null);
                         break;
                     case InputDeviceChange.Added:
                         LobbyManager.Instance.AddPlayer(device);

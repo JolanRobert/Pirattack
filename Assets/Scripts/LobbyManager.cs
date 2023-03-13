@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class LobbyManager : Singleton<LobbyManager>
 {
-    public UI_MainMenu uiLobby;
+    public UI_Lobby uiLobby;
     public List<PlayerInput> players = new();
 
     private void Awake()
