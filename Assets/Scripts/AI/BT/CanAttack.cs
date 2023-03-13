@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BehaviourTree;
 using Player;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CanAttack : Node
@@ -15,6 +16,7 @@ public class CanAttack : Node
 
     public void SetTarget()
     {
+        //PlayerController[] players = GameManager.Instance.GetPlayers();
         PlayerController[] players = PlayerManager.Players.ToArray();
         PlayerController target;
         if (Vector3.Distance(players[0].transform.position, transform.position) <

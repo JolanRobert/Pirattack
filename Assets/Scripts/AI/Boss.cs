@@ -11,14 +11,15 @@ namespace AI
     public class Boss : Enemy
     {
         public static Boss Instance;
-    
+
         public static Action<PlayerController> OnTriggerAttack;
         [ReadOnly] public Pattern currentPattern;
         public new BossData Data;
-    
+
         [SerializeField] private string[] voicelines;
         [SerializeField] private string[] voicelinesDead;
         [SerializeField] private GameObject FXShield;
+        [SerializeField] private BossBT bossBt;
 
         private int shieldHealth = 0;
 
@@ -27,15 +28,28 @@ namespace AI
             Instance = this;
         }
 
+
         private void OnEnable()
+        {
+            GameManager.OnLaunchingBoss += BeginAttack;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.OnLaunchingBoss -= BeginAttack;
+        }
+
+        private void BeginAttack()
         {
             maxHp = Data.maxHealth; // possible to change max health value
             healthEnemy.Init(maxHp);
             ResetAttackBossDefaultValue();
             Print_Argh();
             AddShield();
+            bossBt.enabled = true;
         }
-    
+
+
         public void LaunchPattern(IEnumerator coroutine)
         {
             StartCoroutine(coroutine);
@@ -61,7 +75,7 @@ namespace AI
         {
             float ratio = healthEnemy.GetRatio();
             healthEnemy.LoseHealth(damage);
-            if( ratio > 0.5f && healthEnemy.GetRatio() <= 0.5f)
+            if (ratio > 0.5f && healthEnemy.GetRatio() <= 0.5f)
             {
                 AddShield();
             }
@@ -78,14 +92,22 @@ namespace AI
             {
                 int indexGun = Random.Range(0, Data.lootGun.Length);
                 int indexGunAmmo = Random.Range(0, Data.lootGunAmmo.Length);
-            
-                Instantiate(Data.lootGun[Random.Range(0, Data.lootGun.Length)], transform.position + Vector3.back * 10 + Vector3.right * (i - 2) + Vector3.right * i * 2 - Vector3.up * 4.5f, Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
-                Instantiate(Data.lootGunAmmo[Random.Range(0, Data.lootGunAmmo.Length)], transform.position + Vector3.back * 10 + Vector3.right * (i - 1) + Vector3.right * i * 2 - Vector3.up * 4.5f, Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
+
+                Instantiate(Data.lootGun[Random.Range(0, Data.lootGun.Length)],
+                        transform.position + Vector3.back * 10 + Vector3.right * (i - 2) + Vector3.right * i * 2 -
+                        Vector3.up * 4.5f, Quaternion.identity)
+                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue
+                    ? UnityEngine.Color.blue
+                    : UnityEngine.Color.red;
+                Instantiate(Data.lootGunAmmo[Random.Range(0, Data.lootGunAmmo.Length)],
+                        transform.position + Vector3.back * 10 + Vector3.right * (i - 1) + Vector3.right * i * 2 -
+                        Vector3.up * 4.5f, Quaternion.identity)
+                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue
+                    ? UnityEngine.Color.blue
+                    : UnityEngine.Color.red;
             }
         }
-    
+
         protected override void OnDie()
         {
             LootSystem();

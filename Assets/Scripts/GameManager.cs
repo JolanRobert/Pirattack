@@ -12,17 +12,22 @@ public class GameManager : MonoBehaviour
     public static Action OnEndFightBoss;
     public static Action OnIncreaseChaosBar;
     public static Action OnDecreaseChaosBar;
-    public PlayerController[] Players;
     
     [SerializeField] private int IncreaseChaosBar = 10;
     [SerializeField] private int DecreaseChaosBar = 10;
+    [SerializeField] private float  DepopBossTimer = 60f;
     [SerializeField] private GameObject triggerBossDoor;
+    [SerializeField] private GameObject bossDoor;
+    [SerializeField] private GameObject Boss;
+    [SerializeField] private PlayerController[] players;
     
     private float startTime;
     private float endTime;
     private int nbEnemiesKilled = 0;
     private int ChaosBar = 50;
-    
+    private bool waitingForBoss = false;
+    private float timerDepopBoss;
+
     private void Awake()
     {
         Instance = this;
@@ -68,33 +73,44 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    IEnumerator RelaunchGame()
+    IEnumerator RelaunchGame(float delay)
     {
-        yield return new WaitForSeconds(10f);
+        Boss.SetActive(false);
+        triggerBossDoor.SetActive(false);
+        bossDoor.SetActive(false);
+        yield return new WaitForSeconds(delay);
         SpawnManager.Instance.SetOnBossFight(false);
         ChaosBar = 50;
         OnDecreaseChaosBar?.Invoke();
+        waitingForBoss = false;
     }
     
     public void BossKilled()
     {
-        StartCoroutine(RelaunchGame());
+        
+        StartCoroutine(RelaunchGame(10f));
     }
     
     private void BossPop()
     {
         UIManager.Instance.SetVoicelineText("Boss is here !");
         triggerBossDoor.SetActive(true);
+        bossDoor.SetActive(true);
+        Boss.SetActive(true);
+        waitingForBoss = true;
+        timerDepopBoss = DepopBossTimer;
     }
     
     public void LaunchBoss()
     {
+        waitingForBoss = false;
+        timerDepopBoss = 0f;
         SpawnManager.Instance.SetOnBossFight(true);
     }
 
     public void SuccessTask()
     {
-        if (ChaosBar >= 100) return;
+        if (ChaosBar >= 100 || waitingForBoss) return;
         
         ChaosBar += IncreaseChaosBar;
         OnIncreaseChaosBar?.Invoke();
@@ -102,7 +118,7 @@ public class GameManager : MonoBehaviour
 
     public void FailTask()
     {
-        if (ChaosBar <= 0) return;
+        if (ChaosBar <= 0 || waitingForBoss) return;
         
         ChaosBar -= DecreaseChaosBar;
         OnDecreaseChaosBar?.Invoke();
@@ -119,4 +135,18 @@ public class GameManager : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (!waitingForBoss) return;
+        timerDepopBoss -= Time.deltaTime;
+        if (timerDepopBoss <= 0f)
+        {
+            StartCoroutine(RelaunchGame(0f));
+        }
+    }
+
+    public PlayerController[] GetPlayers()
+    {
+        return players;
+    }
 }
