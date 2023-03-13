@@ -15,6 +15,7 @@ public class CheckPlayerInVision : Node
         var transform = ((Enemy)GetData("caster")).transform;
         
         //PlayerController[] players = GameManager.Instance.GetPlayers();
+        if (PlayerManager.Players.Count == 0) return NodeState.Success;
         PlayerController[] players = PlayerManager.Players.ToArray();
         PlayerController target = null;
         
