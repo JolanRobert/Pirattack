@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
+using MyBox;
 using Player;
 using UnityEngine;
 
 public class UiIndicator : MonoBehaviour
 {
-    [SerializeField] private CameraManager cameraManager;
-    [SerializeField] private List<IndicObj> obj;
     public static UiIndicator instance;
-    [SerializeField] private List<Transform> indics;
+    
+    [SerializeField] private CameraManager cameraManager;
+    [SerializeField, ReadOnly] private List<IndicObj> obj;
+    [SerializeField, ReadOnly] private List<Transform> indics;
     [SerializeField] private RectTransform boxRect;
     [SerializeField] private GameObject prefabNoColor;
     [SerializeField] private GameObject prefabRed;
     [SerializeField] private GameObject prefabBlue;
-
 
     private void Awake()
     {
@@ -35,7 +36,7 @@ public class UiIndicator : MonoBehaviour
         }
     }
 
-    public void AddObject(GameObject newObj,PlayerColor color)
+    public void AddObject(GameObject newObj, PlayerColor color)
     {
         IndicObj added = new IndicObj();
         added.obj = newObj;
@@ -59,8 +60,9 @@ public class UiIndicator : MonoBehaviour
                 index = i;
             }
         }
-        indics.RemoveAt(index * 2);
+        
         indics.RemoveAt(index * 2+1);
+        indics.RemoveAt(index * 2);
         obj.RemoveAt(index);
     }
     

@@ -27,7 +27,14 @@ namespace Task
             timer = timeBeforeLosing;
             nextInput = Input.Any;
         }
-        
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            
+            UiIndicator.instance.RemoveObject(gameObject);
+        }
+
         public void HandleInput(bool leftInput, bool rightInput)
         {
             if (leftInput)

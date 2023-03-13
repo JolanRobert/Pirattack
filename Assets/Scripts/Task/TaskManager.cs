@@ -67,7 +67,7 @@ namespace Task
         {
             currentTasks.Remove(chaosTask);
             chaosTask.gameObject.SetActive(false);
-            
+
             if (!isCycling) StartCoroutine(TaskCycle());
         }
     }
