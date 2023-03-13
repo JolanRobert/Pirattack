@@ -13,6 +13,8 @@ namespace Player
         public PlayerSwitchColor Color => playerSwitchColor;
         public PlayerCollision Collision => playerCollision;
         public PlayerInteract Interact => playerInteract;
+        public Animator Animator => animator;
+        public Animator AnimatorParrot => animatorParrot;
 
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerInput playerInput;
@@ -23,6 +25,8 @@ namespace Player
         [SerializeField] private PlayerInteract playerInteract;
         [SerializeField] private PlayerRespawn playerRespawn;
         [SerializeField] private Rigidbody rb;
+        [SerializeField] private Animator animator;
+        [SerializeField] private Animator animatorParrot;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;
@@ -31,28 +35,15 @@ namespace Player
         private bool interactInput;
         private bool cancelInteractInput;
 
-        private Vector3 startPos;
-        private bool isSpawned;
-        private bool isInit;
-
         public void Init(Vector3 startPosition, PlayerColor color)
         {
-            startPos = startPosition;
-            Color.InitColor(color);
-            isInit = true;
+            playerSwitchColor.InitColor(color);
+            rb.position = startPosition;
+            playerMovement.Cancel();
         }
 
         private void Update()
         {
-            if (!isInit) return;
-            
-            if (!isSpawned)
-            {
-                rb.position = startPos;
-                isSpawned = true;
-                return;
-            }
-
             if (AssertState(IsDown)) return;
             
             HandleInteract();
@@ -65,6 +56,7 @@ namespace Player
             HandleSwitchColor();
             
             ResetInputs();
+            animator.SetFloat("Velocity", moveInput.magnitude);
         }
         
         #region InputCallback
@@ -75,7 +67,7 @@ namespace Player
         
         public void OnRotate(InputAction.CallbackContext context)
         {
-            rotateInput = context.ReadValue<Vector2>();
+            rotateInput = context.ReadValue<Vector2>().normalized;
         }
         
         public void OnShoot(InputAction.CallbackContext context)
@@ -118,6 +110,7 @@ namespace Player
         private void HandleShoot()
         {
             if (shootInput) playerShoot.Shoot();
+            animator.SetTrigger("Attack");
         }
 
         private void HandleSwitchColor()
@@ -137,15 +130,6 @@ namespace Player
             switchColorInput = false;
             interactInput = false;
             cancelInteractInput = false;
-        }
-        
-        /*
-         * DEBUG
-         */
-        
-        public void RequestSwitchColor()
-        {
-            //playerSwitchColor.Switch();
         }
     }
 }

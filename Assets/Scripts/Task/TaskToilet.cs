@@ -14,6 +14,12 @@ namespace Task
         private Input nextInput;
         private float timer;
         
+        protected override void OnCancel()
+        {
+            progressBar.DOKill();
+            progressBar.DOFillAmount(0, 1/lossAmountPerSec).SetEase(Ease.Linear);
+        }
+        
         private new void OnEnable()
         {
             base.OnEnable();
@@ -21,7 +27,14 @@ namespace Task
             timer = timeBeforeLosing;
             nextInput = Input.Any;
         }
-        
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            
+            UiIndicator.instance.RemoveObject(gameObject);
+        }
+
         public void HandleInput(bool leftInput, bool rightInput)
         {
             if (leftInput)

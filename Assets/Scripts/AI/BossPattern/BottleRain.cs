@@ -36,10 +36,11 @@ public class BottleRain : Pattern
     IEnumerator ExecuteBottleRainAnimation()
     {
         BossData data = caster.Data;
-        for (int i = 0; i < data.nbBottleRain; i++)
+        caster.Animator.SetTrigger("ThrowBottle");
+        for (int i = 0; i < 4; i++)
         {
+            yield return new WaitForSeconds(1f);
             Instantiate(bottleAnimationPrefab, caster.transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(caster.Data.delayBetweenBottleRain);
         }
         yield return new WaitForSeconds(data.delayBeforeFallingRain);
         for (int i = 0; i < data.nbBottleRain; i++)

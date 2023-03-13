@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using InteractiveTrigger;
 using MyBox;
 using Task;
 using UnityEngine;
@@ -20,36 +19,37 @@ namespace Player
 
         private InteractiveElement currentInteraction;
         
-        private bool LBInput;
-        private bool RBInput;
-        private bool AInput;
-        private Vector2 leftStickInput;
-        private Vector2 rightStickInput;
+        private bool LBDown;
+        private bool RBDown;
+        private bool ADown, A;
+        private Vector2 leftStick;
+        private Vector2 rightStick;
         
         #region InputCallback
         public void OnLB(InputAction.CallbackContext context)
         {
-            if (context.started) LBInput = true;
+            if (context.started) LBDown = true;
         }
         
         public void OnRB(InputAction.CallbackContext context)
         {
-            if (context.started) RBInput = true;
+            if (context.started) RBDown = true;
         }
         
         public void OnA(InputAction.CallbackContext context)
         {
-            if (context.started) AInput = true;
+            if (context.started) ADown = true;
+            A = context.performed;
         }
 
         public void OnLeftStick(InputAction.CallbackContext context)
         {
-            leftStickInput = context.ReadValue<Vector2>();
+            leftStick = context.ReadValue<Vector2>();
         }
 
         public void OnRightStick(InputAction.CallbackContext context)
         {
-            rightStickInput = context.ReadValue<Vector2>();
+            rightStick = context.ReadValue<Vector2>();
         }
         #endregion
 
@@ -77,13 +77,14 @@ namespace Player
                 return;
             }
             
-            if (currentInteraction is RespawnTrigger rTrigger) rTrigger.HandleInput(AInput);
+            if (currentInteraction is RespawnTrigger rTrigger) rTrigger.HandleInput(A);
             
             else if (currentInteraction is ChaosTask task)
             {
                 if (!task.IsValid()) return;
-                if (task is TaskToilet tToilet) tToilet.HandleInput(LBInput, RBInput);
-                else if (task is TaskBed tBed) tBed.HandleInput(AInput);
+                if (task is TaskToilet tToilet) tToilet.HandleInput(LBDown, RBDown);
+                else if (task is TaskBedItem tBedItem) tBedItem.HandleInput(ADown);
+                else if (task is TaskMustache tMustache) tMustache.HandleInput(leftStick, rightStick);
             }
             
             ResetInputs();
@@ -111,9 +112,9 @@ namespace Player
 
         private void ResetInputs()
         {
-            LBInput = false;
-            RBInput = false;
-            AInput = false;
+            LBDown = false;
+            RBDown = false;
+            ADown = false;
         }
     }
 }

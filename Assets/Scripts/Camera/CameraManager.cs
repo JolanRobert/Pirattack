@@ -10,7 +10,7 @@ public class CameraManager : MonoBehaviour
     public float angle;
     [SerializeField] private Material splitScreenMat;
     public static CameraManager instance;
-    private bool playersConnected,separated;
+    [SerializeField] private bool playersConnected,separated;
     [SerializeField] private Vector3 focusPos;
     [SerializeField] private UiIndicator uiIndicator;
 

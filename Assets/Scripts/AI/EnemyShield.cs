@@ -7,42 +7,59 @@ public class EnemyShield : Enemy
     public new EnemyShieldData Data;
     
     [SerializeField] private EnemyShieldBT BTShield;
+    
+    private Renderer ShieldRenderer = null;
 
     private void OnEnable()
     {
-        damage = Data.damage; // possible to change damage value
-        maxHp = Data.maxHealth; // possible to change max health value
-        agent.speed = Data.speed;
-        healthEnemy.Init((int)maxHp);
+        healthEnemy.Init(maxHp);
+        healthEnemy.onDeath = OnDie;
+        if (GameManager.Instance) healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
+        
         PlayerColor color = (PlayerColor)Random.Range(0, 2);
-       AssignShieldColor(color);
-       //ChangeShieldRendererColor(color);
-       ResetAttackDefaultValue();
-       healthEnemy.onDeath = OnDie;
-       BTShield.ResetBlackboard();
-       BTShield.enabled = true;
+        AssignShieldColor(color);
+        ChangeShieldRendererColor(color);
+        ResetAttackDefaultValue();
+        BTShield.ResetBlackboard();
+        
+        BTShield.enabled = true;
     }
     
     private void OnDisable()
     {
+        if (GameManager.Instance) healthEnemy.onDeath -= GameManager.Instance.AddEnemyKilled;
+        
         BTShield.enabled = false;
     }
-    
-    // public void ChangeShieldRendererColor(PlayerColor color)
-    // {
-    //     switch (color)
-    //     {
-    //         case PlayerColor.Red:
-    //             ShieldRenderer.material.color = new Color(1f, 0f, 0f, 0.5f);
-    //             break;
-    //         case PlayerColor.Blue:
-    //             ShieldRenderer.material.color = new Color(0f, 0f, 1f, 0.5f);
-    //             break;
-    //         case PlayerColor.None:
-    //             ShieldRenderer.material.color = new Color(1f, 1f, 1f, 0.5f);
-    //             break;
-    //     }
-    // }
+
+    private void Awake()
+    {
+        damage = Data.damage; // possible to change damage value
+        maxHp = Data.maxHealth; // possible to change max health value
+        agent.speed = Data.speed;
+    }
+
+    protected override void Depop()
+    {
+        Pooler.Instance.Depop(Key.EnemyShield, gameObject);
+    }
+
+    public void ChangeShieldRendererColor(PlayerColor color)
+    {
+        if (!ShieldRenderer) ShieldRenderer = GetComponent<Renderer>();
+        switch (color)
+        {
+            case PlayerColor.Red:
+                ShieldRenderer.material.color = UnityEngine.Color.red;
+                break;
+            case PlayerColor.Blue:
+                ShieldRenderer.material.color = UnityEngine.Color.blue;
+                break;
+            case PlayerColor.None:
+                ShieldRenderer.material.color = UnityEngine.Color.white;
+                break;
+        }
+    }
 
     protected override void OnDie()
     {

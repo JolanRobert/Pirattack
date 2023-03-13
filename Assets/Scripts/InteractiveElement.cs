@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using InteractiveTrigger;
 using MyBox;
 using Player;
 using UnityEngine;
@@ -15,15 +14,15 @@ public class InteractiveElement : MonoBehaviour, IComparable<InteractiveElement>
     [SerializeField] protected Renderer cubeRenderer;
 
     protected HashSet<PlayerController> players = new HashSet<PlayerController>();
-    private bool isActive;
+    protected bool isActive;
 
     protected void OnEnable()
     {
         isActive = true;
-        progressBar.fillAmount = 0;
+        if (progressBar) progressBar.fillAmount = 0;
     }
     
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         isActive = false;
             
@@ -38,7 +37,7 @@ public class InteractiveElement : MonoBehaviour, IComparable<InteractiveElement>
 
     protected virtual void OnCancel() {}
 
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out PlayerController player))
         {
@@ -48,7 +47,7 @@ public class InteractiveElement : MonoBehaviour, IComparable<InteractiveElement>
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected void OnTriggerExit(Collider other)
     {
         if (other.TryGetComponent(out PlayerController player))
         {

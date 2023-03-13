@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     public Action<int, PlayerController> IsWasAttacked;
     public EnemyData Data => enemyData;
+    public Animator Animator => animator;
     public PlayerColor Color => ShieldColor;
     
     [SerializeField] private EnemyData enemyData;
@@ -16,29 +17,39 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] protected Health healthEnemy;
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] private EnemyBT BT;
+    [SerializeField] protected Animator animator;
+    [SerializeField] protected Rigidbody rb;
 
     protected int damage = 0;
     protected int maxHp = 0;
     
-    private void Start()
-    {
-        healthEnemy.onDeath = OnDie;
-    }
-
     private void OnEnable()
     {
         damage = enemyData.damage; // possible to change damage value
         maxHp = enemyData.maxHealth; // possible to change max health value
-        healthEnemy.Init((int)maxHp);
+        healthEnemy.Init(maxHp);
         ResetAttackDefaultValue();
         agent.speed = enemyData.speed;
         BT.ResetBlackboard();
         BT.enabled = true;
+        GameManager.OnLaunchingBoss += Depop;
     }
 
     private void OnDisable()
     {
         BT.enabled = false;
+        GameManager.OnLaunchingBoss -= Depop;
+    }
+
+    protected virtual void Depop()
+    {
+        Pooler.Instance.Depop(Key.BasicEnemy, gameObject);
+    }
+    
+    private void Start()
+    {
+        healthEnemy.onDeath = OnDie;
+        if (GameManager.Instance) healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
     }
 
     public PlayerColor GetShieldColor()
@@ -74,5 +85,11 @@ public class Enemy : MonoBehaviour, IDamageable
     public void Attack(PlayerController target)
     {
         target.Collision.Damage(damage);
+        
+    }
+
+    private void Update()
+    {
+        animator.SetFloat("Velocity", agent.velocity.magnitude);
     }
 }
