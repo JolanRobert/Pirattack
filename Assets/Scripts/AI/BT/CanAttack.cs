@@ -18,7 +18,7 @@ public class CanAttack : Node
         PlayerController[] players = PlayerManager.Players.ToArray();
         PlayerController target = (Vector3.Distance(players[0].transform.position, transform.position) <
             Vector3.Distance(players[1].transform.position, transform.position) && !players[0].IsDown) ? 
-            players[0] : (!players[1].IsDown) ? players[0] : players[1];
+            players[0] : (!players[1].IsDown) ? players[1] : players[0];
         SetDataInBlackboard("Target", target);
     }
     
@@ -33,6 +33,7 @@ public class CanAttack : Node
         }
         var enemyShield = GetData("caster");
         float distanceMin = 1;
+        transform.LookAt(target.transform);
         if (enemyShield != null && enemyShield is EnemyShield)
             distanceMin = (enemyShield as EnemyShield).Data.AttackDistance;
         else
