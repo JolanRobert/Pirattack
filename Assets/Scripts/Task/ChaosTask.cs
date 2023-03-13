@@ -11,12 +11,13 @@ namespace Task
     public class ChaosTask : InteractiveElement
     {
         public Action<ChaosTask> OnComplete;
-
-        [SerializeField, ReadOnly] private PlayerColor requiredColor = PlayerColor.None;
         
+        [SerializeField, ReadOnly] private PlayerColor requiredColor = PlayerColor.None;
+
         public virtual void Init()
         {
             SetRequiredColor(GetRandomColor());
+            UiIndicator.instance.AddObject(gameObject, requiredColor);
         }
 
         public void SetRequiredColor(PlayerColor color)

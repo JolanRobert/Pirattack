@@ -22,7 +22,7 @@ public class InteractiveElement : MonoBehaviour, IComparable<InteractiveElement>
         if (progressBar) progressBar.fillAmount = 0;
     }
     
-    protected void OnDisable()
+    protected virtual void OnDisable()
     {
         isActive = false;
             
