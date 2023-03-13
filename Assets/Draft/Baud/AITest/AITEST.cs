@@ -50,7 +50,7 @@ public class AITEST : MonoBehaviour
     {
         Bullet bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<Bullet>();
         bullet.transform.SetPositionAndRotation(player.transform.position, player.transform.rotation);
-        bullet.Init(data, player);
+        bullet.Init(player);
     }
 
     private void PrintPlayerColor()
@@ -61,7 +61,7 @@ public class AITEST : MonoBehaviour
 
     private void SwapPlayerColor()
     {
-        player.RequestSwitchColor();
+        //player.RequestSwitchColor();
         PrintPlayerColor();
     }
 

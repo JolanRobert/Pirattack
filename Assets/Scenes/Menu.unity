@@ -168,8 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiMainMenu: {fileID: 1720424870525075471}
-  playerInUiGO: {fileID: 4362036967770897870, guid: cbefa9d607a7e574b8ef59d3fa356d33,
-    type: 3}
+  players: []
 --- !u!1 &1453483111
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,6 +537,30 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 825b2f1b-70e6-440c-bf81-ce6434ab22b5
     m_ActionName: UI/Move[/XInputControllerWindows/rightStick,/XInputControllerWindows1/rightStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 00c74a7c-6d26-4596-95ac-daa28f97a979
+    m_ActionName: Player/CancelInteract
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 705eb60d-073a-4f29-9f79-ceae16a13635
+    m_ActionName: Player/LB
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0f67fbdb-b9d1-4552-a4b1-5f00787000d1
+    m_ActionName: Player/RB
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bbb9b46a-67b6-4fd9-958b-46d2f1f5fd36
+    m_ActionName: Player/A
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 452e1397-1a50-42db-92d6-43ec1cbef052
+    m_ActionName: Player/LeftStick
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cf10cb36-8e11-463d-bec9-31c4aee64a3f
+    m_ActionName: Player/RightStick
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: UI

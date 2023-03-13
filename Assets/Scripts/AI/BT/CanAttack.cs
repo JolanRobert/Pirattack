@@ -13,17 +13,23 @@ public class CanAttack : Node
         transform = _transform;
     }
 
+    public void SetTarget()
+    {
+        PlayerController[] players = PlayerManager.Players.ToArray();
+        PlayerController target = (Vector3.Distance(players[0].transform.position, transform.position) <
+            Vector3.Distance(players[1].transform.position, transform.position) && !players[0].IsDown) ? 
+            players[0] : (!players[1].IsDown) ? players[0] : players[1];
+        SetDataInBlackboard("Target", target);
+    }
+    
     public override NodeState Evaluate(Node root)
     {
         bool canAttack = (bool)GetData("CanAttack");
         PlayerController target = GetData<PlayerController>("Target");
-        if (!target)
+        if (!target || target.IsDown)
         {
-            PlayerController[] players = PlayerManager.Players.ToArray();
-            target = (Vector3.Distance(players[0].transform.position, transform.position) <
-                     Vector3.Distance(players[1].transform.position, transform.position)) ? 
-               players[0] : players[1];
-            SetDataInBlackboard("Target", target);
+            SetTarget();
+            target = GetData<PlayerController>("Target");
         }
         var enemyShield = GetData("caster");
         float distanceMin = 1;
