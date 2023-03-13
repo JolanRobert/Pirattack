@@ -39,7 +39,6 @@ namespace Task
         {
             isCycling = true;
             int time = Random.Range(timeBeforeNextTask.Min, timeBeforeNextTask.Max+1);
-            Debug.Log("Wait "+time+"s");
             yield return new WaitForSeconds(time);
             AddTask();
 
@@ -55,7 +54,6 @@ namespace Task
             ChaosTask newChaosTask = nextTasks[0];
             if (currentTasks.Contains(newChaosTask)) return;
 
-            Debug.Log("Add task");
             currentTasks.Add(newChaosTask);
             nextTasks.RemoveAt(0);
 

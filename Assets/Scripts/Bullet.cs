@@ -11,6 +11,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private GameObject particleSystem;
     [SerializeField, ReadOnly] private PlayerController owner;
 
+    private Collider lastColliderHit;
+    
     private float speed;
     private int damage;
     private int nbBounce;
@@ -19,6 +21,7 @@ public class Bullet : MonoBehaviour
     private void OnEnable()
     {
         rb.velocity = Vector3.zero;
+        lastColliderHit = null;
     }
     
     public void Init(PlayerController owner)
@@ -40,12 +43,17 @@ public class Bullet : MonoBehaviour
         Pooler.Instance.DelayedDepop(data.bulletLifespan, Key.Bullet, gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
+        if (other.isTrigger) return;
+        if (other == lastColliderHit) return;
+
+        Debug.Log(other.name);
+        
         // TODO : Remplacer l'instanciation VFX par un Pool
         
         //Hit entity
-        if (collision.gameObject.TryGetComponent(out IDamageable entity))
+        if (other.TryGetComponent(out IDamageable entity))
         {
             //Enemy damage player
             if (entity is PlayerCollision && !owner) entity.Damage(damage);
@@ -68,14 +76,19 @@ public class Bullet : MonoBehaviour
         {
             if (nbBounce > 0)
             {
-                Vector3 normal = collision.contacts[0].normal;
-                Destroy(Instantiate(particleSystem, transform.position, Quaternion.LookRotation(-normal)), 0.3f);
-                rb.velocity = Vector3.Reflect(rb.velocity.normalized, normal) * speed;
-                nbBounce--;
-                return;
+                if (Physics.Raycast(transform.position-transform.forward, transform.forward, out RaycastHit hit, 1f))
+                {
+                    Debug.DrawRay(transform.position-transform.forward, transform.forward*1, Color.green, 2f);
+                    Destroy(Instantiate(particleSystem, transform.position, Quaternion.LookRotation(-hit.normal)), 0.3f);
+                    rb.velocity = Vector3.Reflect(transform.forward, hit.normal) * speed;
+                    nbBounce--;
+                    return;
+                }
+                Debug.DrawRay(transform.position-transform.forward, transform.forward*1, Color.red, 2f);
             }
         }
-        
+
+        lastColliderHit = other;
         Destroy(Instantiate(particleSystem,transform.position,transform.rotation),0.3f);
         Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
