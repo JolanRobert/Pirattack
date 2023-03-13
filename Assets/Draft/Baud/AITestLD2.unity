@@ -31877,6 +31877,11 @@ PrefabInstance:
       propertyPath: ChaosBarSlider
       value: 
       objectReference: {fileID: 1169565048}
+    - target: {fileID: 4063685557650060724, guid: 226e274b810a1d74d8a1a001c0c41fbd,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5203609090645742108, guid: 226e274b810a1d74d8a1a001c0c41fbd,
         type: 3}
       propertyPath: CanvasEndGame

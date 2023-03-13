@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private int IncreaseChaosBar = 10;
     [SerializeField] private int DecreaseChaosBar = 10;
+    [SerializeField] private float  DepopBossTimer = 60f;
     [SerializeField] private GameObject triggerBossDoor;
     [SerializeField] private GameObject Boss;
     
@@ -23,7 +24,8 @@ public class GameManager : MonoBehaviour
     private int nbEnemiesKilled = 0;
     private int ChaosBar = 50;
     private bool waitingForBoss = false;
-    
+    private float timerDepopBoss;
+
     private void Awake()
     {
         Instance = this;
@@ -69,9 +71,10 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    IEnumerator RelaunchGame()
+    IEnumerator RelaunchGame(float delay)
     {
-        yield return new WaitForSeconds(10f);
+        Boss.SetActive(false);
+        yield return new WaitForSeconds(delay);
         SpawnManager.Instance.SetOnBossFight(false);
         ChaosBar = 50;
         OnDecreaseChaosBar?.Invoke();
@@ -80,7 +83,7 @@ public class GameManager : MonoBehaviour
     
     public void BossKilled()
     {
-        StartCoroutine(RelaunchGame());
+        StartCoroutine(RelaunchGame(10f));
     }
     
     private void BossPop()
@@ -89,11 +92,13 @@ public class GameManager : MonoBehaviour
         triggerBossDoor.SetActive(true);
         Boss.SetActive(true);
         waitingForBoss = true;
+        timerDepopBoss = DepopBossTimer;
     }
     
     public void LaunchBoss()
     {
-        //check here
+        waitingForBoss = false;
+        timerDepopBoss = 0f;
         SpawnManager.Instance.SetOnBossFight(true);
     }
 
@@ -124,4 +129,13 @@ public class GameManager : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (!waitingForBoss) return;
+        timerDepopBoss -= Time.deltaTime;
+        if (timerDepopBoss <= 0f)
+        {
+            StartCoroutine(RelaunchGame(0f));
+        }
+    }
 }
