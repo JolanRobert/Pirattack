@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7260043455544003213}
   - component: {fileID: 4063685557650060724}
   - component: {fileID: 8921672750770611548}
+  - component: {fileID: 7447034994763324298}
+  - component: {fileID: 5203609090645742108}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -115,3 +117,35 @@ MonoBehaviour:
   - {fileID: 0}
   delaySpawn: 0.4
   nbTickPerShieldSpawn: 5
+--- !u!114 &7447034994763324298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605963250011035188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645d28df56c34b14aafbc95aa45bcff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IncreaseChaosBar: 10
+  DecreaseChaosBar: 10
+  triggerBossDoor: {fileID: 0}
+  Boss: {fileID: 0}
+--- !u!114 &5203609090645742108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605963250011035188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e546e699d5e894d817e488e61bc9fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voicelineText: {fileID: 0}
+  timerVoiceline: 5
+  ChaosBarSlider: {fileID: 0}
+  CanvasEndGame: {fileID: 0}

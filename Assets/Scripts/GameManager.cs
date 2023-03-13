@@ -16,11 +16,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int IncreaseChaosBar = 10;
     [SerializeField] private int DecreaseChaosBar = 10;
     [SerializeField] private GameObject triggerBossDoor;
+    [SerializeField] private GameObject Boss;
     
     private float startTime;
     private float endTime;
     private int nbEnemiesKilled = 0;
     private int ChaosBar = 50;
+    private bool waitingForBoss = false;
     
     private void Awake()
     {
@@ -73,6 +75,7 @@ public class GameManager : MonoBehaviour
         SpawnManager.Instance.SetOnBossFight(false);
         ChaosBar = 50;
         OnDecreaseChaosBar?.Invoke();
+        waitingForBoss = false;
     }
     
     public void BossKilled()
@@ -84,16 +87,19 @@ public class GameManager : MonoBehaviour
     {
         UIManager.Instance.SetVoicelineText("Boss is here !");
         triggerBossDoor.SetActive(true);
+        Boss.SetActive(true);
+        waitingForBoss = true;
     }
     
     public void LaunchBoss()
     {
+        //check here
         SpawnManager.Instance.SetOnBossFight(true);
     }
 
     public void SuccessTask()
     {
-        if (ChaosBar >= 100) return;
+        if (ChaosBar >= 100 || waitingForBoss) return;
         
         ChaosBar += IncreaseChaosBar;
         OnIncreaseChaosBar?.Invoke();
@@ -101,7 +107,7 @@ public class GameManager : MonoBehaviour
 
     public void FailTask()
     {
-        if (ChaosBar <= 0) return;
+        if (ChaosBar <= 0 || waitingForBoss) return;
         
         ChaosBar -= DecreaseChaosBar;
         OnDecreaseChaosBar?.Invoke();

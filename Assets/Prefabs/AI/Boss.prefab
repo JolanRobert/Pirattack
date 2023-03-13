@@ -36,7 +36,7 @@ Transform:
   m_Children:
   - {fileID: 3623806119107032713}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2553871992643951441
 MeshFilter:
@@ -137,6 +137,7 @@ MonoBehaviour:
   - Engagez vous qui disez...
   - Ok ok, on efface votre ardoise.
   FXShield: {fileID: 6031358363752759155}
+  bossBt: {fileID: 8360871816658119286}
 --- !u!114 &8360871816658119286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +145,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 208030816618510756}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba063f497b3b48a468f66e732d1d076e, type: 3}
   m_Name: 
