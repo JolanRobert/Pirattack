@@ -527,6 +527,8 @@ MonoBehaviour:
   healthEnemy: {fileID: 1240984457848921876}
   agent: {fileID: 0}
   BT: {fileID: 0}
+  animator: {fileID: 0}
+  rb: {fileID: 0}
   currentPattern: {fileID: 0}
   Data: {fileID: 11400000, guid: be4ff7882d7de814eb71c30e569b5dd5, type: 2}
   voicelines:
@@ -768,7 +770,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1181353247626451379
 Transform:
   m_ObjectHideFlags: 0

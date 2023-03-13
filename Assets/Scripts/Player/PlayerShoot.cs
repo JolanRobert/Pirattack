@@ -14,7 +14,7 @@ using Utils;
         public void Shoot()
         {
             if (!canShoot) return;
-            
+            playerController.Animator.SetTrigger("Attack");
             BulletBehavior bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<BulletBehavior>();
             bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
             bullet.Init(weaponData, playerController);
@@ -24,7 +24,7 @@ using Utils;
         private IEnumerator ShootCooldown()
         {
             canShoot = false;
-            yield return new WaitForSeconds(1 / weaponData.fireRate);
+            yield return new WaitForSeconds(1 );
             canShoot = true;
         }
     }

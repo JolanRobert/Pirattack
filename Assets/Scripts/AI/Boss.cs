@@ -15,13 +15,11 @@ namespace AI
         public static Action<PlayerController> OnTriggerAttack;
         [ReadOnly] public Pattern currentPattern;
         public new BossData Data;
-        public Animator Animator => animator;
 
         [SerializeField] private string[] voicelines;
         [SerializeField] private string[] voicelinesDead;
         [SerializeField] private GameObject FXShield;
         [SerializeField] private BossBT bossBt;
-        [SerializeField] private Animator animator;
 
         private int shieldHealth = 0;
 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89ac0846ca1ea2498c9956639470af9, type: 3}
   m_Name: EnemyData
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 50
   damage: 5
   AttackDistance: 3
   speed: 3.5
-  ATKSpeed: 1
+  ATKSpeed: 1.2

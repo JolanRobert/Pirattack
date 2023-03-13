@@ -13,6 +13,8 @@ namespace Player
         public PlayerSwitchColor Color => playerSwitchColor;
         public PlayerCollision Collision => playerCollision;
         public PlayerInteract Interact => playerInteract;
+        public Animator Animator => animator;
+        public Animator AnimatorParrot => animatorParrot;
 
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerInput playerInput;
@@ -23,6 +25,8 @@ namespace Player
         [SerializeField] private PlayerInteract playerInteract;
         [SerializeField] private PlayerRespawn playerRespawn;
         [SerializeField] private Rigidbody rb;
+        [SerializeField] private Animator animator;
+        [SerializeField] private Animator animatorParrot;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;
@@ -52,6 +56,7 @@ namespace Player
             HandleSwitchColor();
             
             ResetInputs();
+            animator.SetFloat("Velocity", moveInput.magnitude);
         }
         
         #region InputCallback
@@ -105,6 +110,7 @@ namespace Player
         private void HandleShoot()
         {
             if (shootInput) playerShoot.Shoot();
+            animator.SetTrigger("Attack");
         }
 
         private void HandleSwitchColor()

@@ -42,6 +42,7 @@ namespace Player
             sphereRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
             playerController.Interact.EndInteract();
             StartCoroutine(SwitchCooldown());
+            playerController.AnimatorParrot.SetTrigger("Switch");
         }
 
         private IEnumerator SwitchCooldown()
