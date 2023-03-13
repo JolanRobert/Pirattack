@@ -7,7 +7,11 @@ using Utils;
 
 public class Bullet : MonoBehaviour
 {
+    public PlayerController Owner => owner;
+    
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private Collider collider;
+    [SerializeField] private BulletTrigger bulletTrigger;
     [SerializeField] private GameObject particleSystem;
     [SerializeField, ReadOnly] private PlayerController owner;
 
@@ -19,17 +23,13 @@ public class Bullet : MonoBehaviour
     private void OnEnable()
     {
         rb.velocity = Vector3.zero;
-    }
-    
-    public void Init(PlayerController owner)
-    {
-        this.owner = owner;
-        rb.velocity = transform.forward * 10;
-        Pooler.Instance.DelayedDepop(5, Key.Bullet, gameObject);
+        collider.enabled = true;
     }
 
     public void Init(PlayerController owner, WeaponData data)
     {
+        bulletTrigger.Init(data);
+        
         speed = data.bulletSpeed;
         damage = data.damage;
         nbBounce = data.nbBounce;
@@ -44,39 +44,19 @@ public class Bullet : MonoBehaviour
     {
         // TODO : Remplacer l'instanciation VFX par un Pool
         
-        //Hit entity
-        if (collision.gameObject.TryGetComponent(out IDamageable entity))
-        {
-            //Enemy damage player
-            if (entity is PlayerCollision && !owner) entity.Damage(damage);
-            
-            //Player damage enemy
-            else if (entity is Enemy enemy && owner)
-            {
-                if (nbPierce > 0)
-                {
-                    enemy.IsWasAttacked.Invoke(damage, owner);
-                    Destroy(Instantiate(particleSystem,transform.position,transform.rotation),0.3f);
-                    nbPierce--;
-                    return;
-                }
-            }
-        }
-        
         //Hit wall
-        else
+        if (nbBounce > 0)
         {
-            if (nbBounce > 0)
-            {
-                Vector3 normal = collision.contacts[0].normal;
-                Destroy(Instantiate(particleSystem, transform.position, Quaternion.LookRotation(-normal)), 0.3f);
-                rb.velocity = Vector3.Reflect(rb.velocity.normalized, normal) * speed;
-                nbBounce--;
-                return;
-            }
+            Vector3 normal = collision.GetContact(0).normal;
+            Destroy(Instantiate(particleSystem, transform.position, Quaternion.LookRotation(-normal)), 0.3f);
+            rb.velocity = Vector3.Reflect(transform.forward, normal) * speed;
+            rb.MoveRotation(Quaternion.LookRotation(rb.velocity));
+            nbBounce--;
+            return;
         }
         
         Destroy(Instantiate(particleSystem,transform.position,transform.rotation),0.3f);
+        Debug.Log("collision with "+collision.gameObject.name);
         Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
 }

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: WeaponTest
   m_EditorClassIdentifier: 
   bulletSpeed: 10
-  bulletLifespan: 5
-  damage: 50
+  bulletLifespan: 2.5
+  damage: 25
   nbBounce: 2
   nbPierce: 2
   fireRate: 4

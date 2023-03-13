@@ -14,7 +14,14 @@ namespace Task
             progressBar.DOKill();
             progressBar.fillAmount = 0;
         }
-    
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            
+            UiIndicator.instance.RemoveObject(gameObject);
+        }
+
         public void HandleInput(bool aInput)
         {
             if (aInput) IncreaseBar();
