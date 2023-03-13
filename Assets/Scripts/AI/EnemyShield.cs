@@ -7,6 +7,8 @@ public class EnemyShield : Enemy
     public new EnemyShieldData Data;
     
     [SerializeField] private EnemyShieldBT BTShield;
+    
+    private Renderer ShieldRenderer = null;
 
     private void OnEnable()
     {
@@ -16,7 +18,7 @@ public class EnemyShield : Enemy
         
         PlayerColor color = (PlayerColor)Random.Range(0, 2);
         AssignShieldColor(color);
-        //ChangeShieldRendererColor(color);
+        ChangeShieldRendererColor(color);
         ResetAttackDefaultValue();
         BTShield.ResetBlackboard();
         
@@ -42,21 +44,22 @@ public class EnemyShield : Enemy
         Pooler.Instance.Depop(Key.EnemyShield, gameObject);
     }
 
-    // public void ChangeShieldRendererColor(PlayerColor color)
-    // {
-    //     switch (color)
-    //     {
-    //         case PlayerColor.Red:
-    //             ShieldRenderer.material.color = new Color(1f, 0f, 0f, 0.5f);
-    //             break;
-    //         case PlayerColor.Blue:
-    //             ShieldRenderer.material.color = new Color(0f, 0f, 1f, 0.5f);
-    //             break;
-    //         case PlayerColor.None:
-    //             ShieldRenderer.material.color = new Color(1f, 1f, 1f, 0.5f);
-    //             break;
-    //     }
-    // }
+    public void ChangeShieldRendererColor(PlayerColor color)
+    {
+        if (!ShieldRenderer) ShieldRenderer = GetComponent<Renderer>();
+        switch (color)
+        {
+            case PlayerColor.Red:
+                ShieldRenderer.material.color = UnityEngine.Color.red;
+                break;
+            case PlayerColor.Blue:
+                ShieldRenderer.material.color = UnityEngine.Color.blue;
+                break;
+            case PlayerColor.None:
+                ShieldRenderer.material.color = UnityEngine.Color.white;
+                break;
+        }
+    }
 
     protected override void OnDie()
     {
