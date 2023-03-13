@@ -42,7 +42,7 @@ namespace Task
             yield return new WaitForSeconds(time);
             AddTask();
 
-            if (currentTasks.Count < maxTaskSimultaneously) StartCoroutine(TaskCycle());
+            if (currentTasks.Count < maxTaskSimultaneously && currentTasks.Count < tasks.Count) StartCoroutine(TaskCycle());
             else isCycling = false;
         }
 
@@ -57,17 +57,26 @@ namespace Task
             currentTasks.Add(newChaosTask);
             nextTasks.RemoveAt(0);
 
-            newChaosTask.OnComplete = null;
-            newChaosTask.OnComplete += CompleteTask;
+            newChaosTask.OnComplete = CompleteTask;
+            newChaosTask.OnExpire = ExpireTask;
             newChaosTask.gameObject.SetActive(true);
             newChaosTask.Init();
         }
 
+        
         private void CompleteTask(ChaosTask chaosTask)
         {
             currentTasks.Remove(chaosTask);
             chaosTask.gameObject.SetActive(false);
 
+            if (!isCycling) StartCoroutine(TaskCycle());
+        }
+
+        private void ExpireTask(ChaosTask chaosTask)
+        {
+            currentTasks.Remove(chaosTask);
+            chaosTask.gameObject.SetActive(false);
+            
             if (!isCycling) StartCoroutine(TaskCycle());
         }
     }

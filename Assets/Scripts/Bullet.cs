@@ -1,4 +1,3 @@
-using System;
 using Interfaces;
 using MyBox;
 using Player;
@@ -10,7 +9,7 @@ public class Bullet : MonoBehaviour
     public PlayerController Owner => owner;
     
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private Collider collider;
+    [SerializeField] private SphereCollider collider;
     [SerializeField] private BulletTrigger bulletTrigger;
     [SerializeField] private GameObject particleSystem;
     [SerializeField, ReadOnly] private PlayerController owner;
@@ -40,6 +39,7 @@ public class Bullet : MonoBehaviour
         Pooler.Instance.DelayedDepop(data.bulletLifespan, Key.Bullet, gameObject);
     }
 
+    //Layers Player/Enemy EXCLUDED
     private void OnCollisionEnter(Collision collision)
     {
         // TODO : Remplacer l'instanciation VFX par un Pool

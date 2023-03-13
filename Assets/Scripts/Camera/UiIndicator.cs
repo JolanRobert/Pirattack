@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MyBox;
 using Player;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UiIndicator : MonoBehaviour
 {
@@ -36,18 +37,23 @@ public class UiIndicator : MonoBehaviour
         }
     }
 
-    public void AddObject(GameObject newObj, PlayerColor color)
+    public Image[] AddObject(GameObject newObj, PlayerColor color)
     {
         IndicObj added = new IndicObj();
         added.obj = newObj;
         added.color = color;
         obj.Add(added);
+
+        Image[] res = new Image[2];
         for (int i = 0; i < 2; i++)
         {
             GameObject newIndic = Instantiate(color == PlayerColor.None ? prefabNoColor : color == PlayerColor.Blue ? prefabBlue : prefabRed, boxRect.position, Quaternion.identity, boxRect);
             newIndic.SetActive(false);
+            res[i] = newIndic.transform.GetChild(1).GetChild(0).GetComponent<Image>();
             indics.Add(newIndic.transform);
         }
+
+        return res;
     }
     
     public void RemoveObject(GameObject objToRemove)
@@ -60,6 +66,9 @@ public class UiIndicator : MonoBehaviour
                 index = i;
             }
         }
+        
+        Destroy(indics[index*2+1].gameObject);
+        Destroy(indics[index*2].gameObject);
         
         indics.RemoveAt(index * 2+1);
         indics.RemoveAt(index * 2);

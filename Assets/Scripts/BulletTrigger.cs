@@ -6,7 +6,7 @@ using Utils;
 public class BulletTrigger : MonoBehaviour
 {
     [SerializeField] private Bullet bullet;
-    [SerializeField] private Collider collider;
+    [SerializeField] private SphereCollider collider;
     [SerializeField] private GameObject particleSystem;
 
     private PlayerController owner => bullet.Owner;
@@ -24,6 +24,7 @@ public class BulletTrigger : MonoBehaviour
         nbPierce = data.nbPierce;
     }
     
+    //Layers Player/Enemy INCLUDED
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger) return;
@@ -47,7 +48,6 @@ public class BulletTrigger : MonoBehaviour
             }
             
             Destroy(Instantiate(particleSystem,transform.position,transform.rotation),0.3f);
-            Debug.Log("trigger with "+other.name);
             collider.enabled = false;
             Pooler.Instance.Depop(Key.Bullet, bullet.gameObject);
         }
