@@ -12,7 +12,9 @@ public class WeaponData : ScriptableObject
     public int nbBounce;
     public int nbPierce;
     public float fireRate;
-    
+    public int nbShock;
+    public float nbSlow;
+
     /*public int bulletNb;
     public int electric;
     public float slow;*/
