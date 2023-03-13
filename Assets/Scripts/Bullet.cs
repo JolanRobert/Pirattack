@@ -11,13 +11,10 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private SphereCollider collider;
     [SerializeField] private BulletTrigger bulletTrigger;
-    [SerializeField] private GameObject particleSystem;
     [SerializeField, ReadOnly] private PlayerController owner;
 
     private float speed;
-    private int damage;
     private int nbBounce;
-    private int nbPierce;
 
     private void OnEnable()
     {
@@ -30,9 +27,7 @@ public class Bullet : MonoBehaviour
         bulletTrigger.Init(data);
         
         speed = data.bulletSpeed;
-        damage = data.damage;
         nbBounce = data.nbBounce;
-        nbPierce = data.nbPierce;
         
         this.owner = owner;
         rb.velocity = transform.forward * speed;

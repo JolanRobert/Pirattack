@@ -10,24 +10,17 @@ public class BulletTrigger : MonoBehaviour
 {
     [SerializeField] private Bullet bullet;
     [SerializeField] private Collider collider;
-    [SerializeField] private GameObject contactParticleSystem;
-    [SerializeField] private GameObject zapParticleSystem;
-    [SerializeField] private GameObject shockLine;
 
     private PlayerController owner => bullet.Owner;
 
-    private float speed;
     private int damage;
-    private int nbBounce;
     private int nbPierce;
     private int nbShock;
     private float nbSlow;
     
     public void Init(WeaponData data)
     {
-        speed = data.bulletSpeed;
         damage = data.damage;
-        nbBounce = data.nbBounce;
         nbPierce = data.nbPierce;
         nbShock = data.nbShock;
         nbSlow = data.nbSlow;
