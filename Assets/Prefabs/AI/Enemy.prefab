@@ -126,7 +126,6 @@ MonoBehaviour:
   ShieldColor: 2
   healthEnemy: {fileID: 7391461338345102066}
   agent: {fileID: 4601543595915888144}
-  BT: {fileID: 7802507471193136510}
   animator: {fileID: 3389813104167062050}
   rb: {fileID: 4852080501000238888}
   renderer: {fileID: 2270062293439620508}
@@ -514,6 +513,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -43.96813
+      objectReference: {fileID: 0}
+    - target: {fileID: 4121431660456653262, guid: 31d3511be7f96fd40a46301de80d870c,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4121431660456653262, guid: 31d3511be7f96fd40a46301de80d870c,
         type: 3}
