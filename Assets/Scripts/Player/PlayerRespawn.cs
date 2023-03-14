@@ -6,7 +6,6 @@ namespace Player
     public class PlayerRespawn : MonoBehaviour
     {
         public bool IsDown => isDown;
-        public float RespawnDuration => playerController.Data.respawnDuration;
         
         [SerializeField] private PlayerController playerController;
         [SerializeField] private Health health;
@@ -29,6 +28,7 @@ namespace Player
         private void Start()
         {
             health.Init(data.maxHealth);
+            health.StartPassiveRegeneration(data.regenValue, data.regenTick);
         }
 
         private void Die()

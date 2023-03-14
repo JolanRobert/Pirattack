@@ -23,11 +23,6 @@ public class Bullet : MonoBehaviour
         collider.enabled = true;
     }
 
-    private void Update()
-    {
-        Debug.Log(rb.velocity);
-    }
-
     public void Init(PlayerController owner, WeaponData data)
     {
         bulletTrigger.Init(data);

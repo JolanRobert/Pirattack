@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using MyBox;
 using UnityEngine;
 
@@ -18,13 +19,37 @@ namespace Utils
         [SerializeField, ReadOnly] private int currentHealth = -1;
         [SerializeField, ReadOnly] private bool isImmortal;
 
+        private int regenValue;
+        private float regenTick;
+        private Coroutine regenCR;
+
         public void Init(int maxHealth)
         {
             this.maxHealth = maxHealth;
             currentHealth = maxHealth;
         }
 
-        [ContextMenu("Gain 0.25")]
+        public void StartPassiveRegeneration(int regenValue, float regenTick)
+        {
+            this.regenValue = regenValue;
+            this.regenTick = regenTick;
+            
+            regenCR = StartCoroutine(PassiveRegeneration());
+        }
+
+        private IEnumerator PassiveRegeneration()
+        {
+            yield return new WaitForSeconds(regenTick);
+            if (currentHealth > 0) GainHealth(regenValue);
+            
+            regenCR = StartCoroutine(PassiveRegeneration());
+        }
+
+        public void StopPassiveRegeneration()
+        {
+            StopCoroutine(regenCR);
+        }
+
         public void GainHealth(int amount)
         {
             if (maxHealth == -1) Debug.LogError("Health has not been initialized!");
@@ -33,7 +58,6 @@ namespace Utils
             OnHealthGain?.Invoke();
         }
 
-        [ContextMenu("Lose 0.25")]
         public void LoseHealth(int amount)
         {
             if (maxHealth == -1) Debug.LogError("Health has not been initialized!");

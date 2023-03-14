@@ -4,8 +4,8 @@ namespace Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private Rigidbody rb;
         [SerializeField] private PlayerController playerController;
+        [SerializeField] private Rigidbody rb;
 
         private PlayerData data => playerController.Data;
         

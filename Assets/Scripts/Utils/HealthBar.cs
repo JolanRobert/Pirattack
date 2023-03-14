@@ -7,7 +7,7 @@ namespace Utils
     public class HealthBar : MonoBehaviour
     {
         public float RespawnAmount => respawnFill.fillAmount;
-        
+
         [SerializeField] private Health health;
         [SerializeField] private Image healthFill;
         [SerializeField] private Image respawnFill;
@@ -29,6 +29,7 @@ namespace Utils
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space)) health.SmoothKill();
+            if (Input.GetKeyDown(KeyCode.E)) health.LoseHealth(50);
         }
 
         public void SetRespawnFill(float amount)
