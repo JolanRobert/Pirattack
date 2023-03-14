@@ -2,13 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using MyBox;
 using UI;
-using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
-public class MenuManager : Singleton<MenuManager>
+public class LobbyManager : Singleton<LobbyManager>
 {
-    public UI_MainMenu uiMainMenu;
+    public UI_Lobby uiLobby;
     public List<PlayerInput> players = new();
 
     private void Awake()
@@ -16,14 +14,21 @@ public class MenuManager : Singleton<MenuManager>
         InitializeSingleton(false);
     }
 
-    private void Start()
+    public void InstantiatePlayers()
     {
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Menu"));
-        
         foreach (var gamepad in Gamepad.all)
         {
             AddPlayer(gamepad);
         }
+    }
+    
+    public void ClearPlayers()
+    {
+        foreach (var player in players)
+        {
+            Destroy(player.gameObject);
+        }
+        players.Clear();
     }
 
     public void AddPlayer(InputDevice device)

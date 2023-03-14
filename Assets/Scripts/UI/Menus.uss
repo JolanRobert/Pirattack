@@ -2,11 +2,6 @@
     flex-direction: row;
 }
 
-.container {
-    align-items: center;
-    flex-grow: 1;
-}
-
 .button {
     background-color: rgb(255, 255, 255);
     border-left-color: rgba(0, 0, 0, 0);
@@ -64,6 +59,7 @@
     padding-right: 75px;
     padding-top: 25px;
     padding-bottom: 25px;
+    -unity-text-align: upper-center;
 }
 
 .playerContainer {
@@ -85,7 +81,7 @@
 }
 
 .playerImg {
-    background-image: url('project://database/Assets/Draft/Art%20UI/Pirate.png?fileID=2800000&guid=9ade847062dcf0949919cde57ddbe893&type=3#Pirate');
+    background-image: url('project://database/Assets/Draft/Romeo/Art%20UI/Pirate.png?fileID=2800000&guid=9ade847062dcf0949919cde57ddbe893&type=3#Pirate');
     flex-grow: 1;
     -unity-background-scale-mode: scale-to-fit;
 }
@@ -94,4 +90,5 @@
     align-self: center;
     -unity-font-style: bold;
     font-size: 25px;
+    -unity-text-align: upper-center;
 }

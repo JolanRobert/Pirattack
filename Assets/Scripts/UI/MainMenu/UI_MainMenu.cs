@@ -1,93 +1,91 @@
 using System;
 using System.Collections;
-using DefaultNamespace;
+using System.Linq;
 using MyBox;
 using Scene;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace UI
 {
-    public class UI_MainMenu : MonoBehaviour
+    public class UI_MainMenu : UI_Lobby
     {
         private enum MenuState
         {
             Menu,
-            Lobby
+            Lobby,
+            Credits
         }
         
         #region Constants
+            private const string VE_BGM = "VE_BackgroundM";
+            private const string VE_BGL = "VE_BackgroundL";
+            private const string VE_BGC = "VE_BackgroundC";
+        
             private const string BT_PLAY = "BT_Play";
+            private const string BT_CREDITS = "BT_Credits";
             private const string BT_QUIT = "BT_Quit";
-            private const string BT_BACK = "BT_Back";
-            private const string VE_MENU = "VE_Menu";
-            private const string VE_PLAYERCONNECTION = "VE_PlayerConnection";
-            private const string VE_P1IMG = "VE_P1Img";
-            private const string VE_P2IMG = "VE_P2Img";
-            private const string LB_P1READY = "LB_P1Ready";
-            private const string LB_P2READY = "LB_P2Ready";
             
             private const string USS_BUTTON = "button";
             private const string USS_BUTTONFOCUS = "buttonFocus";
         #endregion
         
-        [SerializeField] private UIDocument layout;
+        [SerializeField] private VisualTreeAsset lobbyLayout, creditsLayout;
         [SerializeField] private PlayerInput playerInput;
-        [SerializeField] private PlayerDeviceBuffer devicesSO;
         [SerializeField, Scene] private string gameScene;
 
         #region Visual Elements
-            private Button playBT, quitBT, backBT;
-            private VisualElement menuVE, playerConnectionVE;
-            private VisualElement p1ImgVE, p2ImgVE;
-            private Label p1Ready, p2Ready;
+            private VisualElement menuVE, lobbyVE, creditsVE;
+            private Button playBT, creditsBT, quitBT;
         #endregion
 
-        private MenuState state = MenuState.Menu;
+        private MenuState state;
         private InputDevice lastMainDevice;
 
-        private void OnEnable()
-        {
-            InputSystem.onDeviceChange += OnDeviceChange;
-        }
-
-        private void OnDisable()
-        {
-            InputSystem.onDeviceChange -= OnDeviceChange;
-        }
-        
         private void Start()
         {
-            var root = layout.rootVisualElement;
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Menu"));
+            
+            LobbyManager.Instance.InstantiatePlayers();
+            
+            Init();
+            
+            var lobbyVEs = lobbyLayout.CloneTree().Children().ToList();
+            var creditsVEs = creditsLayout.CloneTree().Children().ToList();
+            
+            foreach (var visualElement in lobbyVEs)
+            {
+                root.Add(visualElement);
+            }
+            foreach (var visualElement in creditsVEs)
+            {
+                root.Add(visualElement);
+            }
+            
+            InitVE();
+            
+            // Containers
+            menuVE = root.Q<VisualElement>(VE_BGM);
+            lobbyVE = root.Q<VisualElement>(VE_BGL);
+            creditsVE = root.Q<VisualElement>(VE_BGC);
 
             // Buttons
             playBT = root.Q<Button>(BT_PLAY);
+            creditsBT = root.Q<Button>(BT_CREDITS);
             quitBT = root.Q<Button>(BT_QUIT);
-            backBT = root.Q<Button>(BT_BACK);
-            
-            // Containers
-            menuVE = root.Q<VisualElement>(VE_MENU);
-            playerConnectionVE = root.Q<VisualElement>(VE_PLAYERCONNECTION);
-            
-            // Images
-            p1ImgVE = root.Q<VisualElement>(VE_P1IMG);
-            p2ImgVE = root.Q<VisualElement>(VE_P2IMG);
-            
-            // Labels
-            p1Ready = root.Q<Label>(LB_P1READY);
-            p2Ready = root.Q<Label>(LB_P2READY);
-            
+
             //Bindings
             BindButton(playBT, Play, true);
+            BindButton(creditsBT, Credits, true);
             BindButton(quitBT, Quit, true);
-            BindButton(backBT, Back, false);
             
             // Default values
-            DisplayMenu(true);
+            DisplayLayout(MenuState.Menu);
+            SetMainDeviceToDefault();
             UpdatePlayer(true, null);
             UpdatePlayer(false, null);
-            SetMainDeviceToDefault();
         }
 
         private void Update()
@@ -96,24 +94,6 @@ namespace UI
         }
 
         #region UI Update
-            private void UpdatePlayer(bool p1, InputDevice newDevice)
-            {
-                if (p1) devicesSO.player1Device = newDevice;
-                else devicesSO.player2Device = newDevice;
-
-                var visible = newDevice is not null;
-                if (p1)
-                {
-                    p1ImgVE.visible = visible;
-                    p1Ready.visible = visible;
-                }
-                else
-                {
-                    p2ImgVE.visible = visible;
-                    p2Ready.visible = visible;
-                }
-            }
-            
             private void BindButton(Button button, Action onClick, bool focusable)
             {
                 button.clicked -= onClick;
@@ -125,21 +105,27 @@ namespace UI
                 button.RegisterCallback<FocusOutEvent>(_ => FocusButton(button, false));
             }
             
-            private void DisplayMenu(bool b)
+            private void DisplayLayout(MenuState newState)
             {
-                menuVE.style.display = b ? DisplayStyle.Flex : DisplayStyle.None;  
-                playerConnectionVE.style.display = b ? DisplayStyle.None : DisplayStyle.Flex;
-
-                if (b)
+                state = newState;
+                menuVE.style.display = DisplayStyle.None;
+                lobbyVE.style.display = DisplayStyle.None;
+                creditsVE.style.display = DisplayStyle.None;
+                
+                switch (state)
                 {
-                    state = MenuState.Menu;
-                    playBT.Focus();
-                }
-                else
-                {
-                    StartCoroutine(LaunchLobby());
-                    UpdatePlayer(true, null);
-                    UpdatePlayer(false, null);
+                    case MenuState.Menu:
+                        menuVE.style.display = DisplayStyle.Flex;
+                        playBT.Focus();
+                        break;
+                    case MenuState.Lobby:
+                        lobbyVE.style.display = DisplayStyle.Flex;
+                        UpdatePlayer(true, null);
+                        UpdatePlayer(false, null);
+                        break;
+                    case MenuState.Credits:
+                        creditsVE.style.display = DisplayStyle.Flex;
+                        break;
                 }
             }
 
@@ -156,19 +142,17 @@ namespace UI
                     button.AddToClassList(USS_BUTTON);
                 }
             }
-
-            private IEnumerator LaunchLobby()
-            {
-                yield return new WaitForSeconds(0.25f);
-
-                state = MenuState.Lobby;
-            }
-            #endregion
+        #endregion
         
         #region Main Buttons
             private void Play()
             {
-                DisplayMenu(false);
+                DisplayLayout(MenuState.Lobby);
+            }
+            
+            private void Credits()
+            {
+                DisplayLayout(MenuState.Credits);
             }
             
             private void Quit()
@@ -182,12 +166,13 @@ namespace UI
             
             public void Back()
             {
-                DisplayMenu(true);
+                DisplayLayout(MenuState.Menu);
             }
         #endregion
         
-        public void TryToJoinPlayer(InputAction.CallbackContext context)
+        public override void TryToJoinPlayer(InputAction.CallbackContext context)
         {
+            Debug.Log("Hey");
             var device = context.control.device;
                 
             if (state is not MenuState.Lobby || device is null) return;
@@ -228,16 +213,17 @@ namespace UI
                 playerInput.SwitchCurrentControlScheme(lastMainDevice);
             }
             
-            private void OnDeviceChange(InputDevice device, InputDeviceChange change)
+            protected override void OnDeviceChange(InputDevice device, InputDeviceChange change)
             {
                 switch (change)
                 {
                     case InputDeviceChange.Disconnected:
                         if (device.Equals(lastMainDevice)) SetMainDeviceToDefault();
-                        UpdatePlayer(device.Equals(devicesSO.player1Device), null);
+                        if (device.Equals(devicesSO.player1Device)) UpdatePlayer(true, null);
+                        else if (device.Equals(devicesSO.player2Device)) UpdatePlayer(false, null);
                         break;
                     case InputDeviceChange.Added:
-                        MenuManager.Instance.AddPlayer(device);
+                        LobbyManager.Instance.AddPlayer(device);
                         SetMainDeviceToOnlyLast();
                         break;
                 }
