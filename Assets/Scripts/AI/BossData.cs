@@ -13,8 +13,8 @@ namespace AI
         public int maxHealthShield;
     
         [Header("Loot system")]
-        public GameObject[] lootGun;
-        public GameObject[] lootGunAmmo;
+        public int nbLoot = 3;
+        public GameObject[] loot;
 
         [Header("Pattern Bottle Rain")]
         public float speedBottleRain = 5f;

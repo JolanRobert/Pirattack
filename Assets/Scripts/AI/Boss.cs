@@ -88,20 +88,10 @@ namespace AI
 
         private void LootSystem()
         {
-            for (int i = 0; i < PlayerManager.Players.Count; i++)
+            for (int i = 0; i < data.nbLoot; i++)
             {
-                int indexGun = Random.Range(0, data.lootGun.Length);
-                int indexGunAmmo = Random.Range(0, data.lootGunAmmo.Length);
-
-                Instantiate(data.lootGun[Random.Range(0, data.lootGun.Length)],
-                        transform.position + Vector3.back * 10 + Vector3.right * (i - 2) + Vector3.right * i * 2 -
-                        Vector3.up * 4.5f, Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue
-                    ? UnityEngine.Color.blue
-                    : UnityEngine.Color.red;
-                Instantiate(data.lootGunAmmo[Random.Range(0, data.lootGunAmmo.Length)],
-                        transform.position + Vector3.back * 10 + Vector3.right * (i - 1) + Vector3.right * i * 2 -
-                        Vector3.up * 4.5f, Quaternion.identity)
+                Instantiate(data.loot[Random.Range(0, data.loot.Length)],
+                        transform.position + Vector3.back * 10 + Vector3.right * (i - 1), Quaternion.identity)
                     .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue
                     ? UnityEngine.Color.blue
                     : UnityEngine.Color.red;
