@@ -7,6 +7,8 @@ namespace AI
 {
     public class ConeProjectile : MonoBehaviour
     {
+        [SerializeField] private Renderer renderer;
+        
         private float maxSize = 10;
         private float minSize = 0;
         private float currentSize = 0;
@@ -90,6 +92,7 @@ namespace AI
             casterPosition = _caster.transform.position;
             target = _target;
             caster = _caster;
+            renderer.material = _caster.GetComponent<Renderer>().material;
             StartCoroutine(Wave());
         }
     }

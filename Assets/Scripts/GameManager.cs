@@ -152,4 +152,9 @@ public class GameManager : MonoBehaviour
             StartCoroutine(RelaunchGame(0f));
         }
     }
+
+    public float currentTimer()
+    {
+        return Time.time - startTime;
+    }
 }

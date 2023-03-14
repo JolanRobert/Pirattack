@@ -12,12 +12,12 @@ namespace AI
         public float attackSpeed = 1;
         public float speed = 3.5f;
         public float delaySwitchTarget = 0f;
+        public float viewRangeDetection = 4f;
 
         [Header("Bullets")]
         public float maxSize;
         public float minSize;
         public float speedPattern;
         public float angle;
-        public float viewRangeDetection = 4f;
     }
 }
