@@ -42,9 +42,9 @@ namespace AI.BossPattern
             yield return new WaitForSeconds(data.delayBeforeFallingRain);
             for (int i = 0; i < data.nbBottleRain; i++)
             {
-                Vector3 randomPos = new Vector3(Utils.Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain, -data.minImpactRangeRain, data.minImpactRangeRain),
+                Vector3 randomPos = new Vector3(Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain, -data.minImpactRangeRain, data.minImpactRangeRain),
                     55, 
-                    Utils.Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain, -data.minImpactRangeRain, data.minImpactRangeRain));
+                    Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain, -data.minImpactRangeRain, data.minImpactRangeRain));
             
                 Vector3 fallPosition = caster.transform.position + randomPos;
 
@@ -57,7 +57,7 @@ namespace AI.BossPattern
                 fx.transform.position = fallPosition;
                 fx.transform.localScale = new Vector3(data.impactSizeRain, 1, data.impactSizeRain);
             
-                bottle.GetComponent<BottleFalling>().Init(data.SpeedBottleRain, fx);
+                bottle.GetComponent<BottleFalling>().Init(data.speedBottleRain, fx);
                 yield return new WaitForSeconds(caster.data.delayBetweenBottleRain);
             }
         }

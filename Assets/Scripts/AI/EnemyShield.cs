@@ -36,7 +36,7 @@ namespace AI
 
         private void Awake()
         {
-            damage = data.damage; // possible to change damage value
+            Damagz = data.damage; // possible to change damage value
             maxHp = data.maxHealth; // possible to change max health value
             agent.speed = data.speed;
         }
@@ -46,7 +46,7 @@ namespace AI
             Pooler.Instance.Depop(Key.EnemyShield, gameObject);
         }
 
-        public void ChangeShieldRendererColor(PlayerColor color)
+        private void ChangeShieldRendererColor(PlayerColor color)
         {
             if (!shieldRenderer) shieldRenderer = GetComponent<Renderer>();
             switch (color)

@@ -8,7 +8,7 @@ public class EnemyData : ScriptableObject
     [Header("Stats")]
     public int  maxHealth = 100;
     public int damage = 10;
-    public float AttackDistance = 2;
+    public float attackDistance = 2;
     public float speed = 3.5f;
     public float ATKSpeed = 1f;
     public float viewRangeDetection = 4f;

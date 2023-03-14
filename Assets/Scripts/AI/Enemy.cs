@@ -28,27 +28,27 @@ namespace AI
     
 
         protected bool enemyInVision = false;
-        protected int damage = 0;
+        protected int Damagz = 0;
         protected int maxHp = 0;
         protected List<Transform> PatrolPoints = new ();
-        private EnemyBT BT = null;
+        private EnemyBT bt = null;
     
         private void OnEnable()
         {
-            damage = enemyData.damage; // possible to change damage value
+            Damagz = enemyData.damage; // possible to change damage value
             maxHp = enemyData.maxHealth; // possible to change max health value
             healthEnemy.Init(maxHp);
             ResetAttackDefaultValue();
             agent.speed = enemyData.speed;
-            if (!BT) BT = GetComponent<EnemyBT>();
-            BT.ResetBlackboard();   
-            BT.enabled = true;
+            if (!bt) bt = GetComponent<EnemyBT>();
+            bt.ResetBlackboard();   
+            bt.enabled = true;
             GameManager.OnLaunchingBoss += Depop;
         }
 
         private void OnDisable()
         {
-            BT.enabled = false;
+            bt.enabled = false;
             GameManager.OnLaunchingBoss -= Depop;
         }
     
@@ -96,7 +96,7 @@ namespace AI
 
         public void Attack(PlayerController target)
         {
-            target.Collision.Damage(damage);
+            target.Collision.Damage(Damagz);
         }
 
         public void OnPlayerOnVision()
