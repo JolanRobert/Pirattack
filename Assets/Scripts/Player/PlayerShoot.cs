@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Player;
+using Unity.VisualScripting;
 using UnityEngine;
 using Utils;
 
@@ -12,10 +13,24 @@ public class PlayerShoot : MonoBehaviour
 
         private bool canShoot = true;
         private WeaponData currentWeaponData;
-
+        
         private void Start()
         {
-            currentWeaponData = weaponData;
+            InitializeWeaponData();
+        }
+
+        private void InitializeWeaponData()
+        {
+            currentWeaponData = ScriptableObject.CreateInstance<WeaponData>();
+            currentWeaponData.damage = weaponData.damage;
+            currentWeaponData.nbBounce = weaponData.nbBounce;
+            currentWeaponData.nbShock = weaponData.nbShock;
+            currentWeaponData.nbSlow = weaponData.nbSlow;
+            currentWeaponData.nbPierce = weaponData.nbPierce;
+            currentWeaponData.fireRate = weaponData.fireRate;
+            
+            currentWeaponData.bulletSpeed = weaponData.bulletSpeed;
+            currentWeaponData.bulletLifespan = weaponData.bulletLifespan;
         }
 
         public void Shoot()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using MyBox;
+using Player;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
