@@ -2,7 +2,7 @@
     <ui:Template name="Countdown" src="project://database/Assets/Scripts/UI/Countdown/Countdown.uxml?fileID=9197481963319205126&amp;guid=0356b8dce9987d3418ed733202a94144&amp;type=3#Countdown" />
     <Style src="project://database/Assets/Scripts/UI/Menus.uss?fileID=7433441132597879392&amp;guid=bfbc368cf46bf5e499a98a53f6471940&amp;type=3#Menus" />
     <Style src="project://database/Assets/Scripts/UI/MainMenu/MainMenu.uss?fileID=7433441132597879392&amp;guid=3af38dff7aab6ed408634b045d1f970c&amp;type=3#MainMenu" />
-    <ui:VisualElement name="VE_BackgroundC" class="container background">
+    <ui:VisualElement name="VE_BackgroundCD" class="container background">
         <ui:Instance template="Countdown" name="Countdown" style="flex-grow: 1;" />
         <ui:Label tabindex="-1" text="&lt;- B to go back" display-tooltip-when-elided="true" name="LB_BackInfos" class="labelInfos" />
     </ui:VisualElement>

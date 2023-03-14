@@ -1,0 +1,30 @@
+.playerContainer {
+    width: 350px;
+    background-color: rgb(255, 255, 255);
+    height: 500px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.playerImg {
+    background-image: url('project://database/Assets/Draft/Romeo/Art%20UI/Pirate.png?fileID=2800000&guid=9ade847062dcf0949919cde57ddbe893&type=3#Pirate');
+    flex-grow: 1;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.playerLabel {
+    align-self: center;
+    -unity-font-style: bold;
+    font-size: 25px;
+    -unity-text-align: upper-center;
+}

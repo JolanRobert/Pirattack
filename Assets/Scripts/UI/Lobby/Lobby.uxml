@@ -1,5 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Scripts/UI/Menus.uss?fileID=7433441132597879392&amp;guid=bfbc368cf46bf5e499a98a53f6471940&amp;type=3#Menus" />
+    <Style src="project://database/Assets/Scripts/UI/Lobby/Lobby.uss?fileID=7433441132597879392&amp;guid=3dbc730d2aa545c4da864446a594cfe2&amp;type=3#Lobby" />
     <ui:VisualElement name="VE_Players" class="verticalContainer" style="align-self: center;">
         <ui:VisualElement name="VE_Player1" class="playerContainer" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
             <ui:VisualElement name="VE_P1Img" class="playerImg" style="-unity-background-image-tint-color: rgb(126, 246, 255); visibility: hidden;" />

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Linq;
 using MyBox;
 using Scene;
@@ -16,13 +15,15 @@ namespace UI
         {
             Menu,
             Lobby,
-            Credits
+            Credits,
+            Countdown
         }
         
         #region Constants
             private const string VE_BGM = "VE_BackgroundM";
             private const string VE_BGL = "VE_BackgroundL";
             private const string VE_BGC = "VE_BackgroundC";
+            private const string VE_BGCD = "VE_BackgroundCD";
         
             private const string BT_PLAY = "BT_Play";
             private const string BT_CREDITS = "BT_Credits";
@@ -32,12 +33,13 @@ namespace UI
             private const string USS_BUTTONFOCUS = "buttonFocus";
         #endregion
         
-        [SerializeField] private VisualTreeAsset lobbyLayout, creditsLayout;
+        [SerializeField] private VisualTreeAsset lobbyLayout, creditsLayout, countdownLayout;
+        [SerializeField] private UI_Countdown countdown;
         [SerializeField] private PlayerInput playerInput;
         [SerializeField, Scene] private string gameScene;
 
         #region Visual Elements
-            private VisualElement menuVE, lobbyVE, creditsVE;
+            private VisualElement menuVE, lobbyVE, creditsVE, countdownVE;
             private Button playBT, creditsBT, quitBT;
         #endregion
 
@@ -54,6 +56,7 @@ namespace UI
             
             var lobbyVEs = lobbyLayout.CloneTree().Children().ToList();
             var creditsVEs = creditsLayout.CloneTree().Children().ToList();
+            var countdownVEs = countdownLayout.CloneTree().Children().ToList();
             
             foreach (var visualElement in lobbyVEs)
             {
@@ -63,14 +66,20 @@ namespace UI
             {
                 root.Add(visualElement);
             }
+            foreach (var visualElement in countdownVEs)
+            {
+                root.Add(visualElement);
+            }
             
+            countdown.Init();
             InitVE();
             
             // Containers
             menuVE = root.Q<VisualElement>(VE_BGM);
             lobbyVE = root.Q<VisualElement>(VE_BGL);
             creditsVE = root.Q<VisualElement>(VE_BGC);
-
+            countdownVE = root.Q<VisualElement>(VE_BGCD);
+            
             // Buttons
             playBT = root.Q<Button>(BT_PLAY);
             creditsBT = root.Q<Button>(BT_CREDITS);
@@ -90,7 +99,8 @@ namespace UI
 
         private void Update()
         {
-            if (devicesSO.player1Device != null && devicesSO.player2Device != null) StartGame();
+            if (state is not MenuState.Lobby) return;
+            if (devicesSO.player1Device != null && devicesSO.player2Device != null) StartCountDown();
         }
 
         #region UI Update
@@ -111,6 +121,7 @@ namespace UI
                 menuVE.style.display = DisplayStyle.None;
                 lobbyVE.style.display = DisplayStyle.None;
                 creditsVE.style.display = DisplayStyle.None;
+                countdownVE.style.display = DisplayStyle.None;
                 
                 switch (state)
                 {
@@ -125,6 +136,10 @@ namespace UI
                         break;
                     case MenuState.Credits:
                         creditsVE.style.display = DisplayStyle.Flex;
+                        break;
+                    case MenuState.Countdown:
+                        countdownVE.style.display = DisplayStyle.Flex;
+                        countdown.StartCountdown(StartGame);
                         break;
                 }
             }
@@ -172,7 +187,6 @@ namespace UI
         
         public override void TryToJoinPlayer(InputAction.CallbackContext context)
         {
-            Debug.Log("Hey");
             var device = context.control.device;
                 
             if (state is not MenuState.Lobby || device is null) return;
@@ -219,10 +233,14 @@ namespace UI
             }
         #endregion
         
+        private void StartCountDown()
+        {
+            DisplayLayout(MenuState.Countdown);
+        }
+        
         private void StartGame()
         {
-            //SceneController.Instance.QuickLoad(gameScene);
+            SceneController.Instance.QuickLoad(gameScene);
         }
-
     }
 }
