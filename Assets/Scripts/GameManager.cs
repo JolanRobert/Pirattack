@@ -74,6 +74,12 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    public void EndGame()
+    {
+        ChaosBar = 0;
+        OnDecreaseChaosBar?.Invoke();
+    }
+    
     IEnumerator RelaunchGame(float delay)
     {
         Boss.SetActive(false);

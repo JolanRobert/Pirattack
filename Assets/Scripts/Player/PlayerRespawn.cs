@@ -31,10 +31,17 @@ namespace Player
             health.Init(data.maxHealth);
         }
 
+        public void CheckEndGame()
+        {
+            PlayerController[] players = PlayerManager.Players.ToArray();
+            if (players[0].IsDown && players[1].IsDown) GameManager.Instance.EndGame();
+        }
+
         private void Die()
         {
             respawnTrigger.SetActive(true);
             isDown = true;
+            CheckEndGame();
             
             Debug.Log("Dead");
         }
