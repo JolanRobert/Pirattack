@@ -22,3 +22,4 @@ MonoBehaviour:
   minSize: 1
   speedPattern: 8
   angle: 45
+  viewRangeDetection: 10

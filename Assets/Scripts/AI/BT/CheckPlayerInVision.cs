@@ -22,7 +22,7 @@ public class CheckPlayerInVision : Node
         
         float distanceplayer0 = Vector3.Distance(players[0].transform.position, transform.position);
         float distanceplayer1 = Vector3.Distance(players[1].transform.position, transform.position);
-        float minViewRange = 1;
+        float minViewRange = 10;
         
         if (enemyShield != null && enemyShield is EnemyShield)
             minViewRange = (enemyShield as EnemyShield).Data.viewRangeDetection;
