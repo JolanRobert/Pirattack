@@ -527,7 +527,7 @@ MonoBehaviour:
   healthEnemy: {fileID: 1240984457848921876}
   agent: {fileID: 0}
   BT: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 6068528702488566454}
   rb: {fileID: 0}
   renderer: {fileID: 1426896915795377821}
   materials:
