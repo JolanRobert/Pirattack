@@ -15,7 +15,7 @@ public class BottleHarrasment : Pattern
 
     public override float GetDelay()
     {
-        BossData data = caster.Data;
+        BossData data = caster.data;
         float animationTime = ((55 / Time.deltaTime * 45f) * Time.deltaTime) / 1000f;
         float animationBottle = 4f; // 4f = temps de l'animation up
         float animationFallBottle = data.nbBottleHarassment * data.delayBetweenBottleHarassment + animationTime;
@@ -24,7 +24,7 @@ public class BottleHarrasment : Pattern
 
     public override void TouchPlayer(PlayerController player)
     {
-        player.Collision.Damage(caster.Data.damagePerBottleHarassment);
+        player.Collision.Damage(caster.data.damagePerBottleHarassment);
         Debug.Log("Touch Player by BottleRain");
     }
 
@@ -36,7 +36,7 @@ public class BottleHarrasment : Pattern
 
     IEnumerator ExecuteBottleHarassmentAnimation()
     {
-        BossData data = caster.Data;
+        BossData data = caster.data;
         caster.Animator.SetTrigger("ThrowBottle");
         for (int i = 0; i < 4; i++)
         {
@@ -74,7 +74,7 @@ public class BottleHarrasment : Pattern
             fx.transform.localScale = new Vector3(data.impactSizeHarassment, 1, data.impactSizeHarassment);
             
             bottle.GetComponent<BottleFalling>().Init(data.SpeedBottleHarassment, fx);
-            yield return new WaitForSeconds(caster.Data.delayBetweenBottleHarassment);
+            yield return new WaitForSeconds(caster.data.delayBetweenBottleHarassment);
         }
     }
 

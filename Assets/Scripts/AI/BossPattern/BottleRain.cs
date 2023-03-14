@@ -1,74 +1,71 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using AI;
-using AI.BossPattern;
 using Player;
 using UnityEngine;
 using Utils;
 
-[CreateAssetMenu(fileName = "BottleRain", menuName = "ScriptableObjects/Pattern/BottleRain", order = 1)]
-public class BottleRain : Pattern
+namespace AI.BossPattern
 {
-    [SerializeField] private GameObject bottleAnimationPrefab;
-    [SerializeField] private GameObject bottlePrefab;
-    [SerializeField] private GameObject FXFallingPosPrefab;
-
-    public override float GetDelay()
+    [CreateAssetMenu(fileName = "BottleRain", menuName = "ScriptableObjects/Pattern/BottleRain", order = 1)]
+    public class BottleRain : Pattern
     {
-        BossData data = caster.Data;
-        float animationBottle = 4f; // 4f = temps de l'animation up
-        float animationFallBottle = data.nbBottleRain * (data.delayBetweenBottleRain + 1.2f); // 1.2f = temps de l'animation fall
-        return animationBottle + data.delayBeforeFallingRain + animationFallBottle;
-    }
+        [SerializeField] private GameObject bottleAnimationPrefab;
 
-    public override void TouchPlayer(PlayerController player)
-    {
-        player.Collision.Damage(caster.Data.damagePerBottleRain);
-        Debug.Log("Touch Player by BottleRain");
-    }
+        public override float GetDelay()
+        {
+            BossData data = caster.data;
+            float animationBottle = 4f; // 4f = temps de l'animation up
+            float animationFallBottle = data.nbBottleRain * (data.delayBetweenBottleRain + 1.2f); // 1.2f = temps de l'animation fall
+            return animationBottle + data.delayBeforeFallingRain + animationFallBottle;
+        }
 
-    public override void EndTrigger(GameObject obj)
-    {
-        obj.GetComponent<BottleFalling>().EndOfLife();
-        Pooler.Instance.Depop(Key.Bottle, obj);
-    }
+        public override void TouchPlayer(PlayerController player)
+        {
+            player.Collision.Damage(caster.data.damagePerBottleRain);
+            Debug.Log("Touch Player by BottleRain");
+        }
 
-    private IEnumerator ExecuteBottleRainAnimation()
-    {
-        BossData data = caster.Data;
+        public override void EndTrigger(GameObject obj)
+        {
+            obj.GetComponent<BottleFalling>().EndOfLife();
+            Pooler.Instance.Depop(Key.Bottle, obj);
+        }
+
+        private IEnumerator ExecuteBottleRainAnimation()
+        {
+            BossData data = caster.data;
             caster.Animator.SetTrigger("ThrowBottle");
-        for (int i = 0; i < 4; i++)
-        {
-            yield return new WaitForSeconds(1f);
-            Instantiate(bottleAnimationPrefab, caster.transform.position, Quaternion.identity);
-        }
-        yield return new WaitForSeconds(data.delayBeforeFallingRain);
-        for (int i = 0; i < data.nbBottleRain; i++)
-        {
-            Vector3 randomPos = new Vector3(Utils.Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain, -data.minImpactRangeRain, data.minImpactRangeRain),
-                55, 
-                Utils.Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain, -data.minImpactRangeRain, data.minImpactRangeRain));
+            for (int i = 0; i < 4; i++)
+            {
+                yield return new WaitForSeconds(1f);
+                Instantiate(bottleAnimationPrefab, caster.transform.position, Quaternion.identity);
+            }
+            yield return new WaitForSeconds(data.delayBeforeFallingRain);
+            for (int i = 0; i < data.nbBottleRain; i++)
+            {
+                Vector3 randomPos = new Vector3(Utils.Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain, -data.minImpactRangeRain, data.minImpactRangeRain),
+                    55, 
+                    Utils.Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain, -data.minImpactRangeRain, data.minImpactRangeRain));
             
-            Vector3 FallPosition = caster.transform.position + randomPos;
+                Vector3 fallPosition = caster.transform.position + randomPos;
 
-            GameObject bottle = Pooler.Instance.Pop(Key.Bottle);
-            bottle.transform.position = FallPosition;
-            bottle.GetComponent<BoxCollider>().size = new Vector3(data.impactSizeRain, 2, data.impactSizeRain);
+                GameObject bottle = Pooler.Instance.Pop(Key.Bottle);
+                bottle.transform.position = fallPosition;
+                bottle.GetComponent<BoxCollider>().size = new Vector3(data.impactSizeRain, 2, data.impactSizeRain);
 
-            FallPosition.y = 0.5f;
-            GameObject fx = Pooler.Instance.Pop(Key.FXBottle);
-            fx.transform.position = FallPosition;
-            fx.transform.localScale = new Vector3(data.impactSizeRain, 1, data.impactSizeRain);
+                fallPosition.y = 0.5f;
+                GameObject fx = Pooler.Instance.Pop(Key.FXBottle);
+                fx.transform.position = fallPosition;
+                fx.transform.localScale = new Vector3(data.impactSizeRain, 1, data.impactSizeRain);
             
-            bottle.GetComponent<BottleFalling>().Init(data.SpeedBottleRain, fx);
-            yield return new WaitForSeconds(caster.Data.delayBetweenBottleRain);
+                bottle.GetComponent<BottleFalling>().Init(data.SpeedBottleRain, fx);
+                yield return new WaitForSeconds(caster.data.delayBetweenBottleRain);
+            }
         }
-    }
     
-    public override void Execute()
-    {
-        caster.currentPattern = this;
-        caster.StartCoroutine(ExecuteBottleRainAnimation());
+        public override void Execute()
+        {
+            caster.currentPattern = this;
+            caster.StartCoroutine(ExecuteBottleRainAnimation());
+        }
     }
 }

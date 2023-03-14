@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using AI;
 using BehaviourTree;
 using Player;
-using Unity.VisualScripting;
-using UnityEngine;
+    using UnityEngine;
 
 public class CanAttack : Node
 {
@@ -48,7 +46,7 @@ public class CanAttack : Node
         float distanceMin = 1;
         transform.LookAt(target.transform);
         if (enemyShield != null && enemyShield is EnemyShield)
-            distanceMin = (enemyShield as EnemyShield).Data.AttackDistance;
+            distanceMin = (enemyShield as EnemyShield).data.AttackDistance;
         else
             distanceMin = (enemyShield as Enemy).Data.AttackDistance;
 

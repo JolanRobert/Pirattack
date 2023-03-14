@@ -523,7 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: bd22af85a22ec0147bbcf024a9756be4, type: 2}
-  ShieldColor: 2
+  shieldColor: 2
   healthEnemy: {fileID: 1240984457848921876}
   agent: {fileID: 0}
   animator: {fileID: 6068528702488566454}
@@ -533,7 +533,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
   - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
   currentPattern: {fileID: 0}
-  Data: {fileID: 11400000, guid: be4ff7882d7de814eb71c30e569b5dd5, type: 2}
+  data: {fileID: 11400000, guid: be4ff7882d7de814eb71c30e569b5dd5, type: 2}
   voicelines:
   - Yo Ho Ho !
   - YARG !

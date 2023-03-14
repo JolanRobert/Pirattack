@@ -1,28 +1,29 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class TrapManager : MonoBehaviour
+namespace AI
 {
-    public List<Transform> patrolPoints = new List<Transform>();
-
-    private readonly List<Enemy> Enemies = new();
-
-    public void AddEnemy(Enemy enemy)
+    public class TrapManager : MonoBehaviour
     {
-        Enemies.Add(enemy);
-    }
+        public List<Transform> patrolPoints = new ();
 
-    public bool CheckEnemiesVision()
-    {
-        bool isPlayerInVision = Enemies.Any(t => t.EnemyInVision);
+        private readonly List<Enemy> enemies = new();
 
-        if (isPlayerInVision)
-            Enemies.Clear();
-        else if (Enemies.Count == 0)
-            isPlayerInVision = true;
-        return isPlayerInVision;
+        public void AddEnemy(Enemy enemy)
+        {
+            enemies.Add(enemy);
+        }
+
+        public bool CheckEnemiesVision()
+        {
+            bool isPlayerInVision = enemies.Any(t => t.EnemyInVision);
+
+            if (isPlayerInVision)
+                enemies.Clear();
+            else if (enemies.Count == 0)
+                isPlayerInVision = true;
+            return isPlayerInVision;
+        }
     }
 }
