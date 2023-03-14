@@ -15,16 +15,18 @@ using Utils;
         {
             if (!canShoot) return;
             
-            BulletBehavior bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<BulletBehavior>();
+            Bullet bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<Bullet>();
             bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
-            bullet.Init(weaponData, playerController);
+            bullet.Init(playerController, weaponData);
             StartCoroutine(ShootCooldown());
+            
+            playerController.Animation.SetTrigger(PlayerAnimation.AnimTrigger.Attack);
         }
 
         private IEnumerator ShootCooldown()
         {
             canShoot = false;
-            yield return new WaitForSeconds(1 / weaponData.fireRate);
+            yield return new WaitForSeconds(1 );
             canShoot = true;
         }
     }

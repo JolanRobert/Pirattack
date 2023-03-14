@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject triggerBossDoor;
     [SerializeField] private GameObject bossDoor;
     [SerializeField] private GameObject Boss;
+    [SerializeField] private PlayerController[] players;
     
     private float startTime;
     private float endTime;
@@ -142,5 +143,10 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(RelaunchGame(0f));
         }
+    }
+
+    public PlayerController[] GetPlayers()
+    {
+        return players;
     }
 }

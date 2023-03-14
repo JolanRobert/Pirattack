@@ -139,5 +139,9 @@ namespace Utils
         FXBottle,
         BasicEnemy,
         EnemyShield,
+        BulletImpactVFX,
+        PerkZapVFX,
+        PerkZapLine,
+        PerkIceVFX
     }
 }

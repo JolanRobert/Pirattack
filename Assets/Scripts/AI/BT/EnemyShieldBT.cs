@@ -17,6 +17,7 @@ public class EnemyShieldBT : Tree
         origin = new Selector(
             new InitEnemyBlackboard(enemy),
             new TaskWaitForSeconds(),
+            new CheckPlayerInVision(),
             new CheckColorTarget(),
             new Sequence(
                 new CanAttack(enemy.transform),

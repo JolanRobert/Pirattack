@@ -22,8 +22,9 @@ namespace Task
         
         protected override void OnCancel()
         {
-            progressBar.DOKill();
-            progressBar.fillAmount = 0;
+            base.OnCancel();
+            
+            taskInfos.SetProgressFill(0);
         }
  
         private new void OnEnable()
@@ -54,20 +55,17 @@ namespace Task
         
         private void IncreaseBar()
         {
-            float newAmount = progressBar.fillAmount + currentAngle / 360 * speedFactor;
-
-            progressBar.DOKill();
-            Tween tween = progressBar.DOFillAmount(newAmount, angleCheckTimer).SetEase(Ease.Linear);
+            float newAmount = ProgressAmount + currentAngle / 360 * speedFactor;
+            Tween tween = taskInfos.DoProgressFill(newAmount, angleCheckTimer);
             if (newAmount >= 1) tween.onComplete += Complete;
         }
 
         private void DecreaseBar()
         {
-            if (progressBar.fillAmount == 0) return;
-            float newAmount = progressBar.fillAmount - lossAmountPerSec*angleCheckTimer;
-
-            progressBar.DOKill();
-            progressBar.DOFillAmount(newAmount, angleCheckTimer).SetEase(Ease.Linear);
+            if (ProgressAmount == 0) return;
+            
+            float newAmount = ProgressAmount - lossAmountPerSec*angleCheckTimer;
+            taskInfos.DoProgressFill(newAmount, angleCheckTimer);
         }
         
         private void Complete()
