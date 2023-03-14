@@ -7,12 +7,12 @@ using Random = UnityEngine.Random;
 [Serializable]
 public enum LootType
 {
-    damage,
-    bounce,
-    zap,
-    slow,
-    pierce,
-    fireRate,
+    Damage,
+    Bounce,
+    Zap,
+    Slow,
+    Pierce,
+    FireRate,
 }
 
 public class LootStats : MonoBehaviour
@@ -36,7 +36,7 @@ public class LootStats : MonoBehaviour
         PlayerController playerController = other.GetComponent<PlayerController>();
         if (playerController)
         {
-            playerController.WeaponData.AddStat(lootType);
+            playerController.Stats.AddStat(lootType);
             Pooler.Instance.Depop(Key.PerkLoot, gameObject);
         }
     }
