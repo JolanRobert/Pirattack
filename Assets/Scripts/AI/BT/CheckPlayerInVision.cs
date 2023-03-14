@@ -13,15 +13,15 @@ public class CheckPlayerInVision : Node
         
         var enemyShield = GetData("caster");
         var caster = (Enemy)GetData("caster");
-        var transform = caster.transform;
+        var casterPos = caster.transform.position;
         
         //PlayerController[] players = GameManager.Instance.GetPlayers();
         if (PlayerManager.Players.Count == 0) return NodeState.Success;
         PlayerController[] players = PlayerManager.Players.ToArray();
         PlayerController target = null;
         
-        float distancePlayer0 = Vector3.Distance(players[0].transform.position, transform.position);
-        float distancePlayer1 = Vector3.Distance(players[1].transform.position, transform.position);
+        float distancePlayer0 = Vector3.Distance(players[0].transform.position, casterPos);
+        float distancePlayer1 = Vector3.Distance(players[1].transform.position, casterPos);
         float minViewRange = 10;
         
         if (enemyShield != null && enemyShield is EnemyShield)
