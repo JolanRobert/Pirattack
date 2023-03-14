@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using MyBox;
 using Scene;
 using UnityEngine;
@@ -14,28 +15,33 @@ namespace UI
         private enum MenuState
         {
             Menu,
-            Lobby
+            Lobby,
+            Credits
         }
         
         #region Constants
+            private const string VE_BGM = "VE_BackgroundM";
+            private const string VE_BGL = "VE_BackgroundL";
+            private const string VE_BGC = "VE_BackgroundC";
+        
             private const string BT_PLAY = "BT_Play";
+            private const string BT_CREDITS = "BT_Credits";
             private const string BT_QUIT = "BT_Quit";
-            private const string VE_MENU = "VE_Menu";
-            private const string VE_PLAYERCONNECTION = "VE_PlayerConnection";
             
             private const string USS_BUTTON = "button";
             private const string USS_BUTTONFOCUS = "buttonFocus";
         #endregion
         
+        [SerializeField] private VisualTreeAsset lobbyLayout, creditsLayout;
         [SerializeField] private PlayerInput playerInput;
         [SerializeField, Scene] private string gameScene;
 
         #region Visual Elements
-            private Button playBT, quitBT, backBT;
-            private VisualElement menuVE, playerConnectionVE;
+            private VisualElement menuVE, lobbyVE, creditsVE;
+            private Button playBT, creditsBT, quitBT;
         #endregion
 
-        private MenuState state = MenuState.Menu;
+        private MenuState state;
         private InputDevice lastMainDevice;
 
         private void Start()
@@ -46,22 +52,37 @@ namespace UI
             
             Init();
             
-            var root = layout.rootVisualElement;
+            var lobbyVEs = lobbyLayout.CloneTree().Children().ToList();
+            var creditsVEs = creditsLayout.CloneTree().Children().ToList();
             
-            // Buttons
-            playBT = root.Q<Button>(BT_PLAY);
-            quitBT = root.Q<Button>(BT_QUIT);
+            foreach (var visualElement in lobbyVEs)
+            {
+                root.Add(visualElement);
+            }
+            foreach (var visualElement in creditsVEs)
+            {
+                root.Add(visualElement);
+            }
+            
+            InitVE();
             
             // Containers
-            menuVE = root.Q<VisualElement>(VE_MENU);
-            playerConnectionVE = root.Q<VisualElement>(VE_PLAYERCONNECTION);
+            menuVE = root.Q<VisualElement>(VE_BGM);
+            lobbyVE = root.Q<VisualElement>(VE_BGL);
+            creditsVE = root.Q<VisualElement>(VE_BGC);
+
+            // Buttons
+            playBT = root.Q<Button>(BT_PLAY);
+            creditsBT = root.Q<Button>(BT_CREDITS);
+            quitBT = root.Q<Button>(BT_QUIT);
 
             //Bindings
             BindButton(playBT, Play, true);
+            BindButton(creditsBT, Credits, true);
             BindButton(quitBT, Quit, true);
             
             // Default values
-            DisplayMenu(state is MenuState.Menu);
+            DisplayLayout(MenuState.Menu);
             SetMainDeviceToDefault();
             UpdatePlayer(true, null);
             UpdatePlayer(false, null);
@@ -84,21 +105,27 @@ namespace UI
                 button.RegisterCallback<FocusOutEvent>(_ => FocusButton(button, false));
             }
             
-            private void DisplayMenu(bool b)
+            private void DisplayLayout(MenuState newState)
             {
-                menuVE.style.display = b ? DisplayStyle.Flex : DisplayStyle.None;  
-                playerConnectionVE.style.display = b ? DisplayStyle.None : DisplayStyle.Flex;
-
-                if (b)
+                state = newState;
+                menuVE.style.display = DisplayStyle.None;
+                lobbyVE.style.display = DisplayStyle.None;
+                creditsVE.style.display = DisplayStyle.None;
+                
+                switch (state)
                 {
-                    state = MenuState.Menu;
-                    playBT.Focus();
-                }
-                else
-                {
-                    StartCoroutine(LaunchLobby());
-                    UpdatePlayer(true, null);
-                    UpdatePlayer(false, null);
+                    case MenuState.Menu:
+                        menuVE.style.display = DisplayStyle.Flex;
+                        playBT.Focus();
+                        break;
+                    case MenuState.Lobby:
+                        lobbyVE.style.display = DisplayStyle.Flex;
+                        UpdatePlayer(true, null);
+                        UpdatePlayer(false, null);
+                        break;
+                    case MenuState.Credits:
+                        creditsVE.style.display = DisplayStyle.Flex;
+                        break;
                 }
             }
 
@@ -115,19 +142,17 @@ namespace UI
                     button.AddToClassList(USS_BUTTON);
                 }
             }
-
-            private IEnumerator LaunchLobby()
-            {
-                yield return new WaitForSeconds(0.25f);
-
-                state = MenuState.Lobby;
-            }
         #endregion
         
         #region Main Buttons
             private void Play()
             {
-                DisplayMenu(false);
+                DisplayLayout(MenuState.Lobby);
+            }
+            
+            private void Credits()
+            {
+                DisplayLayout(MenuState.Credits);
             }
             
             private void Quit()
@@ -141,12 +166,13 @@ namespace UI
             
             public void Back()
             {
-                DisplayMenu(true);
+                DisplayLayout(MenuState.Menu);
             }
         #endregion
         
         public override void TryToJoinPlayer(InputAction.CallbackContext context)
         {
+            Debug.Log("Hey");
             var device = context.control.device;
                 
             if (state is not MenuState.Lobby || device is null) return;
