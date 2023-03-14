@@ -5,6 +5,7 @@ namespace UI
 {
     public class UI_ControllerSwitch : UI_Lobby
     {
+        [SerializeField] private PlayerInputManager pimGame, pimUI;
         private bool on;
         
         private void Start()
@@ -50,16 +51,22 @@ namespace UI
         
         private void Display(bool p1Disconnected)
         {
-            on = true;
             Time.timeScale = 0f;
-            layout.enabled = true;
+            pimGame.enabled = false;
+            pimUI.enabled = true;
+            LobbyManager.Instance.InstantiatePlayers();
+            DisplayCompletely(true);
             UpdatePlayer(p1Disconnected, null);
             UpdatePlayer(!p1Disconnected, p1Disconnected ? devicesSO.player2Device : devicesSO.player1Device);
+            on = true;
         }
         
         private void Hide()
         {
-            layout.enabled = false;
+            DisplayCompletely(false);
+            LobbyManager.Instance.ClearPlayers();
+            pimUI.enabled = false;
+            pimGame.enabled = true;
             Time.timeScale = 1f;
             on = false;
         }

@@ -21,6 +21,15 @@ public class LobbyManager : Singleton<LobbyManager>
             AddPlayer(gamepad);
         }
     }
+    
+    public void ClearPlayers()
+    {
+        foreach (var player in players)
+        {
+            Destroy(player.gameObject);
+        }
+        players.Clear();
+    }
 
     public void AddPlayer(InputDevice device)
     {

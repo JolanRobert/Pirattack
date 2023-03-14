@@ -18,6 +18,7 @@ namespace UI
         [SerializeField] protected PlayerDeviceBuffer devicesSO;
 
         #region Visual Elements
+            protected VisualElement root;
             private VisualElement p1ImgVE, p2ImgVE;
             private Label p1Ready, p2Ready;
         #endregion
@@ -34,7 +35,7 @@ namespace UI
         
         protected void Init()
         {
-            var root = layout.rootVisualElement;
+            root = layout.rootVisualElement;
             
             // Images
             p1ImgVE = root.Q<VisualElement>(VE_P1IMG);
@@ -46,12 +47,23 @@ namespace UI
         }
 
         #region UI Update
+            protected void DisplayCompletely(bool b)
+            {
+                root.visible = b;
+                p1ImgVE.visible = b;
+                p1Ready.visible = b;
+                p2ImgVE.visible = b;
+                p2Ready.visible = b;
+            }
+            
             protected void UpdatePlayer(bool p1, InputDevice newDevice)
             {
                 if (p1) devicesSO.player1Device = newDevice;
                 else devicesSO.player2Device = newDevice;
 
                 var visible = newDevice is not null;
+                //Debug.Log((p1 ? "P1 : " : "P2 : ") + visible + gameObject);
+                
                 if (p1)
                 {
                     p1ImgVE.visible = visible;
@@ -60,7 +72,6 @@ namespace UI
                 else
                 {
                     p2ImgVE.visible = visible;
-                    Debug.Log(p2ImgVE.visible);
                     p2Ready.visible = visible;
                 }
             }
@@ -75,21 +86,10 @@ namespace UI
             var p1Device = devicesSO.player1Device;
             var p2Device = devicesSO.player2Device;
 
-            if (device.Equals(p1Device))
-            {
-                UpdatePlayer(true, null);
-            } else if (device.Equals(p2Device))
-            {
-                UpdatePlayer(false, null);
-            }
-            else if (p1Device is null)
-            {
-                UpdatePlayer(true, device);
-            }
-            else if (p2Device is null)
-            {
-                UpdatePlayer(false, device);
-            }
+            if (device.Equals(p1Device)) UpdatePlayer(true, null);
+            else if (device.Equals(p2Device)) UpdatePlayer(false, null);
+            else if (p1Device is null) UpdatePlayer(true, device);
+            else if (p2Device is null) UpdatePlayer(false, device);
         }
         
         protected virtual void OnDeviceChange(InputDevice device, InputDeviceChange change)
