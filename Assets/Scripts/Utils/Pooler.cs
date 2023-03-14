@@ -142,6 +142,7 @@ namespace Utils
         BulletImpactVFX,
         PerkZapVFX,
         PerkZapLine,
-        PerkIceVFX
+        PerkIceVFX,
+        PerkLoot
     }
 }

@@ -9,6 +9,7 @@ namespace Player
         public PlayerColor PColor => playerSwitchColor.PColor;
         public bool IsInteracting => playerInteract.IsInteracting;
         public bool IsDown => playerRespawn.IsDown;
+        public PlayerShoot WeaponData => playerShoot;
 
         public PlayerSwitchColor Color => playerSwitchColor;
         public PlayerCollision Collision => playerCollision;

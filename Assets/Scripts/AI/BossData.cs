@@ -14,7 +14,7 @@ namespace AI
     
         [Header("Loot system")]
         public int nbLoot = 3;
-        public GameObject[] loot;
+        public LootStats loot;
 
         [Header("Pattern Bottle Rain")]
         public float speedBottleRain = 5f;

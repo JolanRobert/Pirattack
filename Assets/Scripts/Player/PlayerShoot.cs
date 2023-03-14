@@ -1,18 +1,18 @@
-using System;
 using System.Collections;
+using MyBox;
 using Player;
-using Unity.VisualScripting;
 using UnityEngine;
 using Utils;
 
 public class PlayerShoot : MonoBehaviour
     {
+        [ReadOnly] public WeaponData currentWeaponData;
+        
         [SerializeField] private PlayerController playerController;
         [SerializeField] private WeaponData weaponData;
         [SerializeField] private Transform firePoint;
 
         private bool canShoot = true;
-        private WeaponData currentWeaponData;
         
         private void Start()
         {
@@ -50,5 +50,30 @@ public class PlayerShoot : MonoBehaviour
             canShoot = false;
             yield return new WaitForSeconds(1 / currentWeaponData.fireRate);
             canShoot = true;
+        }
+
+        public void AddStat(LootType type)
+        {
+            switch (type)
+            {
+                case LootType.damage:
+                    currentWeaponData.damage += (int)(weaponData.damage * 0.4f);
+                    break;
+                case LootType.bounce:
+                    currentWeaponData.nbBounce++;
+                    break;
+                case LootType.zap:
+                    currentWeaponData.nbShock++;
+                    break;
+                case LootType.slow:
+                    currentWeaponData.nbSlow += (int)(weaponData.nbSlow * 0.2f);
+                    break;
+                case LootType.pierce:
+                    currentWeaponData.nbPierce++;
+                    break;
+                case LootType.fireRate:
+                    currentWeaponData.fireRate += (int)(weaponData.fireRate * 0.2f);
+                    break;
+            }
         }
     }

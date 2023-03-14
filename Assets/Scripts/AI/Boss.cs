@@ -4,6 +4,7 @@ using AI.BossPattern;
 using MyBox;
 using Player;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 namespace AI
@@ -90,11 +91,9 @@ namespace AI
         {
             for (int i = 0; i < data.nbLoot; i++)
             {
-                Instantiate(data.loot[Random.Range(0, data.loot.Length)],
-                        transform.position + Vector3.back * 10 + Vector3.right * (i - 1), Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue
-                    ? UnityEngine.Color.blue
-                    : UnityEngine.Color.red;
+                GameObject loot = Pooler.Instance.Pop(Key.PerkLoot);
+                loot.transform.SetPositionAndRotation(transform.position + Vector3.back * 10 + Vector3.right * (i - 1),
+                    Quaternion.identity);
             }
         }
 
