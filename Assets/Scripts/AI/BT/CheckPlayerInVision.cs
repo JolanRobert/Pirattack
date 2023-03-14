@@ -36,8 +36,6 @@ public class CheckPlayerInVision : Node
 
         if (target)
             caster.OnPlayerOnVision();
-        else
-            caster.NotPlayerOnVision();
         
         SetDataInBlackboard("Target", target);
         return target ? NodeState.Failure : NodeState.Success;

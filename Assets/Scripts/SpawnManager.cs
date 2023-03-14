@@ -35,7 +35,7 @@ public class SpawnManager : MonoBehaviour
             
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             activeSpawnPoints[index].AddEnemy(enemyScript);
-            enemyScript.SetPatrolPoints(activeSpawnPoints[index].PatrolPoints);
+            enemyScript.SetPatrolPoints(activeSpawnPoints[index].patrolPoints);
             enemy.transform.position = spawnPosition;
             enemy.SetActive(false);
             enemy.SetActive(true);

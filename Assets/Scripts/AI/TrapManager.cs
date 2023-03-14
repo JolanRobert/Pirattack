@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TrapManager : MonoBehaviour
 {
-    public List<Transform> PatrolPoints = new List<Transform>();
+    public List<Transform> patrolPoints = new List<Transform>();
 
-    private List<Enemy> Enemies = new();
+    private readonly List<Enemy> Enemies = new();
 
     public void AddEnemy(Enemy enemy)
     {
@@ -15,15 +17,7 @@ public class TrapManager : MonoBehaviour
 
     public bool CheckEnemiesVision()
     {
-        bool isPlayerInVision = false;
-        for (int i = 0; i < Enemies.Count; i++)
-        {
-            if (Enemies[i].EnemyInVision)
-            {
-                isPlayerInVision = true;
-                break;
-            }
-        }
+        bool isPlayerInVision = Enemies.Any(t => t.EnemyInVision);
 
         if (isPlayerInVision)
             Enemies.Clear();

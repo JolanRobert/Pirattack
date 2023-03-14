@@ -115,10 +115,6 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    public void NotPlayerOnVision()
-    {
-    }
-
     private void Update()
     {
         animator.SetFloat("Velocity", agent.velocity.magnitude);
