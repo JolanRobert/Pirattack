@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UINotif : MonoBehaviour
 {
+    public float ProgressAmount => taskBarFill.fillAmount;
+    
     public CanvasGroup canvasGroup;
+    public Transform pinHead;
+    
     [SerializeField] private Image pinFill;
-    [SerializeField] public Transform pinHead;
     [SerializeField] private Image backBar;
     [SerializeField] private Image taskBar;
     [SerializeField] private Image taskBarFill;
@@ -17,6 +18,7 @@ public class UINotif : MonoBehaviour
     {
         taskBar.gameObject.SetActive(active);
         backBar.gameObject.SetActive(!active);
+        pinHead.gameObject.SetActive(!active);
     }
     
     public void SetProgressFill(float amount)

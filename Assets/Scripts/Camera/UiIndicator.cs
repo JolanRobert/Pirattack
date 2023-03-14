@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using MyBox;
 using Player;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UiIndicator : MonoBehaviour
 {
@@ -16,6 +16,7 @@ public class UiIndicator : MonoBehaviour
     [SerializeField] private GameObject prefabNoColor;
     [SerializeField] private GameObject prefabRed;
     [SerializeField] private GameObject prefabBlue;
+    [SerializeField] private float notifFadeTime;
 
     private void Awake()
     {
@@ -37,11 +38,14 @@ public class UiIndicator : MonoBehaviour
         }
     }
 
-    public UINotif[] AddObject(GameObject newObj, PlayerColor color)
+    public UINotif[] AddObject(GameObject newObj, PlayerColor color, float yOffset)
     {
-        IndicObj added = new IndicObj();
-        added.obj = newObj;
-        added.color = color;
+        IndicObj added = new IndicObj
+        {
+            obj = newObj,
+            color = color,
+            yOffset = yOffset
+        };
         obj.Add(added);
 
         UINotif[] res = new UINotif[2];
@@ -67,6 +71,9 @@ public class UiIndicator : MonoBehaviour
             }
         }
         
+        indics[index * 2 + 1].canvasGroup.DOKill();
+        indics[index * 2].canvasGroup.DOKill();
+        
         Destroy(indics[index*2+1].gameObject);
         Destroy(indics[index*2].gameObject);
         
@@ -81,11 +88,11 @@ public class UiIndicator : MonoBehaviour
         {
             if (PlayerManager.Players[i].Color.PColor != obj[objIndex].color)
             {
-                indics[objIndex * 2 + i].DoAlpha(0, 0.2f);
+                indics[objIndex * 2 + i].DoAlpha(0, notifFadeTime);
             }
             else
             {
-                indics[objIndex * 2 + i].DoAlpha(1, 0.2f);
+                indics[objIndex * 2 + i].DoAlpha(1, notifFadeTime);
             }
             
             if (CheckVisibility(i,objIndex*2+i,objIndex))
@@ -98,8 +105,8 @@ public class UiIndicator : MonoBehaviour
     
     public void UpdateIndicatorSingle(int objIndex)
     {
-        indics[objIndex * 2 + 1].DoAlpha(0, 0.2f);
-        indics[objIndex * 2].DoAlpha(1, 0.2f);
+        indics[objIndex * 2 + 1].DoAlpha(0, notifFadeTime);
+        indics[objIndex * 2].DoAlpha(1, notifFadeTime);
         if (CheckVisibilitySingle(objIndex))
         {
             UpdatePositionForSingle(objIndex*2,objIndex);
@@ -144,7 +151,7 @@ public class UiIndicator : MonoBehaviour
     public void UpdatePositionOnVisible(int player,int index,int objIndex)
     {
         Vector2 pos = cameraManager.cameras[player].WorldToScreenPoint(obj[objIndex].obj.transform.position);
-        indics[index].transform.position = pos + Vector2.up*20;
+        indics[index].transform.position = pos + Vector2.up * obj[objIndex].yOffset;
         indics[index].pinHead.rotation = Quaternion.Lerp(indics[index].pinHead.rotation,Quaternion.Euler(0,0,180),5*Time.deltaTime);
     }
 
@@ -231,6 +238,6 @@ public class UiIndicator : MonoBehaviour
     {
         public PlayerColor color;
         public GameObject obj;
+        public float yOffset;
     }
-    
 }
