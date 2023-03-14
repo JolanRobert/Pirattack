@@ -4,5 +4,6 @@
     <ui:VisualElement name="VE_BackgroundC" class="container background">
         <ui:Label tabindex="-1" text="Credits" display-tooltip-when-elided="true" name="LB_Title" class="title" style="margin-top: 29px;" />
         <ui:Label tabindex="-1" text="&#10;Voici les crédits&#10;" display-tooltip-when-elided="true" name="LB_Credits" class="title" style="margin-top: 79px; -unity-font-style: normal;" />
+        <ui:Label tabindex="-1" text="&lt;- R2 to go back" display-tooltip-when-elided="true" name="LB_BackInfos" class="labelInfos" />
     </ui:VisualElement>
 </ui:UXML>

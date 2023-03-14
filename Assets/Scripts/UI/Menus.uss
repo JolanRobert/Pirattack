@@ -2,11 +2,6 @@
     flex-direction: row;
 }
 
-.container {
-    align-items: center;
-    flex-grow: 1;
-}
-
 .button {
     background-color: rgb(255, 255, 255);
     border-left-color: rgba(0, 0, 0, 0);
