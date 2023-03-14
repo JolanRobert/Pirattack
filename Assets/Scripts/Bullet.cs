@@ -1,5 +1,3 @@
-using System;
-using Interfaces;
 using MyBox;
 using Player;
 using UnityEngine;
@@ -32,7 +30,7 @@ public class Bullet : MonoBehaviour
         
         this.owner = owner;
         rb.velocity = transform.forward * speed;
-        Pooler.Instance.DelayedDepop(data.bulletLifespan, Key.Bullet, gameObject);
+        Pooler.Instance.DelayedDepop(data.bulletLifespan, Pooler.Key.Bullet, gameObject);
     }
 
     //Layers Player/Enemy EXCLUDED
@@ -44,20 +42,20 @@ public class Bullet : MonoBehaviour
         if (nbBounce > 0)
         {
             Vector3 normal = collision.GetContact(0).normal;
-            GameObject vfx = Pooler.Instance.Pop(Key.BulletImpactVFX);
+            GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.BulletImpactVFX);
             vfx.transform.position = transform.position;
             vfx.transform.rotation = Quaternion.LookRotation(-normal);
-            Pooler.Instance.DelayedDepop(0.3f,Key.BulletImpactVFX,vfx);
+            VFXPooler.Instance.DelayedDepop(0.3f,VFXPooler.Key.BulletImpactVFX,vfx);
             rb.velocity = Vector3.Reflect(transform.forward, normal) * speed;
             rb.MoveRotation(Quaternion.LookRotation(rb.velocity));
             nbBounce--;
             return;
         }
         
-        GameObject vfx2 = Pooler.Instance.Pop(Key.BulletImpactVFX);
+        GameObject vfx2 = VFXPooler.Instance.Pop(VFXPooler.Key.BulletImpactVFX);
         vfx2.transform.position = transform.position;
         vfx2.transform.rotation = transform.rotation;
-        Pooler.Instance.DelayedDepop(0.3f,Key.BulletImpactVFX,vfx2);
-        Pooler.Instance.Depop(Key.Bullet, gameObject);
+        VFXPooler.Instance.DelayedDepop(0.3f,VFXPooler.Key.BulletImpactVFX,vfx2);
+        Pooler.Instance.Depop(Pooler.Key.Bullet, gameObject);
     }
 }

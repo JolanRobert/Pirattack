@@ -16,7 +16,7 @@ namespace Player
         {
             if (!canShoot) return;
             
-            Bullet bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<Bullet>();
+            Bullet bullet = Pooler.Instance.Pop(Pooler.Key.Bullet).GetComponent<Bullet>();
             bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
             bullet.Init(playerController, weapon);
             StartCoroutine(ShootCooldown());

@@ -43,7 +43,7 @@ namespace AI
 
         protected override void Depop()
         {
-            Pooler.Instance.Depop(Key.EnemyShield, gameObject);
+            Pooler.Instance.Depop(Pooler.Key.EnemyShield, gameObject);
         }
 
         private void ChangeShieldRendererColor(PlayerColor color)
@@ -65,7 +65,7 @@ namespace AI
 
         protected override void OnDie()
         {
-            Pooler.Instance.Depop(Key.EnemyShield, gameObject);
+            Pooler.Instance.Depop(Pooler.Key.EnemyShield, gameObject);
         }
     }
 }

@@ -14,7 +14,7 @@ public class AttackProjectile : Node
         enemyShield = GetData<EnemyShield>("caster");
         if (target == null) return NodeState.Failure;
 
-        ConeProjectile cone =  Pooler.Instance.Pop(Key.Wave).GetComponent<ConeProjectile>();
+        ConeProjectile cone =  Pooler.Instance.Pop(Pooler.Key.Wave).GetComponent<ConeProjectile>();
         cone.transform.SetPositionAndRotation(enemyShield.transform.position, enemyShield.transform.rotation);
         cone.InitWave(enemyShield, target);
 

@@ -37,7 +37,7 @@ public class LootStats : MonoBehaviour
         if (playerController)
         {
             playerController.Stats.AddStat(lootType);
-            Pooler.Instance.Depop(Key.PerkLoot, gameObject);
+            Pooler.Instance.Depop(Pooler.Key.PerkLoot, gameObject);
         }
     }
 }

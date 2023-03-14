@@ -25,9 +25,9 @@ public class DestructibleProp : MonoBehaviour,IDamageable
         if(iced) return;
         iced = true;
         renderer.material = materials[1];
-        GameObject vfx = Pooler.Instance.Pop(Key.PerkIceVFX);
+        GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.PerkIceVFX);
         vfx.transform.position = transform.position;
-        Pooler.Instance.DelayedDepop(0.5f,Key.PerkIceVFX,vfx);
+        VFXPooler.Instance.DelayedDepop(0.5f, VFXPooler.Key.PerkIceVFX, vfx);
         StopIced(duration);
     }
 

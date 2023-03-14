@@ -20,7 +20,7 @@ public class SpawnManager : MonoBehaviour
     private readonly List<TrapManager> activeSpawnPoints = new();
     private bool isSpawning = false;
     private bool onBossFight = false;
-    private List<Key> keys = new();
+    private List<Pooler.Key> keys = new();
 
     private void Awake()
     {
@@ -87,16 +87,16 @@ public class SpawnManager : MonoBehaviour
             CheckAddShieldMan();
 
             for (int i = 0; i < nbSpawn; i++)
-                keys.Add(Key.BasicEnemy);
+                keys.Add(Pooler.Key.BasicEnemy);
 
             for (int i = 0; i < nbShield; i++)
-                keys.Add(Key.EnemyShield);
+                keys.Add(Pooler.Key.EnemyShield);
 
             keys.Shuffle();
         }
         else
         {
-            keys.Add(Key.BasicEnemy);
+            keys.Add(Pooler.Key.BasicEnemy);
         }
 
         StartCoroutine(SpawnEnemy(spawnPosition, index));

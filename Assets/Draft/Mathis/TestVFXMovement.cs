@@ -31,7 +31,7 @@ public class TestVFXMovement : MonoBehaviour
         else
         {
             timer = loop;
-            Bullet bullet = Pooler.Instance.Pop(Key.Bullet).GetComponent<Bullet>();
+            Bullet bullet = Pooler.Instance.Pop(Pooler.Key.Bullet).GetComponent<Bullet>();
             bullet.transform.SetPositionAndRotation(canon.position, canon.rotation);
             bullet.Init(controller,weaponData);
         }

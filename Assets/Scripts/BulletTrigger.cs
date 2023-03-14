@@ -36,10 +36,10 @@ public class BulletTrigger : MonoBehaviour
         if (other.TryGetComponent(out IDamageable entity))
         {
             DamageEntity(entity);
-            GameObject vfx = Pooler.Instance.Pop(Key.BulletImpactVFX);
+            GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.BulletImpactVFX);
             vfx.transform.position = transform.position;
             vfx.transform.rotation = transform.rotation;
-            Pooler.Instance.DelayedDepop(0.3f,Key.BulletImpactVFX,vfx);
+            VFXPooler.Instance.DelayedDepop(0.3f,VFXPooler.Key.BulletImpactVFX,vfx);
            
             if (nbSlow > 0 && entity is Enemy ennemy && owner)
             {
@@ -58,7 +58,7 @@ public class BulletTrigger : MonoBehaviour
             }
             
             collider.enabled = false;
-            Pooler.Instance.Depop(Key.Bullet, bullet.gameObject);
+            Pooler.Instance.Depop(Pooler.Key.Bullet, bullet.gameObject);
         }
     }
 
@@ -99,9 +99,9 @@ public class BulletTrigger : MonoBehaviour
                 DamageEntity(targetables[rng]);
                 targetedObjects.Add(targetableObjects[rng]);
                 currentTarget = targetableObjects[rng].transform;
-                GameObject vfx = Pooler.Instance.Pop(Key.PerkZapVFX);
+                GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.PerkZapVFX);
                 vfx.transform.position = new Vector3(currentTarget.position.x, transform.position.y, currentTarget.position.z);
-                Pooler.Instance.DelayedDepop(0.6f,Key.PerkZapVFX,vfx);
+                VFXPooler.Instance.DelayedDepop(0.6f,VFXPooler.Key.PerkZapVFX,vfx);
             }
             else
             {
@@ -111,14 +111,14 @@ public class BulletTrigger : MonoBehaviour
 
         if (targetedObjects.Count > 0)
         {
-            LineRenderer shockLineRd = Pooler.Instance.Pop(Key.PerkZapLine).GetComponent<LineRenderer>();
+            LineRenderer shockLineRd = VFXPooler.Instance.Pop(VFXPooler.Key.PerkZapLine).GetComponent<LineRenderer>();
             shockLineRd.positionCount = targetedObjects.Count;
             for (int i = 0; i < targetedObjects.Count; i++)
             {
                 Vector3 pos = targetedObjects[i].transform.position;
                 shockLineRd.SetPosition(i,new Vector3(pos.x,transform.position.y+0.5f,pos.z));
             }
-            Pooler.Instance.DelayedDepop(0.1f,Key.PerkZapLine,shockLineRd.gameObject);
+            VFXPooler.Instance.DelayedDepop(0.1f,VFXPooler.Key.PerkZapLine,shockLineRd.gameObject);
         }
     }
 }
