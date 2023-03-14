@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using MyBox;
-using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,6 +9,8 @@ namespace Task
 {
     public class TaskManager : MonoBehaviour
     {
+        public static Action OnTaskAdded;
+        
         [SerializeField] private int maxTaskSimultaneously;
         [SerializeField, MinMaxRange(1, 30)] private RangedInt timeBeforeNextTask;
         [SerializeField] private List<ChaosTask> tasks;
@@ -26,6 +26,12 @@ namespace Task
         private void Awake()
         {
             Init();
+        }
+
+        private void Start()
+        {
+            GameManager.OnBossPop += CancelAllTasks;
+            GameManager.OnRelaunchLoop += Init;
         }
 
         private void Init()
@@ -69,6 +75,7 @@ namespace Task
 
             currentTasks.Add(newChaosTask);
             nextTasks.RemoveAt(0);
+            OnTaskAdded?.Invoke();
 
             newChaosTask.OnComplete = CompleteTask;
             newChaosTask.OnExpire = ExpireTask;
@@ -80,8 +87,10 @@ namespace Task
         {
             currentTasks.Remove(chaosTask);
             chaosTask.gameObject.SetActive(false);
+            
+            GameManager.Instance.SuccessTask();
 
-            if (taskCycling == null) StartCoroutine(TaskCycle());
+            taskCycling ??= StartCoroutine(TaskCycle());
         }
 
         private void ExpireTask(ChaosTask chaosTask)
@@ -89,7 +98,9 @@ namespace Task
             currentTasks.Remove(chaosTask);
             chaosTask.gameObject.SetActive(false);
             
-            if (taskCycling == null) StartCoroutine(TaskCycle());
+            GameManager.Instance.FailTask();
+
+            taskCycling ??= StartCoroutine(TaskCycle());
         }
 
         private void CancelAllTasks()

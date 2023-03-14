@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using MyBox;
 using Player;
 using UnityEngine;
 
@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static Action OnLaunchingBoss;
     public static Action OnBossPop;
     public static Action OnEndFightBoss;
+    public static Action OnRelaunchLoop;
     public static Action OnIncreaseChaosBar;
     public static Action OnDecreaseChaosBar;
     
@@ -21,10 +22,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject Boss;
     [SerializeField] private PlayerController[] players;
     
+    [SerializeField, ReadOnly] private int ChaosBar = 50;
+    
     private float startTime;
     private float endTime;
     private int nbEnemiesKilled = 0;
-    private int ChaosBar = 50;
     private bool waitingForBoss = false;
     private float timerDepopBoss;
 
@@ -83,6 +85,8 @@ public class GameManager : MonoBehaviour
         ChaosBar = 50;
         OnDecreaseChaosBar?.Invoke();
         waitingForBoss = false;
+        
+        OnRelaunchLoop?.Invoke();
     }
     
     public void BossKilled()
