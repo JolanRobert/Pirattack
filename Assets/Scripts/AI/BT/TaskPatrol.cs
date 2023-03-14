@@ -19,7 +19,7 @@ public class TaskPatrol : Node
         List<Transform> patrolPoints = GetData<List<Transform>>("PatrolPoints");
         int index = (int)GetData("PatrolPointsIndex");
         Enemy enemy = GetData<Enemy>("caster");
-
+if (patrolPoints == null || patrolPoints.Count == 0 || enemy == null) return NodeState.Success;
         Vector3 target = GetNearestPoint(patrolPoints[index].position);
         if (Vector3.Distance(enemy.transform.position, target) < 1.5f)
         {

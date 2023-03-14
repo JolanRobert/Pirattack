@@ -19,7 +19,6 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] protected PlayerColor ShieldColor = PlayerColor.None;
     [SerializeField] protected Health healthEnemy;
     [SerializeField] protected NavMeshAgent agent;
-    [SerializeField] private EnemyBT BT;
     [SerializeField] protected Animator animator;
     [SerializeField] protected Rigidbody rb;
     [SerializeField] private SkinnedMeshRenderer renderer;
@@ -30,6 +29,7 @@ public class Enemy : MonoBehaviour, IDamageable
     protected int damage = 0;
     protected int maxHp = 0;
     protected List<Transform> PatrolPoints = new ();
+    private EnemyBT BT = null;
     
     private void OnEnable()
     {
@@ -38,7 +38,8 @@ public class Enemy : MonoBehaviour, IDamageable
         healthEnemy.Init(maxHp);
         ResetAttackDefaultValue();
         agent.speed = enemyData.speed;
-        BT.ResetBlackboard();
+        if (!BT) BT = GetComponent<EnemyBT>();
+        BT.ResetBlackboard();   
         BT.enabled = true;
         GameManager.OnLaunchingBoss += Depop;
     }
