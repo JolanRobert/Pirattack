@@ -20,8 +20,8 @@ public class CheckPlayerInVision : Node
         PlayerController[] players = PlayerManager.Players.ToArray();
         PlayerController target = null;
         
-        float distanceplayer0 = Vector3.Distance(players[0].transform.position, transform.position);
-        float distanceplayer1 = Vector3.Distance(players[1].transform.position, transform.position);
+        float distancePlayer0 = Vector3.Distance(players[0].transform.position, transform.position);
+        float distancePlayer1 = Vector3.Distance(players[1].transform.position, transform.position);
         float minViewRange = 10;
         
         if (enemyShield != null && enemyShield is EnemyShield)
@@ -29,9 +29,9 @@ public class CheckPlayerInVision : Node
         else
             minViewRange = (enemyShield as Enemy).Data.viewRangeDetection;
         
-        if (distanceplayer0 < distanceplayer1 && distanceplayer0 < minViewRange)
+        if (distancePlayer0 < distancePlayer1 && distancePlayer0 < minViewRange)
             target = players[0];
-        else if (distanceplayer1 < minViewRange)
+        else if (distancePlayer1 < minViewRange)
             target = players[1];
 
         if (target)
