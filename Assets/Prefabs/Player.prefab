@@ -458,6 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 2669283563355967349}
+  parrotRenderer: {fileID: 1056125774762908887}
   color: 0
 --- !u!114 &2639286240086198180
 MonoBehaviour:
@@ -1553,6 +1554,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAnimation: {fileID: 2259203109671436139}
+--- !u!137 &1056125774762908887 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1114583014161332077, guid: 21b86274715b5ea4e9ca4d55cfe2ec5e,
+    type: 3}
+  m_PrefabInstance: {fileID: 135063542304189370}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3917345036980491078
 PrefabInstance:
   m_ObjectHideFlags: 0
