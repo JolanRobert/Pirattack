@@ -60,7 +60,6 @@ public class CanAttack : Node
 
         if (hit.collider.gameObject != target.gameObject) return NodeState.Failure;
 
-        Debug.Log("Can attack");
         return NodeState.Success;
     }
 }

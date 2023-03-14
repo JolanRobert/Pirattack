@@ -56,7 +56,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PJ_Attack
-  m_Speed: 2.668
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8720157270474626212}
@@ -69,7 +69,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e782da4a9332516469a9bb0a54c27674, type: 2}
+  m_Motion: {fileID: 7400000, guid: 324a6ada8d75f27428290ba25d3a6cc5, type: 2}
   m_Tag: 
   m_SpeedParameter: Velocity
   m_MirrorParameter: 
@@ -84,7 +84,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 56d24a37c39502f4aa4f9ccdfb52a58c, type: 2}
+    m_Motion: {fileID: 7400000, guid: 2b9c0cff70b23c64291ec63cfb9131f2, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -92,7 +92,7 @@ BlendTree:
     m_DirectBlendParameter: Velocity
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: d6aa0116f40157447bdd47b341fd52d6, type: 2}
+    m_Motion: {fileID: 7400000, guid: 57f8a813047706e458b7fc075f6c8c9a, type: 2}
     m_Threshold: 0.1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1

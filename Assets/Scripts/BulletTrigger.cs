@@ -56,7 +56,6 @@ public class BulletTrigger : MonoBehaviour
                 return;
             }
             
-            Debug.Log("trigger with "+other.name);
             collider.enabled = false;
             Pooler.Instance.Depop(Key.Bullet, bullet.gameObject);
         }

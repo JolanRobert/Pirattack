@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -20,6 +21,11 @@ namespace Player
         {
             healthBar.SetRespawnFill(0);
             timer = data.respawnStayDuration;
+        }
+
+        private void OnDisable()
+        {
+            players.Clear();
         }
 
         private void Update()

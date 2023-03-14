@@ -58,7 +58,6 @@ public class Bullet : MonoBehaviour
         vfx2.transform.position = transform.position;
         vfx2.transform.rotation = transform.rotation;
         Pooler.Instance.DelayedDepop(0.3f,Key.BulletImpactVFX,vfx2);
-        Debug.Log("collision with "+collision.gameObject.name);
         Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
 }

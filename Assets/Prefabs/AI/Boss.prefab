@@ -526,8 +526,7 @@ MonoBehaviour:
   ShieldColor: 2
   healthEnemy: {fileID: 1240984457848921876}
   agent: {fileID: 0}
-  BT: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 6068528702488566454}
   rb: {fileID: 0}
   renderer: {fileID: 1426896915795377821}
   materials:
@@ -1456,7 +1455,7 @@ SkinnedMeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6783519891746259709}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0

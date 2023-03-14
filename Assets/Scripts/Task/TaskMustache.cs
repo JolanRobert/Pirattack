@@ -41,7 +41,7 @@ namespace Task
         {
             base.OnDisable();
             
-            UiIndicator.instance.RemoveObject(gameObject);
+            if (UiIndicator.instance) UiIndicator.instance.RemoveObject(gameObject);
         }
 
         public void HandleInput(Vector2 leftInput, Vector2 rightInput)

@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject triggerBossDoor;
     [SerializeField] private GameObject bossDoor;
     [SerializeField] private GameObject Boss;
-    [SerializeField] private PlayerController[] players;
     
     [SerializeField, ReadOnly] private int ChaosBar = 50;
     
@@ -99,7 +98,7 @@ public class GameManager : MonoBehaviour
     {
         UIManager.Instance.SetVoicelineText("Boss is here !");
         triggerBossDoor.SetActive(true);
-        bossDoor.SetActive(true);
+        bossDoor.SetActive(false);
         Boss.SetActive(true);
         waitingForBoss = true;
         timerDepopBoss = DepopBossTimer;
@@ -109,6 +108,7 @@ public class GameManager : MonoBehaviour
     {
         waitingForBoss = false;
         timerDepopBoss = 0f;
+        bossDoor.SetActive(true);
         SpawnManager.Instance.SetOnBossFight(true);
     }
 
@@ -147,10 +147,5 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(RelaunchGame(0f));
         }
-    }
-
-    public PlayerController[] GetPlayers()
-    {
-        return players;
     }
 }

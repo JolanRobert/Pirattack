@@ -17,3 +17,4 @@ MonoBehaviour:
   AttackDistance: 3
   speed: 3.5
   ATKSpeed: 1.2
+  viewRangeDetection: 10
