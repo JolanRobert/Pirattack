@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using MyBox;
 using Player;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UiIndicator : MonoBehaviour
 {
@@ -11,11 +11,12 @@ public class UiIndicator : MonoBehaviour
     
     [SerializeField] private CameraManager cameraManager;
     [SerializeField, ReadOnly] private List<IndicObj> obj;
-    [SerializeField, ReadOnly] private List<Transform> indics;
+    [SerializeField, ReadOnly] private List<UINotif> indics;
     [SerializeField] private RectTransform boxRect;
     [SerializeField] private GameObject prefabNoColor;
     [SerializeField] private GameObject prefabRed;
     [SerializeField] private GameObject prefabBlue;
+    [SerializeField] private float notifFadeTime;
 
     private void Awake()
     {
@@ -37,20 +38,23 @@ public class UiIndicator : MonoBehaviour
         }
     }
 
-    public Image[] AddObject(GameObject newObj, PlayerColor color)
+    public UINotif[] AddObject(GameObject newObj, PlayerColor color, float yOffset)
     {
-        IndicObj added = new IndicObj();
-        added.obj = newObj;
-        added.color = color;
+        IndicObj added = new IndicObj
+        {
+            obj = newObj,
+            color = color,
+            yOffset = yOffset
+        };
         obj.Add(added);
 
-        Image[] res = new Image[2];
+        UINotif[] res = new UINotif[2];
         for (int i = 0; i < 2; i++)
         {
             GameObject newIndic = Instantiate(color == PlayerColor.None ? prefabNoColor : color == PlayerColor.Blue ? prefabBlue : prefabRed, boxRect.position, Quaternion.identity, boxRect);
-            newIndic.SetActive(false);
-            res[i] = newIndic.transform.GetChild(1).GetChild(0).GetComponent<Image>();
-            indics.Add(newIndic.transform);
+            res[i] = newIndic.GetComponent<UINotif>();
+            res[i].canvasGroup.alpha = 0;
+            indics.Add(res[i]);
         }
 
         return res;
@@ -67,6 +71,9 @@ public class UiIndicator : MonoBehaviour
             }
         }
         
+        indics[index * 2 + 1].canvasGroup.DOKill();
+        indics[index * 2].canvasGroup.DOKill();
+        
         Destroy(indics[index*2+1].gameObject);
         Destroy(indics[index*2].gameObject);
         
@@ -74,40 +81,37 @@ public class UiIndicator : MonoBehaviour
         indics.RemoveAt(index * 2);
         obj.RemoveAt(index);
     }
-    
 
-    public void UpdateIndicatorSingle(int objIndex)
-    {
-        if (CheckVisibilitySingle(objIndex))
-        {
-            indics[objIndex*2].gameObject.SetActive(true);
-        }
-        else
-        {
-            indics[objIndex*2].gameObject.SetActive(false);
-        }
-        indics[objIndex*2+1].gameObject.SetActive(false);
-        Vector3 focus = (cameraManager.players[0].position + cameraManager.players[1].position) / 2;
-        Vector3 dir = obj[objIndex].obj.transform.position - focus;
-        Vector2 pos = cameraManager.cameras[0].WorldToScreenPoint(focus + dir.normalized);
-        indics[objIndex*2].position = FindPointOnRectBorder(pos - (boxRect.rect.center + (Vector2)boxRect.position),
-            boxRect.rect.center + (Vector2)boxRect.position,boxRect);
-        indics[objIndex*2].GetChild(0).rotation = Quaternion.Euler(0,0,Vector2.SignedAngle(Vector2.up,(Vector2)indics[objIndex*2].position - (boxRect.rect.center+ (Vector2)boxRect.position)));
-        
-        Debug.DrawLine(boxRect.rect.center + (Vector2)boxRect.position,pos,Color.red);
-    }
-    
     public void UpdateIndicatorSeparated(int objIndex)
     {
         for (int i = 0; i < 2; i++)
         {
+            if (PlayerManager.Players[i].Color.PColor != obj[objIndex].color)
+            {
+                indics[objIndex * 2 + i].DoAlpha(0, notifFadeTime);
+            }
+            else
+            {
+                indics[objIndex * 2 + i].DoAlpha(1, notifFadeTime);
+            }
+            
             if (CheckVisibility(i,objIndex*2+i,objIndex))
             {
-                indics[objIndex*2+i].gameObject.SetActive(true);
+                UpdatePositionForCamera(i,objIndex*2+i,objIndex);
             }
-            else indics[objIndex*2+i].gameObject.SetActive(false);
-            UpdatePositionForCamera(i,objIndex*2+i,objIndex);
+            else UpdatePositionOnVisible(i,objIndex*2+i,objIndex);
         }
+    }
+    
+    public void UpdateIndicatorSingle(int objIndex)
+    {
+        indics[objIndex * 2 + 1].DoAlpha(0, notifFadeTime);
+        indics[objIndex * 2].DoAlpha(1, notifFadeTime);
+        if (CheckVisibilitySingle(objIndex))
+        {
+            UpdatePositionForSingle(objIndex*2,objIndex);
+        }
+        else UpdatePositionOnVisible(0,objIndex*2,objIndex);
     }
 
     public void UpdatePositionForCamera(int player,int index,int objIndex)
@@ -123,22 +127,36 @@ public class UiIndicator : MonoBehaviour
             splitCenter + splitDir * 1500, splitCenter - splitDir * 1500, out bool found);
         if (found && Vector2.Angle(splitNormal,(pos - center).normalized) > 90 && boxRect.rect.Contains(splitPos - (Vector2)boxRect.position))
         {
-            indics[index].position = splitPos;
+            indics[index].transform.position = splitPos;
         }
         else
         {
-            indics[index].position = FindPointOnRectBorder(pos - center,
-                center,boxRect);
+            indics[index].transform.position = FindPointOnRectBorder(pos - center, center,boxRect);
+            Debug.DrawRay(center,(pos - center)*1000,Color.red);
         }
-        indics[index].GetChild(0).rotation = Quaternion.Euler(0,0,Vector2.SignedAngle(Vector2.up,(Vector2)indics[index].position - center));
+        indics[index].pinHead.rotation = Quaternion.Lerp(indics[index].pinHead.rotation,Quaternion.Euler(0,0,Vector2.SignedAngle(Vector2.up,(Vector2)indics[index].transform.position - center)),5*Time.deltaTime);
+    }
+    
+    public void UpdatePositionForSingle(int index,int objIndex)
+    {
+        Vector3 focus = (cameraManager.players[0].position + cameraManager.players[1].position) / 2;
+        Vector3 dir = obj[objIndex].obj.transform.position - focus;
+        Vector2 pos = cameraManager.cameras[0].WorldToScreenPoint(focus + dir.normalized);
+        Vector2 center = cameraManager.cameras[0].WorldToScreenPoint(focus);
+        
+        indics[index].transform.position = FindPointOnRectBorder(pos - center, center,boxRect);
+        indics[index].pinHead.rotation = Quaternion.Lerp(indics[index].pinHead.rotation,Quaternion.Euler(0,0,Vector2.SignedAngle(Vector2.up,(Vector2)indics[index].transform.position - center)),5*Time.deltaTime);
+    }
+    
+    public void UpdatePositionOnVisible(int player,int index,int objIndex)
+    {
+        Vector2 pos = cameraManager.cameras[player].WorldToScreenPoint(obj[objIndex].obj.transform.position);
+        indics[index].transform.position = pos + Vector2.up * obj[objIndex].yOffset;
+        indics[index].pinHead.rotation = Quaternion.Lerp(indics[index].pinHead.rotation,Quaternion.Euler(0,0,180),5*Time.deltaTime);
     }
 
     public bool CheckVisibility(int player,int index,int objIndex)
     {
-        if (PlayerManager.Players[player].Color.PColor != obj[objIndex].color)
-        {
-            return false;
-        }
         Vector2 pos = cameraManager.cameras[player].WorldToScreenPoint(obj[objIndex].obj.transform.position);
         Vector2 splitNormal = Quaternion.Euler(0, 0, player == 0 ? cameraManager.angle-90 : cameraManager.angle+90) * Vector2.up;
         if (boxRect.rect.Contains(pos - (Vector2) boxRect.position))
@@ -166,14 +184,22 @@ public class UiIndicator : MonoBehaviour
         Rect newRect = new Rect(pos, rect.rect.size);
         float angleSup = Vector2.SignedAngle(Vector2.up, newRect.max - center);
         float angleInf = Vector2.SignedAngle(Vector2.up, new Vector2(newRect.xMax,newRect.yMin) - center);
+        float angleSupNeg = Vector2.SignedAngle(Vector2.up, new Vector2(newRect.xMin,newRect.yMax) - center);
+        float angleInfNeg = Vector2.SignedAngle(Vector2.up, newRect.min - center);
         float angle = Vector2.SignedAngle(Vector2.up, dir);
         
-        if (angle > angleSup && angle < -angleSup)
+        Debug.DrawRay(center,Quaternion.Euler(0,0,angleSup) * Vector3.up * 2000,Color.green);
+        Debug.DrawRay(center,Quaternion.Euler(0,0,angleInf) * Vector3.up * 2000,Color.green);
+        Debug.DrawRay(center,Quaternion.Euler(0,0,angleSupNeg) * Vector3.up * 2000,Color.green);
+        Debug.DrawRay(center,Quaternion.Euler(0,0,angleInfNeg) * Vector3.up * 2000,Color.green);
+        
+        
+        if (angle > angleSup && angle < angleSupNeg)
         {
             Vector2 intersection = Intersection(center, center + dir.normalized * 1000, new Vector2(newRect.xMin, newRect.yMax), new Vector2(newRect.xMax, newRect.yMax), out bool found);
             return intersection;
         }
-        if (angle < angleInf || angle > -angleInf)
+        if (angle < angleInf || angle > angleInfNeg)
         {
             Vector2 intersection = Intersection(center, center + dir.normalized * 1000, new Vector2(newRect.xMin, newRect.yMin), new Vector2(newRect.xMax, newRect.yMin), out bool found);
             return intersection;
@@ -212,5 +238,6 @@ public class UiIndicator : MonoBehaviour
     {
         public PlayerColor color;
         public GameObject obj;
+        public float yOffset;
     }
 }

@@ -24,7 +24,8 @@ namespace Task
         {
             base.OnCancel();
             
-            taskInfos.SetProgressFill(0);
+            notifs[0].SetProgressFill(0);
+            notifs[1].SetProgressFill(0);
         }
  
         private new void OnEnable()
@@ -40,7 +41,7 @@ namespace Task
         {
             base.OnDisable();
             
-            UiIndicator.instance.RemoveObject(gameObject);
+            if (UiIndicator.instance) UiIndicator.instance.RemoveObject(gameObject);
         }
 
         public void HandleInput(Vector2 leftInput, Vector2 rightInput)
@@ -55,23 +56,24 @@ namespace Task
         
         private void IncreaseBar()
         {
-            float newAmount = ProgressAmount + currentAngle / 360 * speedFactor;
-            Tween tween = taskInfos.DoProgressFill(newAmount, angleCheckTimer);
+            float newAmount = notifs[0].ProgressAmount + currentAngle / 360 * speedFactor;
+            notifs[0].DoProgressFill(newAmount, angleCheckTimer);
+            Tween tween = notifs[1].DoProgressFill(newAmount, angleCheckTimer);
             if (newAmount >= 1) tween.onComplete += Complete;
         }
 
         private void DecreaseBar()
         {
-            if (ProgressAmount == 0) return;
+            if (notifs[0].ProgressAmount == 0) return;
             
-            float newAmount = ProgressAmount - lossAmountPerSec*angleCheckTimer;
-            taskInfos.DoProgressFill(newAmount, angleCheckTimer);
+            float newAmount = notifs[0].ProgressAmount - lossAmountPerSec*angleCheckTimer;
+            notifs[0].DoProgressFill(newAmount, angleCheckTimer);
+            notifs[1].DoProgressFill(newAmount, angleCheckTimer);
         }
         
         private void Complete()
         {
             OnComplete.Invoke(this);
-            Debug.Log("Task is complete!");
         }
 
         private IEnumerator SpinDetection()

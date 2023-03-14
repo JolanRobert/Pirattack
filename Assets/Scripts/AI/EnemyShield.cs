@@ -13,8 +13,8 @@ public class EnemyShield : Enemy
     private void OnEnable()
     {
         healthEnemy.Init(maxHp);
-        healthEnemy.onDeath = OnDie;
-        if (GameManager.Instance) healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
+        healthEnemy.OnDeath = OnDie;
+        if (GameManager.Instance) healthEnemy.OnDeath += GameManager.Instance.AddEnemyKilled;
         
         PlayerColor color = (PlayerColor)Random.Range(0, 2);
         AssignShieldColor(color);
@@ -27,7 +27,7 @@ public class EnemyShield : Enemy
     
     private void OnDisable()
     {
-        if (GameManager.Instance) healthEnemy.onDeath -= GameManager.Instance.AddEnemyKilled;
+        if (GameManager.Instance) healthEnemy.OnDeath -= GameManager.Instance.AddEnemyKilled;
         
         BTShield.enabled = false;
     }

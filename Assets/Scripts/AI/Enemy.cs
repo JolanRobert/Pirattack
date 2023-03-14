@@ -52,8 +52,8 @@ public class Enemy : MonoBehaviour, IDamageable
     
     private void Start()
     {
-        healthEnemy.onDeath = OnDie;
-        if (GameManager.Instance) healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
+        healthEnemy.OnDeath = OnDie;
+        if (GameManager.Instance) healthEnemy.OnDeath += GameManager.Instance.AddEnemyKilled;
     }
 
     protected virtual void Depop()

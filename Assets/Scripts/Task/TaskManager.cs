@@ -21,7 +21,7 @@ namespace Task
         [SerializeField, ReadOnly] private List<ChaosTask> nextTasks;
         [SerializeField, ReadOnly] private List<ChaosTask> currentTasks = new List<ChaosTask>();
 
-        private Coroutine taskCycling;
+        private bool isCycling;
         
         private void Awake()
         {
@@ -39,10 +39,7 @@ namespace Task
             if (tasks.Count == 0) return;
             
             RefreshNextTasks();
-            if (isActive)
-            {
-                taskCycling = StartCoroutine(TaskCycle());
-            }
+            if (isActive) StartCoroutine(TaskCycle());
         }
         
         private void RefreshNextTasks()
@@ -55,14 +52,14 @@ namespace Task
 
         private IEnumerator TaskCycle()
         {
+            isCycling = true;
+            
             int time = Random.Range(timeBeforeNextTask.Min, timeBeforeNextTask.Max+1);
             yield return new WaitForSeconds(time);
             AddTask();
 
-            if (currentTasks.Count < maxTaskSimultaneously && currentTasks.Count < tasks.Count)
-            {
-                taskCycling = StartCoroutine(TaskCycle());
-            }
+            if (currentTasks.Count < maxTaskSimultaneously && currentTasks.Count < tasks.Count) StartCoroutine(TaskCycle());
+            else isCycling = false;
         }
 
         [ContextMenu("Add Task")]
@@ -90,7 +87,7 @@ namespace Task
             
             GameManager.Instance.SuccessTask();
 
-            taskCycling ??= StartCoroutine(TaskCycle());
+            if (!isCycling) StartCoroutine(TaskCycle());
         }
 
         private void ExpireTask(ChaosTask chaosTask)
@@ -100,12 +97,12 @@ namespace Task
             
             GameManager.Instance.FailTask();
 
-            taskCycling ??= StartCoroutine(TaskCycle());
+            if (!isCycling) StartCoroutine(TaskCycle());
         }
 
         private void CancelAllTasks()
         {
-            StopCoroutine(taskCycling);
+            StopAllCoroutines();
             foreach (ChaosTask task in currentTasks)
             {
                 task.gameObject.SetActive(false);

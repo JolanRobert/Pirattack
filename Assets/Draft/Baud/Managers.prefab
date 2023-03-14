@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4063685557650060724
 MonoBehaviour:
@@ -97,6 +97,34 @@ MonoBehaviour:
       baseCount: 10
       baseRefreshSpeed: 0
       refreshSpeed: 0
+  - key: 7
+    pool:
+      prefab: {fileID: 3372077107701150023, guid: a3013b66ae7b0434dbb2d7d098c442ba,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
+  - key: 8
+    pool:
+      prefab: {fileID: 1045671381080228216, guid: 9c9286e0b43900d42aa0badf4e28825d,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
+  - key: 9
+    pool:
+      prefab: {fileID: 1967207966891838309, guid: b5a0b4a16ff2683478f3e593a9b5112b,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
+  - key: 10
+    pool:
+      prefab: {fileID: 8419578217314179971, guid: ee4b5141c625ce74d98bc726af207d97,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
 --- !u!114 &8921672750770611548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +139,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnRate: 20
   spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -135,6 +167,7 @@ MonoBehaviour:
   triggerBossDoor: {fileID: 0}
   bossDoor: {fileID: 0}
   Boss: {fileID: 0}
+  ChaosBar: 50
 --- !u!114 &5203609090645742108
 MonoBehaviour:
   m_ObjectHideFlags: 0

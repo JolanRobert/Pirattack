@@ -12,16 +12,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private PlayerDeviceBuffer devicesSO;
     [SerializeField] private Transform p1SpawnPoint;
     [SerializeField] private Transform p2SpawnPoint;
-
-    private void OnEnable()
-    {
-        InputSystem.onDeviceChange += OnDeviceChange;
-    }
-
-    private void OnDisable()
-    {
-        InputSystem.onDeviceChange -= OnDeviceChange;
-    }
     
     private void Start()
     {
@@ -52,23 +42,5 @@ public class PlayerManager : MonoBehaviour
         
         CameraManager.instance.InitializePlayer(playerInput1);
         CameraManager.instance.InitializePlayer(playerInput2);
-    }
-
-    private void OnDeviceChange(InputDevice device, InputDeviceChange change)
-    {
-        switch (change)
-        {
-            case InputDeviceChange.Disconnected:
-                Debug.LogError($"The gamepad {device} is disconnected.");
-                break;
-            case InputDeviceChange.Reconnected:
-                Debug.LogError($"The gamepad {device} is reconnected.");
-                break;
-        }
-    }
-    
-    private void Update()
-    {
-        //Debug.Log($"P1 : {devicesSO.player1Device} / P2 : {devicesSO.player2Device}");
     }
 }

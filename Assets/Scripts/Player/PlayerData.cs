@@ -7,6 +7,8 @@ namespace Player
     {
         [Header("Stats")]
         public int maxHealth;
+        public int regenValue;
+        public float regenTick;
         public float moveSpeed;
         
         [Header("Movement")]
@@ -14,8 +16,11 @@ namespace Player
         public AnimationCurve moveDeceleration;
         public float rotationSpeed;
 
-        [Header("Other")]
+        [Header("Respawn")]
         public float respawnDuration;
+        public float respawnStayDuration;
+        
+        [Header("Other")]
         public float switchColorCooldown;
     }
 }
