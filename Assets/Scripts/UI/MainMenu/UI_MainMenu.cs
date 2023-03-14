@@ -180,21 +180,10 @@ namespace UI
             var p1Device = devicesSO.player1Device;
             var p2Device = devicesSO.player2Device;
 
-            if (device.Equals(p1Device))
-            {
-                UpdatePlayer(true, null);
-            } else if (device.Equals(p2Device))
-            {
-                UpdatePlayer(false, null);
-            }
-            else if (p1Device is null)
-            {
-                UpdatePlayer(true, device);
-            }
-            else if (p2Device is null)
-            {
-                UpdatePlayer(false, device);
-            }
+            if (device.Equals(p1Device)) UpdatePlayer(true, null);
+            else if (device.Equals(p2Device))UpdatePlayer(false, null);
+            else if (p1Device is null) UpdatePlayer(true, device);
+            else if (p2Device is null) UpdatePlayer(false, device);
             
         }
         
@@ -232,7 +221,7 @@ namespace UI
         
         private void StartGame()
         {
-            SceneController.Instance.QuickLoad(gameScene);
+            //SceneController.Instance.QuickLoad(gameScene);
         }
 
     }

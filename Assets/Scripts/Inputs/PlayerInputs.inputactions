@@ -372,6 +372,17 @@
                 },
                 {
                     "name": "",
+                    "id": "b429c8c9-3122-4bd2-ac4e-908800fef003",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Return",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e36dd465-7035-4200-8c6a-7fadfe7e722c",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "Tap",

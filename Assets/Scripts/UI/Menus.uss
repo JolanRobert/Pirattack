@@ -86,9 +86,19 @@
     -unity-background-scale-mode: scale-to-fit;
 }
 
-.readyLabel {
+.playerLabel {
     align-self: center;
     -unity-font-style: bold;
     font-size: 25px;
     -unity-text-align: upper-center;
+}
+
+.countownDigit {
+    font-size: 150px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: rgb(255, 255, 255);
 }
