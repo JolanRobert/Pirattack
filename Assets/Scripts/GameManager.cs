@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject triggerBossDoor;
     [SerializeField] private GameObject bossDoor;
     [SerializeField] private GameObject Boss;
-    [SerializeField] private PlayerController[] players;
     
     [SerializeField, ReadOnly] private int ChaosBar = 50;
     
@@ -147,10 +146,5 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(RelaunchGame(0f));
         }
-    }
-
-    public PlayerController[] GetPlayers()
-    {
-        return players;
     }
 }
