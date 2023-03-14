@@ -9,10 +9,10 @@ namespace Utils
         public int MaxHealth => maxHealth;
         public int CurrentHealth => currentHealth;
         
-        public Action onHealthGain;
-        public Action onHealthLose;
-        public Action onDeath;
-        //public UnityEvent onHealthReset;
+        public Action OnHealthGain;
+        public Action OnHealthLose;
+        public Action OnHealthReset;
+        public Action OnDeath;
 
         [SerializeField, ReadOnly] private int maxHealth = -1;
         [SerializeField, ReadOnly] private int currentHealth = -1;
@@ -24,27 +24,29 @@ namespace Utils
             currentHealth = maxHealth;
         }
 
+        [ContextMenu("Gain 0.25")]
         public void GainHealth(int amount)
         {
             if (maxHealth == -1) Debug.LogError("Health has not been initialized!");
         
             currentHealth = Math.Clamp(currentHealth + amount, 0, maxHealth);
-            onHealthGain?.Invoke();
+            OnHealthGain?.Invoke();
         }
 
+        [ContextMenu("Lose 0.25")]
         public void LoseHealth(int amount)
         {
             if (maxHealth == -1) Debug.LogError("Health has not been initialized!");
         
             currentHealth = Math.Clamp(currentHealth - amount, isImmortal ? 1 : 0, maxHealth);
-            onHealthLose?.Invoke();
+            OnHealthLose?.Invoke();
 
-            if (currentHealth == 0) onDeath?.Invoke();
+            if (currentHealth == 0) OnDeath?.Invoke();
         }
 
         public void Reset() {
             SetHealth(maxHealth);
-            //onHealthReset?.Invoke();
+            OnHealthReset?.Invoke();
         }
 
         public void SetHealth(int amount)
@@ -53,16 +55,17 @@ namespace Utils
             currentHealth = amount;
         }
 
-        [ContextMenu("Kill")]
-        public void Kill()
+        [ContextMenu("SmoothKill")]
+        public void SmoothKill()
+        {
+            LoseHealth(currentHealth);
+        }
+        
+        [ContextMenu("InstantKill")]
+        public void InstantKill()
         {
             currentHealth = 0;
-            onDeath?.Invoke();
-        }
-
-        public void FlipImmortality()
-        {
-            isImmortal = !isImmortal;
+            OnDeath?.Invoke();
         }
     
         /// <summary>

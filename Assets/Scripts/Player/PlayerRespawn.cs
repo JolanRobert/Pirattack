@@ -18,12 +18,12 @@ namespace Player
 
         private void OnEnable()
         {
-            health.onDeath += Die;
+            health.OnDeath += Die;
         }
 
         private void OnDisable()
         {
-            health.onDeath -= Die;
+            health.OnDeath -= Die;
         }
 
         private void Start()

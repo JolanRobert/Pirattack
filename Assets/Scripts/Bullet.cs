@@ -1,3 +1,4 @@
+using System;
 using Interfaces;
 using MyBox;
 using Player;
@@ -20,6 +21,11 @@ public class Bullet : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
         collider.enabled = true;
+    }
+
+    private void Update()
+    {
+        Debug.Log(rb.velocity);
     }
 
     public void Init(PlayerController owner, WeaponData data)

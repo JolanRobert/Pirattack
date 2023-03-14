@@ -3,7 +3,7 @@ using Player;
 using UnityEngine;
 using Utils;
 
-    public class PlayerShoot : MonoBehaviour
+public class PlayerShoot : MonoBehaviour
     {
         [SerializeField] private PlayerController playerController;
         [SerializeField] private WeaponData weaponData;
@@ -26,7 +26,7 @@ using Utils;
         private IEnumerator ShootCooldown()
         {
             canShoot = false;
-            yield return new WaitForSeconds(1 );
+            yield return new WaitForSeconds(1 / weaponData.fireRate);
             canShoot = true;
         }
     }
