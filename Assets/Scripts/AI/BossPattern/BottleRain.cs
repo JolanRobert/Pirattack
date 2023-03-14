@@ -16,7 +16,7 @@ public class BottleRain : Pattern
     public override float GetDelay()
     {
         BossData data = caster.Data;
-        float animationBottle = data.nbBottleRain * (data.delayBetweenBottleRain + 1.2f); // 1.2f = temps de l'animation up
+        float animationBottle = 4f; // 4f = temps de l'animation up
         float animationFallBottle = data.nbBottleRain * (data.delayBetweenBottleRain + 1.2f); // 1.2f = temps de l'animation fall
         return animationBottle + data.delayBeforeFallingRain + animationFallBottle;
     }
