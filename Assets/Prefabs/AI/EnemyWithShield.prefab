@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: bd22af85a22ec0147bbcf024a9756be4, type: 2}
-  ShieldColor: 2
+  shieldColor: 2
   healthEnemy: {fileID: 779365937772194499}
   agent: {fileID: 5354188228015821563}
   animator: {fileID: 699064867367454987}
@@ -198,8 +198,8 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
   - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
-  Data: {fileID: 11400000, guid: edaaf3dc24281744bbc303e9ddc001b3, type: 2}
-  BTShield: {fileID: 7140208481260745866}
+  data: {fileID: 11400000, guid: edaaf3dc24281744bbc303e9ddc001b3, type: 2}
+  btShield: {fileID: 7140208481260745866}
 --- !u!114 &779365937772194499
 MonoBehaviour:
   m_ObjectHideFlags: 0

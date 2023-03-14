@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d553a34e61294f59bba4bcf98868b160, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 600
   regenValue: 1
   regenTick: 0.8
   moveSpeed: 5

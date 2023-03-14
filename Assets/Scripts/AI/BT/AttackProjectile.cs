@@ -1,3 +1,5 @@
+using AI;
+using AI.BT;
 using BehaviourTree;
 using Player;
 using UnityEngine;
@@ -17,7 +19,7 @@ public class AttackProjectile : Node
         cone.InitWave(enemyShield, target);
 
         SetDataInBlackboard("CanAttack", false);
-        SetDataInBlackboard("WaitTime", (enemyShield.Data.maxSize - enemyShield.Data.minSize) /  enemyShield.Data.speedPattern + enemyShield.Data.AttackSpeed); 
+        SetDataInBlackboard("WaitTime", (enemyShield.data.maxSize - enemyShield.data.minSize) /  enemyShield.data.speedPattern + enemyShield.data.attackSpeed); 
         GetData<TaskWaitForSeconds>("WaitNode").FinalCountdown = () => SetDataInBlackboard("CanAttack", true);
         enemyShield.Animator.SetTrigger("Attack");
         return NodeState.Success;

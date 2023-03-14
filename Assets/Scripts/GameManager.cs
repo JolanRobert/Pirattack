@@ -14,14 +14,13 @@ public class GameManager : MonoBehaviour
     public static Action OnIncreaseChaosBar;
     public static Action OnDecreaseChaosBar;
     
-    [SerializeField] private int IncreaseChaosBar = 10;
-    [SerializeField] private int DecreaseChaosBar = 10;
-    [SerializeField] private float  DepopBossTimer = 60f;
+    [SerializeField] private int increaseChaosBar = 10;
+    [SerializeField] private int decreaseChaosBar = 10;
+    [SerializeField] private float  depopBossTimer = 60f;
     [SerializeField] private GameObject triggerBossDoor;
     [SerializeField] private GameObject bossDoor;
-    [SerializeField] private GameObject Boss;
-    
-    [SerializeField, ReadOnly] private int ChaosBar = 50;
+    [SerializeField] private GameObject boss;
+    [SerializeField, ReadOnly] private int chaosBar = 50;
     
     private float startTime;
     private float endTime;
@@ -61,7 +60,7 @@ public class GameManager : MonoBehaviour
     
     private void CheckChaosBar()
     {
-        switch (ChaosBar)
+        switch (chaosBar)
         {
             case >= 100:
                 OnBossPop?.Invoke();
@@ -74,14 +73,20 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    public void EndGame()
+    {
+        chaosBar = 0;
+        OnDecreaseChaosBar?.Invoke();
+    }
+    
     IEnumerator RelaunchGame(float delay)
     {
-        Boss.SetActive(false);
+        boss.SetActive(false);
         triggerBossDoor.SetActive(false);
         bossDoor.SetActive(false);
         yield return new WaitForSeconds(delay);
         SpawnManager.Instance.SetOnBossFight(false);
-        ChaosBar = 50;
+        chaosBar = 50;
         OnDecreaseChaosBar?.Invoke();
         waitingForBoss = false;
         
@@ -99,9 +104,9 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.SetVoicelineText("Boss is here !");
         triggerBossDoor.SetActive(true);
         bossDoor.SetActive(false);
-        Boss.SetActive(true);
+        boss.SetActive(true);
         waitingForBoss = true;
-        timerDepopBoss = DepopBossTimer;
+        timerDepopBoss = depopBossTimer;
     }
     
     public void LaunchBoss()
@@ -114,28 +119,28 @@ public class GameManager : MonoBehaviour
 
     public void SuccessTask()
     {
-        if (ChaosBar >= 100 || waitingForBoss) return;
+        if (chaosBar >= 100 || waitingForBoss) return;
         
-        ChaosBar += IncreaseChaosBar;
+        chaosBar += increaseChaosBar;
         OnIncreaseChaosBar?.Invoke();
     }
 
     public void FailTask()
     {
-        if (ChaosBar <= 0 || waitingForBoss) return;
+        if (chaosBar <= 0 || waitingForBoss) return;
         
-        ChaosBar -= DecreaseChaosBar;
+        chaosBar -= decreaseChaosBar;
         OnDecreaseChaosBar?.Invoke();
     }
     
     public int GetChaosValue()
     {
-        return ChaosBar;
+        return chaosBar;
     }
     
     public float GetChaosValueRatio()
     {
-        return ChaosBar / 100f;
+        return chaosBar / 100f;
     }
 
 
@@ -147,5 +152,10 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(RelaunchGame(0f));
         }
+    }
+
+    public float currentTimer()
+    {
+        return Time.time - startTime;
     }
 }
