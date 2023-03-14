@@ -12,6 +12,7 @@ namespace UI
         {
             // Default values
             Init();
+            InitVE();
             Hide();
         }
 

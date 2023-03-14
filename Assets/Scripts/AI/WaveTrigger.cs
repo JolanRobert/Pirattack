@@ -17,7 +17,6 @@ public class WaveTrigger : MonoBehaviour
         if (other.GetComponent<PlayerController>().Color.PColor != coneProjectile.Caster.Color)
         {
             entity.Damage(coneProjectile.Caster.Data.damage);
-            Debug.Log("Hit Player");
         }
     }
 }

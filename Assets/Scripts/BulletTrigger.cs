@@ -10,29 +10,23 @@ public class BulletTrigger : MonoBehaviour
 {
     [SerializeField] private Bullet bullet;
     [SerializeField] private Collider collider;
-    [SerializeField] private GameObject contactParticleSystem;
-    [SerializeField] private GameObject zapParticleSystem;
-    [SerializeField] private GameObject shockLine;
 
     private PlayerController owner => bullet.Owner;
 
-    private float speed;
     private int damage;
-    private int nbBounce;
     private int nbPierce;
     private int nbShock;
     private float nbSlow;
     
     public void Init(WeaponData data)
     {
-        speed = data.bulletSpeed;
         damage = data.damage;
-        nbBounce = data.nbBounce;
         nbPierce = data.nbPierce;
         nbShock = data.nbShock;
         nbSlow = data.nbSlow;
     }
     
+    //Layers Player/Enemy INCLUDED
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger) return;
@@ -46,9 +40,9 @@ public class BulletTrigger : MonoBehaviour
             vfx.transform.rotation = transform.rotation;
             Pooler.Instance.DelayedDepop(0.3f,Key.BulletImpactVFX,vfx);
            
-            if (nbSlow > 0 && entity is DestructibleProp prop && owner)
+            if (nbSlow > 0 && entity is Enemy ennemy && owner)
             {
-                prop.SetIced(nbSlow);
+                ennemy.SetIced(nbSlow);
             }
             
             if (nbShock > 0)
@@ -62,7 +56,6 @@ public class BulletTrigger : MonoBehaviour
                 return;
             }
             
-            Debug.Log("trigger with "+other.name);
             collider.enabled = false;
             Pooler.Instance.Depop(Key.Bullet, bullet.gameObject);
         }

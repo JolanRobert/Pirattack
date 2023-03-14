@@ -2,11 +2,6 @@
     flex-direction: row;
 }
 
-.container {
-    align-items: center;
-    flex-grow: 1;
-}
-
 .button {
     background-color: rgb(255, 255, 255);
     border-left-color: rgba(0, 0, 0, 0);
@@ -64,6 +59,7 @@
     padding-right: 75px;
     padding-top: 25px;
     padding-bottom: 25px;
+    -unity-text-align: upper-center;
 }
 
 .playerContainer {
@@ -94,4 +90,5 @@
     align-self: center;
     -unity-font-style: bold;
     font-size: 25px;
+    -unity-text-align: upper-center;
 }

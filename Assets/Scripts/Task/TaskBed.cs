@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using MyBox;
-using Player;
 using UnityEngine;
 
 namespace Task
@@ -30,9 +29,9 @@ namespace Task
         {
             foreach (TaskBedItem item in beds)
             {
-                PlayerColor bedColor = GetRandomColor();
-                item.SetRequiredColor(bedColor);
-                UiIndicator.instance.AddObject(item.gameObject, bedColor);
+                item.ExpirationTime = ExpirationTime;
+                item.NotifOffset = NotifOffset;
+                item.Init();
             }
         }
 

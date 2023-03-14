@@ -11,17 +11,14 @@ public class TriggerBossLaunch : MonoBehaviour
     {
         PlayerController player = other.GetComponent<PlayerController>();
         if (!player) return;
-        if (players.Contains(player)) return;
+        if (players.Contains(player))
+        {
+            players.Remove(player);
+            return;
+        }
         players.Add(player);
         if (players.Count != 2) return;
         GameManager.OnLaunchingBoss?.Invoke();
         gameObject.SetActive(false);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        PlayerController player = other.GetComponent<PlayerController>();
-        if (player)
-            players.Remove(player);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Interfaces;
 using Player;
 using UnityEngine;
@@ -9,40 +10,57 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     public Action<int, PlayerController> IsWasAttacked;
     public EnemyData Data => enemyData;
+    public bool EnemyInVision => enemyInVision;
+    public Animator Animator => animator;
     public PlayerColor Color => ShieldColor;
+    public NavMeshAgent Agent => agent;
     
     [SerializeField] private EnemyData enemyData;
     [SerializeField] protected PlayerColor ShieldColor = PlayerColor.None;
     [SerializeField] protected Health healthEnemy;
     [SerializeField] protected NavMeshAgent agent;
-    [SerializeField] private EnemyBT BT;
-    [SerializeField] private MeshRenderer renderer;
+    [SerializeField] protected Animator animator;
+    [SerializeField] protected Rigidbody rb;
+    [SerializeField] private SkinnedMeshRenderer renderer;
     [SerializeField] private Material[] materials;
+    
 
+    protected bool enemyInVision = false;
     protected int damage = 0;
     protected int maxHp = 0;
+    protected List<Transform> PatrolPoints = new ();
+    private EnemyBT BT = null;
     
     private void OnEnable()
     {
         damage = enemyData.damage; // possible to change damage value
         maxHp = enemyData.maxHealth; // possible to change max health value
-        healthEnemy.Init((int)maxHp);
+        healthEnemy.Init(maxHp);
         ResetAttackDefaultValue();
         agent.speed = enemyData.speed;
-        BT.ResetBlackboard();
+        if (!BT) BT = GetComponent<EnemyBT>();
+        BT.ResetBlackboard();   
         BT.enabled = true;
+        GameManager.OnLaunchingBoss += Depop;
     }
 
     private void OnDisable()
     {
         BT.enabled = false;
+        GameManager.OnLaunchingBoss -= Depop;
     }
     
     private void Start()
     {
-        healthEnemy.onDeath = OnDie;
-        if (GameManager.Instance) healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
+        healthEnemy.OnDeath = OnDie;
+        if (GameManager.Instance) healthEnemy.OnDeath += GameManager.Instance.AddEnemyKilled;
     }
+
+    protected virtual void Depop()
+    {
+        Pooler.Instance.Depop(Key.BasicEnemy, gameObject);
+    }
+    
 
     public PlayerColor GetShieldColor()
     {
@@ -77,6 +95,30 @@ public class Enemy : MonoBehaviour, IDamageable
     public void Attack(PlayerController target)
     {
         target.Collision.Damage(damage);
+    }
+
+    public void OnPlayerOnVision()
+    {
+        enemyInVision = true;
+    }
+    
+    public List<Transform> GetPatrolPoints()
+    {
+        return PatrolPoints;
+    }
+    
+    public void SetPatrolPoints(List<Transform> points)
+    {
+        PatrolPoints.Clear();
+        for (int i = 0; i < points.Count; i++)
+        {
+            PatrolPoints.Add(points[i]);
+        }
+    }
+
+    private void Update()
+    {
+        animator.SetFloat("Velocity", agent.velocity.magnitude);
     }
 
     public void SetIced(float duration)

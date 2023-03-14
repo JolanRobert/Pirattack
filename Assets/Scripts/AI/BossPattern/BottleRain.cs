@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using AI;
@@ -16,7 +17,7 @@ public class BottleRain : Pattern
     public override float GetDelay()
     {
         BossData data = caster.Data;
-        float animationBottle = data.nbBottleRain * (data.delayBetweenBottleRain + 1.2f); // 1.2f = temps de l'animation up
+        float animationBottle = 4f; // 4f = temps de l'animation up
         float animationFallBottle = data.nbBottleRain * (data.delayBetweenBottleRain + 1.2f); // 1.2f = temps de l'animation fall
         return animationBottle + data.delayBeforeFallingRain + animationFallBottle;
     }
@@ -33,13 +34,14 @@ public class BottleRain : Pattern
         Pooler.Instance.Depop(Key.Bottle, obj);
     }
 
-    IEnumerator ExecuteBottleRainAnimation()
+    private IEnumerator ExecuteBottleRainAnimation()
     {
         BossData data = caster.Data;
-        for (int i = 0; i < data.nbBottleRain; i++)
+            caster.Animator.SetTrigger("ThrowBottle");
+        for (int i = 0; i < 4; i++)
         {
+            yield return new WaitForSeconds(1f);
             Instantiate(bottleAnimationPrefab, caster.transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(caster.Data.delayBetweenBottleRain);
         }
         yield return new WaitForSeconds(data.delayBeforeFallingRain);
         for (int i = 0; i < data.nbBottleRain; i++)
@@ -53,7 +55,7 @@ public class BottleRain : Pattern
             GameObject bottle = Pooler.Instance.Pop(Key.Bottle);
             bottle.transform.position = FallPosition;
             bottle.GetComponent<BoxCollider>().size = new Vector3(data.impactSizeRain, 2, data.impactSizeRain);
-            
+
             FallPosition.y = 0.5f;
             GameObject fx = Pooler.Instance.Pop(Key.FXBottle);
             fx.transform.position = FallPosition;

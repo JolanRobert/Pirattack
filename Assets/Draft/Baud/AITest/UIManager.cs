@@ -28,6 +28,7 @@ public static UIManager Instance;
     
     public void ShowEndGame()
     {
+        if (CanvasEndGame)
         CanvasEndGame.SetActive(true);
         gameObject.SetActive(false);
     }
@@ -42,13 +43,16 @@ public static UIManager Instance;
     public void UpdateChaosSlider()
     {
         float value = GameManager.Instance.GetChaosValueRatio();
+        if (ChaosBarSlider)
         ChaosBarSlider.DOValue(value, 0.5f);
     }
     
     IEnumerator PrintVoiceline(string text)
     {
+        if (voicelineText)
         voicelineText.text = text;
         yield return new WaitForSeconds(timerVoiceline);
+        if (voicelineText)
         voicelineText.text = "";
     }
 

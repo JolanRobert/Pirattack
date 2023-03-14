@@ -11,6 +11,7 @@ public class EnemyData : ScriptableObject
     public float AttackDistance = 2;
     public float speed = 3.5f;
     public float ATKSpeed = 1f;
+    public float viewRangeDetection = 4f;
 
     [Header("Bullets")]
     private float _maxSize;

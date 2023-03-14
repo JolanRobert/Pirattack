@@ -36,7 +36,10 @@ namespace UI
         protected void Init()
         {
             root = layout.rootVisualElement;
-            
+        }
+
+        protected void InitVE()
+        {
             // Images
             p1ImgVE = root.Q<VisualElement>(VE_P1IMG);
             p2ImgVE = root.Q<VisualElement>(VE_P2IMG);

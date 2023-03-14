@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   maxHealth: 100
-  attackSpeed: 4
+  regenValue: 1
+  regenTick: 0.8
   moveSpeed: 5
-  damage: 50
   moveAcceleration:
     serializedVersion: 2
     m_Curve:
@@ -65,7 +65,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   rotationSpeed: 5
-  bulletSpeed: 10
-  bulletLifespan: 2
   respawnDuration: 2
+  respawnStayDuration: 0.5
   switchColorCooldown: 1

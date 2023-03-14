@@ -7,37 +7,41 @@ using Utils;
 public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager Instance;
-    
+
     [SerializeField] private float spawnRate = 5f;
-    [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private TrapManager[] spawnPoints;
     [SerializeField] private float delaySpawn = 0.4f;
     [SerializeField] private int nbTickPerShieldSpawn = 5;
 
     private float currentTime = 0f;
     private int nbSpawn = 0;
     private int nbShield = 0;
-    private readonly List<Transform> activeSpawnPoints = new();
+    private readonly List<TrapManager> activeSpawnPoints = new();
     private bool isSpawning = false;
     private bool onBossFight = false;
     private List<Key> keys = new();
-    
+
     private void Awake()
     {
         Instance = this;
     }
 
-    IEnumerator SpawnEnemy(Vector3 spawnPosition)
+    IEnumerator SpawnEnemy(Vector3 spawnPosition, int index)
     {
         for (int i = 0; i < keys.Count; i++)
         {
             if (onBossFight) yield return null;
             GameObject enemy = Pooler.Instance.Pop(keys[i]);
-            enemy.SetActive(false);
+            
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            activeSpawnPoints[index].AddEnemy(enemyScript);
+            enemyScript.SetPatrolPoints(activeSpawnPoints[index].patrolPoints);
             enemy.transform.position = spawnPosition;
+            enemy.SetActive(false);
             enemy.SetActive(true);
             yield return new WaitForSeconds(delaySpawn);
         }
-
+        activeSpawnPoints.RemoveAt(index);
         isSpawning = false;
     }
 
@@ -48,7 +52,7 @@ public class SpawnManager : MonoBehaviour
             activeSpawnPoints.Add(spawnPoints[i]);
         }
     }
-    
+
     public void SetOnBossFight(bool value)
     {
         onBossFight = value;
@@ -73,18 +77,27 @@ public class SpawnManager : MonoBehaviour
         if (activeSpawnPoints.Count == 0)
             ResetActiveSpawnPoints();
         int index = Random.Range(0, activeSpawnPoints.Count);
-        Vector3 spawnPosition = activeSpawnPoints[index].position;
-        activeSpawnPoints.RemoveAt(index);
-        CheckAddShieldMan();
+        Vector3 spawnPosition = activeSpawnPoints[index].transform.position;
 
-        for (int i = 0; i < nbSpawn; i++)
+        bool playerInVision = activeSpawnPoints[index].CheckEnemiesVision();
+
+        if (playerInVision)
+        {
+            CheckAddShieldMan();
+
+            for (int i = 0; i < nbSpawn; i++)
+                keys.Add(Key.BasicEnemy);
+
+            for (int i = 0; i < nbShield; i++)
+                keys.Add(Key.EnemyShield);
+
+            keys.Shuffle();
+        }
+        else
+        {
             keys.Add(Key.BasicEnemy);
+        }
 
-        for (int i = 0; i < nbShield; i++)
-            keys.Add(Key.EnemyShield);
-
-        keys.Shuffle();
-
-        StartCoroutine(SpawnEnemy(spawnPosition));
+        StartCoroutine(SpawnEnemy(spawnPosition, index));
     }
 }
