@@ -12,7 +12,8 @@ public class CheckPlayerInVision : Node
         if (player) return NodeState.Failure;
         
         var enemyShield = GetData("caster");
-        var transform = ((Enemy)GetData("caster")).transform;
+        var caster = (Enemy)GetData("caster");
+        var transform = caster.transform;
         
         //PlayerController[] players = GameManager.Instance.GetPlayers();
         if (PlayerManager.Players.Count == 0) return NodeState.Success;
@@ -32,6 +33,11 @@ public class CheckPlayerInVision : Node
             target = players[0];
         else if (distanceplayer1 < minViewRange)
             target = players[1];
+
+        if (target)
+            caster.OnPlayerOnVision();
+        else
+            caster.NotPlayerOnVision();
         
         SetDataInBlackboard("Target", target);
         return target ? NodeState.Failure : NodeState.Success;

@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     public Action<int, PlayerController> IsWasAttacked;
     public EnemyData Data => enemyData;
+    public bool EnemyInVision => enemyInVision;
     public Animator Animator => animator;
     public PlayerColor Color => ShieldColor;
     
@@ -21,7 +22,9 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] protected Rigidbody rb;
     [SerializeField] private SkinnedMeshRenderer renderer;
     [SerializeField] private Material[] materials;
+    
 
+    protected bool enemyInVision = false;
     protected int damage = 0;
     protected int maxHp = 0;
     
@@ -42,17 +45,18 @@ public class Enemy : MonoBehaviour, IDamageable
         BT.enabled = false;
         GameManager.OnLaunchingBoss -= Depop;
     }
-
-    protected virtual void Depop()
-    {
-        Pooler.Instance.Depop(Key.BasicEnemy, gameObject);
-    }
     
     private void Start()
     {
         healthEnemy.onDeath = OnDie;
         if (GameManager.Instance) healthEnemy.onDeath += GameManager.Instance.AddEnemyKilled;
     }
+
+    protected virtual void Depop()
+    {
+        Pooler.Instance.Depop(Key.BasicEnemy, gameObject);
+    }
+    
 
     public PlayerColor GetShieldColor()
     {
@@ -87,7 +91,15 @@ public class Enemy : MonoBehaviour, IDamageable
     public void Attack(PlayerController target)
     {
         target.Collision.Damage(damage);
-        
+    }
+
+    public void OnPlayerOnVision()
+    {
+        enemyInVision = true;
+    }
+    public void NotPlayerOnVision()
+    {
+        agent.SetDestination(transform.position);
     }
 
     private void Update()

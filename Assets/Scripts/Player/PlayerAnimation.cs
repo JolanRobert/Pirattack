@@ -19,17 +19,17 @@ namespace Player
 
         public void SetTrigger(AnimTrigger trigger)
         {
-            if (trigger == AnimTrigger.Attack)
+            switch (trigger)
             {
-                playerAnimator.SetTrigger(Attack);
-            }
-            else if (trigger == AnimTrigger.Switch)
-            {
-                parrotAnimator.SetTrigger(Switch);
-            }
-            else if (trigger == AnimTrigger.TaskAdded)
-            {
-                parrotAnimator.SetTrigger(TaskAdded);
+                case AnimTrigger.Attack:
+                    playerAnimator.SetTrigger(Attack);
+                    break;
+                case AnimTrigger.Switch:
+                    parrotAnimator.SetTrigger(Switch);
+                    break;
+                case AnimTrigger.TaskAdded:
+                    parrotAnimator.SetTrigger(TaskAdded);
+                    break;
             }
         }
         
