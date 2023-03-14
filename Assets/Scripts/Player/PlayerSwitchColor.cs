@@ -11,7 +11,6 @@ namespace Player
         public static Action OnSwitchColor;
 
         [SerializeField] private PlayerController playerController;
-        [SerializeField] private Renderer sphereRenderer;
         [SerializeField, ReadOnly] private PlayerColor color;
         
         private PlayerData data => playerController.Data;
@@ -31,7 +30,6 @@ namespace Player
         public void InitColor(PlayerColor newColor)
         {
             color = newColor;
-            sphereRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
         }
 
         private void Switch()
@@ -39,7 +37,6 @@ namespace Player
             if (!canSwitch) return;
             
             color = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;
-            sphereRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
             playerController.Interact.EndInteract();
             StartCoroutine(SwitchCooldown());
             

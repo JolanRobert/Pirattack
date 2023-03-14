@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c03f273666510f6499de4fe443b9b920, type: 3}
-  m_Name: WeaponTest
+  m_Name: WeaponData
   m_EditorClassIdentifier: 
   bulletSpeed: 10
   bulletLifespan: 2.5
   damage: 25
-  nbBounce: 3
+  nbBounce: 2
+  fireRate: 4
   nbPierce: 2
-  fireRate: 0
   nbShock: 2
   nbSlow: 0.5

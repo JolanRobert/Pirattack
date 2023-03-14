@@ -33,8 +33,8 @@ namespace Task
         protected override void OnDisable()
         {
             base.OnDisable();
-            
-            UiIndicator.instance.RemoveObject(gameObject);
+
+            if (UiIndicator.instance) UiIndicator.instance.RemoveObject(gameObject);
         }
 
         public void HandleInput(bool leftInput, bool rightInput)

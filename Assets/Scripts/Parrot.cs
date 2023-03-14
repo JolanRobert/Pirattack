@@ -1,19 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Player;
+using Task;
 using UnityEngine;
 
 public class Parrot : MonoBehaviour
 {
-    [SerializeField] private Animator animator;
+    [SerializeField] private PlayerAnimation playerAnimation;
 
     private void OnEnable()
     {
-        //INSERT HERE THE CODE TO SUBSCRIBE TO THE EVENT new Task
+        TaskManager.OnTaskAdded += NewTask;
+    }
+
+    private void OnDisable()
+    {
+        TaskManager.OnTaskAdded -= NewTask;
     }
 
     private void NewTask()
     {
-        animator.SetTrigger("TaskAdded");
+        playerAnimation.SetTrigger(PlayerAnimation.AnimTrigger.TaskAdded);
     }
 }
