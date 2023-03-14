@@ -13,16 +13,16 @@ namespace Player
         public PlayerSwitchColor Color => playerSwitchColor;
         public PlayerCollision Collision => playerCollision;
         public PlayerInteract Interact => playerInteract;
+        public PlayerAnimation Animation => playerAnimation;
 
         [SerializeField] private PlayerData data;
-        [SerializeField] private PlayerInput playerInput;
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private PlayerShoot playerShoot;
         [SerializeField] private PlayerSwitchColor playerSwitchColor;
         [SerializeField] private PlayerCollision playerCollision;
         [SerializeField] private PlayerInteract playerInteract;
         [SerializeField] private PlayerRespawn playerRespawn;
-        [SerializeField] private Rigidbody rb;
+        [SerializeField] private PlayerAnimation playerAnimation;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;
@@ -34,8 +34,7 @@ namespace Player
         public void Init(Vector3 startPosition, PlayerColor color)
         {
             playerSwitchColor.InitColor(color);
-            rb.position = startPosition;
-            playerMovement.Cancel();
+            playerMovement.Init(startPosition);
         }
 
         private void Update()

@@ -17,6 +17,10 @@ public class EnemyBT : Tree
             new InitEnemyBlackboard(enemy),
             new TaskWaitForSeconds(),
             new Sequence(
+            new CheckPlayerInVision(),
+            new TaskPatrol()
+            ),
+            new Sequence(
                 new CanAttack(enemy.transform),
                 new AttackCaC()
             ),

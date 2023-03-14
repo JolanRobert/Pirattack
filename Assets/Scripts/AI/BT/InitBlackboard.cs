@@ -25,6 +25,8 @@ public class InitEnemyBlackboard : Node
         SetDataInBlackboard("CanAttack", true);
         SetDataInBlackboard("WaitTime", 0f);
         SetDataInBlackboard("caster", enemyShield != null ? enemyShield : enemy);
+        SetDataInBlackboard("PatrolPoints", enemyShield != null ? enemyShield.GetPatrolPoints() : enemy.GetPatrolPoints());
+        SetDataInBlackboard("PatrolPointsIndex", 0);
         return NodeState.Success;
     }
 }

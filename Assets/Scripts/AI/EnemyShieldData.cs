@@ -18,4 +18,5 @@ public class EnemyShieldData : ScriptableObject
     public float minSize;
     public float speedPattern;
     public float angle;
+    public float viewRangeDetection = 4f;
 }

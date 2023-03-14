@@ -22,11 +22,20 @@ public class PlayerManager : MonoBehaviour
         var playerInput1 = pim.JoinPlayer(playerIndex:0, controlScheme: "Gamepad", pairWithDevice: devicesSO.player1Device);
         var playerInput2 = pim.JoinPlayer(playerIndex:1, controlScheme: "Gamepad", pairWithDevice: devicesSO.player2Device);
 
-        Players = new List<PlayerController>
+        if (playerInput1 && playerInput2)
         {
-            playerInput1.GetComponent<PlayerController>(),
-            playerInput2.GetComponent<PlayerController>()
-        };
+            Players = new List<PlayerController>()
+            {
+                playerInput1.GetComponent<PlayerController>(),
+                playerInput2.GetComponent<PlayerController>()
+            };
+        }
+        else
+        {
+            Debug.LogError("PlayerInputManager is null");
+            Players = new List<PlayerController>();
+            return;
+        }
 
         Players[0].Init(p1SpawnPoint.position, PlayerColor.Blue);
         Players[1].Init(p2SpawnPoint.position, PlayerColor.Red);

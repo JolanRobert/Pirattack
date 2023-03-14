@@ -1,12 +1,11 @@
-using System;
 using UnityEngine;
 
 namespace Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private Rigidbody rb;
         [SerializeField] private PlayerController playerController;
+        [SerializeField] private Rigidbody rb;
 
         private PlayerData data => playerController.Data;
         
@@ -20,6 +19,18 @@ namespace Player
         private void FixedUpdate()
         {
             rb.MoveRotation(Quaternion.Lerp(rb.rotation, targetRotation, data.rotationSpeed * Time.fixedDeltaTime));
+        }
+
+        public void Init(Vector3 startPos)
+        {
+            rb.position = startPos;
+            Cancel();
+        }
+        
+        public void Cancel()
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
 
         public void Move(Vector2 moveInput)
@@ -36,6 +47,8 @@ namespace Player
                 deccelerationProgress = 0;
                 rb.velocity = new Vector3(moveInput.x, 0, moveInput.y) * (data.moveAcceleration.Evaluate(accelerationProgress) * data.moveSpeed);
             }
+            
+            playerController.Animation.SetVelocity(moveInput.magnitude);
         }
 
         public void Rotate(Vector2 rotateInput)
@@ -43,12 +56,6 @@ namespace Player
             var direction = new Vector3(rotateInput.x, 0f, rotateInput.y);
             if (direction.magnitude < 0.1f) return;
             targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-        }
-        
-        public void Cancel()
-        {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
         }
     }
 }

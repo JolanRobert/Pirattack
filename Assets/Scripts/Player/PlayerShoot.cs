@@ -1,10 +1,9 @@
 using System.Collections;
+using Player;
 using UnityEngine;
 using Utils;
 
-namespace Player
-{
-    public class PlayerShoot : MonoBehaviour
+public class PlayerShoot : MonoBehaviour
     {
         [SerializeField] private PlayerController playerController;
         [SerializeField] private WeaponData weaponData;
@@ -20,6 +19,8 @@ namespace Player
             bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
             bullet.Init(playerController, weaponData);
             StartCoroutine(ShootCooldown());
+            
+            playerController.Animation.SetTrigger(PlayerAnimation.AnimTrigger.Attack);
         }
 
         private IEnumerator ShootCooldown()
@@ -29,4 +30,3 @@ namespace Player
             canShoot = true;
         }
     }
-}

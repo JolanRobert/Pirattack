@@ -17,7 +17,7 @@ public class BottleHarrasment : Pattern
     {
         BossData data = caster.Data;
         float animationTime = ((55 / Time.deltaTime * 45f) * Time.deltaTime) / 1000f;
-        float animationBottle = data.nbBottleHarassment * data.delayBetweenBottleHarassment + animationTime;
+        float animationBottle = 4f; // 4f = temps de l'animation up
         float animationFallBottle = data.nbBottleHarassment * data.delayBetweenBottleHarassment + animationTime;
         return animationBottle + data.delayBeforeFallingHarassment + animationFallBottle;
     }
@@ -37,10 +37,11 @@ public class BottleHarrasment : Pattern
     IEnumerator ExecuteBottleHarassmentAnimation()
     {
         BossData data = caster.Data;
-        for (int i = 0; i < data.nbBottleHarassment; i++)
+        caster.Animator.SetTrigger("ThrowBottle");
+        for (int i = 0; i < 4; i++)
         {
+            yield return new WaitForSeconds(1f);
             Instantiate(bottleAnimationPrefab, caster.transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(caster.Data.delayBetweenBottleHarassment);
         }
 
         yield return new WaitForSeconds(data.delayBeforeFallingHarassment);

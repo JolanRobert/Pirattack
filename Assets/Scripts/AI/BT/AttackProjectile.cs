@@ -19,6 +19,7 @@ public class AttackProjectile : Node
         SetDataInBlackboard("CanAttack", false);
         SetDataInBlackboard("WaitTime", (enemyShield.Data.maxSize - enemyShield.Data.minSize) /  enemyShield.Data.speedPattern + enemyShield.Data.AttackSpeed); 
         GetData<TaskWaitForSeconds>("WaitNode").FinalCountdown = () => SetDataInBlackboard("CanAttack", true);
+        enemyShield.Animator.SetTrigger("Attack");
         return NodeState.Success;
     }
 }

@@ -10,15 +10,12 @@ public class Bullet : MonoBehaviour
     public PlayerController Owner => owner;
     
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private Collider collider;
+    [SerializeField] private SphereCollider collider;
     [SerializeField] private BulletTrigger bulletTrigger;
-    [SerializeField] private GameObject particleSystem;
     [SerializeField, ReadOnly] private PlayerController owner;
 
     private float speed;
-    private int damage;
     private int nbBounce;
-    private int nbPierce;
 
     private void OnEnable()
     {
@@ -31,15 +28,14 @@ public class Bullet : MonoBehaviour
         bulletTrigger.Init(data);
         
         speed = data.bulletSpeed;
-        damage = data.damage;
         nbBounce = data.nbBounce;
-        nbPierce = data.nbPierce;
         
         this.owner = owner;
         rb.velocity = transform.forward * speed;
         Pooler.Instance.DelayedDepop(data.bulletLifespan, Key.Bullet, gameObject);
     }
 
+    //Layers Player/Enemy EXCLUDED
     private void OnCollisionEnter(Collision collision)
     {
         // TODO : Remplacer l'instanciation VFX par un Pool
@@ -62,7 +58,6 @@ public class Bullet : MonoBehaviour
         vfx2.transform.position = transform.position;
         vfx2.transform.rotation = transform.rotation;
         Pooler.Instance.DelayedDepop(0.3f,Key.BulletImpactVFX,vfx2);
-        Debug.Log("collision with "+collision.gameObject.name);
         Pooler.Instance.Depop(Key.Bullet, gameObject);
     }
 }
