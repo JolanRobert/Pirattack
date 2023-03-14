@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TrapManager : MonoBehaviour
 {
+    public List<Transform> PatrolPoints = new List<Transform>();
+
     private List<Enemy> Enemies = new();
 
     public void AddEnemy(Enemy enemy)

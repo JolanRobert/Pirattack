@@ -33,9 +33,11 @@ public class SpawnManager : MonoBehaviour
             if (onBossFight) yield return null;
             GameObject enemy = Pooler.Instance.Pop(keys[i]);
             
-            activeSpawnPoints[index].AddEnemy(enemy.GetComponent<Enemy>());
-            enemy.SetActive(false);
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            activeSpawnPoints[index].AddEnemy(enemyScript);
+            enemyScript.SetPatrolPoints(activeSpawnPoints[index].PatrolPoints);
             enemy.transform.position = spawnPosition;
+            enemy.SetActive(false);
             enemy.SetActive(true);
             yield return new WaitForSeconds(delaySpawn);
         }

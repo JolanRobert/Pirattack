@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Interfaces;
 using Player;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public bool EnemyInVision => enemyInVision;
     public Animator Animator => animator;
     public PlayerColor Color => ShieldColor;
+    public NavMeshAgent Agent => agent;
     
     [SerializeField] private EnemyData enemyData;
     [SerializeField] protected PlayerColor ShieldColor = PlayerColor.None;
@@ -27,6 +29,7 @@ public class Enemy : MonoBehaviour, IDamageable
     protected bool enemyInVision = false;
     protected int damage = 0;
     protected int maxHp = 0;
+    protected List<Transform> PatrolPoints = new ();
     
     private void OnEnable()
     {
@@ -97,9 +100,23 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         enemyInVision = true;
     }
+    
+    public List<Transform> GetPatrolPoints()
+    {
+        return PatrolPoints;
+    }
+    
+    public void SetPatrolPoints(List<Transform> points)
+    {
+        PatrolPoints.Clear();
+        for (int i = 0; i < points.Count; i++)
+        {
+            PatrolPoints.Add(points[i]);
+        }
+    }
+
     public void NotPlayerOnVision()
     {
-        agent.SetDestination(transform.position);
     }
 
     private void Update()

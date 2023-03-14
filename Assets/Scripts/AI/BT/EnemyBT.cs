@@ -16,7 +16,10 @@ public class EnemyBT : Tree
         origin = new Selector(
             new InitEnemyBlackboard(enemy),
             new TaskWaitForSeconds(),
+            new Sequence(
             new CheckPlayerInVision(),
+            new TaskPatrol()
+            ),
             new Sequence(
                 new CanAttack(enemy.transform),
                 new AttackCaC()
