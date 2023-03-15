@@ -173,7 +173,6 @@ namespace UI
         
         public override void TryToJoinPlayer(InputAction.CallbackContext context)
         {
-            Debug.Log("Hey");
             var device = context.control.device;
                 
             if (state is not MenuState.Lobby || device is null) return;

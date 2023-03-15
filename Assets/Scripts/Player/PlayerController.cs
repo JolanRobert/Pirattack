@@ -110,7 +110,7 @@ namespace Player
 
         private void HandleSwitchColor()
         {
-            if (switchColorInput) PlayerSwitchColor.OnSwitchColor.Invoke();
+            if (switchColorInput) playerSwitchColor.OnSwitchColor.Invoke();
         }
 
         private void HandleInteract()

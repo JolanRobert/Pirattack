@@ -8,6 +8,7 @@ public class CameraManager : MonoBehaviour
     public Camera[] cameras;
     [SerializeField] private float distance;
     private float distanceRectified;
+    [SerializeField] private float camSplitRatio = 1.5f;
     public float angle;
     [SerializeField] private Material splitScreenMat;
     public static CameraManager instance;
@@ -32,7 +33,8 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        distanceRectified = distance * Mathf.Lerp(1,1.78f,(focus[0].position - focus[1].position).normalized.x);
+        distanceRectified = distance * Mathf.Lerp(1,camSplitRatio,Mathf.Abs((players[0].position - players[1].position).normalized.x));
+        
         if(!playersConnected) return;
         if (!separated)
         {

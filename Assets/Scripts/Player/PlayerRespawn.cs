@@ -32,7 +32,7 @@ namespace Player
             health.StartPassiveRegeneration(data.regenValue, data.regenTick);
         }
 
-        public void CheckEndGame()
+        private void CheckEndGame()
         {
             PlayerController[] players = PlayerManager.Players.ToArray();
             if (players[0].IsDown && players[1].IsDown) GameManager.Instance.EndGame();
