@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using AI.BossPattern;
+using Managers;
 using MyBox;
 using Player;
 using UnityEngine;
@@ -91,7 +92,7 @@ namespace AI
         {
             for (int i = 0; i < data.nbLoot; i++)
             {
-                GameObject loot = Pooler.Instance.Pop(Key.PerkLoot);
+                GameObject loot = Pooler.Instance.Pop(Pooler.Key.PerkLoot);
                 loot.transform.SetPositionAndRotation(transform.position + Vector3.back * 10 + Vector3.right * (i - 1),
                     Quaternion.identity);
             }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using Player;
 using UnityEngine;
 using Utils;
@@ -29,7 +30,7 @@ namespace AI.BossPattern
         public override void EndTrigger(GameObject obj)
         {
             obj.GetComponent<BottleFalling>().EndOfLife();
-            Pooler.Instance.Depop(Key.Bottle, obj);
+            Pooler.Instance.Depop(Pooler.Key.Bottle, obj);
         }
 
         IEnumerator ExecuteBottleHarassmentAnimation()
@@ -62,12 +63,12 @@ namespace AI.BossPattern
                 Vector3 randomPos = playerPos + new Vector3(randomPosList[Random.Range(0, randomPosList.Count)] * data.ratioDistanceCurve, 55, randomPosList[Random.Range(0, randomPosList.Count)] * data.ratioDistanceCurve);
                 Vector3 fallPosition = caster.transform.position + randomPos;
             
-                GameObject bottle = Pooler.Instance.Pop(Key.Bottle);
+                GameObject bottle = Pooler.Instance.Pop(Pooler.Key.Bottle);
                 bottle.transform.position = fallPosition;
                 bottle.GetComponent<BoxCollider>().size = new Vector3(data.impactSizeHarassment, 2, data.impactSizeHarassment);
             
                 fallPosition.y = 0.5f;
-                GameObject fx = Pooler.Instance.Pop(Key.FXBottle);
+                GameObject fx = VFXPooler.Instance.Pop(VFXPooler.Key.BottleVFX);
                 fx.transform.position = fallPosition;
                 fx.transform.localScale = new Vector3(data.impactSizeHarassment, 1, data.impactSizeHarassment);
             

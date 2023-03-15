@@ -51,7 +51,7 @@ namespace AI
                 yield return new WaitForSeconds(delay);
             }
 
-            Pooler.Instance.Depop(Key.Cone, gameObject);
+            Pooler.Instance.Depop(Pooler.Key.Cone, gameObject);
         }
 
         IEnumerator Wave()
@@ -66,7 +66,7 @@ namespace AI
                 yield return new WaitForEndOfFrame();
             }
 
-            Pooler.Instance.Depop(Key.Wave, gameObject);
+            Pooler.Instance.Depop(Pooler.Key.Wave, gameObject);
         }
 
         public void InitCone(EnemyShield _caster, PlayerController _target)

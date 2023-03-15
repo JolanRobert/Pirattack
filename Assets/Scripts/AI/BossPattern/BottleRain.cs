@@ -27,7 +27,7 @@ namespace AI.BossPattern
         public override void EndTrigger(GameObject obj)
         {
             obj.GetComponent<BottleFalling>().EndOfLife();
-            Pooler.Instance.Depop(Key.Bottle, obj);
+            Pooler.Instance.Depop(Pooler.Key.Bottle, obj);
         }
 
         private IEnumerator ExecuteBottleRainAnimation()
@@ -48,12 +48,12 @@ namespace AI.BossPattern
             
                 Vector3 fallPosition = caster.transform.position + randomPos;
 
-                GameObject bottle = Pooler.Instance.Pop(Key.Bottle);
+                GameObject bottle = Pooler.Instance.Pop(Pooler.Key.Bottle);
                 bottle.transform.position = fallPosition;
                 bottle.GetComponent<BoxCollider>().size = new Vector3(data.impactSizeRain, 2, data.impactSizeRain);
 
                 fallPosition.y = 0.5f;
-                GameObject fx = Pooler.Instance.Pop(Key.FXBottle);
+                GameObject fx = VFXPooler.Instance.Pop(VFXPooler.Key.BottleVFX);
                 fx.transform.position = fallPosition;
                 fx.transform.localScale = new Vector3(data.impactSizeRain, 1, data.impactSizeRain);
             

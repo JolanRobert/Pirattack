@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Interfaces;
+using Managers;
 using Player;
 using UnityEngine;
 using UnityEngine.AI;
@@ -60,7 +61,7 @@ namespace AI
 
         protected virtual void Depop()
         {
-            Pooler.Instance.Depop(Key.BasicEnemy, gameObject);
+            Pooler.Instance.Depop(Pooler.Key.BasicEnemy, gameObject);
         }
     
 
@@ -71,7 +72,7 @@ namespace AI
 
         protected virtual void OnDie()
         {
-            Pooler.Instance.Depop(Key.BasicEnemy, gameObject);
+            Pooler.Instance.Depop(Pooler.Key.BasicEnemy, gameObject);
         }
 
         public void TakeDamage(int _damage, PlayerController origin)
@@ -126,9 +127,9 @@ namespace AI
         public void SetIced(float duration)
         {
             renderer.material = materials[1];
-            GameObject vfx = Pooler.Instance.Pop(Key.PerkIceVFX);
+            GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.PerkIceVFX);
             vfx.transform.position = transform.position;
-            Pooler.Instance.DelayedDepop(0.5f,Key.PerkIceVFX,vfx);
+            VFXPooler.Instance.DelayedDepop(0.5f,VFXPooler.Key.PerkIceVFX,vfx);
             StopIced(duration);
         }
 
@@ -136,9 +137,9 @@ namespace AI
         {
             await System.Threading.Tasks.Task.Delay(Mathf.FloorToInt(1000 * duration));
             renderer.material = materials[0];
-            GameObject vfx = Pooler.Instance.Pop(Key.PerkIceVFX);
+            GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.PerkIceVFX);
             vfx.transform.position = transform.position;
-            Pooler.Instance.DelayedDepop(0.5f,Key.PerkIceVFX,vfx);
+            VFXPooler.Instance.DelayedDepop(0.5f,VFXPooler.Key.PerkIceVFX,vfx);
         }
     }
 }
