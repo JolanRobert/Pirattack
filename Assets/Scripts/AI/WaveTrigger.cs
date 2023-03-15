@@ -1,23 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Interfaces;
 using Player;
 using UnityEngine;
-using Utils;
 
-public class WaveTrigger : MonoBehaviour
+namespace AI
 {
-    [SerializeField] private ConeProjectile coneProjectile;
-    
-    private void OnTriggerEnter(Collider other)
+    public class WaveTrigger : MonoBehaviour
     {
-        if (!other.TryGetComponent(out IDamageable entity)) return;
-        if (entity is not PlayerCollision) return;
-        if (other.GetComponent<PlayerController>().Color.PColor != coneProjectile.Caster.Color)
+        [SerializeField] private ConeProjectile coneProjectile;
+    
+        private void OnTriggerEnter(Collider other)
         {
-            entity.Damage(coneProjectile.Caster.Data.damage);
-            Debug.Log("Hit Player");
+            if (!other.TryGetComponent(out IDamageable entity)) return;
+            if (entity is not PlayerCollision) return;
+            if (other.GetComponent<PlayerController>().Color.PColor != coneProjectile.Caster.Color)
+            {
+                entity.Damage(coneProjectile.Caster.data.damage);
+            }
         }
     }
 }

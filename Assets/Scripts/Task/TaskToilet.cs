@@ -1,4 +1,3 @@
-using System.Timers;
 using DG.Tweening;
 using MyBox;
 using UnityEngine;
@@ -18,8 +17,9 @@ namespace Task
         protected override void OnCancel()
         {
             base.OnCancel();
-            
-            taskInfos.DoProgressFill(0, 1 / lossAmountPerSec);
+
+            notifs[0].DoProgressFill(0, 1 / lossAmountPerSec);
+            notifs[1].DoProgressFill(0, 1 / lossAmountPerSec);
         }
         
         private new void OnEnable()
@@ -33,8 +33,8 @@ namespace Task
         protected override void OnDisable()
         {
             base.OnDisable();
-            
-            UiIndicator.instance.RemoveObject(gameObject);
+
+            if (UiIndicator.instance) UiIndicator.instance.RemoveObject(gameObject);
         }
 
         public void HandleInput(bool leftInput, bool rightInput)
@@ -61,17 +61,19 @@ namespace Task
         
         private void IncreaseBar()
         {
-            float newAmount = ProgressAmount + amountPerInput;
-            Tween tween = taskInfos.DoProgressFill(newAmount, Time.deltaTime);
+            float newAmount = notifs[0].ProgressAmount + amountPerInput;
+            notifs[0].DoProgressFill(newAmount, Time.deltaTime);
+            Tween tween = notifs[1].DoProgressFill(newAmount, Time.deltaTime);
             if (newAmount >= 1) tween.onComplete += Complete;
         }
 
         private void DecreaseBar()
         {
-            if (ProgressAmount == 0) return;
+            if (notifs[0].ProgressAmount == 0) return;
             
-            float newAmount = ProgressAmount - Time.deltaTime * lossAmountPerSec;
-            taskInfos.DoProgressFill(newAmount, Time.deltaTime);
+            float newAmount = notifs[0].ProgressAmount - Time.deltaTime * lossAmountPerSec;
+            notifs[0].DoProgressFill(newAmount, Time.deltaTime);
+            notifs[1].DoProgressFill(newAmount, Time.deltaTime);
         }
         
         private void Complete()

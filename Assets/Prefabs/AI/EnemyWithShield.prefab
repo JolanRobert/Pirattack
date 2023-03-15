@@ -121,7 +121,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8497502169219896392}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -138,7 +138,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!195 &5354188228015821563
 NavMeshAgent:
@@ -189,18 +189,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: bd22af85a22ec0147bbcf024a9756be4, type: 2}
-  ShieldColor: 2
+  shieldColor: 2
   healthEnemy: {fileID: 779365937772194499}
   agent: {fileID: 5354188228015821563}
-  BT: {fileID: 0}
   animator: {fileID: 699064867367454987}
   rb: {fileID: 5269338767321766461}
   renderer: {fileID: 4888187534809316240}
   materials:
   - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
   - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
-  Data: {fileID: 11400000, guid: edaaf3dc24281744bbc303e9ddc001b3, type: 2}
-  BTShield: {fileID: 7140208481260745866}
+  data: {fileID: 11400000, guid: edaaf3dc24281744bbc303e9ddc001b3, type: 2}
+  btShield: {fileID: 7140208481260745866}
 --- !u!114 &779365937772194499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +282,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Clamp_Idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7749646889685082105, guid: 0baaa521b7aa80546975f2f4a1a17740,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7749646889685082105, guid: 0baaa521b7aa80546975f2f4a1a17740,
         type: 3}

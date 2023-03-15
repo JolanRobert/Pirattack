@@ -1,16 +1,18 @@
-using AI;
 using Player;
 using UnityEngine;
 
-public class TriggerPattern : MonoBehaviour
+namespace AI.BossPattern
 {
-    private void OnTriggerEnter(Collider other)
+    public class TriggerPattern : MonoBehaviour
     {
-        PlayerController player = other.GetComponent<PlayerController>();
-        if (player != null)
+        private void OnTriggerEnter(Collider other)
         {
-            Boss.OnTriggerAttack?.Invoke(player);
+            PlayerController player = other.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                Boss.OnTriggerAttack?.Invoke(player);
+            }
+            Boss.Instance.currentPattern.EndTrigger(gameObject);
         }
-        Boss.Instance.currentPattern.EndTrigger(gameObject);
     }
 }

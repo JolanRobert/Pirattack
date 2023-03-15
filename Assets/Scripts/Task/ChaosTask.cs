@@ -5,7 +5,6 @@ using DG.Tweening;
 using MyBox;
 using Player;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Task
@@ -15,28 +14,21 @@ namespace Task
         public Action<ChaosTask> OnComplete;
         public Action<ChaosTask> OnExpire;
 
-        public float ProgressAmount => taskInfos.GetProgressAmount();
         public bool IsActive => isActive;
+        
+        protected UINotif[] notifs;
 
         [Separator("ChaosTask")]
-        [SerializeField] protected TaskInfos taskInfos;
-        [SerializeField] private float expirationTime;
+        public float ExpirationTime;
+        public Vector3 NotifOffset;
         [SerializeField, ReadOnly] protected PlayerColor requiredColor = PlayerColor.None;
 
         private HashSet<PlayerController> players = new HashSet<PlayerController>();
         private bool isActive;
-
-        private Image[] notifs;
-        
+       
         protected void OnEnable()
         {
             isActive = true;
-
-            taskInfos.SetProgressFill(0);
-            taskInfos.SetPinFill(1);
-            taskInfos.Show(TaskInfos.InfoGroup.Pin);
-            Tween tween = taskInfos.DoPinFill(0, expirationTime);
-            tween.onComplete += Expire;
         }
             
         protected virtual void OnDisable()
@@ -55,23 +47,28 @@ namespace Task
 
         protected virtual void OnBegin()
         {
-            taskInfos.Show(TaskInfos.InfoGroup.Progress);
-            taskInfos.PausePinFill(notifs);
+            notifs[0].SetProgressBarActive(true);
+            notifs[0].PausePinFill();
+            notifs[1].SetProgressBarActive(true);
+            notifs[1].PausePinFill();
         }
 
         protected virtual void OnCancel()
         {
-            taskInfos.Show(TaskInfos.InfoGroup.Pin);
-            taskInfos.ResumePinFill(notifs);
+            notifs[0].SetProgressBarActive(false);
+            notifs[0].ResumePinFill();
+            notifs[1].SetProgressBarActive(false);
+            notifs[1].ResumePinFill();
         }
         
         public virtual void Init()
         {
             requiredColor = GetRandomColor();
-            taskInfos.SetPinColor(requiredColor);
-            notifs = UiIndicator.instance.AddObject(gameObject, requiredColor);
-            notifs[0].DOFillAmount(0, expirationTime);
-            notifs[1].DOFillAmount(0, expirationTime);
+            
+            notifs = UiIndicator.instance.AddObject(gameObject, requiredColor, NotifOffset.y);
+            notifs[0].DoPinFill(0, ExpirationTime);
+            Tween tween = notifs[1].DoPinFill(0, ExpirationTime);
+            tween.onComplete += Expire;
         }
 
         public bool IsValid()

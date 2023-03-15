@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using AI;
 using AI.BT;
 using BehaviourTree;
 using UnityEngine;
@@ -16,7 +17,10 @@ public class EnemyBT : Tree
         origin = new Selector(
             new InitEnemyBlackboard(enemy),
             new TaskWaitForSeconds(),
+            new Sequence(
             new CheckPlayerInVision(),
+            new TaskPatrol()
+            ),
             new Sequence(
                 new CanAttack(enemy.transform),
                 new AttackCaC()
