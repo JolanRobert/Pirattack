@@ -30,10 +30,18 @@ namespace Task
             Init();
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            GameManager.OnBossPop += CancelAllTasks;
-            GameManager.OnRelaunchLoop += Init;
+            GameManager.Instance.OnBossPop += CancelAllTasks;
+            GameManager.Instance.OnEndGame += CancelAllTasks;
+            GameManager.Instance.OnRelaunchLoop += Init;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.Instance.OnBossPop -= CancelAllTasks;
+            GameManager.Instance.OnEndGame -= CancelAllTasks;
+            GameManager.Instance.OnRelaunchLoop -= Init;
         }
 
         private void Init()

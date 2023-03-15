@@ -46,6 +46,12 @@ namespace Scene
             Process();
         }
 
+        public void Reload(string sceneName)
+        {
+            SceneManager.UnloadSceneAsync(sceneName);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+        }
+
         public void UnloadScene(string sceneName) {
             if (!IsSceneLoaded(sceneName)) {
                 Debug.LogWarning($"{sceneName} isn't loaded.");

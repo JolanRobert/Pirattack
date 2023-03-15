@@ -47,13 +47,13 @@ namespace AI
             if (!bt) bt = GetComponent<EnemyBT>();
             bt.ResetBlackboard();   
             bt.enabled = true;
-            GameManager.OnLaunchingBoss += Depop;
+            if (GameManager.Instance) GameManager.Instance.OnLaunchingBoss += Depop;
         }
 
         private void OnDisable()
         {
             bt.enabled = false;
-            GameManager.OnLaunchingBoss -= Depop;
+            if (GameManager.Instance) GameManager.Instance.OnLaunchingBoss -= Depop;
         }
     
         private void Start()

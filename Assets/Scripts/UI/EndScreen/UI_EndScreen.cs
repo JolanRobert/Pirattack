@@ -2,6 +2,7 @@ using Managers;
 using MyBox;
 using Scene;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Utils;
 
@@ -48,11 +49,13 @@ namespace UI
             // Binding
             Utilities.BindButton(menuBT, ToMenu, true);
             Utilities.BindButton(replayBT, Replay, true);
-            GameManager.OnEndGame += Display;
+            GameManager.Instance.OnEndGame -= Display;
+            GameManager.Instance.OnEndGame += Display;
         }
 
         private void Display()
         {
+            Debug.Log("Display");
             replayBT.Focus();
             
             var nbKills = GameManager.Instance.GetNbEnemiesKilled();
@@ -69,7 +72,7 @@ namespace UI
         
         private void Replay()
         {
-            SceneController.Instance.QuickLoad(gameScene);
+            SceneController.Instance.Reload(gameScene);
         }
         
     }
