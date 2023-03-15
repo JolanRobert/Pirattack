@@ -1,4 +1,3 @@
-using System.Globalization;
 using Managers;
 using MyBox;
 using Scene;
@@ -49,10 +48,13 @@ namespace UI
             // Binding
             Utilities.BindButton(menuBT, ToMenu, true);
             Utilities.BindButton(replayBT, Replay, true);
+            GameManager.OnEndGame += Display;
         }
 
         private void Display()
         {
+            Debug.Log("Displayed");
+            
             var nbKills = GameManager.Instance.GetNbEnemiesKilled();
             timerLB.text = $"{(int) GameManager.Instance.currentTimer()} min";
             killsLB.text = $"{nbKills} kills";
