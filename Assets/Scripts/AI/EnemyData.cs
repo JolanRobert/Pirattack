@@ -15,6 +15,7 @@ public class EnemyData : ScriptableObject
     public int HealthPalier1 = 5;
     public int HealthPalier2 = 5;
     public int HealthPalier3 = 5;
+    public int HealthPalier4 = 5;
 
     [Header("Bullets")]
     private float _maxSize;

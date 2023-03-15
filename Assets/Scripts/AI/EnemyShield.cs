@@ -39,6 +39,8 @@ namespace AI
             if (nbMinutes <= 6) return;
             int clampPalier3 = nbMinutes > 9 ? 3 : nbMinutes - 6;
             maxHp += data.maxHealth * clampPalier3;
+            int clampPalier4 = nbMinutes - 9;
+            maxHp += data.maxHealth * clampPalier4;
         }
         
 

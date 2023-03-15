@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Interfaces;
 using Managers;
+using MyBox;
 using Player;
 using UnityEngine;
 using UnityEngine.AI;
@@ -30,7 +31,7 @@ namespace AI
 
         protected bool enemyInVision = false;
         protected int Damagz = 0;
-        protected int maxHp = 0;
+        [SerializeField, ReadOnly] protected int maxHp = 0;
         protected List<Transform> PatrolPoints = new ();
         private EnemyBT bt = null;
     
@@ -71,6 +72,8 @@ namespace AI
             if (nbMinutes <= 6) return;
             int clampPalier3 = nbMinutes > 9 ? 3 : nbMinutes - 6;
             maxHp += enemyData.maxHealth * clampPalier3;
+            int clampPalier4 = nbMinutes - 9;
+            maxHp += enemyData.maxHealth * clampPalier4;
         }
 
         protected virtual void Depop()
