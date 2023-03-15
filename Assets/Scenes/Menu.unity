@@ -487,19 +487,7 @@ MonoBehaviour:
     m_ActionId: 0e623dcf-9924-4e3e-b4fa-8e9a31d48696
     m_ActionName: UI/Return[/XInputControllerWindows/buttonEast,/XInputControllerWindows/rightTrigger]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1720424870525075471}
-        m_TargetAssemblyTypeName: UI.UI_MainMenu, Assembly-CSharp
-        m_MethodName: TryToJoinPlayer
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 96d6bc39-c3e0-42b1-9f61-b4fb64613dbf
     m_ActionName: UI/Join[/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:

@@ -117,13 +117,12 @@ namespace UI
             
             private void DisplayLayout(MenuState newState)
             {
-                state = newState;
                 menuVE.style.display = DisplayStyle.None;
                 lobbyVE.style.display = DisplayStyle.None;
                 creditsVE.style.display = DisplayStyle.None;
                 countdownVE.style.display = DisplayStyle.None;
                 
-                switch (state)
+                switch (newState)
                 {
                     case MenuState.Menu:
                         menuVE.style.display = DisplayStyle.Flex;
@@ -142,6 +141,7 @@ namespace UI
                         countdown.StartCountdown(StartGame);
                         break;
                 }
+                state = newState;
             }
 
             private void FocusButton(Button button, bool focused)
