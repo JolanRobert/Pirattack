@@ -1,4 +1,3 @@
-using System;
 using Managers;
 using Player;
 using UnityEngine;
