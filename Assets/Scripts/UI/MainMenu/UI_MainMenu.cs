@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using Utils;
 
 namespace UI
 {
@@ -29,9 +30,6 @@ namespace UI
             private const string BT_PLAY = "BT_Play";
             private const string BT_CREDITS = "BT_Credits";
             private const string BT_QUIT = "BT_Quit";
-            
-            private const string USS_BUTTON = "button";
-            private const string USS_BUTTONFOCUS = "buttonFocus";
         #endregion
         
         [SerializeField] private VisualTreeAsset lobbyLayout, creditsLayout, countdownLayout;
@@ -87,9 +85,9 @@ namespace UI
             quitBT = root.Q<Button>(BT_QUIT);
 
             //Bindings
-            BindButton(playBT, Play, true);
-            BindButton(creditsBT, Credits, true);
-            BindButton(quitBT, Quit, true);
+            Utilities.BindButton(playBT, Play, true);
+            Utilities.BindButton(creditsBT, Credits, true);
+            Utilities.BindButton(quitBT, Quit, true);
             
             // Default values
             DisplayLayout(MenuState.Menu);
@@ -105,18 +103,7 @@ namespace UI
         }
 
         #region UI Update
-            private void BindButton(Button button, Action onClick, bool focusable)
-            {
-                button.clicked -= onClick;
-                button.clicked += onClick;
-                
-                if (!focusable) return;
-                
-                button.RegisterCallback<FocusInEvent>(_ => FocusButton(button, true));
-                button.RegisterCallback<FocusOutEvent>(_ => FocusButton(button, false));
-            }
-            
-            private void DisplayLayout(MenuState newState)
+        private void DisplayLayout(MenuState newState)
             {
                 menuVE.style.display = DisplayStyle.None;
                 lobbyVE.style.display = DisplayStyle.None;
@@ -143,20 +130,6 @@ namespace UI
                         break;
                 }
                 state = newState;
-            }
-
-            private void FocusButton(Button button, bool focused)
-            {
-                if (focused)
-                {
-                    button.RemoveFromClassList(USS_BUTTON);
-                    button.AddToClassList(USS_BUTTONFOCUS);
-                }
-                else
-                {
-                    button.RemoveFromClassList(USS_BUTTONFOCUS);
-                    button.AddToClassList(USS_BUTTON);
-                }
             }
         #endregion
         

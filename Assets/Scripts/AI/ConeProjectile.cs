@@ -7,7 +7,7 @@ namespace AI
 {
     public class ConeProjectile : MonoBehaviour
     {
-        [SerializeField] private new Renderer renderer;
+        [SerializeField] private GameObject[] fxWave;
         
         private float maxSize = 10;
         private float minSize = 0;
@@ -92,7 +92,7 @@ namespace AI
             casterPosition = _caster.transform.position;
             target = _target;
             caster = _caster;
-            renderer.material = _caster.GetComponent<Renderer>().material;
+            fxWave[caster.GetShieldColor() == PlayerColor.Blue ? 1 : 0].SetActive(true);
             StartCoroutine(Wave());
         }
     }

@@ -13,6 +13,8 @@ namespace AI
         public EnemyShieldData data;
 
         [SerializeField] private EnemyShieldBT btShield;
+        
+        public ParticleSystem shootFX;
 
         private Renderer shieldRenderer = null;
         public UnityEvent OnShoot;
@@ -87,5 +89,6 @@ namespace AI
         {
             Pooler.Instance.Depop(Pooler.Key.EnemyShield, gameObject);
         }
+        
     }
 }
