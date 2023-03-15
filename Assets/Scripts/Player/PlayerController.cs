@@ -16,6 +16,7 @@ namespace Player
         public PlayerAnimation Animation => playerAnimation;
         public PlayerStats Stats => playerStats;
         public PlayerShoot Shoot => playerShoot;
+        public PlayerMovement Movement => playerMovement;
         public Vector2 MoveInput => moveInput;
 
         [SerializeField] private PlayerData data;
