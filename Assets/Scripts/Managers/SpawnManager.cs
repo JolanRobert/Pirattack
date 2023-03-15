@@ -98,7 +98,7 @@ namespace Managers
             }
             else
             {
-                keys.Add(Pooler.Key.BasicEnemy);
+                keys.Add(Pooler.Key.EnemyShield);
             }
 
             StartCoroutine(SpawnEnemy(spawnPosition, index));

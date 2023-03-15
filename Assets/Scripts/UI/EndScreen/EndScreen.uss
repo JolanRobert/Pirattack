@@ -1,0 +1,6 @@
+.endScreenLBL {
+    -unity-text-align: upper-center;
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+}
