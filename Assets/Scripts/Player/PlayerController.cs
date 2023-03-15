@@ -15,6 +15,8 @@ namespace Player
         public PlayerInteract Interact => playerInteract;
         public PlayerAnimation Animation => playerAnimation;
         public PlayerStats Stats => playerStats;
+        public PlayerShoot Shoot => playerShoot;
+        public Vector2 MoveInput => moveInput;
 
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerMovement playerMovement;
@@ -110,7 +112,7 @@ namespace Player
 
         private void HandleSwitchColor()
         {
-            if (switchColorInput) PlayerSwitchColor.OnSwitchColor.Invoke();
+            if (switchColorInput) playerSwitchColor.OnSwitchColor.Invoke();
         }
 
         private void HandleInteract()

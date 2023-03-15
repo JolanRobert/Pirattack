@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Interfaces;
 using Managers;
+using MyBox;
 using Player;
 using UnityEngine;
 using UnityEngine.AI;
@@ -30,14 +31,16 @@ namespace AI
         private bool isIced;
         protected bool enemyInVision = false;
         protected int Damagz = 0;
-        protected int maxHp = 0;
+        [SerializeField, ReadOnly] protected int maxHp = 0;
         protected List<Transform> PatrolPoints = new ();
         private EnemyBT bt = null;
     
+        
+        
         private void OnEnable()
         {
             Damagz = enemyData.damage; // possible to change damage value
-            maxHp = enemyData.maxHealth + (int)(GameManager.Instance.currentTimer() / 60) * enemyData.AdditionalHealthByMinute; // possible to change max health value
+            if (GameManager.Instance) InitializeHealth((int)(GameManager.Instance.currentTimer() / 60));
             healthEnemy.Init(maxHp);
             ResetAttackDefaultValue();
             agent.speed = enemyData.speed;
@@ -57,6 +60,20 @@ namespace AI
         {
             healthEnemy.OnDeath = OnDie;
             if (GameManager.Instance) healthEnemy.OnDeath += GameManager.Instance.AddEnemyKilled;
+        }
+
+        private void InitializeHealth(int nbMinutes)
+        {
+            int clampPalier1 = nbMinutes > 3 ? 3 : nbMinutes;
+            maxHp = enemyData.maxHealth + enemyData.HealthPalier1 * clampPalier1;
+            if (nbMinutes <= 3) return;
+            int clampPalier2 = nbMinutes > 6 ? 3 : nbMinutes - 3;
+            maxHp += enemyData.HealthPalier2 * clampPalier2;
+            if (nbMinutes <= 6) return;
+            int clampPalier3 = nbMinutes > 9 ? 3 : nbMinutes - 6;
+            maxHp += enemyData.HealthPalier3 * clampPalier3;
+            int clampPalier4 = nbMinutes - 9;
+            maxHp += enemyData.HealthPalier4 * clampPalier4;
         }
 
         protected virtual void Depop()

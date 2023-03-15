@@ -7,7 +7,7 @@ namespace AI
 {
     public class ConeProjectile : MonoBehaviour
     {
-        [SerializeField] private Renderer renderer;
+        [SerializeField] private new Renderer renderer;
         
         private float maxSize = 10;
         private float minSize = 0;
