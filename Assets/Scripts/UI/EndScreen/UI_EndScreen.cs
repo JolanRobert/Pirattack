@@ -53,15 +53,16 @@ namespace UI
 
         private void Display()
         {
-            replayBT.Focus();
-            
             var nbKills = GameManager.Instance.GetNbEnemiesKilled();
-            timerLB.text = $"{(int) GameManager.Instance.currentTimer()} min";
+            timerLB.text = $"{(int) GameManager.Instance.currentTimer()} s";
             killsLB.text = $"{nbKills} kills";
             scoreLB.text = $"{(int)(nbKills * (1 + 0.1f * GameManager.Instance.GetElapsedTimeInGame()))}";
             
+            replayBT.Focus();
+            
             bgVE.visible = true;
         }
+        
         private void ToMenu()
         {
             SceneController.Instance.QuickLoad(menuScene);

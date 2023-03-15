@@ -23,6 +23,8 @@ namespace UI
             private VisualElement p1ImgVE, p2ImgVE;
             private Label p1Ready, p2Ready;
         #endregion
+            
+        protected InputDevice p1Device, p2Device;
         
         protected void OnEnable()
         {
@@ -61,8 +63,8 @@ namespace UI
             
             protected void UpdatePlayer(bool p1, InputDevice newDevice)
             {
-                if (p1) devicesSO.player1Device = newDevice;
-                else devicesSO.player2Device = newDevice;
+                if (p1) p1Device = newDevice;
+                else p2Device = newDevice;
 
                 var visible = newDevice is not null;
                 
@@ -84,9 +86,6 @@ namespace UI
             var device = context.control.device;
             
             if (device is null) return;
-
-            var p1Device = devicesSO.player1Device;
-            var p2Device = devicesSO.player2Device;
 
             if (device.Equals(p1Device)) UpdatePlayer(true, null);
             else if (device.Equals(p2Device)) UpdatePlayer(false, null);

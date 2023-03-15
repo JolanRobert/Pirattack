@@ -98,8 +98,9 @@ namespace UI
 
         private void Update()
         {
+            Debug.Log(devicesSO.player1Device + "   " + devicesSO.player2Device);
             if (state is not MenuState.Lobby) return;
-            if (devicesSO.player1Device != null && devicesSO.player2Device != null) StartCountDown();
+            if (p1Device != null && p2Device != null) StartCountDown();
         }
 
         #region UI Update
@@ -165,11 +166,8 @@ namespace UI
                 
             if (state is not MenuState.Lobby || device is null) return;
 
-            var p1Device = devicesSO.player1Device;
-            var p2Device = devicesSO.player2Device;
-
             if (device.Equals(p1Device)) UpdatePlayer(true, null);
-            else if (device.Equals(p2Device))UpdatePlayer(false, null);
+            else if (device.Equals(p2Device)) UpdatePlayer(false, null);
             else if (p1Device is null) UpdatePlayer(true, device);
             else if (p2Device is null) UpdatePlayer(false, device);
         }
@@ -195,8 +193,8 @@ namespace UI
                 {
                     case InputDeviceChange.Disconnected:
                         if (device.Equals(lastMainDevice)) SetMainDeviceToDefault();
-                        if (device.Equals(devicesSO.player1Device)) UpdatePlayer(true, null);
-                        else if (device.Equals(devicesSO.player2Device)) UpdatePlayer(false, null);
+                        if (device.Equals(p1Device)) UpdatePlayer(true, null);
+                        else if (device.Equals(p2Device)) UpdatePlayer(false, null);
                         break;
                     case InputDeviceChange.Added:
                         LobbyManager.Instance.AddPlayer(device);
@@ -213,6 +211,11 @@ namespace UI
         
         private void StartGame()
         {
+            devicesSO.player1Device = p1Device;
+            devicesSO.player2Device = p2Device;
+            
+            Debug.Log(devicesSO.player1Device + "   " + devicesSO.player2Device);
+            
             SceneController.Instance.QuickLoad(gameScene);
         }
     }
