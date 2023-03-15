@@ -13,9 +13,9 @@ namespace Player
         public int damage;
         public int nbBounce;
         public float fireRate;
-        //public int bulletNb;
         public int nbPierce;
         public int nbShock;
         public float nbSlow;
+        //public int bulletNb;
     }
 }

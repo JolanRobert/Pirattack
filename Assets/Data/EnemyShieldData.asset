@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61eadd808e74ae549ad7433adc658a2d, type: 3}
   m_Name: EnemyShieldData
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  damage: 5
-  AttackDistance: 10
-  AttackSpeed: 1
-  speed: 3.5
+  maxHealth: 220
+  damage: 140
+  attackDistance: 2
+  attackSpeed: 1
+  speed: 2
   delaySwitchTarget: 0
-  maxSize: 7.5
-  minSize: 1
-  speedPattern: 8
-  angle: 45
   viewRangeDetection: 10
+  maxSize: 6.5
+  minSize: 1
+  speedPattern: 7
+  angle: 38

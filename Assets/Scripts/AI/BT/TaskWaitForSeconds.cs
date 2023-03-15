@@ -2,24 +2,27 @@ using System;
 using BehaviourTree;
 using UnityEngine;
 
-public class TaskWaitForSeconds : Node
+namespace AI.BT
 {
-    public Action FinalCountdown;
-    
-    public override NodeState Evaluate(Node root)
+    public class TaskWaitForSeconds : Node
     {
-        float timer = (float)GetData("WaitTime");
-        if (GetData<TaskWaitForSeconds>("WaitNode") == null)
-            SetDataInBlackboard("WaitNode", this);
-        
-        if (timer <= 0)
+        public Action FinalCountdown;
+    
+        public override NodeState Evaluate(Node root)
         {
-            FinalCountdown?.Invoke();
-            FinalCountdown = null;
-            return NodeState.Failure;
+            float timer = (float)GetData("WaitTime");
+            if (GetData<TaskWaitForSeconds>("WaitNode") == null)
+                SetDataInBlackboard("WaitNode", this);
+        
+            if (timer <= 0)
+            {
+                FinalCountdown?.Invoke();
+                FinalCountdown = null;
+                return NodeState.Failure;
+            }
+            timer -= Time.deltaTime;
+            SetDataInBlackboard("WaitTime", timer);
+            return NodeState.Success;
         }
-        timer -= Time.deltaTime;
-        SetDataInBlackboard("WaitTime", timer);
-        return NodeState.Success;
     }
 }
