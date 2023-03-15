@@ -53,7 +53,7 @@ namespace UI
 
         private void Display()
         {
-            Debug.Log("Displayed");
+            replayBT.Focus();
             
             var nbKills = GameManager.Instance.GetNbEnemiesKilled();
             timerLB.text = $"{(int) GameManager.Instance.currentTimer()} min";
