@@ -15,6 +15,7 @@ namespace Task
         [SerializeField] private int maxTaskSimultaneously;
         [SerializeField, MinMaxRange(1, 30)] private RangedInt timeBeforeNextTask;
         [SerializeField] private List<ChaosTask> tasks;
+        [SerializeField] private TaskOutline outlineSettings;
 
         [Header("Debug")]
         [SerializeField] private bool isActive = true;
@@ -29,10 +30,18 @@ namespace Task
             Init();
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            GameManager.OnBossPop += CancelAllTasks;
-            GameManager.OnRelaunchLoop += Init;
+            GameManager.Instance.OnBossPop += CancelAllTasks;
+            GameManager.Instance.OnEndGame += CancelAllTasks;
+            GameManager.Instance.OnRelaunchLoop += Init;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.Instance.OnBossPop -= CancelAllTasks;
+            GameManager.Instance.OnEndGame -= CancelAllTasks;
+            GameManager.Instance.OnRelaunchLoop -= Init;
         }
 
         private void Init()
@@ -78,7 +87,7 @@ namespace Task
             newChaosTask.OnComplete = CompleteTask;
             newChaosTask.OnExpire = ExpireTask;
             newChaosTask.gameObject.SetActive(true);
-            newChaosTask.Init();
+            newChaosTask.Init(outlineSettings);
         }
 
         private void CompleteTask(ChaosTask chaosTask)
@@ -112,5 +121,14 @@ namespace Task
             currentTasks.Clear();
             nextTasks.Clear();
         }
+    }
+
+    [Serializable]
+    public struct TaskOutline
+    {
+        public QuickOutline.Mode Mode;
+        [Range(0f, 10f)] public float Width;
+        public Color Blue;
+        public Color Red;
     }
 }

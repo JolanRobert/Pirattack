@@ -11,7 +11,7 @@ namespace Task
         [SerializeField, Range(0.01f,1)] private float lossAmountPerSec;
         [SerializeField] private float timeBeforeLosing;
 
-        private Input nextInput;
+        private ToiletInput nextInput;
         private float timer;
         
         protected override void OnCancel()
@@ -27,7 +27,7 @@ namespace Task
             base.OnEnable();
 
             timer = timeBeforeLosing;
-            nextInput = Input.Any;
+            nextInput = ToiletInput.Any;
         }
 
         protected override void OnDisable()
@@ -41,17 +41,17 @@ namespace Task
         {
             if (leftInput)
             {
-                if (nextInput == Input.Right) return;
+                if (nextInput == ToiletInput.Right) return;
                 IncreaseBar();
-                nextInput = Input.Right;
+                nextInput = ToiletInput.Right;
                 timer = timeBeforeLosing;
             }
             
             else if (rightInput)
             {
-                if (nextInput == Input.Left) return;
+                if (nextInput == ToiletInput.Left) return;
                 IncreaseBar();
-                nextInput = Input.Left;
+                nextInput = ToiletInput.Left;
                 timer = timeBeforeLosing;
             }
 
@@ -79,10 +79,9 @@ namespace Task
         private void Complete()
         {
             OnComplete.Invoke(this);
-            Debug.Log("Task is complete!");
         }
         
-        private enum Input
+        private enum ToiletInput
         {
             Left, Right, Any
         }

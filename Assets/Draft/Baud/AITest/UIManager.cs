@@ -36,8 +36,8 @@ public static UIManager Instance;
     
     private void Start()
     {
-        GameManager.OnIncreaseChaosBar += UpdateChaosSlider;
-        GameManager.OnDecreaseChaosBar += UpdateChaosSlider;
+        GameManager.Instance.OnIncreaseChaosBar += UpdateChaosSlider;
+        GameManager.Instance.OnDecreaseChaosBar += UpdateChaosSlider;
         UpdateChaosSlider();
     }
     
