@@ -45,7 +45,7 @@ public class BulletTrigger : MonoBehaviour
             DamageEntity(entity);
             SpawnImpactVFX(transform.position, transform.rotation);
            
-            if (nbSlow > 0 && entity is Enemy enemy && owner) enemy.SetIced(nbSlow);
+            if (nbSlow > 0 && entity is Enemy enemy && owner) enemy.SetIced(1f,1-nbSlow);
             
             if (nbShock > 0) Shock(other.transform);
             
