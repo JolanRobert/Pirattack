@@ -20,6 +20,7 @@ namespace Managers
         [SerializeField] private int decreaseChaosBar = 10;
         [SerializeField] private float  depopBossTimer = 60f;
         [SerializeField] private GameObject triggerBossDoor;
+        [SerializeField] private GameObject triggerBossExitDoor;
         [SerializeField] private GameObject bossDoor;
         [SerializeField] private GameObject boss;
         [SerializeField, ReadOnly] private int chaosBar = 50;
@@ -116,6 +117,7 @@ namespace Managers
             waitingForBoss = false;
             timerDepopBoss = 0f;
             bossDoor.SetActive(true);
+            triggerBossExitDoor.SetActive(true);
             SpawnManager.Instance.SetOnBossFight(true);
         }
 
@@ -159,6 +161,12 @@ namespace Managers
         public float currentTimer()
         {
             return Time.time - startTime;
+        }
+
+        public void ExitBossDoor()
+        {
+           triggerBossExitDoor.SetActive(false);
+           bossDoor.SetActive(true);
         }
     }
 }

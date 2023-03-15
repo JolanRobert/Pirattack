@@ -34,6 +34,7 @@ namespace AI
         private void OnEnable()
         {
             GameManager.Instance.OnLaunchingBoss += BeginAttack;
+            bossBt.enabled = false;
         }
 
         private void OnDisable()
@@ -57,9 +58,9 @@ namespace AI
             StartCoroutine(coroutine);
         }
 
-        private void ShieldTakeDamage(int damage, PlayerController origin)
+        private void ShieldTakeDamage(int damage, PlayerColor color)
         {
-            if (shieldColor != PlayerColor.None && shieldColor != origin.Color.PColor) return;
+            if (shieldColor != PlayerColor.None && shieldColor != color) return;
             shieldHealth -= damage;
             if (shieldHealth <= 0)
             {
@@ -68,7 +69,7 @@ namespace AI
             }
         }
 
-        private void TakeBossDamage(int _damage, PlayerController origin)
+        private void TakeBossDamage(int _damage, PlayerColor origin)
         {
             BossDamage(_damage);
         }
