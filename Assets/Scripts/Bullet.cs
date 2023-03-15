@@ -53,7 +53,7 @@ public class Bullet : MonoBehaviour
 
             SpawnImpactVFX(transform.position, Quaternion.LookRotation(-normal));
             nbBounce--;
-            source.Play();
+            //source.Play();
             return;
         }
 
