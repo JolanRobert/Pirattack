@@ -16,7 +16,7 @@ namespace AI
 
         public static Action<PlayerController> OnTriggerAttack;
         [ReadOnly] public Pattern currentPattern;
-        public new BossData data;
+        public BossData data;
 
         [SerializeField] private string[] voicelines;
         [SerializeField] private string[] voicelinesDead;
