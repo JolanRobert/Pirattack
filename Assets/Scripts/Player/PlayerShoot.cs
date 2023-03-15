@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Utils;
@@ -6,6 +7,8 @@ namespace Player
 {
     public class PlayerShoot : MonoBehaviour
     {
+        public Action OnShoot;
+        
         [SerializeField] private PlayerController playerController;
         [SerializeField] private Transform firePoint;
 
