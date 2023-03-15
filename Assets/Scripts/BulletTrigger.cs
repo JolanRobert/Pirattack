@@ -65,7 +65,6 @@ public class BulletTrigger : MonoBehaviour
     {
         if (entity is PlayerCollision && !owner) entity.Damage(damage);
         else if (entity is Enemy enemy && owner)enemy.IsWasAttacked.Invoke(damage, owner);
-        else if (entity is DestructibleProp prop) prop.Damage(damage);
     }
     
     private void Shock(Transform originalTarget)
