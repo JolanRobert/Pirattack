@@ -6,6 +6,7 @@ using MyBox;
 using Player;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using Utils;
 
 namespace AI
@@ -27,11 +28,12 @@ namespace AI
         [SerializeField] protected Rigidbody rb;
         [SerializeField] private new SkinnedMeshRenderer renderer;
         [SerializeField] private Material[] materials;
+        [SerializeField] private UnityEvent OnShoot;
 
         private bool isIced;
         protected bool enemyInVision = false;
         protected int Damagz = 0;
-        [SerializeField, ReadOnly] protected int maxHp = 0;
+        protected int maxHp = 0;
         protected List<Transform> PatrolPoints = new ();
         private EnemyBT bt = null;
     
@@ -47,13 +49,13 @@ namespace AI
             if (!bt) bt = GetComponent<EnemyBT>();
             bt.ResetBlackboard();   
             bt.enabled = true;
-            GameManager.OnLaunchingBoss += Depop;
+            if (GameManager.Instance) GameManager.Instance.OnLaunchingBoss += Depop;
         }
 
         private void OnDisable()
         {
             bt.enabled = false;
-            GameManager.OnLaunchingBoss -= Depop;
+            if (GameManager.Instance) GameManager.Instance.OnLaunchingBoss -= Depop;
         }
     
         private void Start()
@@ -114,6 +116,7 @@ namespace AI
 
         public void Attack(PlayerController target)
         {
+            OnShoot.Invoke();
             target.Collision.Damage(Damagz);
         }
 
