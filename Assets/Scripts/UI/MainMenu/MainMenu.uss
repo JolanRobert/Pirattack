@@ -1,6 +1,6 @@
 .background {
     -unity-background-scale-mode: scale-and-crop;
-    background-image: url('project://database/Assets/Draft/Romeo/Art%20UI/BeachBG.jpg?fileID=2800000&guid=8c9a089e210d2544f8e4d64f385ba394&type=3#BeachBG');
+    background-image: url('project://database/Assets/Art/UI/Menus/Background%20selection.png?fileID=2800000&guid=40bf30c72382f1f44b0a03ee73b92e4b&type=3#Background selection');
 }
 
 .labelInfos {

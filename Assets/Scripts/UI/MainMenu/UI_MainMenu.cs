@@ -198,7 +198,6 @@ namespace UI
             else if (device.Equals(p2Device))UpdatePlayer(false, null);
             else if (p1Device is null) UpdatePlayer(true, device);
             else if (p2Device is null) UpdatePlayer(false, device);
-            
         }
         
         #region Input and devices

@@ -52,17 +52,9 @@
 }
 
 .title {
-    background-color: rgb(255, 255, 255);
-    font-size: 150px;
-    align-self: center;
-    -unity-font-style: bold;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    padding-left: 75px;
-    padding-right: 75px;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    -unity-text-align: upper-center;
+    align-self: stretch;
+    -unity-background-scale-mode: scale-to-fit;
+    height: 400px;
+    margin-top: 50px;
+    background-image: url('project://database/Assets/Art/UI/Menus/Title.png?fileID=2800000&guid=98c8760c2b8e56a4c89d9b6cfddeb2db&type=3#Title');
 }
