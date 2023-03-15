@@ -1,7 +1,9 @@
 using Managers;
 using Player;
 using UnityEngine;
+using UnityEngine.Events;
 using Utils;
+using Random = UnityEngine.Random;
 
 namespace AI
 {
@@ -10,8 +12,11 @@ namespace AI
         public EnemyShieldData data;
 
         [SerializeField] private EnemyShieldBT btShield;
+        
+        public ParticleSystem shootFX;
 
         private Renderer shieldRenderer = null;
+        public UnityEvent OnShoot;
 
         private void OnEnable()
         {
@@ -83,5 +88,6 @@ namespace AI
         {
             Pooler.Instance.Depop(Pooler.Key.EnemyShield, gameObject);
         }
+        
     }
 }

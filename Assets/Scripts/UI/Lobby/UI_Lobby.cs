@@ -16,7 +16,8 @@ namespace UI
         
         [SerializeField] protected UIDocument layout;
         [SerializeField] protected PlayerDeviceBuffer devicesSO;
-
+        public VisualElement Root => root;
+        
         #region Visual Elements
             protected VisualElement root;
             private VisualElement p1ImgVE, p2ImgVE;
@@ -52,7 +53,6 @@ namespace UI
         #region UI Update
             protected void DisplayCompletely(bool b)
             {
-                root.visible = b;
                 p1ImgVE.visible = b;
                 p1Ready.visible = b;
                 p2ImgVE.visible = b;
@@ -65,7 +65,6 @@ namespace UI
                 else devicesSO.player2Device = newDevice;
 
                 var visible = newDevice is not null;
-                //Debug.Log((p1 ? "P1 : " : "P2 : ") + visible + gameObject);
                 
                 if (p1)
                 {
