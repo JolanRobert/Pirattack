@@ -4,6 +4,8 @@ namespace Player
 {
     public class PlayerMovement : MonoBehaviour
     {
+        public float IdleTime => idleTime;
+        
         [SerializeField] private PlayerController playerController;
         [SerializeField] private Rigidbody rb;
 
@@ -15,6 +17,7 @@ namespace Player
         private float rotationProgress;
 
         private Quaternion targetRotation;
+        private float idleTime;
 
         private void FixedUpdate()
         {
@@ -48,6 +51,12 @@ namespace Player
                 rb.velocity = new Vector3(moveInput.x, 0, moveInput.y) * (data.moveAcceleration.Evaluate(accelerationProgress) * data.moveSpeed);
             }
             
+            idleTime += Time.deltaTime;
+            if (moveInput.magnitude > 0.1f)
+                idleTime = 0;
+            else
+                idleTime += Time.deltaTime;
+
             playerController.Animation.SetVelocity(moveInput.magnitude);
         }
 

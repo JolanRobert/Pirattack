@@ -24,6 +24,8 @@ public class SoundManager : MonoBehaviour
 
     private Dictionary<string, AudioSource> audioDictionary;
     private PlayerController[] players;
+    private AudioSource[] sourcesShoot = new AudioSource[50];
+
 
     private void Awake()
     {
@@ -50,13 +52,19 @@ public class SoundManager : MonoBehaviour
             audioDictionary.Add(s.name, s.clip);
         }
 
+        sourcesShoot[0] = audioDictionary[shootSoundName];
+        for (int i = 1; i < 50; i++)
+        {
+            sourcesShoot[i] = audioDictionary[shootSoundName].gameObject.AddComponent<AudioSource>();
+        }
+
         if (players.Length > 0)
         {
             players[0].Color.OnSwitchColor += PlaySwitchSound;
             players[0].Shoot.OnShoot += PlayShootSound;
             players[0].Collision.health.OnDeath += PlayDieSound;
             players[0].Collision.health.OnHealthLose += PlayTakeDamageSound;
-            
+
             players[1].Color.OnSwitchColor += PlaySwitchSound;
             players[1].Shoot.OnShoot += PlayShootSound;
             players[1].Collision.health.OnDeath += PlayDieSound;
@@ -65,7 +73,6 @@ public class SoundManager : MonoBehaviour
     }
 
     public void PlaySound(string name, float speed = 1f)
-
     {
         audioDictionary[name].Stop();
         audioDictionary[name].pitch = speed;
@@ -76,17 +83,17 @@ public class SoundManager : MonoBehaviour
     {
         PlaySound(switchSoundName);
     }
-    
+
     public void PlayShootSound(WeaponData weaponData)
     {
         PlaySound(shootSoundName, weaponData.fireRate / 4);
     }
-    
+
     public void PlayDieSound()
     {
         PlaySound(dieSoundName);
     }
-    
+
     public void PlayTakeDamageSound()
     {
         PlaySound(takeDamageSoundName);
@@ -97,19 +104,35 @@ public class SoundManager : MonoBehaviour
         audioDictionary[name].Stop();
     }
 
+    public void PlayHitSound()
+    {
+        for (int i = 0; i < sourcesShoot.Length; i++)
+        {
+            if (sourcesShoot[i].isPlaying) continue;
+            sourcesShoot[i].Play();
+            break;
+        }
+    }
+
     private void Update()
     {
         if (players.Length > 1)
-        foreach (var player in players)
-        {
-            if (player.MoveInput.magnitude > 0.1f && !audioDictionary["Walk"].isPlaying)
+            for (int i = 0; i < players.Length; i++)
             {
-                audioDictionary["Walk"].Play();
+                if (players[i].MoveInput.magnitude > 0.1f && !audioDictionary["Walk"].isPlaying)
+                {
+                    audioDictionary["Walk"].Play();
+                }
+                else if (players[i].MoveInput.magnitude < 0.1f && audioDictionary["Walk"].isPlaying)
+                {
+                    audioDictionary["Walk"].Stop();
+                }
+
+                if (players[i].Movement.IdleTime > 15f)
+                {
+                    if (i == 0 && !audioDictionary["IdleJ" + (i+1)].isPlaying)
+                        audioDictionary["IdleJ" + (i+1)].Play();
+                }
             }
-            else if (player.MoveInput.magnitude < 0.1f && audioDictionary["Walk"].isPlaying)
-            {
-                audioDictionary["Walk"].Stop();
-            }
-        }
     }
 }
