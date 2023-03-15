@@ -16,7 +16,8 @@ namespace UI
         
         [SerializeField] protected UIDocument layout;
         [SerializeField] protected PlayerDeviceBuffer devicesSO;
-
+        public VisualElement Root => root;
+        
         #region Visual Elements
             protected VisualElement root;
             private VisualElement p1ImgVE, p2ImgVE;

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Linq;
 using Managers;
 using MyBox;
@@ -17,13 +16,15 @@ namespace UI
         {
             Menu,
             Lobby,
-            Credits
+            Credits,
+            Countdown
         }
         
         #region Constants
             private const string VE_BGM = "VE_BackgroundM";
             private const string VE_BGL = "VE_BackgroundL";
             private const string VE_BGC = "VE_BackgroundC";
+            private const string VE_BGCD = "VE_BackgroundCD";
         
             private const string BT_PLAY = "BT_Play";
             private const string BT_CREDITS = "BT_Credits";
@@ -33,12 +34,13 @@ namespace UI
             private const string USS_BUTTONFOCUS = "buttonFocus";
         #endregion
         
-        [SerializeField] private VisualTreeAsset lobbyLayout, creditsLayout;
+        [SerializeField] private VisualTreeAsset lobbyLayout, creditsLayout, countdownLayout;
+        [SerializeField] private UI_Countdown countdown;
         [SerializeField] private PlayerInput playerInput;
         [SerializeField, Scene] private string gameScene;
 
         #region Visual Elements
-            private VisualElement menuVE, lobbyVE, creditsVE;
+            private VisualElement menuVE, lobbyVE, creditsVE, countdownVE;
             private Button playBT, creditsBT, quitBT;
         #endregion
 
@@ -55,6 +57,7 @@ namespace UI
             
             var lobbyVEs = lobbyLayout.CloneTree().Children().ToList();
             var creditsVEs = creditsLayout.CloneTree().Children().ToList();
+            var countdownVEs = countdownLayout.CloneTree().Children().ToList();
             
             foreach (var visualElement in lobbyVEs)
             {
@@ -64,14 +67,20 @@ namespace UI
             {
                 root.Add(visualElement);
             }
+            foreach (var visualElement in countdownVEs)
+            {
+                root.Add(visualElement);
+            }
             
+            countdown.Init();
             InitVE();
             
             // Containers
             menuVE = root.Q<VisualElement>(VE_BGM);
             lobbyVE = root.Q<VisualElement>(VE_BGL);
             creditsVE = root.Q<VisualElement>(VE_BGC);
-
+            countdownVE = root.Q<VisualElement>(VE_BGCD);
+            
             // Buttons
             playBT = root.Q<Button>(BT_PLAY);
             creditsBT = root.Q<Button>(BT_CREDITS);
@@ -91,7 +100,8 @@ namespace UI
 
         private void Update()
         {
-            if (devicesSO.player1Device != null && devicesSO.player2Device != null) StartGame();
+            if (state is not MenuState.Lobby) return;
+            if (devicesSO.player1Device != null && devicesSO.player2Device != null) StartCountDown();
         }
 
         #region UI Update
@@ -108,12 +118,12 @@ namespace UI
             
             private void DisplayLayout(MenuState newState)
             {
-                state = newState;
                 menuVE.style.display = DisplayStyle.None;
                 lobbyVE.style.display = DisplayStyle.None;
                 creditsVE.style.display = DisplayStyle.None;
+                countdownVE.style.display = DisplayStyle.None;
                 
-                switch (state)
+                switch (newState)
                 {
                     case MenuState.Menu:
                         menuVE.style.display = DisplayStyle.Flex;
@@ -127,7 +137,12 @@ namespace UI
                     case MenuState.Credits:
                         creditsVE.style.display = DisplayStyle.Flex;
                         break;
+                    case MenuState.Countdown:
+                        countdownVE.style.display = DisplayStyle.Flex;
+                        countdown.StartCountdown(StartGame);
+                        break;
                 }
+                state = newState;
             }
 
             private void FocusButton(Button button, bool focused)
@@ -180,22 +195,10 @@ namespace UI
             var p1Device = devicesSO.player1Device;
             var p2Device = devicesSO.player2Device;
 
-            if (device.Equals(p1Device))
-            {
-                UpdatePlayer(true, null);
-            } else if (device.Equals(p2Device))
-            {
-                UpdatePlayer(false, null);
-            }
-            else if (p1Device is null)
-            {
-                UpdatePlayer(true, device);
-            }
-            else if (p2Device is null)
-            {
-                UpdatePlayer(false, device);
-            }
-            
+            if (device.Equals(p1Device)) UpdatePlayer(true, null);
+            else if (device.Equals(p2Device))UpdatePlayer(false, null);
+            else if (p1Device is null) UpdatePlayer(true, device);
+            else if (p2Device is null) UpdatePlayer(false, device);
         }
         
         #region Input and devices
@@ -230,10 +233,14 @@ namespace UI
             }
         #endregion
         
+        private void StartCountDown()
+        {
+            DisplayLayout(MenuState.Countdown);
+        }
+        
         private void StartGame()
         {
             SceneController.Instance.QuickLoad(gameScene);
         }
-
     }
 }
