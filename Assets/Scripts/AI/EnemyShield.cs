@@ -7,7 +7,7 @@ namespace AI
 {
     public class EnemyShield : Enemy
     {
-        public new EnemyShieldData data;
+        public EnemyShieldData data;
 
         [SerializeField] private EnemyShieldBT btShield;
 
