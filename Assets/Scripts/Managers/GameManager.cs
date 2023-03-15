@@ -14,6 +14,7 @@ namespace Managers
         public static Action OnRelaunchLoop;
         public static Action OnIncreaseChaosBar;
         public static Action OnDecreaseChaosBar;
+        public static Action OnEndGame;
     
         [SerializeField] private int increaseChaosBar = 10;
         [SerializeField] private int decreaseChaosBar = 10;
@@ -68,6 +69,7 @@ namespace Managers
                     break;
                 case <= 0:
                     UIManager.Instance.ShowEndGame();
+                    EndGame();
                     endTime = Time.time - startTime;
                     SpawnManager.Instance.enabled = false;
                     break;
@@ -77,6 +79,7 @@ namespace Managers
         public void EndGame()
         {
             chaosBar = 0;
+            OnEndGame?.Invoke();
             OnDecreaseChaosBar?.Invoke();
         }
     
