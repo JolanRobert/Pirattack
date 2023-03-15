@@ -1,20 +1,28 @@
 using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace UI
 {
     public class UI_ControllerSwitch : UI_Lobby
     {
+        private const string VE_BG = "VE_Bg";
+        
         [SerializeField] private PlayerInputManager pimGame, pimUI;
         private bool on;
+
+        private VisualElement bgVE;
         
         private void Start()
         {
-            // Default values
             Init();
             InitVE();
+            
+            bgVE = root.Q<VisualElement>(VE_BG);
+            
             Hide();
+            
         }
 
         private void Update()
@@ -26,21 +34,19 @@ namespace UI
         #region Input and devices
             protected override void OnDeviceChange(InputDevice device, InputDeviceChange change)
             {
-                if (!on)
-                {
-                    if (change != InputDeviceChange.Disconnected) return;
-                    
-                    if (!device.Equals(devicesSO.player1Device) && !device.Equals(devicesSO.player2Device)) return;
-                    
-                    if (device.Equals(devicesSO.player1Device)) Display(true);
-                    else if (device.Equals(devicesSO.player2Device)) Display(false);
-                    
-                    return;
-                }
-                
                 switch (change)
                 {
                     case InputDeviceChange.Disconnected:
+                        if (!on)
+                        {
+                            if (!device.Equals(devicesSO.player1Device) && !device.Equals(devicesSO.player2Device)) return;
+                    
+                            if (device.Equals(devicesSO.player1Device)) Display(true);
+                            else if (device.Equals(devicesSO.player2Device)) Display(false);
+                    
+                            return;
+                        }
+                        
                         if (device.Equals(devicesSO.player1Device)) UpdatePlayer(true, null);
                         else if (device.Equals(devicesSO.player2Device)) UpdatePlayer(false, null);
                         break;
@@ -58,6 +64,7 @@ namespace UI
             pimUI.enabled = true;
             LobbyManager.Instance.InstantiatePlayers();
             DisplayCompletely(true);
+            bgVE.visible = true;
             UpdatePlayer(p1Disconnected, null);
             UpdatePlayer(!p1Disconnected, p1Disconnected ? devicesSO.player2Device : devicesSO.player1Device);
             on = true;
@@ -65,6 +72,7 @@ namespace UI
         
         private void Hide()
         {
+            bgVE.visible = false;
             DisplayCompletely(false);
             LobbyManager.Instance.ClearPlayers();
             pimUI.enabled = false;
