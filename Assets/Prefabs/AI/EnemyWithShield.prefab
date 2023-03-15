@@ -198,6 +198,7 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
   - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
+  maxHp: 0
   data: {fileID: 11400000, guid: edaaf3dc24281744bbc303e9ddc001b3, type: 2}
   btShield: {fileID: 7140208481260745866}
 --- !u!114 &779365937772194499
@@ -292,7 +293,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
+      objectReference: {fileID: 2100000, guid: de3a07de673343249928bb5559798f00, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

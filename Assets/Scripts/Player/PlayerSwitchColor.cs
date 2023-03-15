@@ -14,7 +14,11 @@ namespace Player
 
         [SerializeField] private PlayerController playerController;
         [SerializeField] private Renderer parrotRenderer;
+        [SerializeField] private Renderer pjRenderer;
+        [SerializeField] private Renderer pjHatRenderer;
         [SerializeField, ReadOnly] private PlayerColor color;
+        [SerializeField] private Material[] parrotMaterials;
+        [SerializeField] private Material[] pjMaterials;
         
         private PlayerData data => playerController.Data;
 
@@ -28,7 +32,9 @@ namespace Player
         public void InitColor(PlayerColor newColor)
         {
             color = newColor;
-            parrotRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
+            parrotRenderer.material = color == PlayerColor.Blue ? parrotMaterials[0] : parrotMaterials[1];
+            pjRenderer.material = color == PlayerColor.Blue ? pjMaterials[0] : pjMaterials[1];
+            pjHatRenderer.material = color == PlayerColor.Blue ? pjMaterials[0] : pjMaterials[1];
         }
 
         private void TrySwitch()
@@ -45,7 +51,9 @@ namespace Player
         private void Switch()
         {
             color = color == PlayerColor.Blue ? PlayerColor.Red : PlayerColor.Blue;
-            parrotRenderer.material.color = color == PlayerColor.Blue ? Color.blue : Color.red;
+            parrotRenderer.material = color == PlayerColor.Blue ? parrotMaterials[0] : parrotMaterials[1];
+            pjRenderer.material = color == PlayerColor.Blue ? pjMaterials[0] : pjMaterials[1];
+            pjHatRenderer.material = color == PlayerColor.Blue ? pjMaterials[0] : pjMaterials[1];
             playerController.Interact.EndInteract();
             StartCoroutine(SwitchCooldown());
             
