@@ -16,7 +16,7 @@ MonoBehaviour:
   bulletLifespan: 2.5
   damage: 25
   nbBounce: 0
-  fireRate: 0
+  fireRate: 5
   nbPierce: 0
   nbShock: 0
   nbSlow: 0
