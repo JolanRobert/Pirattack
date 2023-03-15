@@ -43,8 +43,6 @@ namespace Player
             respawnTrigger.SetActive(true);
             isDown = true;
             CheckEndGame();
-            
-            Debug.Log("Dead");
         }
 
         public void Respawn()
@@ -52,8 +50,6 @@ namespace Player
             respawnTrigger.SetActive(false);
             isDown = false;
             health.Reset();
-            
-            Debug.Log("Respawn!");
         }
     }
 }
