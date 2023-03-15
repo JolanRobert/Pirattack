@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using AI.BossPattern;
+using Managers;
 using MyBox;
 using Player;
 using UnityEngine;
