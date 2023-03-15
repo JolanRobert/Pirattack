@@ -6,12 +6,14 @@ namespace Player
 {
     public class PlayerCollision : MonoBehaviour, IDamageable
     {
+        public Health health => _health;
+        
         [SerializeField] private PlayerController playerController;
-        [SerializeField] private Health health;
+        [SerializeField] private Health _health;
 
         public void Damage(int damage)
         {
-            health.LoseHealth(damage);
+            _health.LoseHealth(damage);
             playerController.Interact.EndInteract();
         }
     }

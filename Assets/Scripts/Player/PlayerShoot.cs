@@ -7,7 +7,7 @@ namespace Player
 {
     public class PlayerShoot : MonoBehaviour
     {
-        public Action OnShoot;
+        public Action<WeaponData> OnShoot;
         
         [SerializeField] private PlayerController playerController;
         [SerializeField] private Transform firePoint;
@@ -23,6 +23,7 @@ namespace Player
             bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
             bullet.Init(playerController, weapon);
             StartCoroutine(ShootCooldown());
+            OnShoot?.Invoke(weapon);
             
             playerController.Animation.SetTrigger(PlayerAnimation.AnimTrigger.Attack);
         }
