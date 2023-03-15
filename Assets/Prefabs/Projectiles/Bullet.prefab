@@ -67,13 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 6843001804146275925}
-  collider: {fileID: 5716733331323012192}
-  contactParticleSystem: {fileID: 3372077107701150023, guid: a3013b66ae7b0434dbb2d7d098c442ba,
-    type: 3}
-  zapParticleSystem: {fileID: 1045671381080228216, guid: 9c9286e0b43900d42aa0badf4e28825d,
-    type: 3}
-  shockLine: {fileID: 1967207966891838309, guid: b5a0b4a16ff2683478f3e593a9b5112b,
-    type: 3}
+  bulletCollider: {fileID: 6904662560718640321}
 --- !u!1 &4881476241310632823
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,8 +78,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6958762606246236796}
   - component: {fileID: 1323515913902174452}
-  - component: {fileID: 6843001804146275925}
   - component: {fileID: 5716733331323012192}
+  - component: {fileID: 6843001804146275925}
   m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
@@ -137,24 +131,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 2
---- !u!114 &6843001804146275925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4881476241310632823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f47d7d1e21f4e78847dc233fb9500c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 1323515913902174452}
-  collider: {fileID: 5716733331323012192}
-  bulletTrigger: {fileID: 80861423843825634}
-  particleSystem: {fileID: 3372077107701150023, guid: a3013b66ae7b0434dbb2d7d098c442ba,
-    type: 3}
-  owner: {fileID: 0}
 --- !u!135 &5716733331323012192
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -176,6 +152,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6843001804146275925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4881476241310632823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f47d7d1e21f4e78847dc233fb9500c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1323515913902174452}
+  bulletCollider: {fileID: 5716733331323012192}
+  bulletTrigger: {fileID: 80861423843825634}
+  owner: {fileID: 0}
 --- !u!1 &8464186288431783798
 GameObject:
   m_ObjectHideFlags: 0

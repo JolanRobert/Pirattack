@@ -14,10 +14,10 @@ namespace Player
         public Action OnBeginInteract;
         public Action OnEndInteract;
 
-        [SerializeField, ReadOnly] private List<InteractiveElement> interactions = new List<InteractiveElement>();
+        [SerializeField, ReadOnly] private List<ChaosTask> interactions = new List<ChaosTask>();
         private bool isInteracting;
 
-        private InteractiveElement currentInteraction;
+        private ChaosTask currentInteraction;
         
         private bool LBDown;
         private bool RBDown;
@@ -57,11 +57,7 @@ namespace Player
         {
             if (interactions.Count == 0) return;
             if (isInteracting) return;
-
-            if (interactions[0] is ChaosTask task)
-            {
-                if (!task.IsValid()) return;
-            }
+            if (!interactions[0].IsValid()) return;
             
             currentInteraction = interactions[0];
             
@@ -76,16 +72,13 @@ namespace Player
                 EndInteract();
                 return;
             }
+
+            ChaosTask task = currentInteraction;
             
-            if (currentInteraction is RespawnTrigger rTrigger) rTrigger.HandleInput(A);
-            
-            else if (currentInteraction is ChaosTask task)
-            {
-                if (!task.IsValid()) return;
-                if (task is TaskToilet tToilet) tToilet.HandleInput(LBDown, RBDown);
-                else if (task is TaskBedItem tBedItem) tBedItem.HandleInput(ADown);
-                else if (task is TaskMustache tMustache) tMustache.HandleInput(leftStick, rightStick);
-            }
+            if (!task.IsValid()) return;
+            if (task is TaskToilet tToilet) tToilet.HandleInput(LBDown, RBDown);
+            else if (task is TaskBedItem tBedItem) tBedItem.HandleInput(ADown);
+            else if (task is TaskMustache tMustache) tMustache.HandleInput(leftStick, rightStick);
             
             ResetInputs();
         }
@@ -99,13 +92,12 @@ namespace Player
             OnEndInteract?.Invoke();
         }
 
-        public void Subscribe(InteractiveElement elmt)
+        public void Subscribe(ChaosTask elmt)
         {
             interactions.Add(elmt);
-            interactions.Sort();
         }
 
-        public void Unsubscribe(InteractiveElement elmt)
+        public void Unsubscribe(ChaosTask elmt)
         {
             interactions.Remove(elmt);
         }

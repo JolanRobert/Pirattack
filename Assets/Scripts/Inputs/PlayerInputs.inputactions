@@ -361,17 +361,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "94f3777b-a9e5-4a2c-adeb-55a23a9bc704",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Return",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "865b8693-6e97-4888-958b-8b358d3569fb",
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
