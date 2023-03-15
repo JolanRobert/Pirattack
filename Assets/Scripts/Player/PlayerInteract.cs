@@ -21,7 +21,9 @@ namespace Player
         
         private bool LBDown;
         private bool RBDown;
-        private bool ADown, A;
+        private bool ADown;
+        private bool XDown;
+        private bool YDown;
         private Vector2 leftStick;
         private Vector2 rightStick;
         
@@ -39,7 +41,16 @@ namespace Player
         public void OnA(InputAction.CallbackContext context)
         {
             if (context.started) ADown = true;
-            A = context.performed;
+        }
+        
+        public void OnX(InputAction.CallbackContext context)
+        {
+            if (context.started) XDown = true;
+        }
+        
+        public void OnY(InputAction.CallbackContext context)
+        {
+            if (context.started) YDown = true;
         }
 
         public void OnLeftStick(InputAction.CallbackContext context)
@@ -79,6 +90,7 @@ namespace Player
             if (task is TaskToilet tToilet) tToilet.HandleInput(LBDown, RBDown);
             else if (task is TaskBedItem tBedItem) tBedItem.HandleInput(ADown);
             else if (task is TaskMustache tMustache) tMustache.HandleInput(leftStick, rightStick);
+            else if (task is TaskCauldron tCauldron) tCauldron.HandleInput(ADown, XDown, YDown);
             
             ResetInputs();
         }
@@ -107,6 +119,8 @@ namespace Player
             LBDown = false;
             RBDown = false;
             ADown = false;
+            XDown = false;
+            YDown = false;
         }
     }
 }

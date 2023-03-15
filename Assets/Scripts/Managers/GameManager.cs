@@ -8,12 +8,13 @@ namespace Managers
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
-        public static Action OnLaunchingBoss;
-        public static Action OnBossPop;
-        public static Action OnEndFightBoss;
-        public static Action OnRelaunchLoop;
-        public static Action OnIncreaseChaosBar;
-        public static Action OnDecreaseChaosBar;
+        public Action OnLaunchingBoss;
+        public Action OnBossPop;
+        public Action OnEndFightBoss;
+        public Action OnRelaunchLoop;
+        public Action OnIncreaseChaosBar;
+        public Action OnDecreaseChaosBar;
+        public Action OnEndGame;
     
         [SerializeField] private int increaseChaosBar = 10;
         [SerializeField] private int decreaseChaosBar = 10;
@@ -67,7 +68,7 @@ namespace Managers
                     OnBossPop?.Invoke();
                     break;
                 case <= 0:
-                    UIManager.Instance.ShowEndGame();
+                    EndGame();
                     endTime = Time.time - startTime;
                     SpawnManager.Instance.enabled = false;
                     break;
@@ -77,7 +78,7 @@ namespace Managers
         public void EndGame()
         {
             chaosBar = 0;
-            OnDecreaseChaosBar?.Invoke();
+            OnEndGame?.Invoke();
         }
     
         IEnumerator RelaunchGame(float delay)

@@ -19,7 +19,7 @@ public class TriggerBossLaunch : MonoBehaviour
         }
         players.Add(player);
         if (players.Count != 2) return;
-        GameManager.OnLaunchingBoss?.Invoke();
+        GameManager.Instance.OnLaunchingBoss?.Invoke();
         gameObject.SetActive(false);
     }
 }

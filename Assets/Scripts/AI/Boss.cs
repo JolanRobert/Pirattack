@@ -16,7 +16,7 @@ namespace AI
 
         public static Action<PlayerController> OnTriggerAttack;
         [ReadOnly] public Pattern currentPattern;
-        public new BossData data;
+        public BossData data;
 
         [SerializeField] private string[] voicelines;
         [SerializeField] private string[] voicelinesDead;
@@ -33,12 +33,12 @@ namespace AI
 
         private void OnEnable()
         {
-            GameManager.OnLaunchingBoss += BeginAttack;
+            GameManager.Instance.OnLaunchingBoss += BeginAttack;
         }
 
         private void OnDisable()
         {
-            GameManager.OnLaunchingBoss -= BeginAttack;
+            GameManager.Instance.OnLaunchingBoss -= BeginAttack;
         }
 
         private void BeginAttack()
@@ -102,7 +102,7 @@ namespace AI
         {
             LootSystem();
             Print_DieVoicelines();
-            GameManager.OnEndFightBoss?.Invoke();
+            GameManager.Instance.OnEndFightBoss?.Invoke();
             gameObject.SetActive(false);
         }
 
