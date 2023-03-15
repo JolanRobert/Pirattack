@@ -14,6 +14,7 @@ namespace Player
         public PlayerCollision Collision => playerCollision;
         public PlayerInteract Interact => playerInteract;
         public PlayerAnimation Animation => playerAnimation;
+        public PlayerStats Stats => playerStats;
 
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerMovement playerMovement;
@@ -23,6 +24,7 @@ namespace Player
         [SerializeField] private PlayerInteract playerInteract;
         [SerializeField] private PlayerRespawn playerRespawn;
         [SerializeField] private PlayerAnimation playerAnimation;
+        [SerializeField] private PlayerStats playerStats;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using AI;
 using BehaviourTree;
+using Managers;
 using Player;
 using UnityEngine;
 
@@ -24,7 +26,7 @@ public class CheckPlayerInVision : Node
         float minViewRange = 10;
         
         if (enemyShield != null && enemyShield is EnemyShield)
-            minViewRange = (enemyShield as EnemyShield).Data.viewRangeDetection;
+            minViewRange = (enemyShield as EnemyShield).data.viewRangeDetection;
         else
             minViewRange = (enemyShield as Enemy).Data.viewRangeDetection;
         

@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 using Utils;
 
@@ -31,12 +32,17 @@ namespace Player
             health.StartPassiveRegeneration(data.regenValue, data.regenTick);
         }
 
+        public void CheckEndGame()
+        {
+            PlayerController[] players = PlayerManager.Players.ToArray();
+            if (players[0].IsDown && players[1].IsDown) GameManager.Instance.EndGame();
+        }
+
         private void Die()
         {
             respawnTrigger.SetActive(true);
             isDown = true;
-            
-            Debug.Log("Dead");
+            CheckEndGame();
         }
 
         public void Respawn()
@@ -44,8 +50,6 @@ namespace Player
             respawnTrigger.SetActive(false);
             isDown = false;
             health.Reset();
-            
-            Debug.Log("Respawn!");
         }
     }
 }

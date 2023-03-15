@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 6843001804146275925}
-  collider: {fileID: 5716733331323012192}
+  bulletCollider: {fileID: 6904662560718640321}
 --- !u!1 &4881476241310632823
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1323515913902174452}
-  collider: {fileID: 5716733331323012192}
+  bulletCollider: {fileID: 5716733331323012192}
   bulletTrigger: {fileID: 80861423843825634}
   owner: {fileID: 0}
 --- !u!1 &8464186288431783798

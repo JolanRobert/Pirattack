@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using AI.BossPattern;
+using Managers;
 using MyBox;
 using Player;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 namespace AI
@@ -14,7 +16,7 @@ namespace AI
 
         public static Action<PlayerController> OnTriggerAttack;
         [ReadOnly] public Pattern currentPattern;
-        public new BossData Data;
+        public new BossData data;
 
         [SerializeField] private string[] voicelines;
         [SerializeField] private string[] voicelinesDead;
@@ -41,7 +43,7 @@ namespace AI
 
         private void BeginAttack()
         {
-            maxHp = Data.maxHealth; // possible to change max health value
+            maxHp = data.maxHealth; // possible to change max health value
             healthEnemy.Init(maxHp);
             ResetAttackBossDefaultValue();
             Print_Argh();
@@ -57,7 +59,7 @@ namespace AI
 
         private void ShieldTakeDamage(int damage, PlayerController origin)
         {
-            if (ShieldColor != PlayerColor.None && ShieldColor != origin.Color.PColor) return;
+            if (shieldColor != PlayerColor.None && shieldColor != origin.Color.PColor) return;
             shieldHealth -= damage;
             if (shieldHealth <= 0)
             {
@@ -88,23 +90,11 @@ namespace AI
 
         private void LootSystem()
         {
-            for (int i = 0; i < PlayerManager.Players.Count; i++)
+            for (int i = 0; i < data.nbLoot; i++)
             {
-                int indexGun = Random.Range(0, Data.lootGun.Length);
-                int indexGunAmmo = Random.Range(0, Data.lootGunAmmo.Length);
-
-                Instantiate(Data.lootGun[Random.Range(0, Data.lootGun.Length)],
-                        transform.position + Vector3.back * 10 + Vector3.right * (i - 2) + Vector3.right * i * 2 -
-                        Vector3.up * 4.5f, Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue
-                    ? UnityEngine.Color.blue
-                    : UnityEngine.Color.red;
-                Instantiate(Data.lootGunAmmo[Random.Range(0, Data.lootGunAmmo.Length)],
-                        transform.position + Vector3.back * 10 + Vector3.right * (i - 1) + Vector3.right * i * 2 -
-                        Vector3.up * 4.5f, Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue
-                    ? UnityEngine.Color.blue
-                    : UnityEngine.Color.red;
+                GameObject loot = Pooler.Instance.Pop(Pooler.Key.PerkLoot);
+                loot.transform.SetPositionAndRotation(transform.position + Vector3.back * 10 + Vector3.right * (i - 1),
+                    Quaternion.identity);
             }
         }
 
@@ -118,9 +108,9 @@ namespace AI
 
         private void AddShield()
         {
-            ShieldColor = (PlayerColor)Random.Range(0, 2);
-            shieldHealth = Data.maxHealthShield;
-            FXShield.GetComponent<Renderer>().material.color = (ShieldColor == PlayerColor.Blue)
+            shieldColor = (PlayerColor)Random.Range(0, 2);
+            shieldHealth = data.maxHealthShield;
+            FXShield.GetComponent<Renderer>().material.color = (shieldColor == PlayerColor.Blue)
                 ? new Color(0, 0, 1, 0.5f)
                 : new Color(1, 0, 0, 0.5f);
             FXShield.SetActive(true);

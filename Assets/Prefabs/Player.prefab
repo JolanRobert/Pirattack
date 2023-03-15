@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 679271570269334704}
   - component: {fileID: 3417260261636371794}
   - component: {fileID: 2259203109671436139}
+  - component: {fileID: 315471827792081947}
   - component: {fileID: 1757877130516654379}
   m_Layer: 6
   m_Name: Player
@@ -416,6 +417,7 @@ MonoBehaviour:
   playerInteract: {fileID: 679271570269334704}
   playerRespawn: {fileID: 3417260261636371794}
   playerAnimation: {fileID: 2259203109671436139}
+  playerStats: {fileID: 315471827792081947}
 --- !u!114 &6338701467244359560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,7 +445,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 2669283563355967349}
-  weaponData: {fileID: 11400000, guid: aecb0c759e5377143901ee2af92b82c3, type: 2}
   firePoint: {fileID: 1555758839059158513}
 --- !u!114 &3309873595056073832
 MonoBehaviour:
@@ -516,6 +517,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnimator: {fileID: 6355435669928230860}
   parrotAnimator: {fileID: 8480620110159675414}
+--- !u!114 &315471827792081947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438483004797300496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed5a46d052406484ca8d2c471bac8ebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseWeaponData: {fileID: 11400000, guid: aecb0c759e5377143901ee2af92b82c3, type: 2}
 --- !u!114 &1757877130516654379
 MonoBehaviour:
   m_ObjectHideFlags: 0
