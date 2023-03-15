@@ -25,11 +25,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Albedo:
-        m_Texture: {fileID: 2800000, guid: 8c5234b7b6adb1d44a0c7bb1c7cbd7ab, type: 3}
+        m_Texture: {fileID: 2800000, guid: 73e2ac240c7d432438aad48b1105711e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Ambient_Occlusion:
-        m_Texture: {fileID: 2800000, guid: 85b298106a68856428422af3606cde49, type: 3}
+        m_Texture: {fileID: 2800000, guid: d87b439a556fc6a418eef54c7e21e1f2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic:
@@ -37,11 +37,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: f782bbe0de225744f85583e7fa25b783, type: 3}
+        m_Texture: {fileID: 2800000, guid: fa0241bd0b742ef498e34f235b2c2f63, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Roughness:
-        m_Texture: {fileID: 2800000, guid: a9a0f25ff6374c644969ef3aeceda6a5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 17dc5eff6112a824380b3fa7054ff4d8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
