@@ -79,7 +79,6 @@ namespace Task
         private void Complete()
         {
             OnComplete.Invoke(this);
-            Debug.Log("Task is complete!");
         }
         
         private enum Input
