@@ -27,8 +27,8 @@ namespace AI
         [SerializeField] protected Rigidbody rb;
         [SerializeField] private new SkinnedMeshRenderer renderer;
         [SerializeField] private Material[] materials;
-    
 
+        private bool isIced;
         protected bool enemyInVision = false;
         protected int Damagz = 0;
         [SerializeField, ReadOnly] protected int maxHp = 0;
@@ -141,22 +141,28 @@ namespace AI
             animator.SetFloat("Velocity", agent.velocity.magnitude);
         }
 
-        public void SetIced(float duration)
+        public void SetIced(float duration,float slowness)
         {
+            if(isIced) return;
+            isIced = true;
             renderer.material = materials[1];
             GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.PerkIceVFX);
             vfx.transform.position = transform.position;
             VFXPooler.Instance.DelayedDepop(0.5f,VFXPooler.Key.PerkIceVFX,vfx);
             StopIced(duration);
+            animator.SetFloat("speedAnimation", slowness);
+            agent.speed = enemyData.speed * slowness;
         }
 
         public async void StopIced(float duration)
         {
             await System.Threading.Tasks.Task.Delay(Mathf.FloorToInt(1000 * duration));
             renderer.material = materials[0];
+            isIced = false;
             GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.PerkIceVFX);
             vfx.transform.position = transform.position;
             VFXPooler.Instance.DelayedDepop(0.5f,VFXPooler.Key.PerkIceVFX,vfx);
+            agent.speed = enemyData.speed;
         }
     }
 }
