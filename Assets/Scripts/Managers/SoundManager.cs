@@ -24,6 +24,8 @@ public class SoundManager : MonoBehaviour
 
     private Dictionary<string, AudioSource> audioDictionary;
     private PlayerController[] players;
+    private AudioSource[] sourcesShoot = new AudioSource[50];
+
 
     private void Awake()
     {
@@ -49,6 +51,11 @@ public class SoundManager : MonoBehaviour
         {
             audioDictionary.Add(s.name, s.clip);
         }
+        sourcesShoot[0] = audioDictionary[shootSoundName];
+        for (int i = 1; i < 50; i++)
+        {
+            sourcesShoot[i] = audioDictionary[shootSoundName].gameObject.AddComponent<AudioSource>();
+        }
 
         if (players.Length > 0)
         {
@@ -65,7 +72,6 @@ public class SoundManager : MonoBehaviour
     }
 
     public void PlaySound(string name, float speed = 1f)
-
     {
         audioDictionary[name].Stop();
         audioDictionary[name].pitch = speed;
@@ -110,6 +116,16 @@ public class SoundManager : MonoBehaviour
             {
                 audioDictionary["Walk"].Stop();
             }
+        }
+    }
+
+    public void PlayHitSound()
+    {
+        for (int i = 0; i < sourcesShoot.Length; i++)
+        {
+            if(sourcesShoot[i].isPlaying) continue;
+            sourcesShoot[i].Play();
+            break;
         }
     }
 }
