@@ -1,19 +1,31 @@
+using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
 namespace Player
 {
     public class PlayerStats : MonoBehaviour
     {
-        public WeaponData Weapon => currentWeaponData;
-        
+        public WeaponData Weapon
+        {
+            get => currentWeaponData;
+            private set => currentWeaponData = value;
+        }
+
+        [SerializeField] private PlayerController playerController;
         [SerializeField] private WeaponData baseWeaponData;
         private WeaponData currentWeaponData;
-        
+
         private void Awake()
         {
             currentWeaponData = Instantiate(baseWeaponData);
         }
-        
+
+        private void Start()
+        {
+            playerController.Color.OnSwitchColor += SwapWeapons;
+        }
+
         public void AddStat(LootType type)
         {
             switch (type)
@@ -37,6 +49,14 @@ namespace Player
                     currentWeaponData.fireRate += baseWeaponData.fireRate * 0.2f;
                     break;
             }
+        }
+
+        private void SwapWeapons()
+        {
+            List<PlayerController> players = PlayerManager.Players;
+            PlayerController other = players[0] == playerController ? players[1] : players[0];
+            
+            (currentWeaponData, other.Stats.Weapon) = (other.Stats.Weapon, currentWeaponData);
         }
     }
 }

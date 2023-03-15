@@ -40,7 +40,7 @@ namespace AI
         private void OnEnable()
         {
             Damagz = enemyData.damage; // possible to change damage value
-            InitializeHealth((int)(GameManager.Instance.currentTimer() / 60));
+            if (GameManager.Instance) InitializeHealth((int)(GameManager.Instance.currentTimer() / 60));
             healthEnemy.Init(maxHp);
             ResetAttackDefaultValue();
             agent.speed = enemyData.speed;

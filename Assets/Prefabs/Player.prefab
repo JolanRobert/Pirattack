@@ -529,6 +529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed5a46d052406484ca8d2c471bac8ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 2669283563355967349}
   baseWeaponData: {fileID: 11400000, guid: aecb0c759e5377143901ee2af92b82c3, type: 2}
 --- !u!114 &1757877130516654379
 MonoBehaviour:

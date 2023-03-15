@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Utils
 {
-    [ExecuteAlways]
     public class LookAtCamera : MonoBehaviour
     {
         [SerializeField] private Mode mode;
@@ -14,6 +13,7 @@ namespace Utils
             mainCam = Camera.main;
         }
 
+        [ContextMenu("Update")]
         private void LateUpdate()
         {
             switch (mode)

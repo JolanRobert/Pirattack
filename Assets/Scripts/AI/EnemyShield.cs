@@ -15,7 +15,7 @@ namespace AI
 
         private void OnEnable()
         {
-            InitializeHealth((int)(GameManager.Instance.currentTimer() / 60));
+            if (GameManager.Instance) InitializeHealth((int)(GameManager.Instance.currentTimer() / 60));
             healthEnemy.Init(maxHp);
             healthEnemy.OnDeath = OnDie;
             if (GameManager.Instance) healthEnemy.OnDeath += GameManager.Instance.AddEnemyKilled;
