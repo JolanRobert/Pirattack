@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7260043455544003213}
   - component: {fileID: 4063685557650060724}
   - component: {fileID: 8921672750770611548}
+  - component: {fileID: 7447034994763324298}
+  - component: {fileID: 5203609090645742108}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -31,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4063685557650060724
 MonoBehaviour:
@@ -48,7 +50,7 @@ MonoBehaviour:
   poolKeys:
   - key: 0
     pool:
-      prefab: {fileID: 8146502215300643550, guid: 1ee91bf533694774799b657340b16078,
+      prefab: {fileID: 4881476241310632823, guid: 1ee91bf533694774799b657340b16078,
         type: 3}
       baseCount: 200
       baseRefreshSpeed: 5
@@ -83,14 +85,42 @@ MonoBehaviour:
       refreshSpeed: 0
   - key: 5
     pool:
-      prefab: {fileID: 306172049151688206, guid: ec22ee3fd6fb4f74c83b7632cdac9777,
+      prefab: {fileID: 1538867339605187364, guid: ec22ee3fd6fb4f74c83b7632cdac9777,
         type: 3}
       baseCount: 10
       baseRefreshSpeed: 0
       refreshSpeed: 0
   - key: 6
     pool:
-      prefab: {fileID: 5997423093716213911, guid: 99cd2bccdc8e2b348b1da42a954bc268,
+      prefab: {fileID: 8497502169219896392, guid: 99cd2bccdc8e2b348b1da42a954bc268,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
+  - key: 7
+    pool:
+      prefab: {fileID: 3372077107701150023, guid: a3013b66ae7b0434dbb2d7d098c442ba,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
+  - key: 8
+    pool:
+      prefab: {fileID: 1045671381080228216, guid: 9c9286e0b43900d42aa0badf4e28825d,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
+  - key: 9
+    pool:
+      prefab: {fileID: 1967207966891838309, guid: b5a0b4a16ff2683478f3e593a9b5112b,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
+  - key: 10
+    pool:
+      prefab: {fileID: 8419578217314179971, guid: ee4b5141c625ce74d98bc726af207d97,
         type: 3}
       baseCount: 10
       baseRefreshSpeed: 0
@@ -113,5 +143,44 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   delaySpawn: 0.4
   nbTickPerShieldSpawn: 5
+--- !u!114 &7447034994763324298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605963250011035188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645d28df56c34b14aafbc95aa45bcff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IncreaseChaosBar: 10
+  DecreaseChaosBar: 10
+  DepopBossTimer: 60
+  triggerBossDoor: {fileID: 0}
+  bossDoor: {fileID: 0}
+  Boss: {fileID: 0}
+  ChaosBar: 50
+--- !u!114 &5203609090645742108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605963250011035188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e546e699d5e894d817e488e61bc9fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voicelineText: {fileID: 0}
+  timerVoiceline: 5
+  ChaosBarSlider: {fileID: 0}
+  CanvasEndGame: {fileID: 0}

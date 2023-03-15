@@ -16,8 +16,10 @@ namespace Task
         
         protected override void OnCancel()
         {
-            progressBar.DOKill();
-            progressBar.DOFillAmount(0, 1/lossAmountPerSec).SetEase(Ease.Linear);
+            base.OnCancel();
+
+            notifs[0].DoProgressFill(0, 1 / lossAmountPerSec);
+            notifs[1].DoProgressFill(0, 1 / lossAmountPerSec);
         }
         
         private new void OnEnable()
@@ -31,8 +33,8 @@ namespace Task
         protected override void OnDisable()
         {
             base.OnDisable();
-            
-            UiIndicator.instance.RemoveObject(gameObject);
+
+            if (UiIndicator.instance) UiIndicator.instance.RemoveObject(gameObject);
         }
 
         public void HandleInput(bool leftInput, bool rightInput)
@@ -59,20 +61,19 @@ namespace Task
         
         private void IncreaseBar()
         {
-            float newAmount = progressBar.fillAmount + amountPerInput;
-
-            progressBar.DOKill();
-            Tween tween = progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
+            float newAmount = notifs[0].ProgressAmount + amountPerInput;
+            notifs[0].DoProgressFill(newAmount, Time.deltaTime);
+            Tween tween = notifs[1].DoProgressFill(newAmount, Time.deltaTime);
             if (newAmount >= 1) tween.onComplete += Complete;
         }
 
         private void DecreaseBar()
         {
-            if (progressBar.fillAmount == 0) return;
-            float newAmount = progressBar.fillAmount - Time.deltaTime*lossAmountPerSec;
-
-            progressBar.DOKill();
-            progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
+            if (notifs[0].ProgressAmount == 0) return;
+            
+            float newAmount = notifs[0].ProgressAmount - Time.deltaTime * lossAmountPerSec;
+            notifs[0].DoProgressFill(newAmount, Time.deltaTime);
+            notifs[1].DoProgressFill(newAmount, Time.deltaTime);
         }
         
         private void Complete()

@@ -1,0 +1,94 @@
+.verticalContainer {
+    flex-direction: row;
+}
+
+.button {
+    background-color: rgb(255, 255, 255);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    -unity-font-style: normal;
+    font-size: 35px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.button:hover {
+    background-color: rgb(156, 156, 156);
+}
+
+.buttonFocus {
+    background-color: rgb(255, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    -unity-font-style: normal;
+    font-size: 35px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.title {
+    background-color: rgb(255, 255, 255);
+    font-size: 150px;
+    align-self: center;
+    -unity-font-style: bold;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    -unity-text-align: upper-center;
+}
+
+.playerContainer {
+    width: 350px;
+    background-color: rgb(255, 255, 255);
+    height: 500px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.playerImg {
+    background-image: url('project://database/Assets/Draft/Romeo/Art%20UI/Pirate.png?fileID=2800000&guid=9ade847062dcf0949919cde57ddbe893&type=3#Pirate');
+    flex-grow: 1;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.readyLabel {
+    align-self: center;
+    -unity-font-style: bold;
+    font-size: 25px;
+    -unity-text-align: upper-center;
+}
