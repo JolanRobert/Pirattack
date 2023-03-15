@@ -34,10 +34,12 @@ namespace AI
         protected List<Transform> PatrolPoints = new ();
         private EnemyBT bt = null;
     
+        
+        
         private void OnEnable()
         {
             Damagz = enemyData.damage; // possible to change damage value
-            maxHp = enemyData.maxHealth + (int)(GameManager.Instance.currentTimer() / 60) * enemyData.AdditionalHealthByMinute; // possible to change max health value
+            InitializeHealth((int)(GameManager.Instance.currentTimer() / 60));
             healthEnemy.Init(maxHp);
             ResetAttackDefaultValue();
             agent.speed = enemyData.speed;
@@ -57,6 +59,18 @@ namespace AI
         {
             healthEnemy.OnDeath = OnDie;
             if (GameManager.Instance) healthEnemy.OnDeath += GameManager.Instance.AddEnemyKilled;
+        }
+
+        private void InitializeHealth(int nbMinutes)
+        {
+            int clampPalier1 = nbMinutes > 3 ? 3 : nbMinutes;
+            maxHp = enemyData.maxHealth + enemyData.maxHealth * clampPalier1;
+            if (nbMinutes <= 3) return;
+            int clampPalier2 = nbMinutes > 6 ? 3 : nbMinutes - 3;
+            maxHp += enemyData.maxHealth * clampPalier2;
+            if (nbMinutes <= 6) return;
+            int clampPalier3 = nbMinutes > 9 ? 3 : nbMinutes - 6;
+            maxHp += enemyData.maxHealth * clampPalier3;
         }
 
         protected virtual void Depop()
