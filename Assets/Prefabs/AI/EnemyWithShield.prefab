@@ -50235,8 +50235,10 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
   - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
+  maxHp: 0
   data: {fileID: 11400000, guid: edaaf3dc24281744bbc303e9ddc001b3, type: 2}
   btShield: {fileID: 7140208481260745866}
+  shootFX: {fileID: 5927107895915246276}
   OnShoot:
     m_PersistentCalls:
       m_Calls:
@@ -50252,7 +50254,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  shootFX: {fileID: 5927107895915246276}
 --- !u!114 &779365937772194499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50278,7 +50279,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e754f828aa33051408ea5076b42be604, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ee27d62748c004a46835c9f095311fcd, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -50364,8 +50365,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &2907656727672317033
-PrefabInstance:
 --- !u!1 &8741166687218307158
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private string shootSoundName;
     [SerializeField] private string dieSoundName;
     [SerializeField] private string takeDamageSoundName;
+    [SerializeField] private string interactSoundName;
 
     private Dictionary<string, AudioSource> audioDictionary;
     private PlayerController[] players;
@@ -64,12 +65,19 @@ public class SoundManager : MonoBehaviour
             players[0].Shoot.OnShoot += PlayShootSound;
             players[0].Collision.health.OnDeath += PlayDieSound;
             players[0].Collision.health.OnHealthLose += PlayTakeDamageSound;
+            players[0].Interact.OnBeginInteract += PlayInteractSound;
 
             players[1].Color.OnSwitchColor += PlaySwitchSound;
             players[1].Shoot.OnShoot += PlayShootSound;
             players[1].Collision.health.OnDeath += PlayDieSound;
             players[1].Collision.health.OnHealthLose += PlayTakeDamageSound;
+            players[1].Interact.OnBeginInteract += PlayInteractSound;
         }
+    }
+
+    private void PlayInteractSound()
+    {
+        PlaySound(interactSoundName);
     }
 
     public void PlaySound(string name, float speed = 1f)
@@ -119,13 +127,13 @@ public class SoundManager : MonoBehaviour
         if (players.Length > 1)
             for (int i = 0; i < players.Length; i++)
             {
-                if (players[i].MoveInput.magnitude > 0.1f && !audioDictionary["Walk"].isPlaying)
+                if (players[i].MoveInput.magnitude > 0.1f && !audioDictionary["WalkJ" + (i+1)].isPlaying)
                 {
-                    audioDictionary["Walk"].Play();
+                    audioDictionary["WalkJ" + (i+1)].Play();
                 }
-                else if (players[i].MoveInput.magnitude < 0.1f && audioDictionary["Walk"].isPlaying)
+                else if (players[i].MoveInput.magnitude < 0.1f && audioDictionary["WalkJ" + (i+1)].isPlaying)
                 {
-                    audioDictionary["Walk"].Stop();
+                    audioDictionary["WalkJ" + (i+1)].Stop();
                 }
 
                 if (players[i].Movement.IdleTime > 15f)
