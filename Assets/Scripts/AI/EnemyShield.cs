@@ -32,15 +32,15 @@ namespace AI
         private void InitializeHealth(int nbMinutes)
         {
             int clampPalier1 = nbMinutes > 3 ? 3 : nbMinutes;
-            maxHp = data.maxHealth + data.maxHealth * clampPalier1;
+            maxHp = data.maxHealth + data.HealthPalier1 * clampPalier1;
             if (nbMinutes <= 3) return;
             int clampPalier2 = nbMinutes > 6 ? 3 : nbMinutes - 3;
-            maxHp += data.maxHealth * clampPalier2;
+            maxHp += data.HealthPalier2 * clampPalier2;
             if (nbMinutes <= 6) return;
             int clampPalier3 = nbMinutes > 9 ? 3 : nbMinutes - 6;
-            maxHp += data.maxHealth * clampPalier3;
+            maxHp += data.HealthPalier3 * clampPalier3;
             int clampPalier4 = nbMinutes - 9;
-            maxHp += data.maxHealth * clampPalier4;
+            maxHp += data.HealthPalier4 * clampPalier4;
         }
         
 

@@ -65,15 +65,15 @@ namespace AI
         private void InitializeHealth(int nbMinutes)
         {
             int clampPalier1 = nbMinutes > 3 ? 3 : nbMinutes;
-            maxHp = enemyData.maxHealth + enemyData.maxHealth * clampPalier1;
+            maxHp = enemyData.maxHealth + enemyData.HealthPalier1 * clampPalier1;
             if (nbMinutes <= 3) return;
             int clampPalier2 = nbMinutes > 6 ? 3 : nbMinutes - 3;
-            maxHp += enemyData.maxHealth * clampPalier2;
+            maxHp += enemyData.HealthPalier2 * clampPalier2;
             if (nbMinutes <= 6) return;
             int clampPalier3 = nbMinutes > 9 ? 3 : nbMinutes - 6;
-            maxHp += enemyData.maxHealth * clampPalier3;
+            maxHp += enemyData.HealthPalier3 * clampPalier3;
             int clampPalier4 = nbMinutes - 9;
-            maxHp += enemyData.maxHealth * clampPalier4;
+            maxHp += enemyData.HealthPalier4 * clampPalier4;
         }
 
         protected virtual void Depop()
