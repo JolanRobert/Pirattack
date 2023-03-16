@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6846040423532376587}
   - component: {fileID: 7930998938679385703}
-  - component: {fileID: 7005959767873140384}
+  - component: {fileID: 4889348097257256734}
   m_Layer: 0
   m_Name: TriggerBossExitRoom
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7930998938679385703
 BoxCollider:
@@ -54,7 +54,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 0.5}
   m_Center: {x: 1.5, y: 1.5, z: -0.25}
---- !u!114 &7005959767873140384
+--- !u!114 &4889348097257256734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,6 +63,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2747294229518227547}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfb2f3dc914f15f4ba537e1c5449555f, type: 3}
+  m_Script: {fileID: 11500000, guid: 7069af36ab41ee646bff6e37f2f50d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
