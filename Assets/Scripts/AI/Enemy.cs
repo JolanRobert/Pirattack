@@ -31,6 +31,7 @@ namespace AI
         [SerializeField] private Material[] materials;
         [SerializeField] private UnityEvent OnShoot;
         [SerializeField] private float perkChances;
+        [SerializeField][ColorUsageAttribute(true,true)] private Color hurtColor;
 
         private bool isIced;
         protected bool enemyInVision = false;
@@ -64,6 +65,12 @@ namespace AI
         {
             healthEnemy.OnDeath = OnDie;
             if (GameManager.Instance) healthEnemy.OnDeath += GameManager.Instance.AddEnemyKilled;
+
+            for (int i = 0; i < materials.Length; i++)
+            {
+                Material copy = new Material(materials[i]);
+                materials[i] = copy;
+            }
         }
 
         private void InitializeHealth(int nbMinutes)
@@ -104,6 +111,7 @@ namespace AI
         public void TakeDamage(int _damage, PlayerController origin)
         {
             Damage(_damage);
+            renderer.material.SetColor("_HurtColor",hurtColor);
         }
     
         public void Damage(int _damage)
@@ -149,6 +157,8 @@ namespace AI
         private void Update()
         {
             animator.SetFloat("Velocity", agent.velocity.magnitude);
+            Color color = UnityEngine.Color.Lerp(renderer.material.GetColor("_HurtColor"),UnityEngine.Color.black, 5*Time.deltaTime);
+            renderer.material.SetColor("_HurtColor",color);
         }
 
         public void SetIced(float duration,float slowness)
@@ -156,6 +166,7 @@ namespace AI
             if(isIced) return;
             isIced = true;
             renderer.material = materials[1];
+            renderer.material.SetColor("_HurtColor",materials[0].GetColor("_HurtColor"));
             GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.PerkIceVFX);
             vfx.transform.position = transform.position;
             VFXPooler.Instance.DelayedDepop(0.5f,VFXPooler.Key.PerkIceVFX,vfx);
@@ -168,6 +179,7 @@ namespace AI
         {
             await System.Threading.Tasks.Task.Delay(Mathf.FloorToInt(1000 * duration));
             renderer.material = materials[0];
+            renderer.material.SetColor("_HurtColor",materials[1].GetColor("_HurtColor"));
             isIced = false;
             GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.PerkIceVFX);
             vfx.transform.position = transform.position;
