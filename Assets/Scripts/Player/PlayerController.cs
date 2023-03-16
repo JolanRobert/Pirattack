@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,8 +34,9 @@ namespace Player
         private Vector2 rotateInput;
         private bool shootInput;
         private bool switchColorInput;
-        private bool interactInput;
+        public bool interactInput;
         private bool cancelInteractInput;
+        public Action interraction;
 
         public void Init(Vector3 startPosition, PlayerColor color)
         {
@@ -81,7 +83,11 @@ namespace Player
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            if (context.started) interactInput = true;
+            if (context.started)
+            {
+                interactInput = true;
+                if(interraction.Target != null)  interraction.Invoke();
+            }
         }
         
         public void OnCancelInteract(InputAction.CallbackContext context)

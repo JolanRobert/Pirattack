@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Managers;
 using MyBox;
@@ -17,28 +16,26 @@ namespace UI
         {
             Menu,
             Lobby,
-            Credits,
-            Countdown
+            Credits
         }
         
         #region Constants
             private const string VE_BGM = "VE_BackgroundM";
             private const string VE_BGL = "VE_BackgroundL";
             private const string VE_BGC = "VE_BackgroundC";
-            private const string VE_BGCD = "VE_BackgroundCD";
         
             private const string BT_PLAY = "BT_Play";
             private const string BT_CREDITS = "BT_Credits";
             private const string BT_QUIT = "BT_Quit";
         #endregion
         
-        [SerializeField] private VisualTreeAsset lobbyLayout, creditsLayout, countdownLayout;
+        [SerializeField] private VisualTreeAsset lobbyLayout, creditsLayout;
         [SerializeField] private UI_Countdown countdown;
         [SerializeField] private PlayerInput playerInput;
         [SerializeField, Scene] private string gameScene;
 
         #region Visual Elements
-            private VisualElement menuVE, lobbyVE, creditsVE, countdownVE;
+            private VisualElement menuVE, lobbyVE, creditsVE;
             private Button playBT, creditsBT, quitBT;
         #endregion
 
@@ -55,7 +52,6 @@ namespace UI
             
             var lobbyVEs = lobbyLayout.CloneTree().Children().ToList();
             var creditsVEs = creditsLayout.CloneTree().Children().ToList();
-            var countdownVEs = countdownLayout.CloneTree().Children().ToList();
             
             foreach (var visualElement in lobbyVEs)
             {
@@ -65,19 +61,14 @@ namespace UI
             {
                 root.Add(visualElement);
             }
-            foreach (var visualElement in countdownVEs)
-            {
-                root.Add(visualElement);
-            }
             
-            countdown.Init();
+            countdown.Init(root);
             InitVE();
             
             // Containers
             menuVE = root.Q<VisualElement>(VE_BGM);
             lobbyVE = root.Q<VisualElement>(VE_BGL);
             creditsVE = root.Q<VisualElement>(VE_BGC);
-            countdownVE = root.Q<VisualElement>(VE_BGCD);
             
             // Buttons
             playBT = root.Q<Button>(BT_PLAY);
@@ -85,9 +76,9 @@ namespace UI
             quitBT = root.Q<Button>(BT_QUIT);
 
             //Bindings
-            Utilities.BindButton(playBT, Play, true);
-            Utilities.BindButton(creditsBT, Credits, true);
-            Utilities.BindButton(quitBT, Quit, true);
+            Utilities.BindButton(playBT, Play, true, true);
+            Utilities.BindButton(creditsBT, Credits, true, true);
+            Utilities.BindButton(quitBT, Quit, true, true);
             
             // Default values
             DisplayLayout(MenuState.Menu);
@@ -99,7 +90,7 @@ namespace UI
         private void Update()
         {
             if (state is not MenuState.Lobby) return;
-            if (devicesSO.player1Device != null && devicesSO.player2Device != null) StartCountDown();
+            if (p1Device != null && p2Device != null && !countdown.Started) StartCountDown();
         }
 
         #region UI Update
@@ -108,7 +99,6 @@ namespace UI
                 menuVE.style.display = DisplayStyle.None;
                 lobbyVE.style.display = DisplayStyle.None;
                 creditsVE.style.display = DisplayStyle.None;
-                countdownVE.style.display = DisplayStyle.None;
                 
                 switch (newState)
                 {
@@ -123,10 +113,6 @@ namespace UI
                         break;
                     case MenuState.Credits:
                         creditsVE.style.display = DisplayStyle.Flex;
-                        break;
-                    case MenuState.Countdown:
-                        countdownVE.style.display = DisplayStyle.Flex;
-                        countdown.StartCountdown(StartGame);
                         break;
                 }
                 state = newState;
@@ -165,11 +151,16 @@ namespace UI
                 
             if (state is not MenuState.Lobby || device is null) return;
 
-            var p1Device = devicesSO.player1Device;
-            var p2Device = devicesSO.player2Device;
-
-            if (device.Equals(p1Device)) UpdatePlayer(true, null);
-            else if (device.Equals(p2Device))UpdatePlayer(false, null);
+            if (device.Equals(p1Device))
+            {
+                UpdatePlayer(true, null);
+                StopCountdownIfStarted();
+            }
+            else if (device.Equals(p2Device))
+            {
+                UpdatePlayer(false, null);
+                StopCountdownIfStarted();
+            }
             else if (p1Device is null) UpdatePlayer(true, device);
             else if (p2Device is null) UpdatePlayer(false, device);
         }
@@ -195,8 +186,8 @@ namespace UI
                 {
                     case InputDeviceChange.Disconnected:
                         if (device.Equals(lastMainDevice)) SetMainDeviceToDefault();
-                        if (device.Equals(devicesSO.player1Device)) UpdatePlayer(true, null);
-                        else if (device.Equals(devicesSO.player2Device)) UpdatePlayer(false, null);
+                        if (device.Equals(p1Device)) UpdatePlayer(true, null);
+                        else if (device.Equals(p2Device)) UpdatePlayer(false, null);
                         break;
                     case InputDeviceChange.Added:
                         LobbyManager.Instance.AddPlayer(device);
@@ -208,11 +199,19 @@ namespace UI
         
         private void StartCountDown()
         {
-            DisplayLayout(MenuState.Countdown);
+            countdown.StartCountdown(StartGame);
+        }
+        
+        private void StopCountdownIfStarted()
+        {
+            if (countdown.Started) countdown.StopCountdown();
         }
         
         private void StartGame()
         {
+            devicesSO.player1Device = p1Device;
+            devicesSO.player2Device = p2Device;
+            
             SceneController.Instance.QuickLoad(gameScene);
         }
     }

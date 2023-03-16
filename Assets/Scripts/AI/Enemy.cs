@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using Utils;
+using Random = UnityEngine.Random;
 
 namespace AI
 {
@@ -29,6 +30,7 @@ namespace AI
         [SerializeField] private new SkinnedMeshRenderer renderer;
         [SerializeField] private Material[] materials;
         [SerializeField] private UnityEvent OnShoot;
+        [SerializeField] private float perkChances;
 
         private bool isIced;
         protected bool enemyInVision = false;
@@ -91,6 +93,11 @@ namespace AI
 
         protected virtual void OnDie()
         {
+            if (Random.Range(0f, 1f) < perkChances)
+            {
+                GameObject loot = Pooler.Instance.Pop(Pooler.Key.PerkChest);
+                loot.transform.position = new Vector3(transform.position.x,0,transform.position.z);
+            }
             Pooler.Instance.Depop(Pooler.Key.BasicEnemy, gameObject);
         }
 

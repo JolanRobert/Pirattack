@@ -100,7 +100,7 @@ namespace Task
             return colors[Random.Range(0, colors.Count)];
         }
 
-        private void Expire()
+        protected virtual void Expire()
         {
             OnExpire.Invoke(this);
         }

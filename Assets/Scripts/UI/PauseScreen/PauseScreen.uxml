@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/UI/Menus.uss?fileID=7433441132597879392&amp;guid=bfbc368cf46bf5e499a98a53f6471940&amp;type=3#Menus" />
+    <ui:VisualElement name="VE_Bg" class="container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); visibility: visible;">
+        <ui:Label tabindex="-1" text="Pause" display-tooltip-when-elided="true" name="LB_Title" class="h1" style="align-self: center; -unity-text-align: upper-center; background-color: rgb(255, 255, 255); border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; -unity-font-style: bold; font-size: 150px;" />
+        <ui:Button text="Menu" display-tooltip-when-elided="true" name="BT_Menu" class="button" style="width: 400px;" />
+    </ui:VisualElement>
+</ui:UXML>
