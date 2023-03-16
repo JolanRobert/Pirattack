@@ -2,7 +2,6 @@ using Managers;
 using MyBox;
 using Scene;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Utils;
 
@@ -47,24 +46,24 @@ namespace UI
             scoreLB = root.Q<Label>(LB_SCORE);
             
             // Binding
-            Utilities.BindButton(menuBT, ToMenu, true);
-            Utilities.BindButton(replayBT, Replay, true);
+            Utilities.BindButton(menuBT, ToMenu, true, false);
+            Utilities.BindButton(replayBT, Replay, true, false);
             GameManager.Instance.OnEndGame -= Display;
             GameManager.Instance.OnEndGame += Display;
         }
 
         private void Display()
         {
-            Debug.Log("Display");
-            replayBT.Focus();
-            
             var nbKills = GameManager.Instance.GetNbEnemiesKilled();
-            timerLB.text = $"{(int) GameManager.Instance.currentTimer()} min";
+            timerLB.text = $"{(int) GameManager.Instance.currentTimer()} s";
             killsLB.text = $"{nbKills} kills";
             scoreLB.text = $"{(int)(nbKills * (1 + 0.1f * GameManager.Instance.GetElapsedTimeInGame()))}";
             
+            replayBT.Focus();
+            
             bgVE.visible = true;
         }
+        
         private void ToMenu()
         {
             SceneController.Instance.QuickLoad(menuScene);
