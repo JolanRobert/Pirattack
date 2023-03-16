@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: 5029171639437275723}
   - component: {fileID: 5313404419607920829}
   - component: {fileID: 460577380659711133}
+  - component: {fileID: 5633558210243887846}
   m_Layer: 0
   m_Name: SM_Desk
   m_TagString: Untagged
@@ -332,6 +333,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5633558210243887846
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5402228669041397982}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9634374, y: 1.8870759, z: 0.85276425}
+  m_Center: {x: -0.004233271, y: -0.037930846, z: 0.4263822}
 --- !u!1 &6563868546421376148
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,7 +556,7 @@ Transform:
   - {fileID: 1650305240145641669}
   - {fileID: 343175120858622651}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9125333595635836411
 GameObject:
