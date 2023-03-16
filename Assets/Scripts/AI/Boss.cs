@@ -5,6 +5,7 @@ using Managers;
 using MyBox;
 using Player;
 using UnityEngine;
+using UnityEngine.UI;
 using Utils;
 using Random = UnityEngine.Random;
 
@@ -22,6 +23,8 @@ namespace AI
         [SerializeField] private string[] voicelinesDead;
         [SerializeField] private GameObject FXShield;
         [SerializeField] private BossBT bossBt;
+        [SerializeField] private Slider HealthBarBoss;
+        [SerializeField] private Slider HealthBarShield;
 
         private int shieldHealth = 0;
 
@@ -35,6 +38,8 @@ namespace AI
         {
             GameManager.Instance.OnLaunchingBoss += BeginAttack;
             bossBt.enabled = false;
+            HealthBarBoss.gameObject.SetActive(false);
+            HealthBarShield.gameObject.SetActive(false);
         }
 
         private void OnDisable()
@@ -46,6 +51,8 @@ namespace AI
         {
             maxHp = data.maxHealth; // possible to change max health value
             healthEnemy.Init(maxHp);
+            HealthBarBoss.value = healthEnemy.GetRatio();
+            HealthBarBoss.gameObject.SetActive(true);
             ResetAttackBossDefaultValue();
             Print_Argh();
             AddShield();
@@ -62,8 +69,11 @@ namespace AI
         {
             if (shieldColor != PlayerColor.None && shieldColor != color) return;
             shieldHealth -= damage;
+            HealthBarShield.value = ShieldHealthRatio();
+            HealthBarShield.gameObject.SetActive(true);
             if (shieldHealth <= 0)
             {
+                HealthBarShield.gameObject.SetActive(false);
                 ResetAttackBossDefaultValue();
                 FXShield.SetActive(false);
             }
@@ -78,6 +88,7 @@ namespace AI
         {
             float ratio = healthEnemy.GetRatio();
             healthEnemy.LoseHealth(damage);
+            HealthBarBoss.value = healthEnemy.GetRatio();
             if (ratio > 0.5f && healthEnemy.GetRatio() <= 0.5f)
             {
                 AddShield();
@@ -107,13 +118,20 @@ namespace AI
             gameObject.SetActive(false);
         }
 
+        private float ShieldHealthRatio()
+        {
+            return (float)shieldHealth / (float)data.maxHealthShield;
+        }
+
         private void AddShield()
         {
             shieldColor = (PlayerColor)Random.Range(0, 2);
             shieldHealth = data.maxHealthShield;
+            HealthBarShield.value = ShieldHealthRatio();
             FXShield.GetComponent<Renderer>().material.color = (shieldColor == PlayerColor.Blue)
                 ? new Color(0, 0, 1, 0.5f)
                 : new Color(1, 0, 0, 0.5f);
+            HealthBarShield.gameObject.SetActive(true);
             FXShield.SetActive(true);
             IsWasAttacked = ShieldTakeDamage;
         }
