@@ -27,13 +27,14 @@ namespace UI
 
         private void Update()
         {
-            if (!on) return;
+            if (GameManager.Instance.GameEnded || !on) return;
             if (p1Device is not null && p2Device is not null) Hide();
         }
         
         #region Input and devices
             protected override void OnDeviceChange(InputDevice device, InputDeviceChange change)
             {
+                if (GameManager.Instance.GameEnded) return;
                 switch (change)
                 {
                     case InputDeviceChange.Disconnected:
