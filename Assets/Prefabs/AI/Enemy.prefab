@@ -305,7 +305,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  perkChances: 1
+  perkChances: 0.1
 --- !u!114 &7802507471193136510
 MonoBehaviour:
   m_ObjectHideFlags: 0
