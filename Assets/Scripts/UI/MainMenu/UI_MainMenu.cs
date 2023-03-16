@@ -76,9 +76,9 @@ namespace UI
             quitBT = root.Q<Button>(BT_QUIT);
 
             //Bindings
-            Utilities.BindButton(playBT, Play, true);
-            Utilities.BindButton(creditsBT, Credits, true);
-            Utilities.BindButton(quitBT, Quit, true);
+            Utilities.BindButton(playBT, Play, true, true);
+            Utilities.BindButton(creditsBT, Credits, true, true);
+            Utilities.BindButton(quitBT, Quit, true, true);
             
             // Default values
             DisplayLayout(MenuState.Menu);

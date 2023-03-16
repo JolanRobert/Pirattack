@@ -2,7 +2,6 @@ using Managers;
 using MyBox;
 using Scene;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Utils;
 
@@ -47,8 +46,8 @@ namespace UI
             scoreLB = root.Q<Label>(LB_SCORE);
             
             // Binding
-            Utilities.BindButton(menuBT, ToMenu, true);
-            Utilities.BindButton(replayBT, Replay, true);
+            Utilities.BindButton(menuBT, ToMenu, true, false);
+            Utilities.BindButton(replayBT, Replay, true, false);
             GameManager.Instance.OnEndGame -= Display;
             GameManager.Instance.OnEndGame += Display;
         }

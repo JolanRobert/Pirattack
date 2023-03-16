@@ -46,6 +46,9 @@ public class UI_Countdown : MonoBehaviour
     {
         started = false;
         currentAnim = 0;
+        ChangeUSS(lb1, USS_HIDDEN, USS_DISPLAYED);
+        ChangeUSS(lb2, USS_HIDDEN, USS_DISPLAYED);
+        ChangeUSS(lb3, USS_HIDDEN, USS_DISPLAYED);
     }
 
     private void NextAnim()
