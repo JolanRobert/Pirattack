@@ -47,6 +47,7 @@ namespace UI
         {
             Time.timeScale = 0f;
             bgVE.visible = true;
+            btMenu.Focus();
         }
 
         private void Hide()

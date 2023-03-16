@@ -11,5 +11,5 @@
             <ui:Label tabindex="-1" text="Ready" display-tooltip-when-elided="true" name="LB_P2Ready" class="readyLabel playerLabel" style="visibility: hidden;" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="infos" style="background-image: url(&apos;project://database/Assets/Art/UI/Menus/JoinFish.png?fileID=2800000&amp;guid=8fe26ea36267a5943b0e3cbe254ee908&amp;type=3#JoinFish&apos;); width: 300px; align-self: center; height: 100px; position: absolute; top: 225px; -unity-background-scale-mode: scale-to-fit;" />
+    <ui:VisualElement name="infos" style="background-image: url(&apos;project://database/Assets/Art/UI/Menus/JoinFish.png?fileID=21300000&amp;guid=c4832d382a7bada448f3d039afb023fd&amp;type=3#JoinFish&apos;); width: 450px; align-self: center; height: 100px; position: absolute; top: 480px; -unity-background-scale-mode: scale-to-fit;" />
 </ui:UXML>
