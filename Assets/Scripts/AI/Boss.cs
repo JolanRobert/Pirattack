@@ -119,6 +119,7 @@ namespace AI
         {
             LootSystem();
             Print_DieVoicelines();
+            GameManager.Instance.AddCoins(data.nbCoinsDropped);
             GameManager.Instance.OnEndFightBoss?.Invoke();
             gameObject.SetActive(false);
         }

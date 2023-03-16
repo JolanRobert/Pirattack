@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using MyBox;
+using TMPro;
 using UnityEngine;
 
 namespace Managers
@@ -28,10 +29,12 @@ namespace Managers
         [SerializeField, ReadOnly] private int chaosBar;
         [SerializeField] private GameObject chaosBarCanvas;
         [SerializeField] private GameObject BossBar;
+        [SerializeField] private TMP_Text nbCoinText;
     
         private float timer;
         private float endTime;
         private int nbEnemiesKilled = 0;
+        private int nbCoins = 0;
         private bool waitingForBoss = false;
         private float timerDepopBoss;
         private bool gameEnded;
@@ -44,6 +47,8 @@ namespace Managers
         private void Start()
         {
             timer = 0;
+            nbCoins = 0;
+            nbCoinText.text = nbCoins + " coin" + (nbCoins > 1 ? "s" : "");
             OnIncreaseChaosBar += CheckChaosBar;
             OnDecreaseChaosBar += CheckChaosBar;
             OnLaunchingBoss += LaunchBoss;
@@ -71,7 +76,18 @@ namespace Managers
         {
             return endTime / 60f;
         }
-    
+
+        public int GetTotalCoins()
+        {
+            return nbCoins;
+        }
+
+        public void AddCoins(int nb)
+        {
+            nbCoins += nb;
+            nbCoinText.text = nbCoins + " coin" + (nbCoins > 1 ? "s" : "");
+        }
+
         private void CheckChaosBar()
         {
             switch (chaosBar)

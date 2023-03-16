@@ -57,10 +57,11 @@ namespace UI
         {
             var nbKills = GameManager.Instance.GetNbEnemiesKilled();
             var timer = GameManager.Instance.currentTimer();
+            var nbCoins = GameManager.Instance.GetTotalCoins();
             timerLB.text = $"{(int) timer} s";
             killsLB.text = nbKills + " kill" + (nbKills > 1 ? "s" : "");
-            scoreLB.text = $"{(int)(nbKills * (1 + 0.1f * timer))}";
-            
+            scoreLB.text = nbCoins + " coin" + (nbCoins > 1 ? "s" : "");
+
             replayBT.Focus();
             
             bgVE.visible = true;
