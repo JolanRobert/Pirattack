@@ -13,8 +13,8 @@ namespace AI.BossPattern
         public override float GetDelay()
         {
             BossData data = caster.data;
-            float animationBottle = 4f; // 4f = temps de l'animation up
-            float animationFallBottle = data.nbBottleRain * (data.delayBetweenBottleRain + 1.2f); // 1.2f = temps de l'animation fall
+            float animationBottle = 5.5f; // 3f = temps de l'animation up
+            float animationFallBottle = data.nbBottleHarassment * data.delayBetweenBottleHarassment + 1.2f;
             return animationBottle + data.delayBeforeFallingRain + animationFallBottle;
         }
 
@@ -34,34 +34,42 @@ namespace AI.BossPattern
         {
             BossData data = caster.data;
             caster.Animator.SetTrigger("ThrowBottle");
+            yield return new WaitForSeconds(1f);
             for (int i = 0; i < 4; i++)
             {
-                yield return new WaitForSeconds(1f);
                 Instantiate(bottleAnimationPrefab, caster.transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(0.75f);
             }
+
             yield return new WaitForSeconds(data.delayBeforeFallingRain);
+
             for (int i = 0; i < data.nbBottleRain; i++)
             {
-                Vector3 randomPos = new Vector3(Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain, -data.minImpactRangeRain, data.minImpactRangeRain),
-                    55, 
-                    Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain, -data.minImpactRangeRain, data.minImpactRangeRain));
-            
+                Vector3 randomPos = new Vector3(
+                    Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain,
+                        -data.minImpactRangeRain, data.minImpactRangeRain),
+                    55,
+                    Utilities.RandomRangeWithExclusion(-data.maxImpactRangeRain, data.maxImpactRangeRain,
+                        -data.minImpactRangeRain, data.minImpactRangeRain));
+
                 Vector3 fallPosition = caster.transform.position + randomPos;
 
                 GameObject bottle = Pooler.Instance.Pop(Pooler.Key.Bottle);
+                bottle.SetActive(false);
                 bottle.transform.position = fallPosition;
                 bottle.GetComponent<BoxCollider>().size = new Vector3(data.impactSizeRain, 2, data.impactSizeRain);
+                bottle.SetActive(true);
 
-                fallPosition.y = 0.5f;
+                fallPosition.y = -1.5f;
                 GameObject fx = VFXPooler.Instance.Pop(VFXPooler.Key.BottleVFX);
                 fx.transform.position = fallPosition;
-                fx.transform.localScale = new Vector3(data.impactSizeRain, 1, data.impactSizeRain);
-            
+                fx.transform.localScale = new Vector3(data.impactSizeRain, 0.3f, data.impactSizeRain);
+
                 bottle.GetComponent<BottleFalling>().Init(data.speedBottleRain, fx);
                 yield return new WaitForSeconds(caster.data.delayBetweenBottleRain);
             }
         }
-    
+
         public override void Execute()
         {
             caster.currentPattern = this;

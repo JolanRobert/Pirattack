@@ -16,8 +16,8 @@ namespace AI.BT
         {
             Pattern pattern = patterns[Random.Range(0, patterns.Length)];
             
-            while (pattern == GetData<Pattern>("currentPattern"))
-                   pattern = patterns[Random.Range(0, patterns.Length)];
+            // while (pattern == GetData<Pattern>("currentPattern"))
+            //        pattern = patterns[Random.Range(0, patterns.Length)];
             
             SetDataInBlackboard("WaitTime", pattern.GetDelay() + pattern.caster.data.delayBetweenPattern);
             SetDataInBlackboard("currentPattern", pattern);

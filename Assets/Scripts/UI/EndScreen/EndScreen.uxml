@@ -8,8 +8,8 @@
             <ui:Label tabindex="-1" text="Score" display-tooltip-when-elided="true" name="LB_Score" class="endScreenLBL" />
         </ui:VisualElement>
         <ui:VisualElement name="VE_Buttons" class="verticalContainer" style="position: absolute; bottom: 15px; justify-content: space-between; width: 750px;">
-            <ui:Button text="Menu" display-tooltip-when-elided="true" name="BT_Menu" class="button2" style="width: 300px;" />
-            <ui:Button text="Replay" display-tooltip-when-elided="true" name="BT_Replay" class="button2" style="width: 300px;" />
+            <ui:Button text="Menu" display-tooltip-when-elided="true" name="BT_Menu" class="button2" />
+            <ui:Button text="Replay" display-tooltip-when-elided="true" name="BT_Replay" class="button2" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
