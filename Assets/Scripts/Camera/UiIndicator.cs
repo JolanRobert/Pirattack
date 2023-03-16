@@ -134,7 +134,6 @@ public class UiIndicator : MonoBehaviour
         else
         {
             indics[index].transform.position = FindPointOnRectBorder(pos - center, center,boxRect);
-            Debug.DrawRay(center,(pos - center)*1000,Color.red);
         }
         indics[index].pinHead.rotation = Quaternion.Lerp(indics[index].pinHead.rotation,Quaternion.Euler(0,0,Vector2.SignedAngle(Vector2.up,(Vector2)indics[index].transform.position - center)),5*Time.deltaTime);
     }
@@ -189,12 +188,6 @@ public class UiIndicator : MonoBehaviour
         float angleSupNeg = Vector2.SignedAngle(Vector2.up, new Vector2(newRect.xMin,newRect.yMax) - center);
         float angleInfNeg = Vector2.SignedAngle(Vector2.up, newRect.min - center);
         float angle = Vector2.SignedAngle(Vector2.up, dir);
-        
-        Debug.DrawRay(center,Quaternion.Euler(0,0,angleSup) * Vector3.up * 2000,Color.green);
-        Debug.DrawRay(center,Quaternion.Euler(0,0,angleInf) * Vector3.up * 2000,Color.green);
-        Debug.DrawRay(center,Quaternion.Euler(0,0,angleSupNeg) * Vector3.up * 2000,Color.green);
-        Debug.DrawRay(center,Quaternion.Euler(0,0,angleInfNeg) * Vector3.up * 2000,Color.green);
-        
         
         if (angle > angleSup && angle < angleSupNeg)
         {

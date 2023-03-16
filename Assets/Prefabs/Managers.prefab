@@ -50,9 +50,15 @@ MonoBehaviour:
   decreaseChaosBar: 10
   depopBossTimer: 60
   triggerBossDoor: {fileID: 0}
-  bossDoor: {fileID: 0}
+  triggerBossExitDoor: {fileID: 0}
+  bossDoorOpen: {fileID: 0}
+  bossDoorClose: {fileID: 0}
   boss: {fileID: 0}
   chaosBar: 50
+  chaosBarCanvas: {fileID: 0}
+  BossBar: {fileID: 0}
+  nbCoinText: {fileID: 0}
+  pauseScreen: {fileID: 0}
 --- !u!114 &4432806130032610369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +73,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   voicelineText: {fileID: 0}
   timerVoiceline: 5
+  chaosBar: {fileID: 0}
   ChaosBarSlider: {fileID: 0}
+  ChaosBarSliderImageColor: {fileID: 0}
   CanvasEndGame: {fileID: 0}
 --- !u!114 &4491475543167421988
 MonoBehaviour:

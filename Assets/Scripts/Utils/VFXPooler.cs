@@ -137,6 +137,7 @@ namespace Utils
             PerkZapLine,
             PerkIceVFX,
             ExplosionVFX,
+            CoinVFX
         }
     }
 }

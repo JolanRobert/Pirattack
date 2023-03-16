@@ -104,6 +104,10 @@ namespace AI
                 GameObject loot = Pooler.Instance.Pop(Pooler.Key.PerkChest);
                 loot.transform.position = new Vector3(transform.position.x,0,transform.position.z);
             }
+
+            GameObject fx = VFXPooler.Instance.Pop(VFXPooler.Key.CoinVFX);
+            fx.transform.position = transform.position;
+            VFXPooler.Instance.DelayedDepop(1,VFXPooler.Key.CoinVFX,fx);
             GameManager.Instance.AddCoins(enemyData.nbCoinsDropped);
             Pooler.Instance.Depop(Pooler.Key.BasicEnemy, gameObject);
         }

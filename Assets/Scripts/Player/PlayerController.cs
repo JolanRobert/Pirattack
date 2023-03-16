@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -95,6 +96,11 @@ namespace Player
         public void OnCancelInteract(InputAction.CallbackContext context)
         {
             if (context.started) cancelInteractInput = true;
+        }
+
+        public void OnPause(InputAction.CallbackContext context)
+        {
+            if (context.started) GameManager.Instance.PauseScreen.TogglePause();
         }
         #endregion
 

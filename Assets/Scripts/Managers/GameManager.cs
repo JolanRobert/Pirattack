@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using MyBox;
 using TMPro;
+using UI;
 using UnityEngine;
 
 namespace Managers
@@ -17,6 +18,7 @@ namespace Managers
         public Action OnDecreaseChaosBar;
         public Action OnEndGame;
         public bool GameEnded => gameEnded;
+        public UI_PauseScreen PauseScreen => pauseScreen;
         
         [SerializeField] private int increaseChaosBar = 10;
         [SerializeField] private int decreaseChaosBar = 10;
@@ -30,6 +32,7 @@ namespace Managers
         [SerializeField] private GameObject chaosBarCanvas;
         [SerializeField] private GameObject BossBar;
         [SerializeField] private TMP_Text nbCoinText;
+        [SerializeField] private UI_PauseScreen pauseScreen;
     
         private float timer;
         private float endTime;

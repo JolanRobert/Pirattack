@@ -13,6 +13,7 @@ public static UIManager Instance;
 
 [SerializeField] private TMP_Text voicelineText;
 [SerializeField] private float timerVoiceline = 5f;
+[SerializeField] private GameObject chaosBar;
 [SerializeField] private Slider ChaosBarSlider;
 [SerializeField] private Image ChaosBarSliderImageColor;
 [SerializeField] private GameObject CanvasEndGame;
@@ -38,17 +39,29 @@ public static UIManager Instance;
     
     private void Start()
     {
-        GameManager.Instance.OnIncreaseChaosBar += UpdateChaosSlider;
-        GameManager.Instance.OnDecreaseChaosBar += UpdateChaosSlider;
-        UpdateChaosSlider();
+        GameManager.Instance.OnIncreaseChaosBar += IncreaseChaosSlider;
+        GameManager.Instance.OnDecreaseChaosBar += DecreaseChaosSlider;
     }
     
-    public void UpdateChaosSlider()
+    private void IncreaseChaosSlider()
     {
-        ChaosBarSliderImageColor.color = UnityEngine.Color.black;
+        StartCoroutine(BlinkCoroutine(new UnityEngine.Color(0f, 0.78f, 0f, 1f)));
         float value = GameManager.Instance.GetChaosValueRatio();
-        if (ChaosBarSlider)
-        ChaosBarSlider.DOValue(value, 0.5f);
+        if (ChaosBarSlider) ChaosBarSlider.DOValue(value, 0.3f);
+    }
+
+    private void DecreaseChaosSlider()
+    {
+        StartCoroutine(BlinkCoroutine(new UnityEngine.Color(0.78f, 0f, 0f, 1f)));
+        float value = GameManager.Instance.GetChaosValueRatio();
+        if (ChaosBarSlider) ChaosBarSlider.DOValue(value, 0.3f);
+    }
+
+    private IEnumerator BlinkCoroutine(UnityEngine.Color color)
+    {
+        chaosBar.transform.DOShakePosition(0.5f, Vector3.right*10);
+        ChaosBarSliderImageColor.DOColor(color, 0.25f);
+        yield return new WaitForSeconds(0.25f);
         ChaosBarSliderImageColor.DOColor(UnityEngine.Color.white, 0.25f);
     }
     

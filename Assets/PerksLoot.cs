@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 public class PerksLoot : MonoBehaviour
 {
     public LootType perk;
-    public GameObject fxLoot;
     public GameObject[] perksobj;
     public GameObject iconParent;
     public PlayerController[] controller = new PlayerController[2];
@@ -90,7 +90,9 @@ public class PerksLoot : MonoBehaviour
         controller[0].Stats.AddStat(perk);
         controller[0].interaction -= GetUpgradePlayer1;
         if(controller[1]) controller[1].interaction -= GetUpgradePlayer2;
-        Destroy(Instantiate(fxLoot, transform.position, Quaternion.Euler(0, 0, 0)),1);
+        GameObject fx = VFXPooler.Instance.Pop(VFXPooler.Key.CoinVFX);
+        fx.transform.position = transform.position;
+        VFXPooler.Instance.DelayedDepop(1,VFXPooler.Key.CoinVFX,fx);
         Destroy(gameObject);
     }
     
@@ -100,7 +102,9 @@ public class PerksLoot : MonoBehaviour
         controller[1].Stats.AddStat(perk);
         if(controller[0]) controller[0].interaction -= GetUpgradePlayer1;
         controller[1].interaction -= GetUpgradePlayer2;
-        Destroy(Instantiate(fxLoot, transform.position, Quaternion.Euler(0, 0, 0)),1);
+        GameObject fx = VFXPooler.Instance.Pop(VFXPooler.Key.CoinVFX);
+        fx.transform.position = transform.position;
+        VFXPooler.Instance.DelayedDepop(1,VFXPooler.Key.CoinVFX,fx);
         Destroy(gameObject);
     }
 }
