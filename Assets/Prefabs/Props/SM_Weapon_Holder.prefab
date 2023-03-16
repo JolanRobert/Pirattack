@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6223524352111861181}
   - component: {fileID: 2808062599871665582}
   - component: {fileID: 3019437882971765771}
+  - component: {fileID: 4527746851334000286}
   m_Layer: 0
   m_Name: SM_Weapon_Holder
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2808062599871665582
 MeshFilter:
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3043319508471551541, guid: 4bb63f57dbf0fa445bb5d71d74788b18, type: 3}
+  - {fileID: 2100000, guid: f7dc9897f7a0b2c44970f5cb03c804de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,3 +84,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4527746851334000286
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5392939132735467084}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6162584, y: 1.9900815, z: 1.6651998}
+  m_Center: {x: -0.017677337, y: -0.7880418, z: 0.8325999}
