@@ -28,7 +28,7 @@ namespace AI
         [SerializeField] protected Rigidbody rb;
         [SerializeField] private new SkinnedMeshRenderer renderer;
         [SerializeField] private Material[] materials;
-        [SerializeField] private UnityEvent OnShoot;
+        [SerializeField] public UnityEvent OnShoot;
 
         private bool isIced;
         protected bool enemyInVision = false;

@@ -16,7 +16,7 @@ namespace AI.BossPattern
         {
             BossData data = caster.data;
             float animationTime = ((55 / Time.deltaTime * 45f) * Time.deltaTime) / 1000f;
-            float animationBottle = 4f; // 4f = temps de l'animation up
+            float animationBottle = 3f; // 3f = temps de l'animation up
             float animationFallBottle = data.nbBottleHarassment * data.delayBetweenBottleHarassment + animationTime;
             return animationBottle + data.delayBeforeFallingHarassment + animationFallBottle;
         }

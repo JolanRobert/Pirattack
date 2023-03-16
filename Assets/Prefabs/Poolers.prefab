@@ -143,3 +143,10 @@ MonoBehaviour:
       baseCount: 10
       baseRefreshSpeed: 0
       refreshSpeed: 0
+  - key: 5
+    pool:
+      prefab: {fileID: 6883638672552996417, guid: b0b9b7d2528582d4583583c14a689f96,
+        type: 3}
+      baseCount: 10
+      baseRefreshSpeed: 0
+      refreshSpeed: 0
