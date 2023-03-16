@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using AI.BossPattern;
+using DG.Tweening;
 using Managers;
 using MyBox;
 using Player;
@@ -25,6 +26,7 @@ namespace AI
         [SerializeField] private BossBT bossBt;
         [SerializeField] private Slider HealthBarBoss;
         [SerializeField] private Slider HealthBarShield;
+        [SerializeField] private Material[] ShieldFXMaterial;
 
         private int shieldHealth = 0;
 
@@ -90,6 +92,8 @@ namespace AI
         {
             float ratio = healthEnemy.GetRatio();
             healthEnemy.LoseHealth(damage);
+            renderer.material.color = UnityEngine.Color.black;
+            renderer.material.DOColor(UnityEngine.Color.white, 0.15f);
             HealthBarBoss.value = healthEnemy.GetRatio();
             if (ratio > 0.5f && healthEnemy.GetRatio() <= 0.5f)
             {
@@ -130,9 +134,9 @@ namespace AI
             shieldColor = (PlayerColor)Random.Range(0, 2);
             shieldHealth = data.maxHealthShield;
             HealthBarShield.value = ShieldHealthRatio();
-            FXShield.GetComponent<Renderer>().material.color = (shieldColor == PlayerColor.Blue)
-                ? new Color(0, 0, 1, 0.5f)
-                : new Color(1, 0, 0, 0.5f);
+            FXShield.GetComponent<Renderer>().material = (shieldColor == PlayerColor.Blue)
+                ? ShieldFXMaterial[0]
+                : ShieldFXMaterial[1];
             HealthBarShield.gameObject.SetActive(true);
             FXShield.SetActive(true);
             IsWasAttacked = ShieldTakeDamage;

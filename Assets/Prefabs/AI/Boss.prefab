@@ -870,6 +870,9 @@ MonoBehaviour:
   bossBt: {fileID: 8964707928474049485}
   HealthBarBoss: {fileID: 3724849640888748211}
   HealthBarShield: {fileID: 6346956395476137895}
+  ShieldFXMaterial:
+  - {fileID: 2100000, guid: 45ad12c06678c5f4399426b55a3be978, type: 2}
+  - {fileID: 2100000, guid: 67749c4748f5ad543bcbfea3de54393b, type: 2}
 --- !u!114 &8964707928474049485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1094,7 +1097,7 @@ GameObject:
   - component: {fileID: 1670947720008549238}
   - component: {fileID: 5760977653401601415}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1108,8 +1111,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3408901902402148530}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.98, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0, y: 0.98, z: 0.4}
+  m_LocalScale: {x: 2.8, y: 2.8, z: 2.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3963618233194230699}

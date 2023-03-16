@@ -26,7 +26,7 @@ namespace AI
         [SerializeField] protected NavMeshAgent agent;
         [SerializeField] protected Animator animator;
         [SerializeField] protected Rigidbody rb;
-        [SerializeField] private new SkinnedMeshRenderer renderer;
+        [SerializeField] protected new SkinnedMeshRenderer renderer;
         [SerializeField] private Material[] materials;
         [SerializeField] public UnityEvent OnShoot;
 
