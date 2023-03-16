@@ -55,9 +55,10 @@ namespace UI
         private void Display()
         {
             var nbKills = GameManager.Instance.GetNbEnemiesKilled();
-            timerLB.text = $"{(int) GameManager.Instance.currentTimer()} s";
-            killsLB.text = $"{nbKills} kills";
-            scoreLB.text = $"{(int)(nbKills * (1 + 0.1f * GameManager.Instance.GetElapsedTimeInGame()))}";
+            var timer = GameManager.Instance.currentTimer();
+            timerLB.text = $"{(int) timer} s";
+            killsLB.text = nbKills + " kill" + (nbKills > 1 ? "s" : "");
+            scoreLB.text = $"{(int)(nbKills * (1 + 0.1f * timer))}";
             
             replayBT.Focus();
             

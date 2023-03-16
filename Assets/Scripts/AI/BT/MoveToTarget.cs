@@ -8,6 +8,7 @@ namespace AI.BT
     public class MoveToTarget : Node
     {
         private readonly NavMeshAgent agent;
+
         public MoveToTarget(NavMeshAgent _agent)
         {
             agent = _agent;
@@ -15,28 +16,27 @@ namespace AI.BT
 
         public override NodeState Evaluate(Node root)
         {
-            //float distance = 0;
-            /*var enemyShield = GetData("caster");
-            if (enemyShield is EnemyShield shield)
-                distance = shield.Data.AttackDistance;
-            else
-            {
-                Enemy enemy = enemyShield as Enemy;
-                if (enemy != null) distance = enemy.Data.AttackDistance;
-            }*/
+            //first iteration
             PlayerController target = GetData<PlayerController>("Target");
             var agentPosition = agent.transform.position;
             var targetPosition = target.transform.position;
             if (target == null)
             {
-                agent.SetDestination(agentPosition);
+                agent.SetDestination(Vector3.zero);
                 return NodeState.Failure;
             }
 
-            Vector3 direction = (targetPosition - agentPosition).normalized;
-            Vector3 destination = targetPosition/* - direction * distance*/;
-            destination.y = agentPosition.y;
-            agent.SetDestination(destination);
+            targetPosition.y = agentPosition.y;
+            agent.SetDestination(targetPosition);
+
+            //second iteration
+            float angularVision = 60;
+            int indexOfSeed = 6;
+            float randomizeAngle = Random.Range(0, angularVision);
+            var vec = Quaternion.Euler(0, angularVision * (indexOfSeed - 1) + randomizeAngle, 0) * Vector3.forward;
+            agent.SetDestination(agent.destination + Vector3.forward * (agent.radius + agent.radius + 0.5f));
+
+
             return NodeState.Success;
         }
     }

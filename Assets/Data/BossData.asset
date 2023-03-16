@@ -16,14 +16,13 @@ MonoBehaviour:
   delayBetweenPattern: 1
   maxHealthShield: 2000
   nbLoot: 3
-  loot:
-  - {fileID: 2798511252438826758, guid: a7345c2050749ef468fbea5f34a16ffa, type: 3}
+  loot: {fileID: 0}
   speedBottleRain: 5
-  impactSizeRain: 1
+  impactSizeRain: 1.5
   minImpactRangeRain: 1
   maxImpactRangeRain: 4
   nbBottleRain: 10
-  damagePerBottleRain: 0
+  damagePerBottleRain: 150
   delayBetweenBottleRain: 0.3
   delayBeforeFallingRain: 3
   SpeedBottleHarassment: 5
@@ -63,6 +62,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   ratioDistanceCurve: 4
   nbBottleHarassment: 10
-  damagePerBottleHarassment: 0
+  damagePerBottleHarassment: 150
   delayBetweenBottleHarassment: 0.3
   delayBeforeFallingHarassment: 1.5

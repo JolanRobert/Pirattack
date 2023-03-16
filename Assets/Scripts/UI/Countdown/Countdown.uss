@@ -17,4 +17,5 @@
     font-size: 250px;
     color: rgb(255, 255, 255);
     position: absolute;
+    -unity-font-definition: url('project://database/Assets/Art/Font/Pirate%20Scripts%20SDF.asset?fileID=11400000&guid=9569c77653398344bab4efcdeda613d2&type=2#Pirate Scripts SDF');
 }
