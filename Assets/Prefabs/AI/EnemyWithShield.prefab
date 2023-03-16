@@ -30244,6 +30244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1810013005819741782}
   - component: {fileID: 4888187534809316240}
+  - component: {fileID: 933594974626039493}
   m_Layer: 0
   m_Name: maw_up
   m_TagString: Untagged
@@ -30350,6 +30351,25 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.44192296, y: -0.0030955076, z: 0.26754585}
     m_Extent: {x: 0.90566343, y: 1.4938788, z: 0.57763076}
   m_DirtyAABB: 0
+--- !u!114 &933594974626039493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6603592621158316107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineWidth: 3
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+  needsUpdate: 1
 --- !u!1 &6648911338084226517
 GameObject:
   m_ObjectHideFlags: 0
@@ -50234,6 +50254,7 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
   - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
+  perkChances: 0
   OnShoot:
     m_PersistentCalls:
       m_Calls: []
