@@ -42,6 +42,7 @@ namespace Player
         {
             respawnTrigger.SetActive(true);
             isDown = true;
+            playerController.Interact.EndInteract();
             CheckEndGame();
         }
 
