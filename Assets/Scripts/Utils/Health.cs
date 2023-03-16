@@ -40,7 +40,7 @@ namespace Utils
         private IEnumerator PassiveRegeneration()
         {
             yield return new WaitForSeconds(regenTick);
-            if (currentHealth > 0) GainHealth(regenValue);
+            if (currentHealth > 0 && currentHealth < maxHealth) GainHealth(regenValue);
             
             regenCR = StartCoroutine(PassiveRegeneration());
         }

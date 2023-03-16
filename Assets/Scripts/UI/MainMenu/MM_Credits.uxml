@@ -2,7 +2,10 @@
     <Style src="project://database/Assets/Scripts/UI/Menus.uss?fileID=7433441132597879392&amp;guid=bfbc368cf46bf5e499a98a53f6471940&amp;type=3#Menus" />
     <Style src="project://database/Assets/Scripts/UI/MainMenu/MainMenu.uss?fileID=7433441132597879392&amp;guid=3af38dff7aab6ed408634b045d1f970c&amp;type=3#MainMenu" />
     <ui:VisualElement name="VE_BackgroundC" class="container background">
-        <ui:VisualElement name="VE_Credits" style="width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Art/UI/Menus/Post_it_credits.png?fileID=2800000&amp;guid=acabff396331c814ab095aa3b5905636&amp;type=3#Post_it_credits&apos;);" />
-        <ui:Label tabindex="-1" text="&lt;- B to go back" display-tooltip-when-elided="true" name="LB_BackInfos" class="labelInfos" />
+        <ui:VisualElement name="VE_Credits" style="width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Art/UI/Menus/Credits.png?fileID=2800000&amp;guid=acabff396331c814ab095aa3b5905636&amp;type=3#Credits&apos;);" />
+        <ui:VisualElement name="logo_SIG" style="position: absolute; width: 453px; height: 184px; top: 74px; left: 1415px; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; padding-left: 50px; padding-right: 50px; padding-top: 30px; padding-bottom: 20px; background-image: url(&apos;project://database/Assets/Art/UI/Menus/bt2.png?fileID=2800000&amp;guid=199494e7bd7820c49a36a39c4313322b&amp;type=3#bt2&apos;); -unity-background-scale-mode: stretch-to-fill; -unity-background-image-tint-color: rgb(231, 231, 231);">
+            <ui:VisualElement name="logo" style="background-color: rgba(0, 0, 0, 0); width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Art/UI/Menus/SIG_Logo.png?fileID=2800000&amp;guid=a020623675e355a4ab7dfaf2fe46274c&amp;type=3#SIG_Logo&apos;); -unity-background-scale-mode: stretch-to-fill; rotate: 4deg;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="infos" style="position: absolute; bottom: 20px; left: 20px; height: 125px; width: 300px; background-image: url(&apos;project://database/Assets/Art/UI/Menus/BackFish.png?fileID=21300000&amp;guid=e6f3373984a1ce04db45dd482fd70583&amp;type=3#BackFish&apos;); -unity-background-scale-mode: scale-to-fit;" />
     </ui:VisualElement>
 </ui:UXML>

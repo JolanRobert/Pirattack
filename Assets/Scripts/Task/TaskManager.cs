@@ -130,5 +130,7 @@ namespace Task
         [Range(0f, 10f)] public float Width;
         public Color Blue;
         public Color Red;
+        public Color BlueInteractable;
+        public Color RedInteractable;
     }
 }

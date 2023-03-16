@@ -11,6 +11,7 @@ namespace Player
         
         [SerializeField] private PlayerController playerController;
         [SerializeField] private Transform firePoint;
+        [SerializeField] private ParticleSystem muzzlePS;
 
         private bool canShoot = true;
         private WeaponData weapon => playerController.Stats.Weapon;
@@ -24,6 +25,8 @@ namespace Player
             bullet.Init(playerController, weapon);
             StartCoroutine(ShootCooldown());
             OnShoot?.Invoke(weapon);
+            
+            muzzlePS.Play();
             
             playerController.Animation.SetTrigger(PlayerAnimation.AnimTrigger.Attack);
         }

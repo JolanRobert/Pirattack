@@ -1,8 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="Lobby" src="project://database/Assets/Scripts/UI/Lobby/Lobby.uxml?fileID=9197481963319205126&amp;guid=0495386cad0077c48a206f5ac5c1f00b&amp;type=3#Lobby" />
     <Style src="project://database/Assets/Scripts/UI/Menus.uss?fileID=7433441132597879392&amp;guid=bfbc368cf46bf5e499a98a53f6471940&amp;type=3#Menus" />
-    <ui:VisualElement name="VE_Bg" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); visibility: hidden;">
-        <ui:Label tabindex="-1" text="Controllers" display-tooltip-when-elided="true" name="LB_Title" style="align-self: center; -unity-text-align: upper-center; background-color: rgb(255, 255, 255); border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; -unity-font-style: bold; font-size: 150px; padding-left: 50px; padding-right: 50px; padding-top: 20px; padding-bottom: 20px; margin-top: 54px;" />
-        <ui:Instance template="Lobby" name="VE_Lobby" style="margin-top: 50px;" />
+    <ui:VisualElement name="VE_Bg" style="visibility: hidden; background-image: url(&apos;project://database/Assets/Art/UI/Menus/ControllersFrame.png?fileID=2800000&amp;guid=b0cf716c77d26fd498f0301b98419cc2&amp;type=3#ControllersFrame&apos;); align-self: center; width: 70%; height: 80%; margin-top: 50px;">
+        <ui:Instance template="Lobby" name="VE_Lobby" style="margin-top: 200px;" />
     </ui:VisualElement>
 </ui:UXML>
