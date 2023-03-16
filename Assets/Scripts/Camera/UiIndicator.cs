@@ -39,7 +39,7 @@ public class UiIndicator : MonoBehaviour
         }
     }
 
-    public UINotif[] AddObject(GameObject newObj, PlayerColor color, float yOffset)
+    public UINotif[] AddObject(GameObject newObj, PlayerColor color, float yOffset,int icon)
     {
         IndicObj added = new IndicObj
         {
@@ -55,7 +55,7 @@ public class UiIndicator : MonoBehaviour
             GameObject newIndic = Instantiate(color == PlayerColor.None ? prefabNoColor : color == PlayerColor.Blue ? prefabBlue : prefabRed, boxRect.position, Quaternion.identity, boxRect);
             res[i] = newIndic.GetComponent<UINotif>();
             res[i].canvasGroup.alpha = 0;
-            res[i].SetIconActive(0);
+            res[i].SetIconActive(icon);
             indics.Add(res[i]);
         }
 

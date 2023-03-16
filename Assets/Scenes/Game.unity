@@ -588,6 +588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExpirationTime: 60
   NotifOffset: {x: 0, y: 100, z: 0}
+  Icon: 0
   requiredColor: 2
   linkedOutline: {fileID: 1548904115}
   amountPerInput: 0.0625
@@ -4117,6 +4118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExpirationTime: 60
   NotifOffset: {x: 0, y: 50, z: 0}
+  Icon: 3
   requiredColor: 2
   linkedOutline: {fileID: 764541987}
   amountPerInput: 0.1
@@ -9983,6 +9985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExpirationTime: 60
   NotifOffset: {x: 0, y: 100, z: 0}
+  Icon: 0
   requiredColor: 2
   linkedOutline: {fileID: 0}
   beds:
@@ -11617,6 +11620,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TaskBedItem (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197763951354448798, guid: d59664b141b9e844b875fab24965db20,
+        type: 3}
+      propertyPath: Icon
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5197763951354448798, guid: d59664b141b9e844b875fab24965db20,
         type: 3}
@@ -14486,6 +14494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExpirationTime: 60
   NotifOffset: {x: 0, y: 150, z: 0}
+  Icon: 2
   requiredColor: 2
   linkedOutline: {fileID: 1844685801}
   angleCheckTimer: 0.1
@@ -15021,6 +15030,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TaskBedItem (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197763951354448798, guid: d59664b141b9e844b875fab24965db20,
+        type: 3}
+      propertyPath: Icon
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5197763951354448798, guid: d59664b141b9e844b875fab24965db20,
         type: 3}
@@ -17055,6 +17069,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5814755945265793628, guid: 268a04d67164d3842b52d519b083876b,
         type: 3}
+      propertyPath: poolKeys.Array.data[4].pool.prefab
+      value: 
+      objectReference: {fileID: 4718481724412050215, guid: ec22ee3fd6fb4f74c83b7632cdac9777,
+        type: 3}
+    - target: {fileID: 5814755945265793628, guid: 268a04d67164d3842b52d519b083876b,
+        type: 3}
       propertyPath: poolKeys.Array.data[7].pool.prefab
       value: 
       objectReference: {fileID: 8973407931216599034, guid: ac7bcfc481c68c2448a7fe3e93572136,
@@ -17723,6 +17743,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TaskBedItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197763951354448798, guid: d59664b141b9e844b875fab24965db20,
+        type: 3}
+      propertyPath: Icon
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5197763951354448798, guid: d59664b141b9e844b875fab24965db20,
         type: 3}

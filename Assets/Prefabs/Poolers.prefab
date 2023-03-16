@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5814755945265793628
 MonoBehaviour:
@@ -76,7 +76,7 @@ MonoBehaviour:
       refreshSpeed: 0
   - key: 4
     pool:
-      prefab: {fileID: 1538867339605187364, guid: ec22ee3fd6fb4f74c83b7632cdac9777,
+      prefab: {fileID: 4718481724412050215, guid: ec22ee3fd6fb4f74c83b7632cdac9777,
         type: 3}
       baseCount: 10
       baseRefreshSpeed: 0

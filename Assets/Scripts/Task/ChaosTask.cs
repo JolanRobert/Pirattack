@@ -21,6 +21,7 @@ namespace Task
         [Separator("ChaosTask")]
         public float ExpirationTime;
         public Vector3 NotifOffset;
+        public int Icon;
         [SerializeField, ReadOnly] protected PlayerColor requiredColor = PlayerColor.None;
         
         [Header("Outline")]
@@ -76,7 +77,7 @@ namespace Task
             linkedOutline.OutlineWidth = tOutline.Width;
             linkedOutline.OutlineColor = requiredColor == PlayerColor.Blue ? tOutline.Blue : tOutline.Red;
             
-            notifs = UiIndicator.instance.AddObject(gameObject, requiredColor, NotifOffset.y);
+            notifs = UiIndicator.instance.AddObject(gameObject, requiredColor, NotifOffset.y,Icon);
             notifs[0].DoPinFill(0, ExpirationTime);
             Tween tween = notifs[1].DoPinFill(0, ExpirationTime);
             tween.onComplete += Expire;
