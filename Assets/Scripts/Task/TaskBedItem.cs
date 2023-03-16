@@ -37,6 +37,11 @@ namespace Task
             if (newAmount >= 1) tween.onComplete += Complete;
         }
 
+        protected override void Expire()
+        {
+            taskBed.Fail(this);
+        }
+
         private void Complete()
         {
             taskBed.Progress(this);
