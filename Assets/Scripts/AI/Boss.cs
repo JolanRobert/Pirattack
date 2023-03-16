@@ -36,6 +36,7 @@ namespace AI
 
         private void OnEnable()
         {
+            if (!GameManager.Instance) return; 
             GameManager.Instance.OnLaunchingBoss += BeginAttack;
             bossBt.enabled = false;
             HealthBarBoss.gameObject.SetActive(false);
@@ -44,6 +45,7 @@ namespace AI
 
         private void OnDisable()
         {
+            if (!GameManager.Instance) return;
             GameManager.Instance.OnLaunchingBoss -= BeginAttack;
         }
 
