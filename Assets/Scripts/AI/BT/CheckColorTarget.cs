@@ -26,8 +26,8 @@ public class CheckColorTarget : Node
         PlayerController target = GetData<PlayerController>("Target");
         if (target != null && target.Color.PColor == color)
             SelectTarget();
-        else
-            SelectTarget();
+        /*else
+            SelectTarget();*/
         return NodeState.Failure;
     }
 }
