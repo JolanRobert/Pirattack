@@ -10,6 +10,8 @@ namespace Task
 {
     public class TaskCauldron : ChaosTask
     {
+        public CauldronInput NextInput => nextInput;
+        
         [Separator("Task Cauldron")]
         [SerializeField, Range(0.01f,1)] private float amountPerInput;
         [SerializeField, Range(0.01f,1)] private float lossAmountPerSec;
@@ -97,7 +99,7 @@ namespace Task
             OnComplete.Invoke(this);
         }
         
-        private enum CauldronInput
+        public enum CauldronInput
         {
             A, X, Y, None
         }
