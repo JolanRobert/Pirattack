@@ -22,7 +22,8 @@ namespace Managers
         [SerializeField] private float  depopBossTimer = 60f;
         [SerializeField] private GameObject triggerBossDoor;
         [SerializeField] private GameObject triggerBossExitDoor;
-        [SerializeField] private GameObject bossDoor;
+        [SerializeField] private GameObject bossDoorOpen;
+        [SerializeField] private GameObject bossDoorClose;
         [SerializeField] private GameObject boss;
         [SerializeField, ReadOnly] private int chaosBar;
         [SerializeField] private GameObject chaosBarCanvas;
@@ -96,7 +97,9 @@ namespace Managers
         {
             boss.SetActive(false);
             triggerBossDoor.SetActive(false);
-            bossDoor.SetActive(false);
+            bossDoorOpen.SetActive(true);
+            bossDoorClose.SetActive(false);
+            BossBar.SetActive(false);
             yield return new WaitForSeconds(delay);
             SpawnManager.Instance.SetOnBossFight(false);
             chaosBar = 50;
@@ -109,7 +112,6 @@ namespace Managers
     
         public void BossKilled()
         {
-        
             StartCoroutine(RelaunchGame(10f));
         }
     
@@ -117,7 +119,8 @@ namespace Managers
         {
             UIManager.Instance.SetVoicelineText("Boss is here !");
             triggerBossDoor.SetActive(true);
-            bossDoor.SetActive(false);
+            bossDoorOpen.SetActive(true);
+            bossDoorClose.SetActive(false);
             boss.SetActive(true);
             waitingForBoss = true;
             chaosBarCanvas.SetActive(false);
@@ -129,7 +132,8 @@ namespace Managers
         {
             waitingForBoss = false;
             timerDepopBoss = 0f;
-            bossDoor.SetActive(true);
+            bossDoorOpen.SetActive(false);
+            bossDoorClose.SetActive(true);
             triggerBossExitDoor.SetActive(true);
             SpawnManager.Instance.SetOnBossFight(true);
         }
@@ -180,7 +184,8 @@ namespace Managers
         public void ExitBossDoor()
         {
            triggerBossExitDoor.SetActive(false);
-           bossDoor.SetActive(true);
+           bossDoorOpen.SetActive(false);
+           bossDoorClose.SetActive(true);
         }
     }
 }

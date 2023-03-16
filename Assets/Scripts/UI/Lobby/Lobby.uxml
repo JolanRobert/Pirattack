@@ -11,5 +11,5 @@
             <ui:Label tabindex="-1" text="Ready" display-tooltip-when-elided="true" name="LB_P2Ready" class="readyLabel playerLabel" style="visibility: hidden;" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:Label tabindex="-1" text="Press A to Join / Quit" display-tooltip-when-elided="true" name="infosLB" style="background-color: rgba(255, 255, 255, 0.5); font-size: 25px; -unity-font-style: bold; color: rgb(255, 255, 255); align-self: center;" />
+    <ui:VisualElement name="infos" style="background-image: url(&apos;project://database/Assets/Art/UI/Menus/JoinFish.png?fileID=21300000&amp;guid=c4832d382a7bada448f3d039afb023fd&amp;type=3#JoinFish&apos;); width: 450px; align-self: center; height: 100px; position: absolute; top: 480px; -unity-background-scale-mode: scale-to-fit;" />
 </ui:UXML>

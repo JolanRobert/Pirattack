@@ -45,11 +45,11 @@ public static UIManager Instance;
     
     public void UpdateChaosSlider()
     {
-        ChaosBarSliderImageColor.color = UnityEngine.Color.white;
+        ChaosBarSliderImageColor.color = UnityEngine.Color.black;
         float value = GameManager.Instance.GetChaosValueRatio();
         if (ChaosBarSlider)
         ChaosBarSlider.DOValue(value, 0.5f);
-        ChaosBarSliderImageColor.DOColor(new UnityEngine.Color(0.17f, 0.72f, 0f), 0.25f);
+        ChaosBarSliderImageColor.DOColor(UnityEngine.Color.white, 0.25f);
     }
     
     IEnumerator PrintVoiceline(string text)

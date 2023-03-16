@@ -19,6 +19,10 @@ MonoBehaviour:
   speed: 2
   delaySwitchTarget: 0
   viewRangeDetection: 10
+  HealthPalier1: 5
+  HealthPalier2: 15
+  HealthPalier3: 30
+  HealthPalier4: 50
   maxSize: 6.5
   minSize: 1
   speedPattern: 7

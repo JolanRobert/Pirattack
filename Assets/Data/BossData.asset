@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c39d498cd131d54ab9dce83d90f7083, type: 3}
   m_Name: BossData
   m_EditorClassIdentifier: 
-  maxHealth: 10000
+  maxHealth: 4000
   delayBetweenPattern: 1
-  maxHealthShield: 2000
+  maxHealthShield: 700
   nbLoot: 3
   loot: {fileID: 0}
   speedBottleRain: 5
@@ -62,6 +62,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   ratioDistanceCurve: 4
   nbBottleHarassment: 10
-  damagePerBottleHarassment: 150
+  damagePerBottleHarassment: 100
   delayBetweenBottleHarassment: 0.3
   delayBeforeFallingHarassment: 1.5

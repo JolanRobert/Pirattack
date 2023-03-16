@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   maxHealth: 600
-  regenValue: 1
-  regenTick: 0.8
+  regenValue: 5
+  regenTick: 0.2
   moveSpeed: 5
   moveAcceleration:
     serializedVersion: 2
@@ -64,7 +64,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  rotationSpeed: 5
-  respawnDuration: 2
-  respawnStayDuration: 0.5
+  rotationSpeed: 10
+  respawnDuration: 3
+  respawnStayDuration: 0.4
   switchColorCooldown: 1
