@@ -22,7 +22,7 @@ MonoBehaviour:
   minImpactRangeRain: 1
   maxImpactRangeRain: 4
   nbBottleRain: 10
-  damagePerBottleRain: 0
+  damagePerBottleRain: 150
   delayBetweenBottleRain: 0.3
   delayBeforeFallingRain: 3
   SpeedBottleHarassment: 5
@@ -62,6 +62,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   ratioDistanceCurve: 4
   nbBottleHarassment: 10
-  damagePerBottleHarassment: 0
+  damagePerBottleHarassment: 150
   delayBetweenBottleHarassment: 0.3
   delayBeforeFallingHarassment: 1.5

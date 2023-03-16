@@ -59,8 +59,8 @@ namespace Utils
                 }
                 else
                 {
-                    button.RemoveFromClassList(USS_BUTTON2);
-                    button.AddToClassList(USS_BUTTON2FOCUS);
+                    button.RemoveFromClassList(USS_BUTTON2FOCUS);
+                    button.AddToClassList(USS_BUTTON2);
                 }
             }
         }
