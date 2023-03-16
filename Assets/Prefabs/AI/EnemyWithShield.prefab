@@ -30287,7 +30287,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ffb150b1c5916ef4397cd6eac444b5e5, type: 2}
+  - {fileID: 2100000, guid: de3a07de673343249928bb5559798f00, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -50252,12 +50252,13 @@ MonoBehaviour:
   rb: {fileID: 5269338767321766461}
   renderer: {fileID: 4888187534809316240}
   materials:
-  - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
-  - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
+  - {fileID: 2100000, guid: de3a07de673343249928bb5559798f00, type: 2}
+  - {fileID: 2100000, guid: 1a91ec571c8b7114f955715a28165900, type: 2}
   perkChances: 0
   OnShoot:
     m_PersistentCalls:
       m_Calls: []
+  hurtColor: {r: 1.4339623, g: 0, b: 0, a: 0}
   data: {fileID: 11400000, guid: edaaf3dc24281744bbc303e9ddc001b3, type: 2}
   btShield: {fileID: 7140208481260745866}
   shootFX: {fileID: 5927107895915246276}

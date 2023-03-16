@@ -113,6 +113,9 @@ namespace Task
                 player.Interact.Subscribe(this);
                 player.Interact.OnBeginInteract += OnBegin;
                 player.Interact.OnEndInteract += OnCancel;
+
+                player.Color.OnSwitchColor += UpdateOutline;
+                UpdateOutline();
             }
         }
         
@@ -124,7 +127,16 @@ namespace Task
                 player.Interact.Unsubscribe(this);
                 player.Interact.OnBeginInteract -= OnBegin;
                 player.Interact.OnEndInteract -= OnCancel;
+
+                player.Color.OnSwitchColor -= UpdateOutline;
+                UpdateOutline();
             }
+        }
+
+        public void UpdateOutline()
+        {
+            if (IsValid()) linkedOutline.OutlineColor = requiredColor == PlayerColor.Blue ? tOutline.BlueInteractable : tOutline.RedInteractable;
+            else linkedOutline.OutlineColor = requiredColor == PlayerColor.Blue ? tOutline.Blue : tOutline.Red;
         }
     }
 }

@@ -16,9 +16,12 @@ namespace Player
         [SerializeField] private Renderer parrotRenderer;
         [SerializeField] private Renderer pjRenderer;
         [SerializeField] private Renderer pjHatRenderer;
-        [SerializeField, ReadOnly] private PlayerColor color;
         [SerializeField] private Material[] parrotMaterials;
         [SerializeField] private Material[] pjMaterials;
+
+        [SerializeField] private ParticleSystem bluePS;
+        [SerializeField] private ParticleSystem redPS;
+        [SerializeField, ReadOnly] private PlayerColor color;
         
         private PlayerData data => playerController.Data;
 
@@ -54,10 +57,13 @@ namespace Player
             parrotRenderer.material = color == PlayerColor.Blue ? parrotMaterials[0] : parrotMaterials[1];
             pjRenderer.material = color == PlayerColor.Blue ? pjMaterials[0] : pjMaterials[1];
             pjHatRenderer.material = color == PlayerColor.Blue ? pjMaterials[0] : pjMaterials[1];
-            playerController.Interact.EndInteract();
             StartCoroutine(SwitchCooldown());
             
+            playerController.Interact.EndInteract();
+
             playerController.Animation.SetTrigger(PlayerAnimation.AnimTrigger.Switch);
+            if (color == PlayerColor.Blue) bluePS.Play();
+            else redPS.Play();
         }
 
         private IEnumerator SwitchCooldown()

@@ -288,12 +288,13 @@ MonoBehaviour:
   rb: {fileID: 4852080501000238888}
   renderer: {fileID: 2270062293439620508}
   materials:
-  - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
-  - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
+  - {fileID: 2100000, guid: d21a76055e052e345a40ab2a3d659b6e, type: 2}
+  - {fileID: 2100000, guid: aac9952377857984c9dd5aee48d0cf17, type: 2}
   perkChances: 1
   OnShoot:
     m_PersistentCalls:
       m_Calls: []
+  hurtColor: {r: 1.4339623, g: 0, b: 0, a: 0}
 --- !u!114 &7802507471193136510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,7 +916,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
+  - {fileID: 2100000, guid: d21a76055e052e345a40ab2a3d659b6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -18,7 +18,7 @@
     -unity-font-style: bold;
     font-size: 35px;
     -unity-text-align: upper-center;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     margin-bottom: 50px;
     -unity-font-definition: url('project://database/Assets/Art/Font/Pirate%20Ship%20SDF.asset?fileID=11400000&guid=343aa2c79235b5945ab7a39fcd5aa4ae&type=2#Pirate Ship SDF');
 }
