@@ -137,7 +137,6 @@ namespace Utils
             Bottle,
             BasicEnemy,
             EnemyShield,
-            PerkLoot,
             PerkChest
         }
     }

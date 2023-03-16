@@ -290,10 +290,22 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 9b023f5f799e57a439803c677835959e, type: 2}
   - {fileID: 2100000, guid: 1ddc1b908997f4d419bf1c773a416fb7, type: 2}
-  perkChances: 1
   OnShoot:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 931412502957892771}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  perkChances: 0.1
 --- !u!114 &7802507471193136510
 MonoBehaviour:
   m_ObjectHideFlags: 0

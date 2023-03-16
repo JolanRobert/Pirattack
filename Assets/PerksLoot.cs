@@ -50,12 +50,12 @@ public class PerksLoot : MonoBehaviour
             if (controller[0] == null)
             {
                 controller[0] = player;
-                player.interraction += GetUpgradePlayer1;
+                player.interaction += GetUpgradePlayer1;
             }
             else if (controller[1] == null)
             {
                 controller[1] = player;
-                player.interraction += GetUpgradePlayer2;
+                player.interaction += GetUpgradePlayer2;
             }
             iconShown = true;
         }
@@ -69,12 +69,12 @@ public class PerksLoot : MonoBehaviour
             if (controller[0] == player)
             {
                 controller[0] = null;
-                player.interraction -= GetUpgradePlayer1;
+                player.interaction -= GetUpgradePlayer1;
             }
             else if (controller[1] == player)
             {
                 controller[1] = null;
-                player.interraction -= GetUpgradePlayer2;
+                player.interaction -= GetUpgradePlayer2;
             }
 
             if (controller[0] == null && controller[1] == null)
@@ -88,8 +88,8 @@ public class PerksLoot : MonoBehaviour
     {
         taken = true;
         controller[0].Stats.AddStat(perk);
-        controller[0].interraction -= GetUpgradePlayer1;
-        if(controller[1]) controller[1].interraction -= GetUpgradePlayer2;
+        controller[0].interaction -= GetUpgradePlayer1;
+        if(controller[1]) controller[1].interaction -= GetUpgradePlayer2;
         Destroy(Instantiate(fxLoot, transform.position, Quaternion.Euler(0, 0, 0)),1);
         Destroy(gameObject);
     }
@@ -98,8 +98,8 @@ public class PerksLoot : MonoBehaviour
     {
         taken = true;
         controller[1].Stats.AddStat(perk);
-        if(controller[0]) controller[0].interraction -= GetUpgradePlayer1;
-        controller[1].interraction -= GetUpgradePlayer2;
+        if(controller[0]) controller[0].interaction -= GetUpgradePlayer1;
+        controller[1].interaction -= GetUpgradePlayer2;
         Destroy(Instantiate(fxLoot, transform.position, Quaternion.Euler(0, 0, 0)),1);
         Destroy(gameObject);
     }
