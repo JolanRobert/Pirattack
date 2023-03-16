@@ -35,6 +35,12 @@ namespace Task
             }
         }
 
+        public void Fail(TaskBedItem item)
+        {
+            if (item != beds[0]) return;
+            OnExpire.Invoke(this);
+        }
+
         public void Progress(TaskBedItem item)
         {
             bedsLeft.Remove(item);
