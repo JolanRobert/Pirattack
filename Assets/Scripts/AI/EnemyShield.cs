@@ -12,8 +12,10 @@ namespace AI
         public EnemyShieldData data;
 
         [SerializeField] private EnemyShieldBT btShield;
+        [SerializeField] private GameObject[] colorflames;
         
         public ParticleSystem shootFX;
+        
 
         private Renderer shieldRenderer = null;
 
@@ -29,7 +31,14 @@ namespace AI
             ChangeShieldRendererColor(color);
             ResetAttackDefaultValue();
             btShield.ResetBlackboard();
-
+            if (color == PlayerColor.Blue)
+            {
+                colorflames[0].SetActive(true);
+            }
+            else
+            {
+                colorflames[1].SetActive(true);
+            }
             btShield.enabled = true;
         }
         
