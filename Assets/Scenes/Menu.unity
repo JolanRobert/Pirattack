@@ -384,6 +384,9 @@ MonoBehaviour:
     type: 3}
   creditsLayout: {fileID: 9197481963319205126, guid: c8942cf86d0705e47b25104c3e2feada,
     type: 3}
+  countdownLayout: {fileID: 9197481963319205126, guid: 0fb263c0c66c4e245b81431b09ac9f02,
+    type: 3}
+  countdown: {fileID: 6801142764561152622}
   playerInput: {fileID: 6801142764561152619}
   gameScene: Game
 --- !u!1 &4068453339171528015
@@ -400,6 +403,7 @@ GameObject:
   - component: {fileID: 6801142764561152620}
   - component: {fileID: 6801142764561152619}
   - component: {fileID: 1720424870525075471}
+  - component: {fileID: 6801142764561152622}
   m_Layer: 0
   m_Name: UIMainMenu
   m_TagString: Untagged
@@ -483,19 +487,7 @@ MonoBehaviour:
     m_ActionId: 0e623dcf-9924-4e3e-b4fa-8e9a31d48696
     m_ActionName: UI/Return[/XInputControllerWindows/buttonEast,/XInputControllerWindows/rightTrigger]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1720424870525075471}
-        m_TargetAssemblyTypeName: UI.UI_MainMenu, Assembly-CSharp
-        m_MethodName: TryToJoinPlayer
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 96d6bc39-c3e0-42b1-9f61-b4fb64613dbf
     m_ActionName: UI/Join[/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
@@ -587,3 +579,16 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!114 &6801142764561152622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4068453339171528015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80be2e2b5bd7734a815510f74cf0631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layout: {fileID: 1720424870525075471}

@@ -25,14 +25,20 @@ namespace Task
             }
         }
 
-        public override void Init()
+        public override void Init(TaskOutline outlineSettings)
         {
             foreach (TaskBedItem item in beds)
             {
                 item.ExpirationTime = ExpirationTime;
                 item.NotifOffset = NotifOffset;
-                item.Init();
+                item.Init(outlineSettings);
             }
+        }
+
+        public void Fail(TaskBedItem item)
+        {
+            if (item != beds[0]) return;
+            OnExpire.Invoke(this);
         }
 
         public void Progress(TaskBedItem item)

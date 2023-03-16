@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using Interfaces;
 using Managers;
+using MyBox;
 using Player;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using Utils;
+using Random = UnityEngine.Random;
 
 namespace AI
 {
@@ -26,6 +29,8 @@ namespace AI
         [SerializeField] protected Rigidbody rb;
         [SerializeField] private new SkinnedMeshRenderer renderer;
         [SerializeField] private Material[] materials;
+        [SerializeField] private UnityEvent OnShoot;
+        [SerializeField] private float perkChances;
 
         private bool isIced;
         protected bool enemyInVision = false;
@@ -34,29 +39,45 @@ namespace AI
         protected List<Transform> PatrolPoints = new ();
         private EnemyBT bt = null;
     
+        
+        
         private void OnEnable()
         {
             Damagz = enemyData.damage; // possible to change damage value
-            maxHp = enemyData.maxHealth + (int)(GameManager.Instance.currentTimer() / 60) * enemyData.AdditionalHealthByMinute; // possible to change max health value
+            if (GameManager.Instance) InitializeHealth((int)(GameManager.Instance.currentTimer() / 60));
             healthEnemy.Init(maxHp);
             ResetAttackDefaultValue();
             agent.speed = enemyData.speed;
             if (!bt) bt = GetComponent<EnemyBT>();
             bt.ResetBlackboard();   
             bt.enabled = true;
-            GameManager.OnLaunchingBoss += Depop;
+            if (GameManager.Instance) GameManager.Instance.OnLaunchingBoss += Depop;
         }
 
         private void OnDisable()
         {
             bt.enabled = false;
-            GameManager.OnLaunchingBoss -= Depop;
+            if (GameManager.Instance) GameManager.Instance.OnLaunchingBoss -= Depop;
         }
     
         private void Start()
         {
             healthEnemy.OnDeath = OnDie;
             if (GameManager.Instance) healthEnemy.OnDeath += GameManager.Instance.AddEnemyKilled;
+        }
+
+        private void InitializeHealth(int nbMinutes)
+        {
+            int clampPalier1 = nbMinutes > 3 ? 3 : nbMinutes;
+            maxHp = enemyData.maxHealth + enemyData.HealthPalier1 * clampPalier1;
+            if (nbMinutes <= 3) return;
+            int clampPalier2 = nbMinutes > 6 ? 3 : nbMinutes - 3;
+            maxHp += enemyData.HealthPalier2 * clampPalier2;
+            if (nbMinutes <= 6) return;
+            int clampPalier3 = nbMinutes > 9 ? 3 : nbMinutes - 6;
+            maxHp += enemyData.HealthPalier3 * clampPalier3;
+            int clampPalier4 = nbMinutes - 9;
+            maxHp += enemyData.HealthPalier4 * clampPalier4;
         }
 
         protected virtual void Depop()
@@ -72,6 +93,11 @@ namespace AI
 
         protected virtual void OnDie()
         {
+            if (Random.Range(0f, 1f) < perkChances)
+            {
+                GameObject loot = Pooler.Instance.Pop(Pooler.Key.PerkChest);
+                loot.transform.position = new Vector3(transform.position.x,0,transform.position.z);
+            }
             Pooler.Instance.Depop(Pooler.Key.BasicEnemy, gameObject);
         }
 
@@ -97,6 +123,7 @@ namespace AI
 
         public void Attack(PlayerController target)
         {
+            OnShoot.Invoke();
             target.Collision.Damage(Damagz);
         }
 

@@ -1,0 +1,23 @@
+.playerContainer {
+    width: 350px;
+    height: 500px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-image: url('project://database/Assets/Art/UI/Menus/case.png?fileID=2800000&guid=42492adb7ab4b5449927e6746df3defb&type=3#case');
+}
+
+.playerImg {
+    flex-grow: 1;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.playerLabel {
+    align-self: center;
+    -unity-font-style: bold;
+    font-size: 35px;
+    -unity-text-align: upper-center;
+    color: rgb(255, 255, 255);
+    margin-bottom: 50px;
+}

@@ -1,20 +1,26 @@
 using Managers;
 using Player;
 using UnityEngine;
+using UnityEngine.Events;
 using Utils;
+using Random = UnityEngine.Random;
 
 namespace AI
 {
     public class EnemyShield : Enemy
     {
-        public new EnemyShieldData data;
+        public EnemyShieldData data;
 
         [SerializeField] private EnemyShieldBT btShield;
+        
+        public ParticleSystem shootFX;
 
         private Renderer shieldRenderer = null;
+        public UnityEvent OnShoot;
 
         private void OnEnable()
         {
+            if (GameManager.Instance) InitializeHealth((int)(GameManager.Instance.currentTimer() / 60));
             healthEnemy.Init(maxHp);
             healthEnemy.OnDeath = OnDie;
             if (GameManager.Instance) healthEnemy.OnDeath += GameManager.Instance.AddEnemyKilled;
@@ -27,6 +33,21 @@ namespace AI
 
             btShield.enabled = true;
         }
+        
+        private void InitializeHealth(int nbMinutes)
+        {
+            int clampPalier1 = nbMinutes > 3 ? 3 : nbMinutes;
+            maxHp = data.maxHealth + data.HealthPalier1 * clampPalier1;
+            if (nbMinutes <= 3) return;
+            int clampPalier2 = nbMinutes > 6 ? 3 : nbMinutes - 3;
+            maxHp += data.HealthPalier2 * clampPalier2;
+            if (nbMinutes <= 6) return;
+            int clampPalier3 = nbMinutes > 9 ? 3 : nbMinutes - 6;
+            maxHp += data.HealthPalier3 * clampPalier3;
+            int clampPalier4 = nbMinutes - 9;
+            maxHp += data.HealthPalier4 * clampPalier4;
+        }
+        
 
         private void OnDisable()
         {
@@ -38,7 +59,6 @@ namespace AI
         private void Awake()
         {
             Damagz = data.damage; // possible to change damage value
-            maxHp = data.maxHealth; // possible to change max health value
             agent.speed = data.speed;
         }
 
@@ -68,5 +88,6 @@ namespace AI
         {
             Pooler.Instance.Depop(Pooler.Key.EnemyShield, gameObject);
         }
+        
     }
 }

@@ -22,9 +22,14 @@ namespace Task
         public float ExpirationTime;
         public Vector3 NotifOffset;
         [SerializeField, ReadOnly] protected PlayerColor requiredColor = PlayerColor.None;
-
+        
+        [Header("Outline")]
+        [SerializeField] private QuickOutline linkedOutline;
+        
         private HashSet<PlayerController> players = new HashSet<PlayerController>();
         private bool isActive;
+
+        private TaskOutline tOutline;
        
         protected void OnEnable()
         {
@@ -41,8 +46,9 @@ namespace Task
                 player.Interact.OnBeginInteract -= OnBegin;
                 player.Interact.OnEndInteract -= OnCancel;
             }
-                
             players.Clear();
+            
+            if (linkedOutline) linkedOutline.OutlineWidth = 0;
         }
 
         protected virtual void OnBegin()
@@ -61,9 +67,14 @@ namespace Task
             notifs[1].ResumePinFill();
         }
         
-        public virtual void Init()
+        public virtual void Init(TaskOutline outlineSettings)
         {
+            tOutline = outlineSettings;
+            
             requiredColor = GetRandomColor();
+            linkedOutline.OutlineMode = tOutline.Mode;
+            linkedOutline.OutlineWidth = tOutline.Width;
+            linkedOutline.OutlineColor = requiredColor == PlayerColor.Blue ? tOutline.Blue : tOutline.Red;
             
             notifs = UiIndicator.instance.AddObject(gameObject, requiredColor, NotifOffset.y);
             notifs[0].DoPinFill(0, ExpirationTime);
@@ -80,8 +91,8 @@ namespace Task
 
             return false;
         }
-        
-        protected PlayerColor GetRandomColor()
+
+        private PlayerColor GetRandomColor()
         {
             List<PlayerColor> colors = Enum.GetValues(typeof(PlayerColor)).Cast<PlayerColor>().ToList();
             colors.Remove(PlayerColor.None);
@@ -89,7 +100,7 @@ namespace Task
             return colors[Random.Range(0, colors.Count)];
         }
 
-        private void Expire()
+        protected virtual void Expire()
         {
             OnExpire.Invoke(this);
         }

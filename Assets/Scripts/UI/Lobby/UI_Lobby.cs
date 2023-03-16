@@ -16,12 +16,14 @@ namespace UI
         
         [SerializeField] protected UIDocument layout;
         [SerializeField] protected PlayerDeviceBuffer devicesSO;
-
+        
         #region Visual Elements
             protected VisualElement root;
             private VisualElement p1ImgVE, p2ImgVE;
             private Label p1Ready, p2Ready;
         #endregion
+            
+        protected InputDevice p1Device, p2Device;
         
         protected void OnEnable()
         {
@@ -52,7 +54,6 @@ namespace UI
         #region UI Update
             protected void DisplayCompletely(bool b)
             {
-                root.visible = b;
                 p1ImgVE.visible = b;
                 p1Ready.visible = b;
                 p2ImgVE.visible = b;
@@ -61,11 +62,10 @@ namespace UI
             
             protected void UpdatePlayer(bool p1, InputDevice newDevice)
             {
-                if (p1) devicesSO.player1Device = newDevice;
-                else devicesSO.player2Device = newDevice;
+                if (p1) p1Device = newDevice;
+                else p2Device = newDevice;
 
                 var visible = newDevice is not null;
-                //Debug.Log((p1 ? "P1 : " : "P2 : ") + visible + gameObject);
                 
                 if (p1)
                 {
@@ -85,9 +85,6 @@ namespace UI
             var device = context.control.device;
             
             if (device is null) return;
-
-            var p1Device = devicesSO.player1Device;
-            var p2Device = devicesSO.player2Device;
 
             if (device.Equals(p1Device)) UpdatePlayer(true, null);
             else if (device.Equals(p2Device)) UpdatePlayer(false, null);

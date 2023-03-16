@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/UI/Menus.uss?fileID=7433441132597879392&amp;guid=bfbc368cf46bf5e499a98a53f6471940&amp;type=3#Menus" />
+    <Style src="project://database/Assets/Scripts/UI/EndScreen/EndScreen.uss?fileID=7433441132597879392&amp;guid=d1fd09a1cd982df4e85965d6f923d29d&amp;type=3#EndScreen" />
+    <ui:VisualElement name="VE_Background" class="container" style="background-image: url(&apos;project://database/Assets/Art/UI/Menus/EndScreen.png?fileID=2800000&amp;guid=fceee17ba77ec7e4793d12d8362b5dd6&amp;type=3#EndScreen&apos;); visibility: hidden;">
+        <ui:VisualElement name="VE_Labels" style="position: absolute; right: 15%; top: 27.5%; left: 60%; bottom: 17.5%; justify-content: space-between; padding-top: 30px; padding-bottom: 30px;">
+            <ui:Label tabindex="-1" text="Timer" display-tooltip-when-elided="true" name="LB_Timer" class="endScreenLBL" />
+            <ui:Label tabindex="-1" text="Kills" display-tooltip-when-elided="true" name="LB_Kills" class="endScreenLBL" />
+            <ui:Label tabindex="-1" text="Score" display-tooltip-when-elided="true" name="LB_Score" class="endScreenLBL" />
+        </ui:VisualElement>
+        <ui:VisualElement name="VE_Buttons" class="verticalContainer" style="position: absolute; bottom: 15px; justify-content: space-between; width: 750px;">
+            <ui:Button text="Menu" display-tooltip-when-elided="true" name="BT_Menu" class="button2" style="width: 300px;" />
+            <ui:Button text="Replay" display-tooltip-when-elided="true" name="BT_Replay" class="button2" style="width: 300px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

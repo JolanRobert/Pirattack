@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MyBox;
 using UI;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Managers
@@ -10,6 +12,7 @@ namespace Managers
     {
         public UI_Lobby uiLobby;
         public List<PlayerInput> players = new();
+        public List<InputDevice> devices = new();
 
         private void Awake()
         {
@@ -30,6 +33,7 @@ namespace Managers
             {
                 Destroy(player.gameObject);
             }
+            devices.Clear();
             players.Clear();
         }
 
@@ -37,11 +41,12 @@ namespace Managers
         {
             if (device is not Gamepad || IsDeviceAlreadyUsed(device)) return;
             players.Add(PlayerInputManager.instance.JoinPlayer(controlScheme: "Gamepad", pairWithDevice: device));
+            devices.Add(device);
         }
 
         private bool IsDeviceAlreadyUsed(InputDevice device)
         {
-            return players.Any(player => player.devices.ToList().Contains(device));
+            return players.Any(player => player.devices.ToList().Contains(device)) || devices.Contains(device);
         }
     }
 }

@@ -13,6 +13,10 @@ namespace AI
         public float speed = 3.5f;
         public float delaySwitchTarget = 0f;
         public float viewRangeDetection = 4f;
+        public int HealthPalier1 = 5;
+        public int HealthPalier2 = 5;
+        public int HealthPalier3 = 5;
+        public int HealthPalier4 = 5;
 
         [Header("Bullets")]
         public float maxSize;

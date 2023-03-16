@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,9 @@ namespace Player
         public PlayerInteract Interact => playerInteract;
         public PlayerAnimation Animation => playerAnimation;
         public PlayerStats Stats => playerStats;
+        public PlayerShoot Shoot => playerShoot;
+        public PlayerMovement Movement => playerMovement;
+        public Vector2 MoveInput => moveInput;
 
         [SerializeField] private PlayerData data;
         [SerializeField] private PlayerMovement playerMovement;
@@ -30,8 +34,9 @@ namespace Player
         private Vector2 rotateInput;
         private bool shootInput;
         private bool switchColorInput;
-        private bool interactInput;
+        public bool interactInput;
         private bool cancelInteractInput;
+        public Action interraction;
 
         public void Init(Vector3 startPosition, PlayerColor color)
         {
@@ -78,7 +83,11 @@ namespace Player
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            if (context.started) interactInput = true;
+            if (context.started)
+            {
+                interactInput = true;
+                if(interraction.Target != null)  interraction.Invoke();
+            }
         }
         
         public void OnCancelInteract(InputAction.CallbackContext context)
@@ -110,7 +119,7 @@ namespace Player
 
         private void HandleSwitchColor()
         {
-            if (switchColorInput) PlayerSwitchColor.OnSwitchColor.Invoke();
+            if (switchColorInput) playerSwitchColor.OnSwitchColor.Invoke();
         }
 
         private void HandleInteract()

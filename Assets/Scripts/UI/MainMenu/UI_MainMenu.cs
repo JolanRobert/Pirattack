@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Linq;
 using Managers;
 using MyBox;
@@ -8,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using Utils;
 
 namespace UI
 {
@@ -28,12 +27,10 @@ namespace UI
             private const string BT_PLAY = "BT_Play";
             private const string BT_CREDITS = "BT_Credits";
             private const string BT_QUIT = "BT_Quit";
-            
-            private const string USS_BUTTON = "button";
-            private const string USS_BUTTONFOCUS = "buttonFocus";
         #endregion
         
         [SerializeField] private VisualTreeAsset lobbyLayout, creditsLayout;
+        [SerializeField] private UI_Countdown countdown;
         [SerializeField] private PlayerInput playerInput;
         [SerializeField, Scene] private string gameScene;
 
@@ -65,22 +62,23 @@ namespace UI
                 root.Add(visualElement);
             }
             
+            countdown.Init(root);
             InitVE();
             
             // Containers
             menuVE = root.Q<VisualElement>(VE_BGM);
             lobbyVE = root.Q<VisualElement>(VE_BGL);
             creditsVE = root.Q<VisualElement>(VE_BGC);
-
+            
             // Buttons
             playBT = root.Q<Button>(BT_PLAY);
             creditsBT = root.Q<Button>(BT_CREDITS);
             quitBT = root.Q<Button>(BT_QUIT);
 
             //Bindings
-            BindButton(playBT, Play, true);
-            BindButton(creditsBT, Credits, true);
-            BindButton(quitBT, Quit, true);
+            Utilities.BindButton(playBT, Play, true, true);
+            Utilities.BindButton(creditsBT, Credits, true, true);
+            Utilities.BindButton(quitBT, Quit, true, true);
             
             // Default values
             DisplayLayout(MenuState.Menu);
@@ -91,29 +89,18 @@ namespace UI
 
         private void Update()
         {
-            if (devicesSO.player1Device != null && devicesSO.player2Device != null) StartGame();
+            if (state is not MenuState.Lobby) return;
+            if (p1Device != null && p2Device != null && !countdown.Started) StartCountDown();
         }
 
         #region UI Update
-            private void BindButton(Button button, Action onClick, bool focusable)
+        private void DisplayLayout(MenuState newState)
             {
-                button.clicked -= onClick;
-                button.clicked += onClick;
-                
-                if (!focusable) return;
-                
-                button.RegisterCallback<FocusInEvent>(_ => FocusButton(button, true));
-                button.RegisterCallback<FocusOutEvent>(_ => FocusButton(button, false));
-            }
-            
-            private void DisplayLayout(MenuState newState)
-            {
-                state = newState;
                 menuVE.style.display = DisplayStyle.None;
                 lobbyVE.style.display = DisplayStyle.None;
                 creditsVE.style.display = DisplayStyle.None;
                 
-                switch (state)
+                switch (newState)
                 {
                     case MenuState.Menu:
                         menuVE.style.display = DisplayStyle.Flex;
@@ -128,20 +115,7 @@ namespace UI
                         creditsVE.style.display = DisplayStyle.Flex;
                         break;
                 }
-            }
-
-            private void FocusButton(Button button, bool focused)
-            {
-                if (focused)
-                {
-                    button.RemoveFromClassList(USS_BUTTON);
-                    button.AddToClassList(USS_BUTTONFOCUS);
-                }
-                else
-                {
-                    button.RemoveFromClassList(USS_BUTTONFOCUS);
-                    button.AddToClassList(USS_BUTTON);
-                }
+                state = newState;
             }
         #endregion
         
@@ -173,30 +147,22 @@ namespace UI
         
         public override void TryToJoinPlayer(InputAction.CallbackContext context)
         {
-            Debug.Log("Hey");
             var device = context.control.device;
                 
             if (state is not MenuState.Lobby || device is null) return;
 
-            var p1Device = devicesSO.player1Device;
-            var p2Device = devicesSO.player2Device;
-
             if (device.Equals(p1Device))
             {
                 UpdatePlayer(true, null);
-            } else if (device.Equals(p2Device))
+                StopCountdownIfStarted();
+            }
+            else if (device.Equals(p2Device))
             {
                 UpdatePlayer(false, null);
+                StopCountdownIfStarted();
             }
-            else if (p1Device is null)
-            {
-                UpdatePlayer(true, device);
-            }
-            else if (p2Device is null)
-            {
-                UpdatePlayer(false, device);
-            }
-            
+            else if (p1Device is null) UpdatePlayer(true, device);
+            else if (p2Device is null) UpdatePlayer(false, device);
         }
         
         #region Input and devices
@@ -220,8 +186,8 @@ namespace UI
                 {
                     case InputDeviceChange.Disconnected:
                         if (device.Equals(lastMainDevice)) SetMainDeviceToDefault();
-                        if (device.Equals(devicesSO.player1Device)) UpdatePlayer(true, null);
-                        else if (device.Equals(devicesSO.player2Device)) UpdatePlayer(false, null);
+                        if (device.Equals(p1Device)) UpdatePlayer(true, null);
+                        else if (device.Equals(p2Device)) UpdatePlayer(false, null);
                         break;
                     case InputDeviceChange.Added:
                         LobbyManager.Instance.AddPlayer(device);
@@ -231,10 +197,22 @@ namespace UI
             }
         #endregion
         
+        private void StartCountDown()
+        {
+            countdown.StartCountdown(StartGame);
+        }
+        
+        private void StopCountdownIfStarted()
+        {
+            if (countdown.Started) countdown.StopCountdown();
+        }
+        
         private void StartGame()
         {
+            devicesSO.player1Device = p1Device;
+            devicesSO.player2Device = p2Device;
+            
             SceneController.Instance.QuickLoad(gameScene);
         }
-
     }
 }
