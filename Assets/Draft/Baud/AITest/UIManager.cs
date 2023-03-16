@@ -5,6 +5,7 @@ using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Color = System.Drawing.Color;
 
 public class UIManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public static UIManager Instance;
 [SerializeField] private TMP_Text voicelineText;
 [SerializeField] private float timerVoiceline = 5f;
 [SerializeField] private Slider ChaosBarSlider;
+[SerializeField] private Image ChaosBarSliderImageColor;
 [SerializeField] private GameObject CanvasEndGame;
 
     private void Awake()
@@ -43,9 +45,11 @@ public static UIManager Instance;
     
     public void UpdateChaosSlider()
     {
+        ChaosBarSliderImageColor.color = UnityEngine.Color.white;
         float value = GameManager.Instance.GetChaosValueRatio();
         if (ChaosBarSlider)
         ChaosBarSlider.DOValue(value, 0.5f);
+        ChaosBarSliderImageColor.DOColor(new UnityEngine.Color(0.17f, 0.72f, 0f), 0.25f);
     }
     
     IEnumerator PrintVoiceline(string text)

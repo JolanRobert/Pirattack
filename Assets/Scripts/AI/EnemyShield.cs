@@ -16,7 +16,6 @@ namespace AI
         public ParticleSystem shootFX;
 
         private Renderer shieldRenderer = null;
-        public UnityEvent OnShoot;
 
         private void OnEnable()
         {

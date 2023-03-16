@@ -5,7 +5,7 @@ using Managers;
 using Player;
 using UnityEngine;
 
-public class TriggerBossLaunch : MonoBehaviour
+public class TriggerBossExitLaunch : MonoBehaviour
 {
     List<PlayerController> players = new ();
     private void OnTriggerEnter(Collider other)
@@ -19,7 +19,12 @@ public class TriggerBossLaunch : MonoBehaviour
         }
         players.Add(player);
         if (players.Count != 2) return;
-        GameManager.Instance.OnLaunchingBoss?.Invoke();
+        GameManager.Instance.ExitBossDoor();
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        players.Clear();
     }
 }

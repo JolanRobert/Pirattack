@@ -16,7 +16,7 @@ namespace AI.BossPattern
         {
             BossData data = caster.data;
             float animationTime = ((55 / Time.deltaTime * 45f) * Time.deltaTime) / 1000f;
-            float animationBottle = 4f; // 4f = temps de l'animation up
+            float animationBottle = 3f; // 3f = temps de l'animation up
             float animationFallBottle = data.nbBottleHarassment * data.delayBetweenBottleHarassment + animationTime;
             return animationBottle + data.delayBeforeFallingHarassment + animationFallBottle;
         }
@@ -37,10 +37,11 @@ namespace AI.BossPattern
         {
             BossData data = caster.data;
             caster.Animator.SetTrigger("ThrowBottle");
+            yield return new WaitForSeconds(1f);
             for (int i = 0; i < 4; i++)
             {
-                yield return new WaitForSeconds(1f);
                 Instantiate(bottleAnimationPrefab, caster.transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(0.5f);
             }
 
             yield return new WaitForSeconds(data.delayBeforeFallingHarassment);
@@ -67,10 +68,10 @@ namespace AI.BossPattern
                 bottle.transform.position = fallPosition;
                 bottle.GetComponent<BoxCollider>().size = new Vector3(data.impactSizeHarassment, 2, data.impactSizeHarassment);
             
-                fallPosition.y = 0.5f;
+                fallPosition.y = -1.5f;
                 GameObject fx = VFXPooler.Instance.Pop(VFXPooler.Key.BottleVFX);
                 fx.transform.position = fallPosition;
-                fx.transform.localScale = new Vector3(data.impactSizeHarassment, 1, data.impactSizeHarassment);
+                fx.transform.localScale = new Vector3(data.impactSizeHarassment, 0.3f, data.impactSizeHarassment);
             
                 bottle.GetComponent<BottleFalling>().Init(data.SpeedBottleHarassment, fx);
                 yield return new WaitForSeconds(caster.data.delayBetweenBottleHarassment);
