@@ -48,6 +48,7 @@ namespace UI
             // Binding
             Utilities.BindButton(menuBT, ToMenu, true, false);
             Utilities.BindButton(replayBT, Replay, true, false);
+            
             GameManager.Instance.OnEndGame -= Display;
             GameManager.Instance.OnEndGame += Display;
         }
