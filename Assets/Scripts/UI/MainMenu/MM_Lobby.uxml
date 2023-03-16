@@ -6,7 +6,7 @@
     <ui:VisualElement name="VE_BackgroundL" class="container background">
         <ui:VisualElement name="Title" class="title" style="background-color: rgba(0, 0, 0, 0); height: 400px; margin-top: 15px;" />
         <ui:Instance template="Lobby" name="VE_Lobby" style="margin-top: 35px;" />
-        <ui:Label tabindex="-1" text="&lt;- B to go back" display-tooltip-when-elided="true" name="LB_BackInfos" class="labelInfos" />
+        <ui:VisualElement name="infos" style="position: absolute; bottom: 20px; left: 20px; height: 100px; width: 200px; background-image: url(&apos;project://database/Assets/Art/UI/Menus/BackFish.png?fileID=2800000&amp;guid=6419e28fee74c7943a2cbc9b40335658&amp;type=3#BackFish&apos;); -unity-background-scale-mode: scale-to-fit;" />
         <ui:Instance template="Countdown" name="Countdown" style="position: absolute; right: 12.5%; bottom: 15%;" />
     </ui:VisualElement>
 </ui:UXML>
