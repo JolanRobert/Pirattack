@@ -27,7 +27,6 @@ namespace UI
 
         private void Update()
         {
-            Debug.Log(devicesSO.player1Device + "   " + devicesSO.player2Device);
             if (!on) return;
             if (p1Device is not null && p2Device is not null) Hide();
         }
