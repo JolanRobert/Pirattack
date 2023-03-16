@@ -13,6 +13,12 @@ public class UINotif : MonoBehaviour
     [SerializeField] private Image backBar;
     [SerializeField] private Image taskBar;
     [SerializeField] private Image taskBarFill;
+    [SerializeField] private GameObject[] icons;
+
+    public void SetIconActive(int icon)
+    {
+        icons[icon].SetActive(true);
+    }
     
     public void SetProgressBarActive(bool active)
     {

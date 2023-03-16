@@ -55,6 +55,7 @@ public class UiIndicator : MonoBehaviour
             GameObject newIndic = Instantiate(color == PlayerColor.None ? prefabNoColor : color == PlayerColor.Blue ? prefabBlue : prefabRed, boxRect.position, Quaternion.identity, boxRect);
             res[i] = newIndic.GetComponent<UINotif>();
             res[i].canvasGroup.alpha = 0;
+            res[i].SetIconActive(0);
             indics.Add(res[i]);
         }
 
