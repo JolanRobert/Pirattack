@@ -13,6 +13,7 @@ public class AttackProjectile : Node
         PlayerController target = GetData<PlayerController>("Target");
         enemyShield = GetData<EnemyShield>("caster");
         if (target == null) return NodeState.Failure;
+        enemyShield.transform.LookAt(target.transform);
         StartWaveAttack(target);
         SetDataInBlackboard("CanAttack", false);
         SetDataInBlackboard("WaitTime", (enemyShield.data.maxSize - enemyShield.data.minSize) /  enemyShield.data.speedPattern + enemyShield.data.attackSpeed); 

@@ -92,6 +92,8 @@ namespace AI
             casterPosition = _caster.transform.position;
             target = _target;
             caster = _caster;
+            fxWave[0].SetActive(false);
+            fxWave[1].SetActive(false);
             fxWave[caster.GetShieldColor() == PlayerColor.Blue ? 1 : 0].SetActive(true);
             StartCoroutine(Wave());
         }
