@@ -104,6 +104,7 @@ namespace AI
                 GameObject loot = Pooler.Instance.Pop(Pooler.Key.PerkChest);
                 loot.transform.position = new Vector3(transform.position.x,0,transform.position.z);
             }
+            GameManager.Instance.AddCoins(enemyData.nbCoinsDropped);
             Pooler.Instance.Depop(Pooler.Key.BasicEnemy, gameObject);
         }
 

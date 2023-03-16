@@ -17,6 +17,8 @@ namespace AI
         public int HealthPalier2 = 5;
         public int HealthPalier3 = 5;
         public int HealthPalier4 = 5;
+        public int nbCoinsDropped = 50;
+
 
         [Header("Bullets")]
         public float maxSize;
