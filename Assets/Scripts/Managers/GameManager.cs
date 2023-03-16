@@ -26,7 +26,7 @@ namespace Managers
         [SerializeField] private GameObject boss;
         [SerializeField, ReadOnly] private int chaosBar = 50;
     
-        private float startTime;
+        private float timer;
         private float endTime;
         private int nbEnemiesKilled = 0;
         private bool waitingForBoss = false;
@@ -40,7 +40,7 @@ namespace Managers
     
         private void Start()
         {
-            startTime = Time.time;
+            timer = 0;
             OnIncreaseChaosBar += CheckChaosBar;
             OnDecreaseChaosBar += CheckChaosBar;
             OnLaunchingBoss += LaunchBoss;
@@ -78,7 +78,7 @@ namespace Managers
                     break;
                 case <= 0:
                     EndGame();
-                    endTime = Time.time - startTime;
+                    endTime = Time.time - timer;
                     SpawnManager.Instance.enabled = false;
                     break;
             }
@@ -158,6 +158,7 @@ namespace Managers
 
         private void Update()
         {
+            timer += Time.deltaTime;
             if (!waitingForBoss) return;
             timerDepopBoss -= Time.deltaTime;
             if (timerDepopBoss <= 0f)
@@ -168,7 +169,7 @@ namespace Managers
 
         public float currentTimer()
         {
-            return Time.time - startTime;
+            return timer;
         }
 
         public void ExitBossDoor()
