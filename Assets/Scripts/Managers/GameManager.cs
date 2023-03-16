@@ -99,6 +99,7 @@ namespace Managers
             triggerBossDoor.SetActive(false);
             bossDoorOpen.SetActive(true);
             bossDoorClose.SetActive(false);
+            BossBar.SetActive(false);
             yield return new WaitForSeconds(delay);
             SpawnManager.Instance.SetOnBossFight(false);
             chaosBar = 50;
@@ -111,7 +112,6 @@ namespace Managers
     
         public void BossKilled()
         {
-        
             StartCoroutine(RelaunchGame(10f));
         }
     

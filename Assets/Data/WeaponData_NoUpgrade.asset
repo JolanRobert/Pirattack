@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03f273666510f6499de4fe443b9b920, type: 3}
   m_Name: WeaponData_NoUpgrade
   m_EditorClassIdentifier: 
-  bulletSpeed: 10
+  bulletSpeed: 15
   bulletLifespan: 3
   damage: 100
   nbBounce: 0
-  fireRate: 4
+  fireRate: 5.5
   nbPierce: 0
   nbShock: 0
   nbSlow: 0
