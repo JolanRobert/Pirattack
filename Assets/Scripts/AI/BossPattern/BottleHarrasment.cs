@@ -68,7 +68,7 @@ namespace AI.BossPattern
                 bottle.transform.position = fallPosition;
                 bottle.GetComponent<BoxCollider>().size = new Vector3(data.impactSizeHarassment, 2, data.impactSizeHarassment);
             
-                fallPosition.y = 0.5f;
+                fallPosition.y = -1.5f;
                 GameObject fx = VFXPooler.Instance.Pop(VFXPooler.Key.BottleVFX);
                 fx.transform.position = fallPosition;
                 fx.transform.localScale = new Vector3(data.impactSizeHarassment, 0.3f, data.impactSizeHarassment);

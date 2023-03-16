@@ -34,6 +34,14 @@ Boss _boss;
         {
             PopBoss();
         }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            GameManager.Instance.SuccessTask();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            GameManager.Instance.FailTask();
+        }
         if (Input.GetKeyDown(KeyCode.V))
         {
             GameManager.Instance.OnLaunchingBoss?.Invoke();
