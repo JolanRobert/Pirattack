@@ -38,9 +38,9 @@ namespace UI
 
         public void TogglePause()
         {
-            if (GameManager.Instance.GameEnded) return;
+            /*if (GameManager.Instance.GameEnded) return;
             if (on) Hide();
-            else Display();
+            else Display();*/
         }
         
         private void Display()
