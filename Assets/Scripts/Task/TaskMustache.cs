@@ -13,6 +13,9 @@ namespace Task
         [SerializeField, Range(0.01f,1)] private float lossAmountPerSec;
         [SerializeField] private float speedFactor = 1;
 
+        [SerializeField] private GameObject imageLeftJoystick;
+        [SerializeField] private GameObject imageRightJoystick;
+
         private Vector2 leftInput, rightInput;
         private Vector2 lastLeftInput, lastRightInput;
         private bool isChecking;
@@ -41,11 +44,16 @@ namespace Task
         {
             base.OnDisable();
             
+            imageLeftJoystick.SetActive(false);
+            imageRightJoystick.SetActive(false);
             if (UiIndicator.instance) UiIndicator.instance.RemoveObject(gameObject);
         }
 
         public void HandleInput(Vector2 leftInput, Vector2 rightInput)
         {
+            imageLeftJoystick.SetActive(true);
+            imageRightJoystick.SetActive(true);
+            
             this.leftInput = leftInput;
             this.rightInput = rightInput;
 

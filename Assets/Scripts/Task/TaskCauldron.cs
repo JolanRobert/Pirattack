@@ -4,7 +4,6 @@ using System.Linq;
 using DG.Tweening;
 using MyBox;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Task
 {
@@ -16,6 +15,10 @@ namespace Task
         [SerializeField, Range(0.01f,1)] private float amountPerInput;
         [SerializeField, Range(0.01f,1)] private float lossAmountPerSec;
         [SerializeField] private float timeBeforeLosing;
+        
+        [SerializeField] private GameObject imageA;
+        [SerializeField] private GameObject imageX;
+        [SerializeField] private GameObject imageY;
         
         [SerializeField, ReadOnly] private CauldronInput nextInput;
         private float timer;
@@ -40,6 +43,9 @@ namespace Task
         {
             base.OnDisable();
 
+            imageA.SetActive(false);
+            imageX.SetActive(false);
+            imageY.SetActive(false);
             if (UiIndicator.instance) UiIndicator.instance.RemoveObject(gameObject);
         }
 
@@ -47,6 +53,10 @@ namespace Task
         {
             List<bool> inputs = new List<bool> { aInput, xInput, yInput };
             CauldronInput input = ToCauldronInput(inputs);
+
+            imageA.SetActive(nextInput == CauldronInput.A);
+            imageX.SetActive(nextInput == CauldronInput.X);
+            imageY.SetActive(nextInput == CauldronInput.Y);
             
             if (nextInput == input)
             {

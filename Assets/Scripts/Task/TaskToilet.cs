@@ -1,15 +1,21 @@
 using DG.Tweening;
 using MyBox;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Task
 {
     public class TaskToilet : ChaosTask
     {
+        public ToiletInput NextInput => nextInput;
+        
         [Separator("Task Toilet")]
         [SerializeField, Range(0.01f,1)] private float amountPerInput;
         [SerializeField, Range(0.01f,1)] private float lossAmountPerSec;
         [SerializeField] private float timeBeforeLosing;
+
+        [SerializeField] private SpriteRenderer imageLB;
+        [SerializeField] private SpriteRenderer imageRB;
 
         private ToiletInput nextInput;
         private float timer;
@@ -34,11 +40,17 @@ namespace Task
         {
             base.OnDisable();
 
+            imageLB.gameObject.SetActive(false);
+            imageRB.gameObject.SetActive(false);
             if (UiIndicator.instance) UiIndicator.instance.RemoveObject(gameObject);
         }
 
         public void HandleInput(bool leftInput, bool rightInput)
         {
+            if (nextInput == ToiletInput.Any) HandleToiletImages(true, true);
+            else if (nextInput == ToiletInput.Left) HandleToiletImages(true, false);
+            else if (nextInput == ToiletInput.Right) HandleToiletImages(false, true);
+            
             if (leftInput)
             {
                 if (nextInput == ToiletInput.Right) return;
@@ -81,7 +93,18 @@ namespace Task
             OnComplete.Invoke(this);
         }
         
-        private enum ToiletInput
+        private void HandleToiletImages(bool leftInput, bool rightInput)
+        {
+            imageLB.gameObject.SetActive(true);
+            imageLB.transform.localScale = leftInput ? new Vector3(1.2f, 1.2f, 1.2f) : Vector3.one;
+            imageLB.color = leftInput ? Color.white : new Color(0.7f, 0.7f, 0.7f);
+                    
+            imageRB.gameObject.SetActive(true);
+            imageRB.transform.localScale = rightInput ? new Vector3(1.2f, 1.2f, 1.2f) : Vector3.one;
+            imageRB.color = rightInput ? Color.white : new Color(0.7f, 0.7f, 0.7f);
+        }
+        
+        public enum ToiletInput
         {
             Left, Right, Any
         }

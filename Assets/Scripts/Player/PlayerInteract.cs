@@ -4,6 +4,7 @@ using MyBox;
 using Task;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace Player
 {
@@ -16,10 +17,6 @@ namespace Player
 
         [SerializeField, ReadOnly] private List<ChaosTask> interactions = new List<ChaosTask>();
         [SerializeField, ReadOnly] private bool isInteracting;
-
-        [SerializeField] private GameObject imageA;
-        [SerializeField] private GameObject imageX;
-        [SerializeField] private GameObject imageY;
 
         private ChaosTask currentInteraction;
         
@@ -91,45 +88,10 @@ namespace Player
             ChaosTask task = currentInteraction;
             
             if (!task.IsValid()) return;
-            if (task is TaskToilet tToilet)
-            {
-                //L ou R
-                tToilet.HandleInput(LBDown, RBDown);
-            }
-            else if (task is TaskBedItem tBedItem)
-            {
-                imageA.SetActive(true);
-                tBedItem.HandleInput(ADown);
-            }
-            else if (task is TaskMustache tMustache)
-            {
-                //Joystick
-                tMustache.HandleInput(leftStick, rightStick);
-            }
-            else if (task is TaskCauldron tCauldron)
-            {
-                TaskCauldron.CauldronInput nextInput = tCauldron.NextInput;
-                if (nextInput == TaskCauldron.CauldronInput.A)
-                {
-                    imageA.SetActive(true);
-                    imageX.SetActive(false);
-                    imageY.SetActive(false);
-                }
-                else if (nextInput == TaskCauldron.CauldronInput.X)
-                {
-                    imageA.SetActive(false);
-                    imageX.SetActive(true);
-                    imageY.SetActive(false);
-                }
-                else if (nextInput == TaskCauldron.CauldronInput.Y)
-                {
-                    imageA.SetActive(false);
-                    imageX.SetActive(false);
-                    imageY.SetActive(true);
-                }
-                
-                tCauldron.HandleInput(ADown, XDown, YDown);
-            }
+            if (task is TaskToilet tToilet) tToilet.HandleInput(LBDown, RBDown);
+            else if (task is TaskBedItem tBedItem) tBedItem.HandleInput(ADown);
+            else if (task is TaskMustache tMustache) tMustache.HandleInput(leftStick, rightStick);
+            else if (task is TaskCauldron tCauldron) tCauldron.HandleInput(ADown, XDown, YDown);
             
             ResetInputs();
         }
@@ -138,8 +100,6 @@ namespace Player
         {
             if (!isInteracting) return;
             isInteracting = false;
-
-            DisableImages();
 
             currentInteraction = null;
             OnEndInteract?.Invoke();
@@ -154,14 +114,7 @@ namespace Player
         {
             interactions.Remove(elmt);
         }
-
-        private void DisableImages()
-        {
-            imageA.SetActive(false);
-            imageX.SetActive(false);
-            imageY.SetActive(false);
-        }
-
+        
         private void ResetInputs()
         {
             LBDown = false;

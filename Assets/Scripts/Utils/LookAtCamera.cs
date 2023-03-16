@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Utils
 {
+    [ExecuteAlways]
     public class LookAtCamera : MonoBehaviour
     {
         [SerializeField] private Mode mode;

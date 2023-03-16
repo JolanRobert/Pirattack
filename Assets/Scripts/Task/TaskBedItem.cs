@@ -9,6 +9,8 @@ namespace Task
         [Separator("Task Bed Item")]
         [SerializeField] private TaskBed taskBed;
 
+        [SerializeField] private GameObject imageA;
+
         protected override void OnCancel()
         {
             base.OnCancel();
@@ -21,11 +23,13 @@ namespace Task
         {
             base.OnDisable();
             
+            imageA.SetActive(false);
             if (UiIndicator.instance) UiIndicator.instance.RemoveObject(gameObject);
         }
 
         public void HandleInput(bool aInput)
         {
+            imageA.SetActive(true);
             if (aInput) IncreaseBar();
         }
 
