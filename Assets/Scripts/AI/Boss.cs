@@ -41,7 +41,7 @@ namespace AI
             if (!GameManager.Instance) return; 
             GameManager.Instance.OnLaunchingBoss += BeginAttack;
             bossBt.enabled = false;
-            HealthBarBoss.gameObject.SetActive(false);
+            HealthBarBoss.value = 1;
             HealthBarShield.gameObject.SetActive(false);
         }
 
@@ -108,11 +108,10 @@ namespace AI
 
         private void LootSystem()
         {
-            for (int i = 0; i < data.nbLoot; i++)
+            for (int i = 0; i < 3; i++)
             {
-                /*GameObject loot = Pooler.Instance.Pop(Pooler.Key.PerkLoot);
-                loot.transform.SetPositionAndRotation(transform.position + Vector3.back * 10 + Vector3.right * (i - 1),
-                    Quaternion.identity);*/
+                GameObject loot = Pooler.Instance.Pop(Pooler.Key.PerkChest);
+                loot.transform.position = new Vector3(transform.position.x-1.5f + (1.5f *i),0,transform.position.z);
             }
         }
 

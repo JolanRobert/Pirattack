@@ -24,7 +24,9 @@ namespace Managers
         [SerializeField] private GameObject triggerBossExitDoor;
         [SerializeField] private GameObject bossDoor;
         [SerializeField] private GameObject boss;
-        [SerializeField, ReadOnly] private int chaosBar = 50;
+        [SerializeField, ReadOnly] private int chaosBar;
+        [SerializeField] private GameObject chaosBarCanvas;
+        [SerializeField] private GameObject BossBar;
     
         private float timer;
         private float endTime;
@@ -100,6 +102,7 @@ namespace Managers
             chaosBar = 50;
             OnDecreaseChaosBar?.Invoke();
             waitingForBoss = false;
+            chaosBarCanvas.SetActive(true);
         
             OnRelaunchLoop?.Invoke();
         }
@@ -117,6 +120,8 @@ namespace Managers
             bossDoor.SetActive(false);
             boss.SetActive(true);
             waitingForBoss = true;
+            chaosBarCanvas.SetActive(false);
+            BossBar.SetActive(true);
             timerDepopBoss = depopBossTimer;
         }
     
