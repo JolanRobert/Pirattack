@@ -94,6 +94,7 @@ namespace AI
 
         protected override void OnDie()
         {
+            GameManager.Instance.AddCoins(data.nbCoinsDropped);
             Pooler.Instance.Depop(Pooler.Key.EnemyShield, gameObject);
         }
         
