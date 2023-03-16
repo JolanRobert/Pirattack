@@ -38,13 +38,14 @@ namespace UI
 
         public void TogglePause()
         {
-            /*if (GameManager.Instance.GameEnded) return;
+            if (GameManager.Instance.GameEnded) return;
             if (on) Hide();
-            else Display();*/
+            else Display();
         }
         
         private void Display()
         {
+            on = true;
             Time.timeScale = 0f;
             bgVE.visible = true;
             btMenu.Focus();
@@ -52,6 +53,7 @@ namespace UI
 
         private void Hide()
         {
+            on = false;
             bgVE.visible = false;
             Time.timeScale = 1f;
         }

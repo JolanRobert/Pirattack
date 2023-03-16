@@ -70,7 +70,7 @@ public class CameraManager : MonoBehaviour
         angle = Vector2.SignedAngle(Vector2.right,
             new Vector2(focus[0].transform.position.x, focus[0].transform.position.z) -
             new Vector2(focus[1].transform.position.x, focus[1].transform.position.z));
-        float width = Mathf.Clamp((Vector3.Distance(focus[0].transform.position, focus[1].transform.position) - distanceRectified) * 0.05f,0,0.03f) ;
+        float width = Mathf.Clamp((Vector3.Distance(focus[0].transform.position, focus[1].transform.position) - distanceRectified) * 0.05f,0,0.015f) ;
         splitScreenMat.SetFloat("_Angle",angle);
         splitScreenMat.SetFloat("_Width",width);
     }

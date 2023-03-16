@@ -17,9 +17,9 @@ namespace AI.BossPattern
             fx = _fx;
         }
 
-        public void EndOfLife()
+        private void Update()
         {
-            VFXPooler.Instance.Depop(VFXPooler.Key.BottleVFX, fx);
+            if (transform.position.y < -10f) Pooler.Instance.Depop(Pooler.Key.Bottle, gameObject);
         }
     }
 }

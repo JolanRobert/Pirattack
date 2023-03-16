@@ -131,7 +131,7 @@ namespace Utils
         
         public enum Key
         {
-            BottleVFX,
+            FXFalling,
             BulletImpactVFX,
             PerkZapVFX,
             PerkZapLine,

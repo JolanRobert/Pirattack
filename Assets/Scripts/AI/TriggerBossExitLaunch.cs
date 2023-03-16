@@ -8,8 +8,10 @@ using UnityEngine;
 public class TriggerBossExitLaunch : MonoBehaviour
 {
     List<PlayerController> players = new ();
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
+        if (other.transform.position.z > transform.position.z) return;
+        
         PlayerController player = other.GetComponent<PlayerController>();
         if (!player) return;
         if (players.Contains(player))
