@@ -33,6 +33,7 @@ namespace Managers
         [SerializeField] private GameObject BossBar;
         [SerializeField] private TMP_Text nbCoinText;
         [SerializeField] private UI_PauseScreen pauseScreen;
+        [SerializeField] private GameObject tavernierGentil;
     
         private float timer;
         private float endTime;
@@ -51,7 +52,7 @@ namespace Managers
         {
             timer = 0;
             nbCoins = 0;
-            nbCoinText.text = nbCoins + " coin" + (nbCoins > 1 ? "s" : "");
+            nbCoinText.text = nbCoins.ToString();
             OnIncreaseChaosBar += CheckChaosBar;
             OnDecreaseChaosBar += CheckChaosBar;
             OnLaunchingBoss += LaunchBoss;
@@ -88,7 +89,7 @@ namespace Managers
         public void AddCoins(int nb)
         {
             nbCoins += nb;
-            nbCoinText.text = nbCoins + " coin" + (nbCoins > 1 ? "s" : "");
+            nbCoinText.text = nbCoins.ToString();
         }
 
         private void CheckChaosBar()
@@ -132,6 +133,7 @@ namespace Managers
         public void BossKilled()
         {
             StartCoroutine(RelaunchGame(10f));
+            tavernierGentil.SetActive(true);
         }
     
         private void BossPop()
@@ -145,6 +147,7 @@ namespace Managers
             chaosBarCanvas.SetActive(false);
             BossBar.SetActive(true);
             timerDepopBoss = depopBossTimer;
+            tavernierGentil.SetActive(false);
         }
     
         public void LaunchBoss()
