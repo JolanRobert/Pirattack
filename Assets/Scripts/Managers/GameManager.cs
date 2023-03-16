@@ -15,7 +15,8 @@ namespace Managers
         public Action OnIncreaseChaosBar;
         public Action OnDecreaseChaosBar;
         public Action OnEndGame;
-    
+        public bool GameEnded => gameEnded;
+        
         [SerializeField] private int increaseChaosBar = 10;
         [SerializeField] private int decreaseChaosBar = 10;
         [SerializeField] private float  depopBossTimer = 60f;
@@ -30,6 +31,7 @@ namespace Managers
         private int nbEnemiesKilled = 0;
         private bool waitingForBoss = false;
         private float timerDepopBoss;
+        private bool gameEnded;
 
         private void Awake()
         {
@@ -44,8 +46,14 @@ namespace Managers
             OnLaunchingBoss += LaunchBoss;
             OnEndFightBoss += BossKilled;
             OnBossPop += BossPop;
+            OnEndGame += SetEnd;
         }
 
+        private void SetEnd()
+        {
+            gameEnded = true;
+        }
+        
         public void AddEnemyKilled()
         {
             nbEnemiesKilled++;
