@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 using Utils;
 
@@ -6,7 +7,6 @@ namespace Player
     public class PlayerRespawn : MonoBehaviour
     {
         public bool IsDown => isDown;
-        public float RespawnDuration => playerController.Data.respawnDuration;
         
         [SerializeField] private PlayerController playerController;
         [SerializeField] private Health health;
@@ -18,25 +18,32 @@ namespace Player
 
         private void OnEnable()
         {
-            health.onDeath += Die;
+            health.OnDeath += Die;
         }
 
         private void OnDisable()
         {
-            health.onDeath -= Die;
+            health.OnDeath -= Die;
         }
 
         private void Start()
         {
             health.Init(data.maxHealth);
+            health.StartPassiveRegeneration(data.regenValue, data.regenTick);
+        }
+
+        private void CheckEndGame()
+        {
+            PlayerController[] players = PlayerManager.Players.ToArray();
+            if (players[0].IsDown && players[1].IsDown) GameManager.Instance.EndGame();
         }
 
         private void Die()
         {
             respawnTrigger.SetActive(true);
             isDown = true;
-            
-            Debug.Log("Dead");
+            playerController.Interact.EndInteract();
+            CheckEndGame();
         }
 
         public void Respawn()
@@ -44,8 +51,6 @@ namespace Player
             respawnTrigger.SetActive(false);
             isDown = false;
             health.Reset();
-            
-            Debug.Log("Respawn!");
         }
     }
 }

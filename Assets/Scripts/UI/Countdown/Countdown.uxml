@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/UI/Menus.uss?fileID=7433441132597879392&amp;guid=bfbc368cf46bf5e499a98a53f6471940&amp;type=3#Menus" />
+    <Style src="project://database/Assets/Scripts/UI/Countdown/Countdown.uss?fileID=7433441132597879392&amp;guid=1de9ce0210f706b4c8b68fed965ba45d&amp;type=3#Countdown" />
+    <ui:VisualElement name="VE_Container" class="container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); justify-content: center;">
+        <ui:Label tabindex="-1" text="1" display-tooltip-when-elided="true" name="1LB" class="countownDigit digit hidden" />
+        <ui:Label tabindex="-1" text="2" display-tooltip-when-elided="true" name="2LB" class="countownDigit digit hidden" />
+        <ui:Label tabindex="-1" text="3" display-tooltip-when-elided="true" name="3LB" class="countownDigit hidden digit" />
+    </ui:VisualElement>
+</ui:UXML>

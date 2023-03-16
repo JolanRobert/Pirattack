@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using AI;
 using BehaviourTree;
 using UnityEngine;
 
@@ -25,6 +26,8 @@ public class InitEnemyBlackboard : Node
         SetDataInBlackboard("CanAttack", true);
         SetDataInBlackboard("WaitTime", 0f);
         SetDataInBlackboard("caster", enemyShield != null ? enemyShield : enemy);
+        SetDataInBlackboard("PatrolPoints", enemyShield != null ? enemyShield.GetPatrolPoints() : enemy.GetPatrolPoints());
+        SetDataInBlackboard("PatrolPointsIndex", 0);
         return NodeState.Success;
     }
 }
@@ -35,8 +38,9 @@ public class InitBossBlackboard : Node
 
     public override NodeState Evaluate(Node root)
     {
-        if (isInit) return NodeState.Failure;
-        isInit = true;
+        var init = GetData("Init");
+        if (init != null && (bool)init) return NodeState.Failure;
+        SetDataInBlackboard("Init", true);
         SetDataInBlackboard("WaitTime", 0f);
         SetDataInBlackboard("WaitNode", null);
         return NodeState.Success;

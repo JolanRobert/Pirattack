@@ -11,15 +11,17 @@ namespace Task
 
         protected override void OnCancel()
         {
-            progressBar.DOKill();
-            progressBar.fillAmount = 0;
+            base.OnCancel();
+            
+            notifs[0].SetProgressFill(0);
+            notifs[1].SetProgressFill(0);
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
             
-            UiIndicator.instance.RemoveObject(gameObject);
+            if (UiIndicator.instance) UiIndicator.instance.RemoveObject(gameObject);
         }
 
         public void HandleInput(bool aInput)
@@ -29,11 +31,15 @@ namespace Task
 
         private void IncreaseBar()
         {
-            float newAmount = progressBar.fillAmount + taskBed.AmountPerInput;
-
-            progressBar.DOKill();
-            Tween tween = progressBar.DOFillAmount(newAmount, Time.deltaTime).SetEase(Ease.Linear);
+            float newAmount = notifs[0].ProgressAmount + taskBed.AmountPerInput;
+            notifs[0].DoProgressFill(newAmount, Time.deltaTime);
+            Tween tween = notifs[1].DoProgressFill(newAmount, Time.deltaTime);
             if (newAmount >= 1) tween.onComplete += Complete;
+        }
+
+        protected override void Expire()
+        {
+            taskBed.Fail(this);
         }
 
         private void Complete()

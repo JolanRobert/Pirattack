@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,16 +14,21 @@ namespace Player
         public PlayerSwitchColor Color => playerSwitchColor;
         public PlayerCollision Collision => playerCollision;
         public PlayerInteract Interact => playerInteract;
+        public PlayerAnimation Animation => playerAnimation;
+        public PlayerStats Stats => playerStats;
+        public PlayerShoot Shoot => playerShoot;
+        public PlayerMovement Movement => playerMovement;
+        public Vector2 MoveInput => moveInput;
 
         [SerializeField] private PlayerData data;
-        [SerializeField] private PlayerInput playerInput;
         [SerializeField] private PlayerMovement playerMovement;
         [SerializeField] private PlayerShoot playerShoot;
         [SerializeField] private PlayerSwitchColor playerSwitchColor;
         [SerializeField] private PlayerCollision playerCollision;
         [SerializeField] private PlayerInteract playerInteract;
         [SerializeField] private PlayerRespawn playerRespawn;
-        [SerializeField] private Rigidbody rb;
+        [SerializeField] private PlayerAnimation playerAnimation;
+        [SerializeField] private PlayerStats playerStats;
 
         private Vector2 moveInput;
         private Vector2 rotateInput;
@@ -30,27 +36,29 @@ namespace Player
         private bool switchColorInput;
         private bool interactInput;
         private bool cancelInteractInput;
+        public Action interaction;
 
         public void Init(Vector3 startPosition, PlayerColor color)
         {
             playerSwitchColor.InitColor(color);
-            rb.position = startPosition;
-            playerMovement.Cancel();
+            playerMovement.Init(startPosition);
         }
 
         private void Update()
         {
-            if (AssertState(IsDown)) return;
-            
-            HandleInteract();
+            if (!AssertState(IsDown))
+            {
+                HandleInteract();
+                
+                if (!AssertState(IsInteracting))
+                {
+                    HandleMovement();
+                    HandleRotation();
+                    HandleShoot();
+                    HandleSwitchColor();
+                }
+            }
 
-            if (AssertState(IsInteracting)) return;
-            
-            HandleMovement();
-            HandleRotation();
-            HandleShoot();
-            HandleSwitchColor();
-            
             ResetInputs();
         }
         
@@ -77,7 +85,11 @@ namespace Player
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            if (context.started) interactInput = true;
+            if (context.started)
+            {
+                interactInput = true;
+                interaction?.Invoke();
+            }
         }
         
         public void OnCancelInteract(InputAction.CallbackContext context)
@@ -109,7 +121,7 @@ namespace Player
 
         private void HandleSwitchColor()
         {
-            if (switchColorInput) PlayerSwitchColor.OnSwitchColor.Invoke();
+            if (switchColorInput) playerSwitchColor.OnSwitchColor.Invoke();
         }
 
         private void HandleInteract()

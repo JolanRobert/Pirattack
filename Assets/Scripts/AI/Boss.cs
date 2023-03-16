@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
 using AI.BossPattern;
+using DG.Tweening;
+using Managers;
 using MyBox;
 using Player;
 using UnityEngine;
+using UnityEngine.UI;
+using Utils;
 using Random = UnityEngine.Random;
 
 namespace AI
@@ -11,14 +15,18 @@ namespace AI
     public class Boss : Enemy
     {
         public static Boss Instance;
-    
+
         public static Action<PlayerController> OnTriggerAttack;
         [ReadOnly] public Pattern currentPattern;
-        public new BossData Data;
-    
+        public BossData data;
+
         [SerializeField] private string[] voicelines;
         [SerializeField] private string[] voicelinesDead;
         [SerializeField] private GameObject FXShield;
+        [SerializeField] private BossBT bossBt;
+        [SerializeField] private Slider HealthBarBoss;
+        [SerializeField] private Slider HealthBarShield;
+        [SerializeField] private Material[] ShieldFXMaterial;
 
         private int shieldHealth = 0;
 
@@ -27,32 +35,55 @@ namespace AI
             Instance = this;
         }
 
+
         private void OnEnable()
         {
-            maxHp = Data.maxHealth; // possible to change max health value
+            if (!GameManager.Instance) return; 
+            GameManager.Instance.OnLaunchingBoss += BeginAttack;
+            bossBt.enabled = false;
+            HealthBarBoss.value = 1;
+            HealthBarShield.gameObject.SetActive(false);
+        }
+
+        private void OnDisable()
+        {
+            if (!GameManager.Instance) return;
+            GameManager.Instance.OnLaunchingBoss -= BeginAttack;
+        }
+
+        private void BeginAttack()
+        {
+            maxHp = data.maxHealth; // possible to change max health value
             healthEnemy.Init(maxHp);
+            HealthBarBoss.value = healthEnemy.GetRatio();
+            HealthBarBoss.gameObject.SetActive(true);
             ResetAttackBossDefaultValue();
             Print_Argh();
             AddShield();
+            bossBt.enabled = true;
         }
-    
+
+
         public void LaunchPattern(IEnumerator coroutine)
         {
             StartCoroutine(coroutine);
         }
 
-        private void ShieldTakeDamage(int damage, PlayerController origin)
+        private void ShieldTakeDamage(int damage, PlayerColor color)
         {
-            if (ShieldColor != PlayerColor.None && ShieldColor != origin.Color.PColor) return;
+            if (shieldColor != PlayerColor.None && shieldColor != color) return;
             shieldHealth -= damage;
+            HealthBarShield.value = ShieldHealthRatio();
+            HealthBarShield.gameObject.SetActive(true);
             if (shieldHealth <= 0)
             {
+                HealthBarShield.gameObject.SetActive(false);
                 ResetAttackBossDefaultValue();
                 FXShield.SetActive(false);
             }
         }
 
-        private void TakeBossDamage(int _damage, PlayerController origin)
+        private void TakeBossDamage(int _damage, PlayerColor origin)
         {
             BossDamage(_damage);
         }
@@ -61,7 +92,10 @@ namespace AI
         {
             float ratio = healthEnemy.GetRatio();
             healthEnemy.LoseHealth(damage);
-            if( ratio > 0.5f && healthEnemy.GetRatio() <= 0.5f)
+            renderer.material.color = UnityEngine.Color.black;
+            renderer.material.DOColor(UnityEngine.Color.white, 0.15f);
+            HealthBarBoss.value = healthEnemy.GetRatio();
+            if (ratio > 0.5f && healthEnemy.GetRatio() <= 0.5f)
             {
                 AddShield();
             }
@@ -74,33 +108,35 @@ namespace AI
 
         private void LootSystem()
         {
-            for (int i = 0; i < PlayerManager.Players.Count; i++)
+            for (int i = 0; i < 3; i++)
             {
-                int indexGun = Random.Range(0, Data.lootGun.Length);
-                int indexGunAmmo = Random.Range(0, Data.lootGunAmmo.Length);
-            
-                Instantiate(Data.lootGun[Random.Range(0, Data.lootGun.Length)], transform.position + Vector3.back * 10 + Vector3.right * (i - 2) + Vector3.right * i * 2 - Vector3.up * 4.5f, Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
-                Instantiate(Data.lootGunAmmo[Random.Range(0, Data.lootGunAmmo.Length)], transform.position + Vector3.back * 10 + Vector3.right * (i - 1) + Vector3.right * i * 2 - Vector3.up * 4.5f, Quaternion.identity)
-                    .GetComponent<Renderer>().material.color = PlayerManager.Players[i].Color.PColor == PlayerColor.Blue ? UnityEngine.Color.blue : UnityEngine.Color.red;
+                GameObject loot = Pooler.Instance.Pop(Pooler.Key.PerkChest);
+                loot.transform.position = new Vector3(transform.position.x-1.5f + (1.5f *i),0,transform.position.z);
             }
         }
-    
+
         protected override void OnDie()
         {
             LootSystem();
             Print_DieVoicelines();
-            GameManager.OnEndFightBoss?.Invoke();
+            GameManager.Instance.OnEndFightBoss?.Invoke();
             gameObject.SetActive(false);
+        }
+
+        private float ShieldHealthRatio()
+        {
+            return (float)shieldHealth / (float)data.maxHealthShield;
         }
 
         private void AddShield()
         {
-            ShieldColor = (PlayerColor)Random.Range(0, 2);
-            shieldHealth = Data.maxHealthShield;
-            FXShield.GetComponent<Renderer>().material.color = (ShieldColor == PlayerColor.Blue)
-                ? new Color(0, 0, 1, 0.5f)
-                : new Color(1, 0, 0, 0.5f);
+            shieldColor = (PlayerColor)Random.Range(0, 2);
+            shieldHealth = data.maxHealthShield;
+            HealthBarShield.value = ShieldHealthRatio();
+            FXShield.GetComponent<Renderer>().material = (shieldColor == PlayerColor.Blue)
+                ? ShieldFXMaterial[0]
+                : ShieldFXMaterial[1];
+            HealthBarShield.gameObject.SetActive(true);
             FXShield.SetActive(true);
             IsWasAttacked = ShieldTakeDamage;
         }

@@ -14,14 +14,20 @@ namespace Player
         public Action OnBeginInteract;
         public Action OnEndInteract;
 
-        [SerializeField, ReadOnly] private List<InteractiveElement> interactions = new List<InteractiveElement>();
-        private bool isInteracting;
+        [SerializeField, ReadOnly] private List<ChaosTask> interactions = new List<ChaosTask>();
+        [SerializeField, ReadOnly] private bool isInteracting;
 
-        private InteractiveElement currentInteraction;
+        [SerializeField] private GameObject imageA;
+        [SerializeField] private GameObject imageX;
+        [SerializeField] private GameObject imageY;
+
+        private ChaosTask currentInteraction;
         
         private bool LBDown;
         private bool RBDown;
-        private bool ADown, A;
+        private bool ADown;
+        private bool XDown;
+        private bool YDown;
         private Vector2 leftStick;
         private Vector2 rightStick;
         
@@ -39,7 +45,16 @@ namespace Player
         public void OnA(InputAction.CallbackContext context)
         {
             if (context.started) ADown = true;
-            A = context.performed;
+        }
+        
+        public void OnX(InputAction.CallbackContext context)
+        {
+            if (context.started) XDown = true;
+        }
+        
+        public void OnY(InputAction.CallbackContext context)
+        {
+            if (context.started) YDown = true;
         }
 
         public void OnLeftStick(InputAction.CallbackContext context)
@@ -57,11 +72,7 @@ namespace Player
         {
             if (interactions.Count == 0) return;
             if (isInteracting) return;
-
-            if (interactions[0] is ChaosTask task)
-            {
-                if (!task.IsValid()) return;
-            }
+            if (!interactions[0].IsValid()) return;
             
             currentInteraction = interactions[0];
             
@@ -76,15 +87,48 @@ namespace Player
                 EndInteract();
                 return;
             }
+
+            ChaosTask task = currentInteraction;
             
-            if (currentInteraction is RespawnTrigger rTrigger) rTrigger.HandleInput(A);
-            
-            else if (currentInteraction is ChaosTask task)
+            if (!task.IsValid()) return;
+            if (task is TaskToilet tToilet)
             {
-                if (!task.IsValid()) return;
-                if (task is TaskToilet tToilet) tToilet.HandleInput(LBDown, RBDown);
-                else if (task is TaskBedItem tBedItem) tBedItem.HandleInput(ADown);
-                else if (task is TaskMustache tMustache) tMustache.HandleInput(leftStick, rightStick);
+                //L ou R
+                tToilet.HandleInput(LBDown, RBDown);
+            }
+            else if (task is TaskBedItem tBedItem)
+            {
+                imageA.SetActive(true);
+                tBedItem.HandleInput(ADown);
+            }
+            else if (task is TaskMustache tMustache)
+            {
+                //Joystick
+                tMustache.HandleInput(leftStick, rightStick);
+            }
+            else if (task is TaskCauldron tCauldron)
+            {
+                TaskCauldron.CauldronInput nextInput = tCauldron.NextInput;
+                if (nextInput == TaskCauldron.CauldronInput.A)
+                {
+                    imageA.SetActive(true);
+                    imageX.SetActive(false);
+                    imageY.SetActive(false);
+                }
+                else if (nextInput == TaskCauldron.CauldronInput.X)
+                {
+                    imageA.SetActive(false);
+                    imageX.SetActive(true);
+                    imageY.SetActive(false);
+                }
+                else if (nextInput == TaskCauldron.CauldronInput.Y)
+                {
+                    imageA.SetActive(false);
+                    imageX.SetActive(false);
+                    imageY.SetActive(true);
+                }
+                
+                tCauldron.HandleInput(ADown, XDown, YDown);
             }
             
             ResetInputs();
@@ -95,19 +139,27 @@ namespace Player
             if (!isInteracting) return;
             isInteracting = false;
 
+            DisableImages();
+
             currentInteraction = null;
             OnEndInteract?.Invoke();
         }
 
-        public void Subscribe(InteractiveElement elmt)
+        public void Subscribe(ChaosTask elmt)
         {
             interactions.Add(elmt);
-            interactions.Sort();
         }
 
-        public void Unsubscribe(InteractiveElement elmt)
+        public void Unsubscribe(ChaosTask elmt)
         {
             interactions.Remove(elmt);
+        }
+
+        private void DisableImages()
+        {
+            imageA.SetActive(false);
+            imageX.SetActive(false);
+            imageY.SetActive(false);
         }
 
         private void ResetInputs()
@@ -115,6 +167,8 @@ namespace Player
             LBDown = false;
             RBDown = false;
             ADown = false;
+            XDown = false;
+            YDown = false;
         }
     }
 }

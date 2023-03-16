@@ -1,5 +1,3 @@
-using System;
-using Interfaces;
 using MyBox;
 using Player;
 using UnityEngine;
@@ -8,55 +6,58 @@ using Utils;
 public class Bullet : MonoBehaviour
 {
     public PlayerController Owner => owner;
-    
+
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private Collider collider;
+    [SerializeField] private AudioSource source;
+    [SerializeField] private SphereCollider bulletCollider;
     [SerializeField] private BulletTrigger bulletTrigger;
-    [SerializeField] private GameObject particleSystem;
     [SerializeField, ReadOnly] private PlayerController owner;
 
     private float speed;
-    private int damage;
     private int nbBounce;
-    private int nbPierce;
 
     private void OnEnable()
     {
         rb.velocity = Vector3.zero;
-        collider.enabled = true;
+        bulletCollider.enabled = true;
     }
 
     public void Init(PlayerController owner, WeaponData data)
     {
         bulletTrigger.Init(data);
-        
+
         speed = data.bulletSpeed;
-        damage = data.damage;
         nbBounce = data.nbBounce;
-        nbPierce = data.nbPierce;
-        
+
         this.owner = owner;
         rb.velocity = transform.forward * speed;
-        Pooler.Instance.DelayedDepop(data.bulletLifespan, Key.Bullet, gameObject);
+        Pooler.Instance.DelayedDepop(data.bulletLifespan, Pooler.Key.Bullet, gameObject);
     }
 
+    private void SpawnImpactVFX(Vector3 position, Quaternion rotation)
+    {
+        GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.BulletImpactVFX);
+        vfx.transform.SetPositionAndRotation(position, rotation);
+        VFXPooler.Instance.DelayedDepop(0.3f, VFXPooler.Key.BulletImpactVFX, vfx);
+    }
+
+    //Layers Player/Enemy EXCLUDED
     private void OnCollisionEnter(Collision collision)
     {
-        // TODO : Remplacer l'instanciation VFX par un Pool
-        
         //Hit wall
         if (nbBounce > 0)
         {
             Vector3 normal = collision.GetContact(0).normal;
-            Destroy(Instantiate(particleSystem, transform.position, Quaternion.LookRotation(-normal)), 0.3f);
             rb.velocity = Vector3.Reflect(transform.forward, normal) * speed;
             rb.MoveRotation(Quaternion.LookRotation(rb.velocity));
+
+            SpawnImpactVFX(transform.position, Quaternion.LookRotation(-normal));
             nbBounce--;
+            //source.Play();
             return;
         }
-        
-        Destroy(Instantiate(particleSystem,transform.position,transform.rotation),0.3f);
-        Debug.Log("collision with "+collision.gameObject.name);
-        Pooler.Instance.Depop(Key.Bullet, gameObject);
+
+        SpawnImpactVFX(transform.position, transform.rotation);
+        Pooler.Instance.Depop(Pooler.Key.Bullet, gameObject);
     }
 }

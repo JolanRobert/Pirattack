@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/UI/Menus.uss?fileID=7433441132597879392&amp;guid=bfbc368cf46bf5e499a98a53f6471940&amp;type=3#Menus" />
+    <Style src="project://database/Assets/Scripts/UI/Lobby/Lobby.uss?fileID=7433441132597879392&amp;guid=3dbc730d2aa545c4da864446a594cfe2&amp;type=3#Lobby" />
+    <ui:VisualElement name="VE_Players" class="verticalContainer" style="align-self: center;">
+        <ui:VisualElement name="VE_Player1" class="playerContainer" style="padding-left: 35px; padding-right: 20px;">
+            <ui:VisualElement name="VE_P1Img" class="playerImg" style="background-image: url(&apos;project://database/Assets/Art/UI/Menus/PlayerOne.png?fileID=2800000&amp;guid=ef4fe37896289104987b4198d3a4359c&amp;type=3#PlayerOne&apos;); visibility: hidden;" />
+            <ui:Label tabindex="-1" text="Ready" display-tooltip-when-elided="true" name="LB_P1Ready" class="playerLabel" style="visibility: hidden;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="VE_Player2" class="playerContainer" style="padding-left: 20px; padding-right: 35px;">
+            <ui:VisualElement name="VE_P2Img" class="playerImg" style="visibility: hidden; background-image: url(&apos;project://database/Assets/Art/UI/Menus/PlayerTwo.png?fileID=2800000&amp;guid=2769510b76dcc3148a588b8103ed0ccd&amp;type=3#PlayerTwo&apos;);" />
+            <ui:Label tabindex="-1" text="Ready" display-tooltip-when-elided="true" name="LB_P2Ready" class="readyLabel playerLabel" style="visibility: hidden;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="infos" style="background-image: url(&apos;project://database/Assets/Art/UI/Menus/JoinFish.png?fileID=21300000&amp;guid=c4832d382a7bada448f3d039afb023fd&amp;type=3#JoinFish&apos;); width: 450px; align-self: center; height: 100px; position: absolute; top: 480px; -unity-background-scale-mode: scale-to-fit;" />
+</ui:UXML>

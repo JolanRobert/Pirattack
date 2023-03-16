@@ -1,0 +1,24 @@
+.playerContainer {
+    width: 350px;
+    height: 500px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-image: url('project://database/Assets/Art/UI/Menus/PlayerSelectBG.png?fileID=2800000&guid=42492adb7ab4b5449927e6746df3defb&type=3#PlayerSelectBG');
+}
+
+.playerImg {
+    flex-grow: 1;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.playerLabel {
+    align-self: center;
+    -unity-font-style: bold;
+    font-size: 35px;
+    -unity-text-align: upper-center;
+    color: rgb(0, 0, 0);
+    margin-bottom: 50px;
+    -unity-font-definition: url('project://database/Assets/Art/Font/Pirate%20Ship%20SDF.asset?fileID=11400000&guid=343aa2c79235b5945ab7a39fcd5aa4ae&type=2#Pirate Ship SDF');
+}

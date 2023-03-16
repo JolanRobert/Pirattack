@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Color = System.Drawing.Color;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public static UIManager Instance;
 [SerializeField] private TMP_Text voicelineText;
 [SerializeField] private float timerVoiceline = 5f;
 [SerializeField] private Slider ChaosBarSlider;
+[SerializeField] private Image ChaosBarSliderImageColor;
 [SerializeField] private GameObject CanvasEndGame;
 
     private void Awake()
@@ -28,27 +31,33 @@ public static UIManager Instance;
     
     public void ShowEndGame()
     {
+        if (CanvasEndGame)
         CanvasEndGame.SetActive(true);
         gameObject.SetActive(false);
     }
     
     private void Start()
     {
-        GameManager.OnIncreaseChaosBar += UpdateChaosSlider;
-        GameManager.OnDecreaseChaosBar += UpdateChaosSlider;
+        GameManager.Instance.OnIncreaseChaosBar += UpdateChaosSlider;
+        GameManager.Instance.OnDecreaseChaosBar += UpdateChaosSlider;
         UpdateChaosSlider();
     }
     
     public void UpdateChaosSlider()
     {
+        ChaosBarSliderImageColor.color = UnityEngine.Color.white;
         float value = GameManager.Instance.GetChaosValueRatio();
+        if (ChaosBarSlider)
         ChaosBarSlider.DOValue(value, 0.5f);
+        ChaosBarSliderImageColor.DOColor(new UnityEngine.Color(0.17f, 0.72f, 0f), 0.25f);
     }
     
     IEnumerator PrintVoiceline(string text)
     {
+        if (voicelineText)
         voicelineText.text = text;
         yield return new WaitForSeconds(timerVoiceline);
+        if (voicelineText)
         voicelineText.text = "";
     }
 

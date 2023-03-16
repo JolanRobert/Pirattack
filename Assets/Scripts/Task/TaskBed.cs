@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using MyBox;
-using Player;
 using UnityEngine;
 
 namespace Task
@@ -26,14 +25,20 @@ namespace Task
             }
         }
 
-        public override void Init()
+        public override void Init(TaskOutline outlineSettings)
         {
             foreach (TaskBedItem item in beds)
             {
-                PlayerColor bedColor = GetRandomColor();
-                item.SetRequiredColor(bedColor);
-                UiIndicator.instance.AddObject(item.gameObject, bedColor);
+                item.ExpirationTime = ExpirationTime;
+                item.NotifOffset = NotifOffset;
+                item.Init(outlineSettings);
             }
+        }
+
+        public void Fail(TaskBedItem item)
+        {
+            if (item != beds[0]) return;
+            OnExpire.Invoke(this);
         }
 
         public void Progress(TaskBedItem item)

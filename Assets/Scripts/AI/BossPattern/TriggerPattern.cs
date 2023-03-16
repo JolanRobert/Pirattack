@@ -1,16 +1,23 @@
-using AI;
 using Player;
 using UnityEngine;
+using Utils;
 
-public class TriggerPattern : MonoBehaviour
+namespace AI.BossPattern
 {
-    private void OnTriggerEnter(Collider other)
+    public class TriggerPattern : MonoBehaviour
     {
-        PlayerController player = other.GetComponent<PlayerController>();
-        if (player != null)
+        private void OnTriggerEnter(Collider other)
         {
-            Boss.OnTriggerAttack?.Invoke(player);
+            if(other.GetComponent<BottleFalling>()) return;
+            PlayerController player = other.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                Boss.OnTriggerAttack?.Invoke(player);
+            }
+            GameObject Explosion = VFXPooler.Instance.Pop(VFXPooler.Key.ExplosionVFX);
+            Explosion.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            VFXPooler.Instance.DelayedDepop(2.1f, VFXPooler.Key.ExplosionVFX, Explosion);
+            Boss.Instance.currentPattern.EndTrigger(gameObject);
         }
-        Boss.Instance.currentPattern.EndTrigger(gameObject);
     }
 }

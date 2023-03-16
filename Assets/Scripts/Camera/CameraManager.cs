@@ -7,6 +7,8 @@ public class CameraManager : MonoBehaviour
     public Transform[] players;
     public Camera[] cameras;
     [SerializeField] private float distance;
+    private float distanceRectified;
+    [SerializeField] private float camSplitRatio = 1.5f;
     public float angle;
     [SerializeField] private Material splitScreenMat;
     public static CameraManager instance;
@@ -31,10 +33,12 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
+        distanceRectified = distance * Mathf.Lerp(1,camSplitRatio,Mathf.Abs((players[0].position - players[1].position).normalized.x));
+        
         if(!playersConnected) return;
         if (!separated)
         {
-            if (Vector3.SqrMagnitude(focus[0].position - focus[1].position) > distance * distance)
+            if (Vector3.SqrMagnitude(focus[0].position - focus[1].position) > distanceRectified * distanceRectified)
             {
                 separated = true;
                 cameras[1].gameObject.SetActive(true);
@@ -45,7 +49,7 @@ public class CameraManager : MonoBehaviour
         }
         else
         {
-            if (Vector3.SqrMagnitude(focus[0].position - focus[1].position) < distance * distance)
+            if (Vector3.SqrMagnitude(focus[0].position - focus[1].position) < distanceRectified * distanceRectified)
             {
                 separated = false;
                 cameras[1].gameObject.SetActive(false);
@@ -61,12 +65,12 @@ public class CameraManager : MonoBehaviour
         focus[0].position = players[0].position + focusPos;
         focus[1].position = players[1].position + focusPos;
         uiIndicator.UpdateIndicators(true);
-        cameras[0].transform.position = focus[0].transform.position + (focus[1].transform.position - focus[0].transform.position).normalized * (distance / 2);
-        cameras[1].transform.position = focus[1].transform.position + (focus[0].transform.position - focus[1].transform.position).normalized * (distance / 2);
+        cameras[0].transform.position = focus[0].transform.position + (focus[1].transform.position - focus[0].transform.position).normalized * (distanceRectified / 2);
+        cameras[1].transform.position = focus[1].transform.position + (focus[0].transform.position - focus[1].transform.position).normalized * (distanceRectified / 2);
         angle = Vector2.SignedAngle(Vector2.right,
             new Vector2(focus[0].transform.position.x, focus[0].transform.position.z) -
             new Vector2(focus[1].transform.position.x, focus[1].transform.position.z));
-        float width = Mathf.Clamp((Vector3.Distance(focus[0].transform.position, focus[1].transform.position) - distance) * 0.05f,0,0.03f) ;
+        float width = Mathf.Clamp((Vector3.Distance(focus[0].transform.position, focus[1].transform.position) - distanceRectified) * 0.05f,0,0.03f) ;
         splitScreenMat.SetFloat("_Angle",angle);
         splitScreenMat.SetFloat("_Width",width);
     }
