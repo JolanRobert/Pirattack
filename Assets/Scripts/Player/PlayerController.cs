@@ -46,17 +46,19 @@ namespace Player
 
         private void Update()
         {
-            if (AssertState(IsDown)) return;
-            
-            HandleInteract();
+            if (!AssertState(IsDown))
+            {
+                HandleInteract();
+                
+                if (!AssertState(IsInteracting))
+                {
+                    HandleMovement();
+                    HandleRotation();
+                    HandleShoot();
+                    HandleSwitchColor();
+                }
+            }
 
-            if (AssertState(IsInteracting)) return;
-            
-            HandleMovement();
-            HandleRotation();
-            HandleShoot();
-            HandleSwitchColor();
-            
             ResetInputs();
         }
         

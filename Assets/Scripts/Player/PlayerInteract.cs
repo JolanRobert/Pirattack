@@ -15,7 +15,7 @@ namespace Player
         public Action OnEndInteract;
 
         [SerializeField, ReadOnly] private List<ChaosTask> interactions = new List<ChaosTask>();
-        private bool isInteracting;
+        [SerializeField, ReadOnly] private bool isInteracting;
 
         private ChaosTask currentInteraction;
         

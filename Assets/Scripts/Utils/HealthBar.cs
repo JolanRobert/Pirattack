@@ -9,6 +9,8 @@ namespace Utils
         public float RespawnAmount => respawnFill.fillAmount;
 
         [SerializeField] private Health health;
+        [SerializeField] private GameObject healthGO;
+        [SerializeField] private GameObject respawnGO;
         [SerializeField] private Image healthFill;
         [SerializeField] private Image respawnFill;
 
@@ -26,14 +28,11 @@ namespace Utils
             health.OnHealthReset -= ResetFills;
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space)) health.SmoothKill();
-            if (Input.GetKeyDown(KeyCode.E)) health.LoseHealth(50);
-        }
-
         public void SetRespawnFill(float amount)
         {
+            healthGO.SetActive(false);
+            respawnGO.SetActive(true);
+            
             respawnFill.DOKill();
             respawnFill.fillAmount = amount;
         }
@@ -57,6 +56,9 @@ namespace Utils
             
             respawnFill.DOKill();
             respawnFill.fillAmount = 0;
+            
+            healthGO.SetActive(true);
+            respawnGO.SetActive(false);
         }
     }
 }
