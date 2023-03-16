@@ -34,9 +34,9 @@ namespace Player
         private Vector2 rotateInput;
         private bool shootInput;
         private bool switchColorInput;
-        public bool interactInput;
+        private bool interactInput;
         private bool cancelInteractInput;
-        public Action interraction;
+        public Action interaction;
 
         public void Init(Vector3 startPosition, PlayerColor color)
         {
@@ -86,7 +86,7 @@ namespace Player
             if (context.started)
             {
                 interactInput = true;
-                if(interraction.Target != null)  interraction.Invoke();
+                interaction?.Invoke();
             }
         }
         
