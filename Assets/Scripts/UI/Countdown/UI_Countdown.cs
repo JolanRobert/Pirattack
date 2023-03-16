@@ -6,8 +6,6 @@ using UnityEngine.UIElements;
 
 public class UI_Countdown : MonoBehaviour
 {
-    [SerializeField] private UI_Lobby layout;
-
     private const string LB_1 = "1LB";
     private const string LB_2 = "2LB";
     private const string LB_3 = "3LB";
@@ -19,21 +17,23 @@ public class UI_Countdown : MonoBehaviour
     private int currentAnim;
 
     private Action endAction;
-    
-    public void Init()
+    private bool started;
+    public bool Started => started;
+
+    public void Init(VisualElement root)
     {
-        lb1 = layout.Root.Q<Label>(LB_1);
-        lb2 = layout.Root.Q<Label>(LB_2);
-        lb3 = layout.Root.Q<Label>(LB_3);
+        lb1 = root.Q<Label>(LB_1);
+        lb2 = root.Q<Label>(LB_2);
+        lb3 = root.Q<Label>(LB_3);
         
         lb1.RegisterCallback<TransitionEndEvent>(_ => NextAnim());
         lb2.RegisterCallback<TransitionEndEvent>(_ => NextAnim());
         lb3.RegisterCallback<TransitionEndEvent>(_ => NextAnim());
     }
 
-    
     public void StartCountdown(Action toDoAtEnd)
     {
+        started = true;
         currentAnim = 0;
         
         NextAnim();
@@ -41,9 +41,17 @@ public class UI_Countdown : MonoBehaviour
         endAction -= toDoAtEnd;
         endAction += toDoAtEnd;
     }
+    
+    public void StopCountdown()
+    {
+        started = false;
+        currentAnim = 0;
+    }
 
     private void NextAnim()
     {
+        if (!started) return;
+        
         var isEven = currentAnim % 2 == 0;
         switch (currentAnim)
         {
