@@ -43,7 +43,6 @@ public class BulletTrigger : MonoBehaviour
         if (other.TryGetComponent(out IDamageable entity))
         {
             DamageEntity(entity);
-            SoundManager.Instance.PlayHitSound();
             SpawnImpactVFX(transform.position, transform.rotation);
            
             if (nbSlow > 0 && entity is Enemy enemy && owner) enemy.SetIced(1f,1-nbSlow);
@@ -64,7 +63,7 @@ public class BulletTrigger : MonoBehaviour
     private void DamageEntity(IDamageable entity)
     {
         if (entity is PlayerCollision && !owner) entity.Damage(damage);
-        else if (entity is Enemy enemy && owner)enemy.IsWasAttacked.Invoke(damage, owner);
+        else if (entity is Enemy enemy && owner)enemy.IsWasAttacked.Invoke(damage, owner.PColor);
     }
     
     private void Shock(Transform originalTarget)

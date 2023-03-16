@@ -14,34 +14,33 @@ namespace AI
 {
     public class Enemy : MonoBehaviour, IDamageable
     {
-        public Action<int, PlayerController> IsWasAttacked;
+        public Action<int, PlayerColor> IsWasAttacked;
         public EnemyData Data => enemyData;
         public bool EnemyInVision => enemyInVision;
         public Animator Animator => animator;
         public PlayerColor Color => shieldColor;
         public NavMeshAgent Agent => agent;
-    
+
         [SerializeField] private EnemyData enemyData;
         [SerializeField] protected PlayerColor shieldColor = PlayerColor.None;
         [SerializeField] protected Health healthEnemy;
         [SerializeField] protected NavMeshAgent agent;
         [SerializeField] protected Animator animator;
         [SerializeField] protected Rigidbody rb;
-        [SerializeField] private new SkinnedMeshRenderer renderer;
+        [SerializeField] protected new SkinnedMeshRenderer renderer;
         [SerializeField] private Material[] materials;
-        [SerializeField] private UnityEvent OnShoot;
         [SerializeField] private float perkChances;
+        [SerializeField] public UnityEvent OnShoot;
         [SerializeField][ColorUsageAttribute(true,true)] private Color hurtColor;
 
         private bool isIced;
         protected bool enemyInVision = false;
         protected int Damagz = 0;
         protected int maxHp = 0;
-        protected List<Transform> PatrolPoints = new ();
+        protected List<Transform> PatrolPoints = new();
         private EnemyBT bt = null;
-    
-        
-        
+
+
         private void OnEnable()
         {
             Damagz = enemyData.damage; // possible to change damage value
@@ -50,7 +49,7 @@ namespace AI
             ResetAttackDefaultValue();
             agent.speed = enemyData.speed;
             if (!bt) bt = GetComponent<EnemyBT>();
-            bt.ResetBlackboard();   
+            bt.ResetBlackboard();
             bt.enabled = true;
             if (GameManager.Instance) GameManager.Instance.OnLaunchingBoss += Depop;
         }
@@ -60,7 +59,7 @@ namespace AI
             bt.enabled = false;
             if (GameManager.Instance) GameManager.Instance.OnLaunchingBoss -= Depop;
         }
-    
+
         private void Start()
         {
             healthEnemy.OnDeath = OnDie;
@@ -91,7 +90,7 @@ namespace AI
         {
             Pooler.Instance.Depop(Pooler.Key.BasicEnemy, gameObject);
         }
-    
+
 
         public PlayerColor GetShieldColor()
         {
@@ -108,22 +107,22 @@ namespace AI
             Pooler.Instance.Depop(Pooler.Key.BasicEnemy, gameObject);
         }
 
-        public void TakeDamage(int _damage, PlayerController origin)
+        public void TakeDamage(int _damage, PlayerColor origin)
         {
             Damage(_damage);
             renderer.material.SetColor("_HurtColor",hurtColor);
         }
-    
+
         public void Damage(int _damage)
         {
             healthEnemy.LoseHealth(_damage);
         }
-    
+
         public void ResetAttackDefaultValue()
         {
             IsWasAttacked = TakeDamage;
         }
-    
+
         public void AssignShieldColor(PlayerColor color)
         {
             shieldColor = color;
@@ -139,12 +138,12 @@ namespace AI
         {
             enemyInVision = true;
         }
-    
+
         public List<Transform> GetPatrolPoints()
         {
             return PatrolPoints;
         }
-    
+
         public void SetPatrolPoints(List<Transform> points)
         {
             PatrolPoints.Clear();
@@ -156,20 +155,21 @@ namespace AI
 
         private void Update()
         {
-            animator.SetFloat("Velocity", agent.velocity.magnitude);
+            if (animator && agent) animator.SetFloat("Velocity", agent.velocity.magnitude);
+            
             Color color = UnityEngine.Color.Lerp(renderer.material.GetColor("_HurtColor"),UnityEngine.Color.black, 5*Time.deltaTime);
             renderer.material.SetColor("_HurtColor",color);
         }
 
-        public void SetIced(float duration,float slowness)
+        public void SetIced(float duration, float slowness)
         {
-            if(isIced) return;
+            if (isIced) return;
             isIced = true;
             renderer.material = materials[1];
             renderer.material.SetColor("_HurtColor",materials[0].GetColor("_HurtColor"));
             GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.PerkIceVFX);
             vfx.transform.position = transform.position;
-            VFXPooler.Instance.DelayedDepop(0.5f,VFXPooler.Key.PerkIceVFX,vfx);
+            VFXPooler.Instance.DelayedDepop(0.5f, VFXPooler.Key.PerkIceVFX, vfx);
             StopIced(duration);
             animator.SetFloat("speedAnimation", slowness);
             agent.speed = enemyData.speed * slowness;
@@ -183,7 +183,7 @@ namespace AI
             isIced = false;
             GameObject vfx = VFXPooler.Instance.Pop(VFXPooler.Key.PerkIceVFX);
             vfx.transform.position = transform.position;
-            VFXPooler.Instance.DelayedDepop(0.5f,VFXPooler.Key.PerkIceVFX,vfx);
+            VFXPooler.Instance.DelayedDepop(0.5f, VFXPooler.Key.PerkIceVFX, vfx);
             agent.speed = enemyData.speed;
         }
     }

@@ -15,20 +15,25 @@ namespace Managers
         public Action OnIncreaseChaosBar;
         public Action OnDecreaseChaosBar;
         public Action OnEndGame;
-    
+        public bool GameEnded => gameEnded;
+        
         [SerializeField] private int increaseChaosBar = 10;
         [SerializeField] private int decreaseChaosBar = 10;
         [SerializeField] private float  depopBossTimer = 60f;
         [SerializeField] private GameObject triggerBossDoor;
+        [SerializeField] private GameObject triggerBossExitDoor;
         [SerializeField] private GameObject bossDoor;
         [SerializeField] private GameObject boss;
-        [SerializeField, ReadOnly] private int chaosBar = 50;
+        [SerializeField, ReadOnly] private int chaosBar;
+        [SerializeField] private GameObject chaosBarCanvas;
+        [SerializeField] private GameObject BossBar;
     
-        private float startTime;
+        private float timer;
         private float endTime;
         private int nbEnemiesKilled = 0;
         private bool waitingForBoss = false;
         private float timerDepopBoss;
+        private bool gameEnded;
 
         private void Awake()
         {
@@ -37,14 +42,20 @@ namespace Managers
     
         private void Start()
         {
-            startTime = Time.time;
+            timer = 0;
             OnIncreaseChaosBar += CheckChaosBar;
             OnDecreaseChaosBar += CheckChaosBar;
             OnLaunchingBoss += LaunchBoss;
             OnEndFightBoss += BossKilled;
             OnBossPop += BossPop;
+            OnEndGame += SetEnd;
         }
 
+        private void SetEnd()
+        {
+            gameEnded = true;
+        }
+        
         public void AddEnemyKilled()
         {
             nbEnemiesKilled++;
@@ -69,7 +80,7 @@ namespace Managers
                     break;
                 case <= 0:
                     EndGame();
-                    endTime = Time.time - startTime;
+                    endTime = Time.time - timer;
                     SpawnManager.Instance.enabled = false;
                     break;
             }
@@ -91,6 +102,7 @@ namespace Managers
             chaosBar = 50;
             OnDecreaseChaosBar?.Invoke();
             waitingForBoss = false;
+            chaosBarCanvas.SetActive(true);
         
             OnRelaunchLoop?.Invoke();
         }
@@ -108,6 +120,8 @@ namespace Managers
             bossDoor.SetActive(false);
             boss.SetActive(true);
             waitingForBoss = true;
+            chaosBarCanvas.SetActive(false);
+            BossBar.SetActive(true);
             timerDepopBoss = depopBossTimer;
         }
     
@@ -116,6 +130,7 @@ namespace Managers
             waitingForBoss = false;
             timerDepopBoss = 0f;
             bossDoor.SetActive(true);
+            triggerBossExitDoor.SetActive(true);
             SpawnManager.Instance.SetOnBossFight(true);
         }
 
@@ -148,6 +163,7 @@ namespace Managers
 
         private void Update()
         {
+            timer += Time.deltaTime;
             if (!waitingForBoss) return;
             timerDepopBoss -= Time.deltaTime;
             if (timerDepopBoss <= 0f)
@@ -158,7 +174,13 @@ namespace Managers
 
         public float currentTimer()
         {
-            return Time.time - startTime;
+            return timer;
+        }
+
+        public void ExitBossDoor()
+        {
+           triggerBossExitDoor.SetActive(false);
+           bossDoor.SetActive(true);
         }
     }
 }

@@ -8,11 +8,14 @@ namespace AI
     {
         public List<Transform> patrolPoints = new ();
 
+        [SerializeField] private Animator animator;
+        
         private readonly List<Enemy> enemies = new();
 
         public void AddEnemy(Enemy enemy)
         {
             enemies.Add(enemy);
+            animator.SetTrigger("OpenTrap");
         }
 
         public bool CheckEnemiesVision()
